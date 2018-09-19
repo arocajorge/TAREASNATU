@@ -23,5 +23,17 @@ namespace Bus
                 throw;
             }
         }
+        public Parametro_Info get_info()
+        {
+            try
+            {
+                return odata.get_info();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

@@ -60,7 +60,10 @@ namespace Data
                         Clave = info.Clave,
                         Nombre = info.Nombre,
                         Correo = info.Correo,
-                        Estado = true
+                        Estado = true,
+                        FechaTransaccion=info.FechaTransaccion=DateTime.Now,
+                        IdUsuarioCreacion=info.IdUsuarioCreacion
+                        
                     };
                     Context.Usuario.Add(Entity);
                     Context.SaveChanges();
@@ -85,6 +88,8 @@ namespace Data
                     Entity.Nombre = info.Nombre;
                     Entity.Correo = info.Correo;
                     Entity.Clave = info.Clave;
+                    Entity.IdUsuarioModifica = info.IdUsuarioModifica;
+                    Entity.FechaModificacion = info.FechaModificacion=DateTime.Now;
                     Context.SaveChanges();
 
                 }
@@ -106,6 +111,8 @@ namespace Data
                     if (Entity == null)
                         return false;
                     Entity.Estado = false;
+                    Entity.IdUsuarioAnula = info.IdUsuarioAnula;
+                    Entity.FechaAnulacion = info.FechaModificacion=DateTime.Now;
                     Context.SaveChanges();
 
                 }

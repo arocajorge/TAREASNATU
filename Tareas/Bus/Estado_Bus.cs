@@ -61,11 +61,11 @@ namespace Bus
             }
         }
 
-        public Estado_Info get_info(int IdEstado)
+        public Estado_Info get_info(int IdEstadoTipo, int IdEstado)
         {
             try
             {
-                return odata.get_info(IdEstado);
+                return odata.get_info(IdEstadoTipo, IdEstado);
             }
             catch (Exception)
             {

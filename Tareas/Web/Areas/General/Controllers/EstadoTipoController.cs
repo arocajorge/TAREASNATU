@@ -30,9 +30,12 @@ namespace Web.Areas.General.Controllers
 
         #region Acciones
 
-        public ActionResult Nuevo()
+        public ActionResult Nuevo(int IdEstadoTipo)
         {
-             EstadoTipo_Info model = new  EstadoTipo_Info();
+            EstadoTipo_Info model = new EstadoTipo_Info()
+            {
+                IdEstadoTipo = IdEstadoTipo
+            };
             return View(model);
         }
 

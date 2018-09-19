@@ -273,19 +273,19 @@
                                         @using (Html.BeginForm("UploadControl_adjuntoUpload", "Tarea", FormMethod.Post))
                                         {
                                             @Html.DevExpress().UploadControl(settings =>
-                                                {
-                                                    settings.Name = "UploadControl_adjunto";
-                                                    settings.CallbackRouteValues = new { Controller = "Tarea", Action = "UploadControl_adjuntoUpload" };
+                                       {
+                                           settings.Name = "UploadControl_adjunto";
+                                           settings.CallbackRouteValues = new { Controller = "Tarea", Action = "UploadControl_adjuntoUpload" };
 
-                                                    settings.AdvancedModeSettings.EnableMultiSelect = true;
-                                                    settings.AdvancedModeSettings.EnableFileList = true;
-                                                    settings.AdvancedModeSettings.EnableDragAndDrop = true;
+                                           settings.AdvancedModeSettings.EnableMultiSelect = true;
+                                           settings.AdvancedModeSettings.EnableFileList = true;
+                                           settings.AdvancedModeSettings.EnableDragAndDrop = true;
 
-                                                    settings.ShowUploadButton = true;
-                                                    settings.ShowProgressPanel = true;
-
-                                                    settings.ValidationSettings.Assign(Web.Areas.General.Controllers.TareaControllerUploadControl_adjuntoSettings.UploadValidationSettings);
-                                                }).GetHtml()
+                                           settings.ShowUploadButton = true;
+                                           settings.ShowProgressPanel = true;
+                                           settings.ClientSideEvents.FileUploadComplete= "function(s,e){refres_grid();}";
+                                           settings.ValidationSettings.Assign(Web.Areas.General.Controllers.TareaControllerUploadControl_adjuntoSettings.UploadValidationSettings);
+                                       }).GetHtml()
                                         }
 
 
@@ -295,7 +295,15 @@
                                 </div>
                             </div>
                         </div>         
-
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.Action("GridViewPartial_tarea_det_adjunto")
+                                    </div>
+                                </div>
+                            </div>
+                        </div>         
                     </div>
                 </div>
             </div>
@@ -342,5 +350,15 @@
                 }
                 });
                 }
-                };
+    };
+
+
+
+    function refres_grid() {
+
+
+        GridViewPartial_tarea_det_adjunto.PerformCallback();
+    };
+
+
 </script>

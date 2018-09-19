@@ -42,7 +42,15 @@ namespace Web.Areas.General.Controllers
             model.list_detalle = Lis_Tarea_det_Info_lis.get_list();
             return PartialView("_GridViewPartial_Tarea_det", model);
         }
+        public ActionResult GridViewPartial_tarea_det_adjunto()
+        {
+            cargar_combo();
+            Tarea_Info model = new Tarea_Info();
+            model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list();
+            return PartialView("_GridViewPartial_tarea_det_adjunto", model);
+        }
 
+        
         #endregion
 
         #region Acciones
@@ -210,12 +218,23 @@ namespace Web.Areas.General.Controllers
             cargar_combo();
             return PartialView("_GridViewPartial_tarea_det", model);
         }
+
         #endregion
 
+        #region funciones de los adjuntos
+        public ActionResult EditingDelete_adjunto([ModelBinder(typeof(DevExpressEditorsBinder))] TareaArchivoAdjunto_Info info_det)
+        {
+            TareaArchivoAdjunto_Info_lis.DeleteRow(info_det.Secuencial);
+            Tarea_Info model = new Tarea_Info();
+            model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list();
+            return PartialView("_GridViewPartial_tarea_det_adjunto", model);
+        }
+        #endregion
         public ActionResult UploadControl_adjuntoUpload()
         {
             UploadControlExtension.GetUploadedFiles("UploadControl_adjunto", TareaControllerUploadControl_adjuntoSettings.UploadValidationSettings, TareaControllerUploadControl_adjuntoSettings.FileUploadComplete);
-            return null;
+            return PartialView("_GridViewPartial_tarea_det_adjunto", TareaArchivoAdjunto_Info_lis.get_list());
+
         }
     }
     public class TareaControllerUploadControl_adjuntoSettings
@@ -286,10 +305,11 @@ namespace Web.Areas.General.Controllers
         {
             if (HttpContext.Current.Session["TareaArchivoAdjunto_Info"] == null)
             {
-                List<Tarea_det_Info> list = new List<Tarea_det_Info>();
+                List<TareaArchivoAdjunto_Info> list = new List<TareaArchivoAdjunto_Info>();
 
                 HttpContext.Current.Session["TareaArchivoAdjunto_Info"] = list;
             }
+            var lis= (List<TareaArchivoAdjunto_Info>)HttpContext.Current.Session["TareaArchivoAdjunto_Info"];
             return (List<TareaArchivoAdjunto_Info>)HttpContext.Current.Session["TareaArchivoAdjunto_Info"];
         }
 

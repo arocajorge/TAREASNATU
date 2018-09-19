@@ -7426,6 +7426,7 @@
     <Content Include="Areas\General\Views\EstadoTipo\Modificar.cshtml" />
     <Content Include="Areas\General\Views\EstadoTipo\Nuevo.cshtml" />
     <Content Include="Areas\General\Views\Parametro\Index.cshtml" />
+    <Content Include="Areas\General\Views\Tarea\_GridViewPartial_tarea_det_adjunto.cshtml" />
     <None Include="Properties\PublishProfiles\Erp_web.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\web.pubxml" />

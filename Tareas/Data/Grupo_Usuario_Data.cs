@@ -17,12 +17,12 @@ namespace Data
 
                 using (EntityTareas Context = new EntityTareas())
                 {
-                    Lista = (from q in Context.Grupo
+                    Lista = (from q in Context.Grupo_Usuario
                              where q.IdGrupo== IdGrupo
                              select new Grupo_Usuario_Info
                              {
                                  IdGrupo = q.IdGrupo,
-                                 Observacion = q.Descripcion,
+                                 Observacion = q.Observacion,
                                  IdUsuario = q.IdUsuario
                              }).ToList();
                 }

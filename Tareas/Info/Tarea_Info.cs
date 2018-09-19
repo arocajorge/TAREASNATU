@@ -27,11 +27,13 @@ namespace Info
         public Nullable<System.DateTime> FechaModificacion { get; set; }
         public Nullable<System.DateTime> FechaAnulacion { get; set; }
         public List<Tarea_det_Info> list_detalle { get; set; }
+        public List<TareaArchivoAdjunto_Info> list_adjuntos { get; set; }
         public string nomb_jef_grupo { get; set; }
 
         public Tarea_Info()
         {
             list_detalle = new List<Tarea_det_Info>();
+            list_adjuntos = new List<TareaArchivoAdjunto_Info>();
         }
     }
 }

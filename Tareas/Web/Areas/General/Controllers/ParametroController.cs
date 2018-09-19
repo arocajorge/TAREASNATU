@@ -14,7 +14,8 @@ namespace Web.Areas.General.Controllers
         // GET: General/Parametro
         public ActionResult Index()
         {
-            return View();
+            Parametro_Info model = bus_pare.get_info();
+            return View(model);
         }
         [HttpPost]
         public ActionResult Index(Parametro_Info model)

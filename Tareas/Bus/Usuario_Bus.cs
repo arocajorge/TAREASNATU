@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Info;
 using Data;
-
 namespace Bus
 {
    public class Usuario_Bus

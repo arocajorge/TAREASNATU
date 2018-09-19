@@ -68,7 +68,7 @@ namespace Data
             {
                 using (EntityTareas Context = new EntityTareas())
                 {
-                    var Entity = Context.Estado.Where(v => v.IdEstado == info.IdEstado).FirstOrDefault();
+                    var Entity = Context.Estado.Where(v => v.IdEstado == info.IdEstado && v.IdEstadoTipo == info.IdEstadoTipo).FirstOrDefault();
                     if (Entity == null)
                         return false;
                     Entity.Descripcion = info.Descripcion;
@@ -92,7 +92,7 @@ namespace Data
             {
                 using (EntityTareas Context = new EntityTareas())
                 {
-                    var Entity = Context.Estado.Where(v => v.IdEstado == info.IdEstado).FirstOrDefault();
+                    var Entity = Context.Estado.Where(v => v.IdEstado == info.IdEstado && v.IdEstadoTipo==info.IdEstadoTipo).FirstOrDefault();
                     if (Entity == null)
                         return false;
                     Entity.Estado1 = false;
@@ -129,14 +129,14 @@ namespace Data
                 throw;
             }
         }
-        public Estado_Info get_info(int IdEstado)
+        public Estado_Info get_info(int IdEstadoTipo, int IdEstado)
         {
             try
             {
                 Estado_Info info = new Estado_Info();
                 using (EntityTareas Context = new EntityTareas())
                 {
-                    Estado Entity = Context.Estado.FirstOrDefault(q => q.IdEstado == IdEstado);
+                    Estado Entity = Context.Estado.FirstOrDefault(q => q.IdEstado == IdEstado && q.IdEstadoTipo== IdEstadoTipo);
                     if (Entity == null) return null;
 
                     info = new Estado_Info

@@ -6,6 +6,8 @@ using System.Web;
 using System.Web.Mvc;
 using Info;
 using Bus;
+using Web.Helps;
+
 namespace Web.Areas.General.Controllers
 {
     public class UsuarioController : Controller
@@ -37,6 +39,8 @@ namespace Web.Areas.General.Controllers
         [HttpPost]
         public ActionResult Nuevo(Usuario_Info model)
         {
+            model.IdUsuarioCreacion = SessionTareas.IdUsuario.ToString();
+
             if (!bus_usuario.guardarDB(model))
             {
                 return View(model);
@@ -55,6 +59,8 @@ namespace Web.Areas.General.Controllers
         [HttpPost]
         public ActionResult Modificar(Usuario_Info model)
         {
+            model.IdUsuarioModifica = SessionTareas.IdUsuario.ToString();
+
             if (!bus_usuario.modificarDB(model))
             {
                 return View(model);
@@ -73,6 +79,7 @@ namespace Web.Areas.General.Controllers
         [HttpPost]
         public ActionResult Anular(Usuario_Info model)
         {
+            model.IdUsuarioAnula = SessionTareas.IdUsuario.ToString();
             if (!bus_usuario.anularDB(model))
             {
                 return View(model);

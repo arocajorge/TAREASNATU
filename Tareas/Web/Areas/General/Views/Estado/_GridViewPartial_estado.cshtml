@@ -1,10 +1,10 @@
 @using System.Web.UI.WebControls;
 
 @{
-        var grid = Html.DevExpress().GridView(settings =>
-        {
-            settings.Name = "GridView_estado";
-            settings.CallbackRouteValues = new { Controller = "Estado", Action = "GridViewPartial_estado", IdEstadoTipo = ViewBag.IdEstadoTipo };
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridView_estado";
+        settings.CallbackRouteValues = new { Controller = "Estado", Action = "GridViewPartial_estado", IdEstadoTipo = ViewBag.IdEstadoTipo };
         settings.Width = Unit.Percentage(100);
         settings.KeyFieldName = "IdEstado";
         //Configuración para que la grilla no muestre texto completo
@@ -63,8 +63,8 @@
                 if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "Estado1")) == true)
                 {
                     ViewContext.Writer.Write(
-                Html.ActionLink("Modificar", "Modificar", new { IdEstado = DataBinder.Eval(tc.DataItem, "IdEstado") }) + "&nbsp;" +
-                        Html.ActionLink("Anular", "Anular", new { IdEstado = DataBinder.Eval(tc.DataItem, "IdEstado") },
+                Html.ActionLink("Modificar", "Modificar", new { IdEstadoTipo= DataBinder.Eval(tc.DataItem, "IdEstadoTipo"), IdEstado = DataBinder.Eval(tc.DataItem, "IdEstado") }) + "&nbsp;" +
+                        Html.ActionLink("Anular", "Anular", new { IdEstadoTipo = DataBinder.Eval(tc.DataItem, "IdEstadoTipo"), IdEstado = DataBinder.Eval(tc.DataItem, "IdEstado") },
                             new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
                     );
                 }
@@ -72,7 +72,8 @@
             c.SetHeaderTemplateContent(tc =>
             {
                 ViewContext.Writer.Write(
-                    Html.ActionLink("Nuevo", "Nuevo").ToHtmlString()
+                    Html.ActionLink("Nuevo", "Nuevo", new { IdEstadoTipo = ViewBag.IdEstadoTipo }).ToHtmlString()
+
                 );
             });
             c.Settings.AllowDragDrop = DefaultBoolean.False;
