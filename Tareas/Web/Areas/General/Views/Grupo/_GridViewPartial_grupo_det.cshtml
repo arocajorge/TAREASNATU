@@ -1,0 +1,52 @@
+@using System.Web.UI.WebControls;
+@model Info.Grupo_Info
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridViewPartial_grupo_det";
+        settings.CallbackRouteValues = new { Controller = "Grupo", Action = "GridViewPartial_grupo_det", IdGrupo = Model.IdGrupo};
+        settings.KeyFieldName = "IdUsuario";
+        settings.Width = Unit.Percentage(100);
+
+
+        settings.SettingsEditing.Mode = GridViewEditingMode.Inline;
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Grupo", Action = "EditingAddNew", Area = "General" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Grupo", Action = "EditingDelete", Area = "General" };
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+
+        settings.SettingsContextMenu.Enabled = true;
+        settings.SettingsBehavior.EnableCustomizationWindow = true;
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+        //Funcion para inicializar fila al presionar nuevo
+
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdUsuario";
+            column.Caption = "Usuario";
+            column.Width = Unit.Percentage(80);
+            column.EditorProperties().ComboBox(p =>
+            {
+                p.Columns.Add("IdUsuario", "Usuario").Width = Unit.Percentage(30);
+                p.Columns.Add("Nombre", "Nombres").Width = Unit.Percentage(70);
+                p.ValueField = "IdUsuario";
+                p.ValueType = typeof(string);
+                p.DataSource = ViewBag.list_usuarios;
+                p.Width = Unit.Percentage(100);
+            });
+        });
+        
+    });
+
+}
+@grid.Bind(Model.list_grupo_usuario).GetHtml()

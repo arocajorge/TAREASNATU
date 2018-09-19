@@ -1,0 +1,63 @@
+﻿@model Info.Estado_Info
+
+@{
+    ViewBag.Title = "Modificar";
+    if (Session["IdUsuario"] == null )
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@using (Html.BeginForm("Modificar", "Estado", FormMethod.Post, new { @class = "from", @role = "form" }))
+{
+    @Html.HiddenFor(v => v.IdEstado);
+
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdCtaCblePadre">Tipo estado*</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.IdEstadoTipo, settings =>
+               {
+                   settings.Name = "IdEstadoTipo";
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.DisplayFormatString = "[{0}]";
+                   settings.Properties.Columns.Add("Descripcion", "Estado").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   //Campo ID
+                   settings.Properties.ValueField = "IdEstadoTipo";
+                   settings.Properties.ValueType = typeof(int);
+                   settings.Properties.TextField = "Descripcion";
+                   //Boton para seleccionar ningun registro
+                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                   settings.Properties.NullText = "== Seleccione ==";
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+
+               }).BindList(ViewBag.lis_estado_tipo).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdEstadoTipo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdUsuario"> Descripción*</label>
+                    @Html.TextBoxFor(v => v.Descripcion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(v => v.Descripcion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","EstadoTipo",new { Area = "General" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
