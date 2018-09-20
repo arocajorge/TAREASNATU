@@ -27,6 +27,7 @@ namespace Bus
         {
             try
             {
+
                 return odata.guardarDB(info);
             }
             catch (Exception)

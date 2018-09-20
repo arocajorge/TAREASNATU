@@ -12,12 +12,11 @@ namespace Info
         public string IdUsuarioSolicitante { get; set; }
         public int IdGrupo { get; set; }
         public string IdUsuarioAsignado { get; set; }
-        public string EstadoActual { get; set; }
+        public int EstadoActual { get; set; }
         public System.DateTime FechaInicio { get; set; }
         public System.DateTime FechaCulmina { get; set; }
         public string Observacion { get; set; }
         public int IdEstadoPrioridad { get; set; }
-        public decimal IdTareaPadre { get; set; }
         public bool TareaConcurrente { get; set; }
         public bool Estado { get; set; }
         public string IdUsuario { get; set; }

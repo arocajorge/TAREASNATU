@@ -40,7 +40,11 @@ namespace Web.Areas.General.Controllers
         public ActionResult Nuevo(Usuario_Info model)
         {
             model.IdUsuarioCreacion = SessionTareas.IdUsuario.ToString();
-
+           if( bus_usuario.si_existe(model.IdUsuario))
+            {
+                ViewBag.mensaje = "El usuario: "+model.IdUsuario+" ya se encuentra registrado";
+                return View(model);
+            }
             if (!bus_usuario.guardarDB(model))
             {
                 return View(model);

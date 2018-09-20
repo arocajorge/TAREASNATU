@@ -17,5 +17,7 @@ namespace Data
         public decimal IdTarea { get; set; }
         public int Secuencial { get; set; }
         public string NombreArchivo { get; set; }
+    
+        public virtual Tarea Tarea { get; set; }
     }
 }

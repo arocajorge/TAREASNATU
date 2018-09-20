@@ -34,7 +34,6 @@ namespace Data
                                  FechaCulmina=q.FechaCulmina,
                                  Observacion=q.Observacion,
                                  IdEstadoPrioridad=q.IdEstadoPrioridad,
-                                 IdTareaPadre=q.IdTareaPadre,
                                  TareaConcurrente=q.TareaConcurrente,
                                  Estado=q.Estado
 
@@ -68,7 +67,6 @@ namespace Data
                         FechaCulmina = info.FechaCulmina,
                         Observacion = info.Observacion,
                         IdEstadoPrioridad = info.IdEstadoPrioridad,
-                        IdTareaPadre = info.IdTareaPadre,
                         TareaConcurrente = info.TareaConcurrente,
                         FechaTransaccion = DateTime.Now,
                         IdUsuario = info.IdUsuario,
@@ -112,7 +110,7 @@ namespace Data
 
                     Context.SaveChanges();
                 }
-                EnviarCorreo(info);
+               // EnviarCorreo(info);
                 return true;
             }
             catch (Exception e)
@@ -130,7 +128,6 @@ namespace Data
                     var Entity = Context. Tarea.Where(v => v.IdTarea == info.IdTarea).FirstOrDefault();
                     if (Entity == null)
                         return false;
-                    Entity.IdTareaPadre = info.IdTareaPadre;
                     Entity.IdUsuarioSolicitante = info.IdUsuarioSolicitante;
                     Entity.IdGrupo = info.IdGrupo;
                     Entity.IdUsuarioAsignado = info.IdUsuarioAsignado;
@@ -212,7 +209,6 @@ namespace Data
                 throw;
             }
         }
-
         public  Tarea_Info get_info(decimal IdTarea)
         {
             try
@@ -225,17 +221,16 @@ namespace Data
 
                     info = new  Tarea_Info
                     {
-                        IdTarea = info.IdTarea,
-                        IdUsuarioSolicitante = info.IdUsuarioSolicitante,
-                        IdGrupo = info.IdGrupo,
-                        IdUsuarioAsignado = info.IdUsuarioAsignado,
-                        EstadoActual = info.EstadoActual,
-                        FechaInicio = info.FechaInicio,
-                        FechaCulmina = info.FechaCulmina,
-                        Observacion = info.Observacion,
-                        IdEstadoPrioridad = info.IdEstadoPrioridad,
-                        IdTareaPadre = info.IdTareaPadre,
-                        TareaConcurrente = info.TareaConcurrente,
+                        IdTarea = Entity.IdTarea,
+                        IdUsuarioSolicitante = Entity.IdUsuarioSolicitante,
+                        IdGrupo = Entity.IdGrupo,
+                        IdUsuarioAsignado = Entity.IdUsuarioAsignado,
+                        EstadoActual = Entity.EstadoActual,
+                        FechaInicio = Entity.FechaInicio,
+                        FechaCulmina = Entity.FechaCulmina,
+                        Observacion = Entity.Observacion,
+                        IdEstadoPrioridad = Entity.IdEstadoPrioridad,
+                        TareaConcurrente = Entity.TareaConcurrente,
 
                     };
                 }
@@ -247,8 +242,6 @@ namespace Data
                 throw;
             }
         }
-
-
         public bool EnviarCorreo(Tarea_Info info)
         {
             try
@@ -317,12 +310,6 @@ namespace Data
                     Body += "<br/>";
                     Body += "<table>";
                     Body += "<tr>";
-                    Body += "<td><strong>Usuario:</strong></td>";
-                    Body += "<td>" + info.nomb_jef_grupo + "</td>";
-                    Body += "</tr>";
-                    Body += "<tr>";
-                    Body += "<td><strong>Contraseña:</strong></td>";
-                    Body += "<td>" + info.nomb_jef_grupo + "</td>";
                     Body += "</tr>";
                     Body += "</table>";
 
@@ -334,7 +321,7 @@ namespace Data
                     smtp.Host = infoParametros.Host;
                     smtp.EnableSsl = true;// infoParametros.PermitirSSL;
                     smtp.Port = infoParametros.Puerto;
-                    smtp.Credentials = new NetworkCredential(infoParametros.CorreoCuenta, "dianaycarlos1985");
+                    smtp.Credentials = new NetworkCredential(infoParametros.CorreoCuenta, "xxxxxxx");
                     smtp.Send(mail);
 
                    

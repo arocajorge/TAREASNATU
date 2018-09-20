@@ -12,7 +12,7 @@
         </div>
 
     }
-    ViewBag.Title = "Parametros";
+    ViewBag.Title = "Parámetros";
     //if (Session["IdUsuario"] == null )
     //{
     //    Response.Redirect("~/Account/Login");
@@ -63,7 +63,7 @@
         <div class="col-md-12">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="IdUsuario">hos*</label>
+                    <label for="IdUsuario">Host*</label>
                     @Html.TextBoxFor(v => v.Host, new { @class = "form-control" })
                     @Html.ValidationMessageFor(m => m.Host, "", new { @class = "text-danger" })
                 </div>
@@ -91,7 +91,7 @@
         <div class="col-md-12">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="IdUsuario">Usuario FTP</label>
+                    <label for="IdUsuario">Usuario FTP*</label>
                     @Html.TextBoxFor(v => v.FtpUsuario, new { @class = "form-control", @row = 2 })
                     @Html.ValidationMessageFor(m => m.FtpUsuario, "", new { @class = "text-danger" })
                 </div>
@@ -103,7 +103,7 @@
         <div class="col-md-12">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="IdUsuario">Clave FTP</label>
+                    <label for="IdUsuario">Clave FTP*</label>
                     @Html.TextBoxFor(v => v.FtpClave, new { @class = "form-control", @row = 2 })
                     @Html.ValidationMessageFor(m => m.FtpClave, "", new { @class = "text-danger" })
                 </div>
@@ -114,7 +114,7 @@
         <div class="col-md-12">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="IdUsuario">Url formato</label>
+                    <label for="IdUsuario">Url formato*</label>
                     @Html.TextBoxFor(v => v.FtpURLArchivo, new { @class = "form-control", @row = 2 })
                     @Html.ValidationMessageFor(m => m.FtpURLArchivo, "", new { @class = "text-danger" })
                 </div>
@@ -125,7 +125,7 @@
         <div class="col-md-12">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="IdUsuario">Url adjuntos</label>
+                    <label for="IdUsuario">Url adjuntos*</label>
                     @Html.TextBoxFor(v => v.FtpURLAdjunto, new { @class = "form-control", @row = 2 })
                     @Html.ValidationMessageFor(m => m.FtpURLAdjunto, "", new { @class = "text-danger" })
                 </div>

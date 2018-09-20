@@ -14,6 +14,12 @@ namespace Data
     
     public partial class EstadoTipo
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public EstadoTipo()
+        {
+            this.Estado1 = new HashSet<Estado>();
+        }
+    
         public int IdEstadoTipo { get; set; }
         public string Descripcion { get; set; }
         public bool Estado { get; set; }
@@ -23,5 +29,8 @@ namespace Data
         public Nullable<System.DateTime> FechaTransaccion { get; set; }
         public Nullable<System.DateTime> FechaModificacion { get; set; }
         public Nullable<System.DateTime> FechaAnulacion { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Estado> Estado1 { get; set; }
     }
 }

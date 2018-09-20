@@ -19,6 +19,7 @@ namespace Web.Areas.General.Controllers
         Grupo_Bus bus_grupo = new Grupo_Bus();
         Usuario_Bus bus_usuario = new Usuario_Bus();
         Estado_Bus bus_estado = new Estado_Bus();
+        TareaArchivoAdjunto_Bus bus_adjunto = new TareaArchivoAdjunto_Bus();
         #endregion
 
         #region Index
@@ -61,7 +62,9 @@ namespace Web.Areas.General.Controllers
             {
                 FechaInicio = DateTime.Now,
                 FechaCulmina = DateTime.Now.AddDays(7),
-                IdUsuarioSolicitante = SessionTareas.IdUsuario.ToString()
+                IdUsuarioSolicitante = SessionTareas.IdUsuario.ToString(),
+                IdEstadoPrioridad=1,
+                EstadoActual=1
 
             };
             Lis_Tarea_det_Info_lis.set_list(new List<Tarea_det_Info>());
@@ -99,10 +102,13 @@ namespace Web.Areas.General.Controllers
         }
 
         public ActionResult Modificar(int IdTarea = 0)
-        {
+        
+{
             Tarea_Info model = bus_tarea.get_info(IdTarea);
             model.list_detalle = bus_tarea_det.get_lis(IdTarea);
             Lis_Tarea_det_Info_lis.set_list(model.list_detalle);
+            model.list_adjuntos = bus_adjunto.get_lis(IdTarea);
+            TareaArchivoAdjunto_Info_lis.set_list(model.list_adjuntos);
             cargar_combo();
             if (model == null)
                 return RedirectToAction("Index");
@@ -141,8 +147,12 @@ namespace Web.Areas.General.Controllers
         public ActionResult Anular(decimal IdTarea = 0)
         {
             Tarea_Info model = bus_tarea.get_info(IdTarea);
+            if (model == null)
+                model = new Tarea_Info();
             model.list_detalle = bus_tarea_det.get_lis(IdTarea);
             Lis_Tarea_det_Info_lis.set_list(model.list_detalle);
+            model.list_adjuntos = bus_adjunto.get_lis(IdTarea);
+            TareaArchivoAdjunto_Info_lis.set_list(model.list_adjuntos);
             cargar_combo();
             if (model == null)
                 return RedirectToAction("Index");

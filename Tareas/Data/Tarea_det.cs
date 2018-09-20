@@ -20,5 +20,12 @@ namespace Data
         public int OrdenEjecuacion { get; set; }
         public System.DateTime FechaInicio { get; set; }
         public System.DateTime FechaFin { get; set; }
+        public string IdUsuario { get; set; }
+        public int IdEstadoEstado { get; set; }
+        public System.DateTime FechaUltimaModif { get; set; }
+        public string Observacion { get; set; }
+    
+        public virtual Tarea Tarea { get; set; }
+        public virtual Usuario Usuario { get; set; }
     }
 }

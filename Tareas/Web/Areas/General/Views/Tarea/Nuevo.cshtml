@@ -94,34 +94,7 @@
             </div>
         </div>
     </div>
-
-    <div class="row">
-        <div class="col-md-12">
-
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="IdCtaCblePadre">Tarea padre*</label>
-                    @Html.DevExpress().ComboBoxFor(q => q.IdUsuario, settings =>
-               {
-                   settings.Name = "IdTareaPadre";
-                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                   settings.Properties.DisplayFormatString = "[{0}]";
-                   settings.Properties.Columns.Add("Observacion", "Tarea").Width = System.Web.UI.WebControls.Unit.Percentage(10);
-                   //Campo ID
-                   settings.Properties.ValueField = "IdTareaPadre";
-                   settings.Properties.ValueType = typeof(decimal);
-                   settings.Properties.TextField = "Observacion";
-                   //Boton para seleccionar ningun registro
-                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
-                   settings.Properties.NullText = "== Seleccione ==";
-                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-
-               }).BindList(ViewBag.list_tarea).GetHtml()
-                    @Html.ValidationMessageFor(q => q.IdTareaPadre, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-    </div>
+    
 
     <div class="row">
         <div class="col-md-12">
@@ -240,7 +213,6 @@
         </div>
     </div>
 
-
     <div id="Tabs" role="tabpanel">
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="active">
@@ -283,7 +255,7 @@
                                            settings.ShowUploadButton = true;
                                            settings.ShowProgressPanel = true;
                                            settings.ClientSideEvents.FileUploadComplete= "function(s,e){refres_grid();}";
-                                          // settings.ValidationSettings.Assign(Web.Areas.General.Controllers.TareaControllerUploadControl_adjuntoSettings.UploadValidationSettings);
+                                           settings.ValidationSettings.Assign(Web.Areas.General.Controllers.TareaControllerUploadControl_adjuntoSettings.UploadValidationSettings);
                                        }).GetHtml()
                                         
 
@@ -313,7 +285,7 @@
 
     <div class="box-footer">
     <button type="submit" class="btn btn-primary">Guardar</button>
-    <a class="btn btn-default" href="@Url.Action("Index","Grupo",new { Area = "General" },null)">Cancelar</a>
+    <a class="btn btn-default" href="@Url.Action("Index","Tarea",new { Area = "General" },null)">Cancelar</a>
     </div>
 
 

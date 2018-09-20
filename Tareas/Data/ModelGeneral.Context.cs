@@ -27,6 +27,8 @@ namespace Data
     
         public virtual DbSet<Area> Area { get; set; }
         public virtual DbSet<Departamento> Departamento { get; set; }
+        public virtual DbSet<Estado> Estado { get; set; }
+        public virtual DbSet<EstadoTipo> EstadoTipo { get; set; }
         public virtual DbSet<Grupo> Grupo { get; set; }
         public virtual DbSet<Grupo_Usuario> Grupo_Usuario { get; set; }
         public virtual DbSet<Parametro> Parametro { get; set; }
@@ -35,7 +37,5 @@ namespace Data
         public virtual DbSet<TareaArchivoAdjunto> TareaArchivoAdjunto { get; set; }
         public virtual DbSet<TareaEstado> TareaEstado { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
-        public virtual DbSet<Estado> Estado { get; set; }
-        public virtual DbSet<EstadoTipo> EstadoTipo { get; set; }
     }
 }

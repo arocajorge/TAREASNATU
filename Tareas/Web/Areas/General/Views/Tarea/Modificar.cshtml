@@ -1,6 +1,17 @@
 ﻿@model Info.Tarea_Info
 
 @{
+
+    if (ViewBag.mensaje != null)
+    {
+
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+
+    }
     ViewBag.Title = "Modificar";
     //if (Session["IdUsuario"] == null )
     //{
@@ -12,7 +23,6 @@
 
 @using (Html.BeginForm("Modificar", "Tarea", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
-    @Html.HiddenFor(v => v.IdTarea);
 
 
     <div class="row">
@@ -84,34 +94,7 @@
             </div>
         </div>
     </div>
-
-    <div class="row">
-        <div class="col-md-12">
-
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="IdCtaCblePadre">Tarea padre*</label>
-                    @Html.DevExpress().ComboBoxFor(q => q.IdUsuario, settings =>
-               {
-                   settings.Name = "IdTareaPadre";
-                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                   settings.Properties.DisplayFormatString = "[{0}]";
-                   settings.Properties.Columns.Add("Observacion", "Tarea").Width = System.Web.UI.WebControls.Unit.Percentage(10);
-                   //Campo ID
-                   settings.Properties.ValueField = "IdTareaPadre";
-                   settings.Properties.ValueType = typeof(decimal);
-                   settings.Properties.TextField = "Observacion";
-                   //Boton para seleccionar ningun registro
-                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
-                   settings.Properties.NullText = "== Seleccione ==";
-                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-
-               }).BindList(ViewBag.list_tarea).GetHtml()
-                    @Html.ValidationMessageFor(q => q.IdTareaPadre, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-    </div>
+    
 
     <div class="row">
         <div class="col-md-12">
@@ -230,49 +213,89 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="IdUsuario">Detalle de la tarea*</label>
+    <div id="Tabs" role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="active">
+                <a href="#tab_detalle" aria-controls="informacion_items" role="tab" data-toggle="tab">Detalle tarea</a>
+            </li>
+            <li>
+                <a href="#tab_adjuntos" aria-controls="otros" role="tab" data-toggle="tab">Archivos adjuntos</a>
+            </li>
 
-                    @Html.Action("GridViewPartial_tarea_det")
+
+        </ul>
+        <div class="tab-content" style="padding-top: 20px">
+            <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_detalle">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.Action("GridViewPartial_tarea_det")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_adjuntos">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+
+
+                                @Html.DevExpress().UploadControl(settings =>
+                                       {
+                                           settings.Name = "UploadControl_adjunto";
+                                           settings.CallbackRouteValues = new { Controller = "Tarea", Action = "UploadControl_adjuntoUpload" };
+
+                                           settings.AdvancedModeSettings.EnableMultiSelect = true;
+                                           settings.AdvancedModeSettings.EnableFileList = true;
+                                           settings.AdvancedModeSettings.EnableDragAndDrop = true;
+
+                                           settings.ShowUploadButton = true;
+                                           settings.ShowProgressPanel = true;
+                                           settings.ClientSideEvents.FileUploadComplete = "function(s,e){refres_grid();}";
+                                           settings.ValidationSettings.Assign(Web.Areas.General.Controllers.TareaControllerUploadControl_adjuntoSettings.UploadValidationSettings);
+                                       }).GetHtml()
+
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.Action("GridViewPartial_tarea_det_adjunto")
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+
+
 
 
             <div class="box-footer">
                 <button type="submit" class="btn btn-primary">Guardar</button>
-                <a class="btn btn-default" href="@Url.Action("Index","Grupo",new { Area = "General" },null)">Cancelar</a>
+                <a class="btn btn-default" href="@Url.Action("Index","Tarea",new { Area = "General" },null)">Cancelar</a>
             </div>
 
-    @section Scripts {
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="IdUsuario">Detalle de la tarea*</label>
-
-                    @Html.Action("GridViewPartial_tarea_det")
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="box-footer">
-        <button type="submit" class="btn btn-primary">Guardar</button>
-        <a class="btn btn-default" href="@Url.Action("Index","Tarea",new { Area = "General" },null)">Cancelar</a>
-    </div>
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }
+            @section Scripts {
+                @Scripts.Render("~/bundles/jqueryval")
+            }
 }
 
 
-    <script>
+<script>
     function get_grupo() {
 
 
@@ -298,5 +321,15 @@
                 }
                 });
                 }
-                };
-    </script>
+    };
+
+
+
+    function refres_grid() {
+
+
+        GridViewPartial_tarea_det_adjunto.PerformCallback();
+    };
+
+
+</script>

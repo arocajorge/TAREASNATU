@@ -24,5 +24,7 @@ namespace Data
         public Nullable<System.DateTime> FechaTransaccion { get; set; }
         public Nullable<System.DateTime> FechaModificacion { get; set; }
         public Nullable<System.DateTime> FechaAnulacion { get; set; }
+    
+        public virtual EstadoTipo EstadoTipo { get; set; }
     }
 }

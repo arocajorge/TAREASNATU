@@ -2,9 +2,20 @@
 
 @{
     ViewBag.Title = "Nuevo";
-    if (Session["IdUsuario"] == null )
+    if (Session["IdUsuario"] == null)
     {
         Response.Redirect("~/Account/Login");
+    }
+
+    if (ViewBag.mensaje != null)
+    {
+
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+
     }
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
