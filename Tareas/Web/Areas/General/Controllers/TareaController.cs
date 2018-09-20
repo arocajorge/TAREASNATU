@@ -73,6 +73,7 @@ namespace Web.Areas.General.Controllers
         public ActionResult Nuevo(Tarea_Info model)
         {
             model.list_detalle = Lis_Tarea_det_Info_lis.get_list();
+            model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list();
             model.IdUsuario = SessionTareas.IdUsuario.ToString();
             if (model.list_detalle == null)
             {
@@ -112,6 +113,8 @@ namespace Web.Areas.General.Controllers
         public ActionResult Modificar(Tarea_Info model)
         {
             model.list_detalle = Lis_Tarea_det_Info_lis.get_list();
+            model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list();
+
             if (model.list_detalle == null)
             {
                 cargar_combo();

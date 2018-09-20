@@ -87,7 +87,7 @@ namespace Data
                         return false;
                     Entity.Nombre = info.Nombre;
                     Entity.Correo = info.Correo;
-                    Entity.Clave = info.Clave;
+                    Entity.Clave = info.Clave==null?"":info.Clave;
                     Entity.IdUsuarioModifica = info.IdUsuarioModifica;
                     Entity.FechaModificacion = info.FechaModificacion=DateTime.Now;
                     Context.SaveChanges();

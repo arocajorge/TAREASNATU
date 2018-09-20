@@ -270,8 +270,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
 
-                                        @using (Html.BeginForm("UploadControl_adjuntoUpload", "Tarea", FormMethod.Post))
-                                        {
+                                       
                                             @Html.DevExpress().UploadControl(settings =>
                                        {
                                            settings.Name = "UploadControl_adjunto";
@@ -284,9 +283,9 @@
                                            settings.ShowUploadButton = true;
                                            settings.ShowProgressPanel = true;
                                            settings.ClientSideEvents.FileUploadComplete= "function(s,e){refres_grid();}";
-                                           settings.ValidationSettings.Assign(Web.Areas.General.Controllers.TareaControllerUploadControl_adjuntoSettings.UploadValidationSettings);
+                                          // settings.ValidationSettings.Assign(Web.Areas.General.Controllers.TareaControllerUploadControl_adjuntoSettings.UploadValidationSettings);
                                        }).GetHtml()
-                                        }
+                                        
 
 
 

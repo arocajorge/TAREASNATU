@@ -35,6 +35,34 @@ namespace Data
                 throw;
             }
         }
-       
+        public List<Grupo_Usuario_Info> get_lis_usuario_x_grupo(int IdGrupo)
+        {
+            try
+            {
+                List<Grupo_Usuario_Info> Lista = new List<Grupo_Usuario_Info>();
+
+                using (EntityTareas Context = new EntityTareas())
+                {
+                    Lista = (from usu in Context.Usuario
+                            join q in Context.Grupo_Usuario
+                            on usu.IdUsuario equals q.IdUsuario
+                            where q.IdGrupo==IdGrupo
+                            select new Grupo_Usuario_Info
+                             {
+                                 IdGrupo = q.IdGrupo,
+                                 Observacion = q.Observacion,
+                                 IdUsuario = q.IdUsuario,
+                                 Correo=usu.Correo
+                             }).ToList();
+                }
+
+                return Lista;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

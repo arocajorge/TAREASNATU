@@ -1,6 +1,7 @@
 ﻿using Info;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -11,6 +12,8 @@ namespace Data
 {
    public class Tarea_Data
     {
+        Grupo_Usuario_Data data_usuarios_grup = new Grupo_Usuario_Data();
+        Usuario_Data data_usuario = new Usuario_Data();
         public List< Tarea_Info> get_lis()
         {
             try
@@ -50,42 +53,66 @@ namespace Data
         {
             try
             {
+                int secuencia = 1;
                 using (EntityTareas Context = new EntityTareas())
                 {
-                     Tarea Entity = new  Tarea
+                    #region tarea
+                    Tarea Entity = new Tarea
                     {
-                         IdTarea = info.IdTarea=get_id(),
-                         IdUsuarioSolicitante = info.IdUsuarioSolicitante,
-                         IdGrupo = info.IdGrupo,
-                         IdUsuarioAsignado = info.IdUsuarioAsignado,
-                         EstadoActual = info.EstadoActual,
-                         FechaInicio = info.FechaInicio,
-                         FechaCulmina = info.FechaCulmina,
-                         Observacion = info.Observacion,
-                         IdEstadoPrioridad = info.IdEstadoPrioridad,
-                         IdTareaPadre = info.IdTareaPadre,
-                         TareaConcurrente = info.TareaConcurrente,
-                         FechaTransaccion=DateTime.Now,
-                         IdUsuario=info.IdUsuario,
-                         Estado=true
-                     };
-                    Context. Tarea.Add(Entity);
+                        IdTarea = info.IdTarea = get_id(),
+                        IdUsuarioSolicitante = info.IdUsuarioSolicitante,
+                        IdGrupo = info.IdGrupo,
+                        IdUsuarioAsignado = info.IdUsuarioAsignado,
+                        EstadoActual = info.EstadoActual,
+                        FechaInicio = info.FechaInicio,
+                        FechaCulmina = info.FechaCulmina,
+                        Observacion = info.Observacion,
+                        IdEstadoPrioridad = info.IdEstadoPrioridad,
+                        IdTareaPadre = info.IdTareaPadre,
+                        TareaConcurrente = info.TareaConcurrente,
+                        FechaTransaccion = DateTime.Now,
+                        IdUsuario = info.IdUsuario,
+                        Estado = true
+                    };
+                    Context.Tarea.Add(Entity);
+                    #endregion
+
+                    #region detalle
                     foreach (var item in info.list_detalle)
                     {
                         Tarea_det det = new Tarea_det
                         {
                             IdTarea = info.IdTarea,
-                            Secuancial=item.Secuancial,
-                            Descripcion=item.Descripcion,
-                            OrdenEjecuacion=item.OrdenEjecuacion,
-                            FechaInicio=item.FechaInicio,
-                            FechaFin=item.FechaFin
-                        
+                            Secuancial = item.Secuancial,
+                            Descripcion = item.Descripcion,
+                            OrdenEjecuacion = item.OrdenEjecuacion,
+                            FechaInicio = item.FechaInicio,
+                            FechaFin = item.FechaFin
+
                         };
                         Context.Tarea_det.Add(det);
                     }
+                    #endregion
+
+                    #region adjuntos
+                    foreach (var item in info.list_adjuntos)
+                    {
+                        TareaArchivoAdjunto det = new TareaArchivoAdjunto
+                        {
+                            IdTarea = info.IdTarea,
+                            Secuencial = secuencia,
+                            NombreArchivo = item.NombreArchivo,
+
+
+                        };
+                        secuencia++;
+                        Context.TareaArchivoAdjunto.Add(det);
+                    }
+                    #endregion
+
                     Context.SaveChanges();
                 }
+                EnviarCorreo(info);
                 return true;
             }
             catch (Exception e)
@@ -222,40 +249,64 @@ namespace Data
         }
 
 
-        public bool EnviarCorreo(Tarea_Info item)
+        public bool EnviarCorreo(Tarea_Info info)
         {
             try
             {
-                Usuario_Data odta_usuario = new Usuario_Data();
-               var info_usuario = odta_usuario.get_info(item.IdUsuarioAsignado);
+                #region variables locales
+                var inf_usu_dirigido = data_usuario.get_info(info.IdUsuarioAsignado);
+                var lisr_usuarios_miembro_grup = data_usuarios_grup.get_lis_usuario_x_grupo(info.IdGrupo);
                 int sec = 0;
                 Parametro_Info infoParametros = new Parametro_Info();
                 Parametro_Data data = new Parametro_Data();
-
                 infoParametros = data.get_info();
+                #endregion
 
                 using (EntityTareas entity = new EntityTareas())
                 {
 
                     sec++;
                     MailMessage mail = new MailMessage();
-                    mail.To.Add(info_usuario.Correo);
-                    mail.From = new MailAddress(info_usuario.Clave);
 
-                    mail.Subject = "Evaluación de personal";
+                    mail.To.Add(inf_usu_dirigido.Correo);
+                    mail.From = new MailAddress(infoParametros.CorreoCuenta);
+                   
+                    mail.Subject = "Nueva tarea";
+                    foreach (var item in lisr_usuarios_miembro_grup)
+                    {
+                        mail.CC.Add(item.Correo);
+                    }
+                    try
+                    {
+                        foreach (var item in info.list_adjuntos)
+                        {
+                            mail.Attachments.Add(new Attachment(new MemoryStream(item.tamanio_file), item.NombreArchivo));
 
+                        }
+                    }
+                    catch (Exception)
+                    {
+
+                        
+                    }
                     string Body = "Estimado colaborador <br/><br/>";
-                    Body += "Degeremcia le encomienda la tarea:"+item.Observacion;
+                    Body += "Degeremcia le encomienda la tarea: "+info.Observacion;
                     Body += "<br/>";
                     Body += "<br/>";
+                    foreach (var item in info.list_detalle)
+                    {
+                        
+                        Body += item.Descripcion+" Fecha inicio"+ info.FechaInicio.ToShortDateString()+"Fecha fin "+ info.FechaCulmina.ToShortDateString();
+                        Body += "<br/>";
+                    }
                     Body += "<table>";
                     Body += "<tr>";
                     Body += "<td><strong>Fecha inicio:</strong></td>";
-                    Body += "<td><strong>" + item.FechaInicio.ToShortDateString() + "</strong></td>";
+                    Body += "<td><strong>" + info.FechaInicio.ToShortDateString() + "</strong></td>";
                     Body += "</tr>";
                     Body += "<tr>";
                     Body += "<td><strong>Fecha fin:</strong></td>";
-                    Body += "<td><strong>" + item.FechaCulmina.ToShortDateString() + "</strong></td>";
+                    Body += "<td><strong>" + info.FechaCulmina.ToShortDateString() + "</strong></td>";
                     Body += "</tr>";
                     Body += "</table>";
                     Body += "<br/>";
@@ -267,11 +318,11 @@ namespace Data
                     Body += "<table>";
                     Body += "<tr>";
                     Body += "<td><strong>Usuario:</strong></td>";
-                    Body += "<td>" + item.nomb_jef_grupo + "</td>";
+                    Body += "<td>" + info.nomb_jef_grupo + "</td>";
                     Body += "</tr>";
                     Body += "<tr>";
                     Body += "<td><strong>Contraseña:</strong></td>";
-                    Body += "<td>" + item.nomb_jef_grupo + "</td>";
+                    Body += "<td>" + info.nomb_jef_grupo + "</td>";
                     Body += "</tr>";
                     Body += "</table>";
 
@@ -281,9 +332,9 @@ namespace Data
 
                     SmtpClient smtp = new SmtpClient();
                     smtp.Host = infoParametros.Host;
-                    smtp.EnableSsl = infoParametros.PermitirSSL;
+                    smtp.EnableSsl = true;// infoParametros.PermitirSSL;
                     smtp.Port = infoParametros.Puerto;
-                    smtp.Credentials = new NetworkCredential(infoParametros.CorreoCuenta, infoParametros.CorreoClave);
+                    smtp.Credentials = new NetworkCredential(infoParametros.CorreoCuenta, "dianaycarlos1985");
                     smtp.Send(mail);
 
                    
