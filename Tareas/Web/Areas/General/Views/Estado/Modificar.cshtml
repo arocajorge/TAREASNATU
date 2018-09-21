@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Modificar";
-    if (Session["IdUsuario"] == null )
+    if (Session["IdUsuario"] == null)
     {
         Response.Redirect("~/Account/Login");
     }
@@ -12,12 +12,10 @@
 
 @using (Html.BeginForm("Modificar", "Estado", FormMethod.Post, new { @class = "from", @role = "form" }))
 {
-    @Html.HiddenFor(v => v.IdEstado);
-
-
+    @Html.HiddenFor(v => v.IdEstado)
+    @Html.HiddenFor(q => q.IdEstadoTipo)
     <div class="row">
         <div class="col-md-12">
-
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="IdCtaCblePadre">Tipo estado*</label>
@@ -32,10 +30,11 @@
                    settings.Properties.ValueType = typeof(int);
                    settings.Properties.TextField = "Descripcion";
                    //Boton para seleccionar ningun registro
-                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
                    settings.Properties.NullText = "== Seleccione ==";
+                   settings.Properties.DropDownButton.Enabled = false;
                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-
+                   settings.ReadOnly = true;
                }).BindList(ViewBag.lis_estado_tipo).GetHtml()
                     @Html.ValidationMessageFor(q => q.IdEstadoTipo, "", new { @class = "text-danger" })
                 </div>
@@ -55,7 +54,7 @@
     </div>
     <div class="box-footer">
         <button type="submit" class="btn btn-primary">Guardar</button>
-        <a class="btn btn-default" href="@Url.Action("Index","EstadoTipo",new { Area = "General" },null)">Cancelar</a>
+        <a class="btn btn-default" href="@Url.Action("Index","Estado",new { IdEstadoTipo = Model.IdEstadoTipo, Area = "General" },null)">Cancelar</a>
     </div>
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")

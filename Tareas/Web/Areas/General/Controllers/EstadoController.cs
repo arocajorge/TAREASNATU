@@ -61,7 +61,9 @@ namespace Web.Areas.General.Controllers
         {
             Estado_Info model = bus_usuario.get_info(IdEstadoTipo,IdEstado);
             if (model == null)
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { IdEstadoTipo = IdEstadoTipo});
+            ViewBag.IdEstadoTipo = IdEstadoTipo;
+            cargar_combo();
             return View(model);
         }
 
@@ -72,19 +74,20 @@ namespace Web.Areas.General.Controllers
             model.IdUsuarioModifica = SessionTareas.IdUsuario.ToString();
             if (!bus_usuario.modificarDB(model))
             {
+                ViewBag.IdEstadoTipo = model.IdEstadoTipo;
                 cargar_combo();
                 return View(model);
             }
-            ViewBag.IdEstadoTipo = model.IdEstadoTipo;
             return RedirectToAction("Index", new { IdEstadoTipo = model.IdEstadoTipo });
         }
 
         public ActionResult Anular(int IdEstadoTipo, int IdEstado = 0)
         {
             Estado_Info model = bus_usuario.get_info(IdEstadoTipo, IdEstado);
-            cargar_combo();
             if (model == null)
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { IdEstadoTipo = IdEstadoTipo });
+            ViewBag.IdEstadoTipo = model.IdEstadoTipo;
+            cargar_combo();
             return View(model);
         }
 
@@ -94,10 +97,10 @@ namespace Web.Areas.General.Controllers
             model.IdUsuarioAnula = SessionTareas.IdUsuario.ToString();
             if (!bus_usuario.anularDB(model))
             {
+                ViewBag.IdEstadoTipo = model.IdEstadoTipo;
                 cargar_combo();
                 return View(model);
             }
-            ViewBag.IdEstadoTipo = model.IdEstadoTipo;
             return RedirectToAction("Index", new { IdEstadoTipo = model.IdEstadoTipo });
         }
 
