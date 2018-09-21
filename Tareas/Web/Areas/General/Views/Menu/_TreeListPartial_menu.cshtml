@@ -18,15 +18,6 @@
             t.Items.Add(TreeListToolbarCommand.ExportToDocx);
             t.Items.Add(TreeListToolbarCommand.ExportToRtf);
         });
-        
-        settings.Columns.Add(
-    column =>
-    {
-        column.FieldName = "DescripcionMenu";
-        column.Caption = "Descripción";
-    }
-);
-
         settings.Columns.Add(c =>
         {
             c.Caption = "#";
@@ -47,10 +38,31 @@
         settings.Columns.Add(
     column =>
     {
+        column.FieldName = "DescripcionMenu";
+        column.Caption = "Descripción";
+        column.Width = Unit.Percentage(70);
+
+    }
+);
+        settings.Columns.Add(
+    column =>
+    {
         column.FieldName = "PosicionMenu";
         column.Caption = "Posición";
+        column.Width = Unit.Percentage(10);
+
     }
 
+);
+
+
+        settings.Columns.Add(
+    column =>
+    {
+        column.FieldName = "IdMenu";
+        column.Caption = "ID";
+        column.Width = Unit.Percentage(10);
+    }
 );
         settings.Columns.Add(
     column =>
@@ -58,33 +70,10 @@
         column.FieldName = "Habilitado";
         column.Caption = "Estado";
         column.ColumnType = MVCxTreeListColumnType.CheckBox;
+        column.Width = Unit.Percentage(10);
+
     }
 );
-
-        settings.Columns.Add(
-column =>
-{
-    column.FieldName = "es_web";
-    column.Caption = "Web";
-    column.ColumnType = MVCxTreeListColumnType.CheckBox;
-}
-);
-
-        settings.Columns.Add(
-column =>
-{
-    column.FieldName = "es_desktop";
-    column.Caption = "Desktop";
-    column.ColumnType = MVCxTreeListColumnType.CheckBox;
-}
-);
-        settings.Columns.Add(
-    column =>
-    {
-        column.FieldName = "IdMenu";
-        column.Caption = "ID";
-    }
-);        
 
         settings.SettingsPager.Visible = true;
         settings.Settings.GridLines = GridLines.Both;
