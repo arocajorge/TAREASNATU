@@ -90,12 +90,15 @@
             column.Width = Unit.Pixel(100);
             column.SetDataItemTemplateContent(container =>
             {
-                Html.DevExpress().HyperLink(hyperlink =>
+                if (Convert.ToBoolean(DataBinder.Eval(container.DataItem, "Estado")) == true)
                 {
-                    var keyValue = DataBinder.Eval(container.DataItem, "IdEstadoTipo");
-                    hyperlink.Properties.Text = "Ver estados";
-                    hyperlink.NavigateUrl = Url.Action("Index", "Estado", new { IdEstadoTipo = keyValue });
-                }).Render();
+                    Html.DevExpress().HyperLink(hyperlink =>
+                    {
+                        var keyValue = DataBinder.Eval(container.DataItem, "IdEstadoTipo");
+                        hyperlink.Properties.Text = "Ver estados";
+                        hyperlink.NavigateUrl = Url.Action("Index", "Estado", new { IdEstadoTipo = keyValue });
+                    }).Render();
+                }
             });
         });
 

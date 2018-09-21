@@ -26,111 +26,92 @@
 
     
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="IdUsuario">Correo*</label>
-                    @Html.TextBoxFor(v => v.CorreoCuenta, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.CorreoCuenta, "", new { @class = "text-danger" })
+        <div class="row">
+            <div class="col-md-6">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="IdUsuario">Correo*</label>
+                        @Html.TextBoxFor(v => v.CorreoCuenta, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.CorreoCuenta, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="IdUsuario">Clave*</label>
-                    @Html.TextBoxFor(v => v.CorreoClave, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.CorreoClave, "", new { @class = "text-danger" })
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="IdUsuario">Clave*</label>
+                        @Html.TextBoxFor(v => v.CorreoClave, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.CorreoClave, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="IdUsuario">Puerto*</label>
-                    @Html.TextBoxFor(v => v.Puerto, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.Puerto, "", new { @class = "text-danger" })
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="IdUsuario">Puerto*</label>
+                        @Html.TextBoxFor(v => v.Puerto, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Puerto, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="IdUsuario">Host*</label>
-                    @Html.TextBoxFor(v => v.Host, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.Host, "", new { @class = "text-danger" })
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="IdUsuario">Host*</label>
+                        @Html.TextBoxFor(v => v.Host, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Host, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">          
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label for="TareaConcurrente"></label>
-                    @Html.DevExpress().CheckBoxFor(q => q.PermitirSSL, settings =>
-               {
-                   settings.Name = "PermitirSSL";
-                   settings.Text = "Permite SSL";
-               }).GetHtml()
-                    @Html.ValidationMessageFor(q => q.PermitirSSL, "", new { @class = "text-danger" })
+                <div class="col-md-12">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="TareaConcurrente"></label>
+                            @Html.DevExpress().CheckBoxFor(q => q.PermitirSSL, settings =>
+                       {
+                           settings.Name = "PermitirSSL";
+                           settings.Text = "Permite SSL";
+                       }).GetHtml()
+                            @Html.ValidationMessageFor(q => q.PermitirSSL, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
                 </div>
+
+
             </div>
 
+            <div class="col-md-6">
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="IdUsuario">Usuario FTP*</label>
+                        @Html.TextBoxFor(v => v.FtpUsuario, new { @class = "form-control", @row = 2 })
+                        @Html.ValidationMessageFor(m => m.FtpUsuario, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="IdUsuario">Clave FTP*</label>
+                        @Html.TextBoxFor(v => v.FtpClave, new { @class = "form-control", @row = 2 })
+                        @Html.ValidationMessageFor(m => m.FtpClave, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="IdUsuario">Url formato*</label>
+                        @Html.TextBoxFor(v => v.FtpURLArchivo, new { @class = "form-control", @row = 2 })
+                        @Html.ValidationMessageFor(m => m.FtpURLArchivo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="IdUsuario">Url adjuntos*</label>
+                        @Html.TextBoxFor(v => v.FtpURLAdjunto, new { @class = "form-control", @row = 2 })
+                        @Html.ValidationMessageFor(m => m.FtpURLAdjunto, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+
 
     <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="IdUsuario">Usuario FTP*</label>
-                    @Html.TextBoxFor(v => v.FtpUsuario, new { @class = "form-control", @row = 2 })
-                    @Html.ValidationMessageFor(m => m.FtpUsuario, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="IdUsuario">Clave FTP*</label>
-                    @Html.TextBoxFor(v => v.FtpClave, new { @class = "form-control", @row = 2 })
-                    @Html.ValidationMessageFor(m => m.FtpClave, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="IdUsuario">Url formato*</label>
-                    @Html.TextBoxFor(v => v.FtpURLArchivo, new { @class = "form-control", @row = 2 })
-                    @Html.ValidationMessageFor(m => m.FtpURLArchivo, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="IdUsuario">Url adjuntos*</label>
-                    @Html.TextBoxFor(v => v.FtpURLAdjunto, new { @class = "form-control", @row = 2 })
-                    @Html.ValidationMessageFor(m => m.FtpURLAdjunto, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
     </div>
 
             <div class="box-footer">
