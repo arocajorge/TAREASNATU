@@ -225,6 +225,8 @@
     <Compile Include="Areas\General\Controllers\EstadoController.cs" />
     <Compile Include="Areas\General\Controllers\EstadoTipoController.cs" />
     <Compile Include="Areas\General\Controllers\GrupoController.cs" />
+    <Compile Include="Areas\General\Controllers\MenuController.cs" />
+    <Compile Include="Areas\General\Controllers\MenuPorUsuarioController.cs" />
     <Compile Include="Areas\General\Controllers\ParametroController.cs" />
     <Compile Include="Areas\General\Controllers\TareaController.cs" />
     <Compile Include="Areas\General\Controllers\UsuarioController.cs" />
@@ -7427,6 +7429,13 @@
     <Content Include="Areas\General\Views\EstadoTipo\Nuevo.cshtml" />
     <Content Include="Areas\General\Views\Parametro\Index.cshtml" />
     <Content Include="Areas\General\Views\Tarea\_GridViewPartial_tarea_det_adjunto.cshtml" />
+    <Content Include="Areas\General\Views\Menu\Anular.cshtml" />
+    <Content Include="Areas\General\Views\Menu\Index.cshtml" />
+    <Content Include="Areas\General\Views\Menu\Modificar.cshtml" />
+    <Content Include="Areas\General\Views\Menu\Nuevo.cshtml" />
+    <Content Include="Areas\General\Views\Menu\_TreeListPartial_menu.cshtml" />
+    <Content Include="Areas\General\Views\MenuPorUsuario\Index.cshtml" />
+    <Content Include="Areas\General\Views\MenuPorUsuario\_TreeListPartial_menu_x_usuario.cshtml" />
     <None Include="Properties\PublishProfiles\Erp_web.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\web.pubxml" />

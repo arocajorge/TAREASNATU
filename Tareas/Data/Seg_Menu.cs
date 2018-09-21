@@ -12,35 +12,33 @@ namespace Data
     using System;
     using System.Collections.Generic;
     
-    public partial class Usuario
+    public partial class Seg_Menu
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Usuario()
+        public Seg_Menu()
         {
-            this.Grupo = new HashSet<Grupo>();
-            this.Grupo_Usuario = new HashSet<Grupo_Usuario>();
-            this.Tarea_det = new HashSet<Tarea_det>();
             this.Seg_Menu_x_usuario = new HashSet<Seg_Menu_x_usuario>();
         }
     
-        public string IdUsuario { get; set; }
-        public string Clave { get; set; }
-        public string Nombre { get; set; }
-        public string Correo { get; set; }
+        public int IdMenu { get; set; }
+        public Nullable<int> IdMenuPadre { get; set; }
+        public string DescripcionMenu { get; set; }
+        public int PosicionMenu { get; set; }
+        public bool Habilitado { get; set; }
+        public bool Tiene_FormularioAsociado { get; set; }
+        public string nom_Formulario { get; set; }
+        public string web_nom_Area { get; set; }
+        public string web_nom_Controller { get; set; }
+        public string web_nom_Action { get; set; }
+        public Nullable<int> nivel { get; set; }
         public bool Estado { get; set; }
-        public string IdUsuarioCreacion { get; set; }
+        public string IdUsuario { get; set; }
         public string IdUsuarioModifica { get; set; }
         public string IdUsuarioAnula { get; set; }
         public Nullable<System.DateTime> FechaTransaccion { get; set; }
         public Nullable<System.DateTime> FechaModificacion { get; set; }
         public Nullable<System.DateTime> FechaAnulacion { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Grupo> Grupo { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Grupo_Usuario> Grupo_Usuario { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tarea_det> Tarea_det { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Seg_Menu_x_usuario> Seg_Menu_x_usuario { get; set; }
     }

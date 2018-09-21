@@ -51,31 +51,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Archivo_Data.cs" />
+    <Compile Include="General\Archivo_Data.cs" />
     <Compile Include="Area.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
-    <Compile Include="Area_Data.cs" />
+    <Compile Include="General\Area_Data.cs" />
     <Compile Include="Departamento.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
-    <Compile Include="Departamento_Data.cs" />
+    <Compile Include="General\Departamento_Data.cs" />
     <Compile Include="Estado.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
     <Compile Include="EstadoTipo.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
-    <Compile Include="EstadoTipo_Data.cs" />
-    <Compile Include="Estado_Data.cs" />
+    <Compile Include="General\EstadoTipo_Data.cs" />
+    <Compile Include="General\Estado_Data.cs" />
+    <Compile Include="General\Seg_Menu_Data.cs" />
+    <Compile Include="General\Seg_Menu_x_usuario_Data.cs" />
     <Compile Include="Grupo.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
-    <Compile Include="Grupo_Data.cs" />
+    <Compile Include="General\Grupo_Data.cs" />
     <Compile Include="Grupo_Usuario.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
-    <Compile Include="Grupo_Usuario_Data.cs" />
+    <Compile Include="General\Grupo_Usuario_Data.cs" />
     <Compile Include="ModelGeneral.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -94,28 +96,34 @@
     <Compile Include="Parametro.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
-    <Compile Include="Parametro_Data.cs" />
+    <Compile Include="General\Parametro_Data.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Seg_Menu.cs">
+      <DependentUpon>ModelGeneral.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Seg_Menu_x_usuario.cs">
+      <DependentUpon>ModelGeneral.tt</DependentUpon>
+    </Compile>
     <Compile Include="Tarea.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
     <Compile Include="TareaArchivoAdjunto.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
-    <Compile Include="TareaArchivoAdjunto_Data.cs" />
+    <Compile Include="General\TareaArchivoAdjunto_Data.cs" />
     <Compile Include="TareaEstado.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
-    <Compile Include="TareaEstado_Data.cs" />
-    <Compile Include="Tarea_Data.cs" />
+    <Compile Include="General\TareaEstado_Data.cs" />
+    <Compile Include="General\Tarea_Data.cs" />
     <Compile Include="Tarea_det.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
-    <Compile Include="Tarea_det_Data.cs" />
+    <Compile Include="General\Tarea_det_Data.cs" />
     <Compile Include="Usuario.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
-    <Compile Include="Usuario_Data.cs" />
+    <Compile Include="General\Usuario_Data.cs" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="ModelGeneral.edmx">

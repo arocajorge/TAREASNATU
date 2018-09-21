@@ -37,5 +37,7 @@ namespace Data
         public virtual DbSet<TareaEstado> TareaEstado { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
         public virtual DbSet<Tarea> Tarea { get; set; }
+        public virtual DbSet<Seg_Menu_x_usuario> Seg_Menu_x_usuario { get; set; }
+        public virtual DbSet<Seg_Menu> Seg_Menu { get; set; }
     }
 }

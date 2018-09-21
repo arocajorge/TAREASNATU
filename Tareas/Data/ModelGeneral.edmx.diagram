@@ -25,6 +25,10 @@
         <AssociationConnector Association="ModelGeneral.FK_Tarea_det_Tarea" />
         <AssociationConnector Association="ModelGeneral.FK_TareaArchivoAdjunto_Tarea" />
         <AssociationConnector Association="ModelGeneral.FK_TareaEstado_Tarea" />
+        <EntityTypeShape EntityType="ModelGeneral.Seg_Menu_x_usuario" Width="1.5" PointX="3" PointY="1.625" />
+        <AssociationConnector Association="ModelGeneral.FK_Seg_Menu_x_usuario_Usuario" />
+        <EntityTypeShape EntityType="ModelGeneral.Seg_Menu" Width="1.5" PointX="8.375" PointY="10" />
+        <AssociationConnector Association="ModelGeneral.FK_Seg_Menu_x_usuario_Seg_Menu" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
