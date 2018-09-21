@@ -142,6 +142,7 @@ namespace Data
         {
             try
             {
+                int secuencia = 0;
                 using (EntityTareas Context = new EntityTareas())
                 {
                     var Entity = Context. Tarea.Where(v => v.IdTarea == info.IdTarea).FirstOrDefault();
@@ -176,6 +177,40 @@ namespace Data
                         Context.Tarea_det.Add(det);
                     }
 
+                    #region adjuntos
+                    var resul_adjunto = Context.TareaArchivoAdjunto.Where(v => v.IdTarea == info.IdTarea);
+                    Context.TareaArchivoAdjunto.RemoveRange(resul_adjunto);
+                    foreach (var item in info.list_adjuntos)
+                    {
+                        TareaArchivoAdjunto det = new TareaArchivoAdjunto
+                        {
+                            IdTarea = info.IdTarea,
+                            Secuencial = secuencia,
+                            NombreArchivo = item.NombreArchivo,
+
+
+                        };
+                        secuencia++;
+                        Context.TareaArchivoAdjunto.Add(det);
+                    }
+                    #endregion
+
+                    #region Estado tarea
+
+                    TareaEstado New_estado = new TareaEstado
+                    {
+                        IdTarea = info.IdTarea,
+                        Secuancial = odta_estado.get_id(info.IdTarea),
+                        IdUsuario = info.IdUsuario,
+                        Observacion = info.Observacion,
+                        IdEstado = info.EstadoActual,
+                        FechaModificacion = DateTime.Now
+
+
+                    };
+                    Context.TareaEstado.Add(New_estado);
+
+                    #endregion
                     Context.SaveChanges();
                 }
                 return true;
