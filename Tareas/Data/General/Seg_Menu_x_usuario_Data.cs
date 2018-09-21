@@ -40,8 +40,7 @@ namespace Data.General
                              }).ToList();
 
                     Lista.AddRange((from q in Context.Seg_Menu
-                                    join me in Context.Seg_Menu_x_usuario
-                                    on q.IdMenu equals me.IdMenu
+                                   
                                     where q.Habilitado == true 
                                     && !Context.Seg_Menu_x_usuario.Any(meu => meu.IdMenu == q.IdMenu && meu.IdUsuario == IdUsuario)
                                     select new Seg_Menu_x_usuario_Info
@@ -119,7 +118,7 @@ namespace Data.General
             {
                 using (EntityTareas Context = new EntityTareas())
                 {
-                    Context.Database.ExecuteSqlCommand("DELETE Seg_Menu_x_usuario WHERE IdEmpresa =  IdUsuario = '" + IdUsuario + "'");
+                    Context.Database.ExecuteSqlCommand("DELETE Seg_Menu_x_usuario WHERE  IdUsuario = '" + IdUsuario + "'");
                 }
 
                 return true;
