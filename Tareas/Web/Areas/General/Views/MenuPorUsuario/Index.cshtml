@@ -1,7 +1,7 @@
-﻿@model Core.Erp.Info.SeguridadAcceso.seg_Menu_x_Empresa_x_Usuario_Info
+﻿@model Info.General.Seg_Menu_x_usuario_Info
 @{
     ViewBag.Title = "Menú por usuario";
-    if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
+    if (Session["IdUsuario"] == null )
     {
         Response.Redirect("~/Account/Login");
     }
@@ -30,7 +30,7 @@
         $.ajax({
             type: 'POST',
             data: JSON.stringify(datos),
-            url: '@Url.Action("guardar", "MenuPorEmpresaPorUsuario", new { Area = "SeguridadAcceso" })',
+            url: '@Url.Action("guardar", "MenuPorUsuario", new { Area = "General" })',
             async: false,
             bDeferRender: true,
             bProcessing: true,
@@ -44,16 +44,11 @@
         });
     }
 </script>
-@using (Html.BeginForm("Index", "MenuPorEmpresaPorUsuario", FormMethod.Post, new { @role = "form", @class = "form", @id = "myform" }))
+@using (Html.BeginForm("Index", "MenuPorUsuario", FormMethod.Post, new { @role = "form", @class = "form", @id = "myform" }))
 {
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="IdEmpresa">Empresa</label>
-                    @Html.DropDownListFor(q => q.IdEmpresa, new SelectList(ViewBag.lst_empresa, "IdEmpresa", "em_nombre"), new { @class = "form-control", @id = "IdEmpresa" })
-                </div>
-            </div>
+            
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="IdUsuario">Usuario</label>
@@ -69,6 +64,6 @@
     </div>
 
 
-    @Html.Action("treelistpartial_menu_x_usuario", new { IdEmpresa = Model.IdEmpresa, IdUsuario = Model.IdUsuario })
+    @Html.Action("treelistpartial_menu_x_usuario", new { IdUsuario = Model.IdUsuario })
 
 }

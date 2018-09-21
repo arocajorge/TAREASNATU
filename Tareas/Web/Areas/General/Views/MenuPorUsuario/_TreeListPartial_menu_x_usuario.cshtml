@@ -1,7 +1,7 @@
 @{
     var treeList = Html.DevExpress().TreeList(settings => {
         settings.Name = "TreeList_menu_x_usuario";
-        settings.CallbackRouteValues = new { Controller = "MenuPorEmpresaPorUsuario", Action = "TreeListPartial_menu_x_usuario", IdEmpresa = ViewBag.IdEmpresa, IdUsuario = ViewBag.IdUsuario };
+        settings.CallbackRouteValues = new { Controller = "MenuPorUsuario", Action = "TreeListPartial_menu_x_usuario", IdEmpresa = ViewBag.IdEmpresa, IdUsuario = ViewBag.IdUsuario };
         settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
         settings.KeyFieldName = "IdMenu";
         settings.ParentFieldName = "info_menu.IdMenuPadre";

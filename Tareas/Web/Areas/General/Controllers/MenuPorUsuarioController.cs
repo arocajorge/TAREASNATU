@@ -29,7 +29,7 @@ namespace Web.Areas.General.Controllers
         }
         public static void CreateTreeViewNodesRecursive(List<Seg_Menu_x_usuario_Info> model, MVCxTreeViewNodeCollection nodesCollection, Int32 parentID, int IdEmpresa = 0, string IdUsuario = "")
         {
-            var rows = bus_menu_x_empresa_x_usuario.get_list(IdEmpresa, IdUsuario, parentID);
+            var rows = bus_menu_x_empresa_x_usuario.get_list( IdUsuario, parentID);
 
             foreach (Seg_Menu_x_usuario_Info row in rows)
             {
@@ -50,10 +50,9 @@ namespace Web.Areas.General.Controllers
         #endregion
 
         [ValidateInput(false)]
-        public ActionResult TreeListPartial_menu_x_usuario(int IdEmpresa = 0, string IdUsuario = "")
+        public ActionResult TreeListPartial_menu_x_usuario(string IdUsuario = "")
         {
-            var model = bus_menu_x_empresa_x_usuario.get_list(IdEmpresa, IdUsuario);
-            ViewBag.IdEmpresa = IdEmpresa;
+            var model = bus_menu_x_empresa_x_usuario.get_list( IdUsuario);
             ViewBag.IdUsuario = IdUsuario;
             ViewData["selectedIDs"] = Request.Params["selectedIDs"];
             if (ViewData["selectedIDs"] == null)
@@ -92,8 +91,8 @@ namespace Web.Areas.General.Controllers
                     lista.Add(info);
                 }
             }
-            bus_menu_x_empresa_x_usuario.eliminarDB(IdEmpresa, IdUsuario);
-            var resultado = bus_menu_x_empresa_x_usuario.guardarDB(lista, IdEmpresa, IdUsuario);
+            bus_menu_x_empresa_x_usuario.eliminarDB( IdUsuario);
+            var resultado = bus_menu_x_empresa_x_usuario.guardarDB(lista,  IdUsuario);
 
 
             return Json(resultado, JsonRequestBehavior.AllowGet);

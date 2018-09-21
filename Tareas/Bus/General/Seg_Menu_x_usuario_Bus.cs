@@ -12,11 +12,11 @@ namespace Bus.General
     {
         Seg_Menu_x_usuario_Data odata = new Seg_Menu_x_usuario_Data();
 
-        public List<Seg_Menu_x_usuario_Info> get_list(int IdEmpresa, string IdUsuario)
+        public List<Seg_Menu_x_usuario_Info> get_list( string IdUsuario)
         {
             try
             {
-                return odata.get_list(IdEmpresa, IdUsuario);
+                return odata.get_list( IdUsuario);
             }
             catch (Exception)
             {
@@ -25,11 +25,11 @@ namespace Bus.General
             }
         }
 
-        public List<Seg_Menu_x_usuario_Info> get_list(int IdEmpresa, string IdUsuario, int IdMenuPadre)
+        public List<Seg_Menu_x_usuario_Info> get_list(  string IdUsuario, int IdMenuPadre)
         {
             try
             {
-                return odata.get_list(IdEmpresa, IdUsuario, IdMenuPadre);
+                return odata.get_list( IdUsuario, IdMenuPadre);
             }
             catch (Exception)
             {
@@ -38,11 +38,11 @@ namespace Bus.General
             }
         }
 
-        public bool eliminarDB(int IdEmpresa, string IdUsuario)
+        public bool eliminarDB(  string IdUsuario)
         {
             try
             {
-                return odata.eliminarDB(IdEmpresa, IdUsuario);
+                return odata.eliminarDB( IdUsuario);
             }
             catch (Exception)
             {
@@ -50,11 +50,11 @@ namespace Bus.General
                 throw;
             }
         }
-        public bool guardarDB(List<Seg_Menu_x_usuario_Info> Lista, int IdEmpresa, string IdUsuario)
+        public bool guardarDB(List<Seg_Menu_x_usuario_Info> Lista,   string IdUsuario)
         {
             try
             {
-                return odata.guardarDB(Lista, IdEmpresa, IdUsuario);
+                return odata.guardarDB(Lista,  IdUsuario);
             }
             catch (Exception)
             {

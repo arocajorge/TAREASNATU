@@ -9,7 +9,7 @@ namespace Data.General
 {
    public class Seg_Menu_x_usuario_Data
     {
-        public List<Seg_Menu_x_usuario_Info> get_list(int IdEmpresa, string IdUsuario)
+        public List<Seg_Menu_x_usuario_Info> get_list( string IdUsuario)
         {
             try
             {
@@ -68,7 +68,7 @@ namespace Data.General
                 throw;
             }
         }
-        public List<Seg_Menu_x_usuario_Info> get_list(int IdEmpresa, string IdUsuario, int IdMenuPadre)
+        public List<Seg_Menu_x_usuario_Info> get_list( string IdUsuario, int IdMenuPadre)
         {
             try
             {
@@ -113,13 +113,13 @@ namespace Data.General
                 throw;
             }
         }
-        public bool eliminarDB(int IdEmpresa, string IdUsuario)
+        public bool eliminarDB( string IdUsuario)
         {
             try
             {
                 using (EntityTareas Context = new EntityTareas())
                 {
-                    Context.Database.ExecuteSqlCommand("DELETE Seg_Menu_x_usuario WHERE IdEmpresa = " + IdEmpresa + " AND IdUsuario = '" + IdUsuario + "'");
+                    Context.Database.ExecuteSqlCommand("DELETE Seg_Menu_x_usuario WHERE IdEmpresa =  IdUsuario = '" + IdUsuario + "'");
                 }
 
                 return true;
@@ -130,7 +130,7 @@ namespace Data.General
                 throw;
             }
         }
-        public bool guardarDB(List<Seg_Menu_x_usuario_Info> Lista, int IdEmpresa, string IdUsuario)
+        public bool guardarDB(List<Seg_Menu_x_usuario_Info> Lista, string IdUsuario)
         {
             try
             {
@@ -150,7 +150,7 @@ namespace Data.General
                     }
 
                     Context.SaveChanges();
-                    string sql = "exec spseg_corregir_menu '" + IdEmpresa + "','" + IdUsuario + "'";
+                    string sql = "exec spseg_corregir_menu '" + IdUsuario + "'";
                     Context.Database.ExecuteSqlCommand(sql);
 
                 }
