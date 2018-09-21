@@ -24,7 +24,7 @@ namespace Data
                                  Secuancial = q.Secuancial,
                                  FechaModificacion = q.FechaModificacion,
                                  IdUsuario = q.IdUsuario,
-                                 Estado = q.Estado
+                                 IdEstado = q.IdEstado
                              }).ToList();
                 }
 
@@ -46,7 +46,9 @@ namespace Data
                     {
                         IdTarea = info.IdTarea,
                         IdUsuario = info.IdUsuario,
-                       Secuancial=info.Secuancial=get_id(info.IdTarea)
+                       Secuancial=info.Secuancial=get_id(info.IdTarea),
+                       Observacion=info.Observacion,
+                       FechaModificacion=DateTime.Now
                     };
                     Context.SaveChanges();
                     Context.TareaEstado.Add(Entity);

@@ -123,7 +123,7 @@ namespace Data.General
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
                 throw;
@@ -149,8 +149,8 @@ namespace Data.General
                     }
 
                     Context.SaveChanges();
-                    string sql = "exec spseg_corregir_menu '" + IdUsuario + "'";
-                    Context.Database.ExecuteSqlCommand(sql);
+                    //string sql = "exec spseg_corregir_menu '" + IdUsuario + "'";
+                    //Context.Database.ExecuteSqlCommand(sql);
 
                 }
 

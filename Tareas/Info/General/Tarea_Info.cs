@@ -42,6 +42,7 @@ namespace Info
 
         public List<Tarea_det_Info> list_detalle { get; set; }
         public List<TareaArchivoAdjunto_Info> list_adjuntos { get; set; }
+        public TareaEstado_Info InfoEstado { get; set; }
         public string nomb_jef_grupo { get; set; }
 
         public Tarea_Info()

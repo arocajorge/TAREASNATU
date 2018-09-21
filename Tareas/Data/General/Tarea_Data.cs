@@ -14,6 +14,7 @@ namespace Data
     {
         Grupo_Usuario_Data data_usuarios_grup = new Grupo_Usuario_Data();
         Usuario_Data data_usuario = new Usuario_Data();
+        TareaEstado_Data odta_estado = new TareaEstado_Data();
         public List< Tarea_Info> get_lis()
         {
             try
@@ -107,6 +108,24 @@ namespace Data
                         Context.TareaArchivoAdjunto.Add(det);
                     }
                     #endregion
+
+                    #region Estado tarea
+                    
+                        TareaEstado New_estado = new TareaEstado
+                        {
+                            IdTarea = info.IdTarea,
+                            Secuancial = odta_estado.get_id(info.IdTarea),
+                            IdUsuario = info.IdUsuario,
+                            Observacion=info.Observacion,
+                            IdEstado=info.EstadoActual,
+                            FechaModificacion=DateTime.Now
+                            
+
+                        };
+                        Context.TareaEstado.Add(New_estado);
+                    
+                    #endregion
+
 
                     Context.SaveChanges();
                 }
