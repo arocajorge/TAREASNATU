@@ -25,7 +25,7 @@ namespace Data
         public System.DateTime FechaUltimaModif { get; set; }
         public string Observacion { get; set; }
     
-        public virtual Tarea Tarea { get; set; }
         public virtual Usuario Usuario { get; set; }
+        public virtual Tarea Tarea { get; set; }
     }
 }

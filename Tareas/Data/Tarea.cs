@@ -32,6 +32,8 @@ namespace Data
         public string Observacion { get; set; }
         public int IdEstadoPrioridad { get; set; }
         public bool TareaConcurrente { get; set; }
+        public bool AprobadoSolicitado { get; set; }
+        public bool AprobadoEncargado { get; set; }
         public bool Estado { get; set; }
         public string IdUsuario { get; set; }
         public string IdUsuarioModifica { get; set; }
@@ -39,8 +41,6 @@ namespace Data
         public Nullable<System.DateTime> FechaTransaccion { get; set; }
         public Nullable<System.DateTime> FechaModificacion { get; set; }
         public Nullable<System.DateTime> FechaAnulacion { get; set; }
-        public Nullable<bool> AprobadoSolicitado { get; set; }
-        public Nullable<bool> AprobadoEncargado { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tarea_det> Tarea_det { get; set; }
