@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,9 @@ namespace Info
    public class Grupo_Info
     {
         public int IdGrupo { get; set; }
+        [Required(ErrorMessage = "El usuario jefe del grupo es obligatorio")]
         public string IdUsuario { get; set; }
+        [Required(ErrorMessage = "El campo descripción del grupo es obligatorio")]
         public string Descripcion { get; set; }
         public bool Estado { get; set; }
         public string IdUsuarioCreacion { get; set; }
