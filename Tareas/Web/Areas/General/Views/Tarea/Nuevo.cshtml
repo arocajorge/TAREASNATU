@@ -19,12 +19,11 @@
     //}
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 @using (Html.BeginForm("Nuevo", "Tarea", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
 
-    
+
     <div class="row">
         <div class="col-md-12">
 
@@ -75,13 +74,13 @@
             </div>
         </div>
     </div>
-    
+
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="IdUsuarioAsignado">Usuario Jefe grupo</label>
-                    @Html.TextBoxFor(v => v.IdUsuarioAsignado, new { @class = "form-control",@id= "IdUsuarioAsignado" })
+                    @Html.TextBoxFor(v => v.IdUsuarioAsignado, new { @class = "form-control", @id = "IdUsuarioAsignado" })
                     @Html.ValidationMessageFor(m => m.IdUsuarioAsignado, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -94,7 +93,7 @@
             </div>
         </div>
     </div>
-    
+
 
     <div class="row">
         <div class="col-md-12">
@@ -206,7 +205,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="IdUsuario">Observación</label>
-                    @Html.TextAreaFor(v => v.Observacion, new { @class = "form-control" ,@row=2})
+                    @Html.TextAreaFor(v => v.Observacion, new { @class = "form-control", @row = 2 })
                     @Html.ValidationMessageFor(m => m.Observacion, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -214,84 +213,84 @@
     </div>
 
     <div id="Tabs" role="tabpanel">
-                <ul class="nav nav-tabs" role="tablist">
-                    <li class="active">
-                        <a href="#tab_detalle" aria-controls="informacion_items" role="tab" data-toggle="tab">Detalle tarea</a>
-                    </li>
-                    <li>
-                        <a href="#tab_adjuntos" aria-controls="otros" role="tab" data-toggle="tab">Archivos adjuntos</a>
-                    </li>
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="active">
+                <a href="#tab_detalle" aria-controls="informacion_items" role="tab" data-toggle="tab">Detalle tarea</a>
+            </li>
+            <li>
+                <a href="#tab_adjuntos" aria-controls="otros" role="tab" data-toggle="tab">Archivos adjuntos</a>
+            </li>
 
 
-                </ul>
-                <div class="tab-content" style="padding-top: 20px">
-                    <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_detalle">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        @Html.Action("GridViewPartial_tarea_det")
-                                    </div>
-                                </div>
+        </ul>
+        <div class="tab-content" style="padding-top: 20px">
+            <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_detalle">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.Action("GridViewPartial_tarea_det")
                             </div>
-                        </div>                   
-                     </div>
-                    <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_adjuntos">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-
-                                       
-                                            @Html.DevExpress().UploadControl(settings =>
-                                       {
-                                           settings.Name = "UploadControl_adjunto";
-                                           settings.CallbackRouteValues = new { Controller = "Tarea", Action = "UploadControl_adjuntoUpload" };
-
-                                           settings.AdvancedModeSettings.EnableMultiSelect = true;
-                                           settings.AdvancedModeSettings.EnableFileList = true;
-                                           settings.AdvancedModeSettings.EnableDragAndDrop = true;
-
-                                           settings.ShowUploadButton = true;
-                                           settings.ShowProgressPanel = true;
-                                           settings.ClientSideEvents.FileUploadComplete= "function(s,e){refres_grid();}";
-                                           settings.ValidationSettings.Assign(Web.Areas.General.Controllers.TareaControllerUploadControl_adjuntoSettings.UploadValidationSettings);
-                                       }).GetHtml()
-                                        
-
-
-
-                                       
-                                    </div>
-                                </div>
-                            </div>
-                        </div>         
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        @Html.Action("GridViewPartial_tarea_det_adjunto")
-                                    </div>
-                                </div>
-                            </div>
-                        </div>         
+                        </div>
                     </div>
                 </div>
             </div>
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_adjuntos">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+
+
+                                @Html.DevExpress().UploadControl(settings =>
+                           {
+                               settings.Name = "UploadControl_adjunto";
+                               settings.CallbackRouteValues = new { Controller = "Tarea", Action = "UploadControl_adjuntoUpload" };
+
+                               settings.AdvancedModeSettings.EnableMultiSelect = true;
+                               settings.AdvancedModeSettings.EnableFileList = true;
+                               settings.AdvancedModeSettings.EnableDragAndDrop = true;
+
+                               settings.ShowUploadButton = true;
+                               settings.ShowProgressPanel = true;
+                               settings.ClientSideEvents.FileUploadComplete= "function(s,e){refres_grid();}";
+                               settings.ValidationSettings.Assign(Web.Areas.General.Controllers.TareaControllerUploadControl_adjuntoSettings.UploadValidationSettings);
+                           }).GetHtml()
+
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.Action("GridViewPartial_tarea_det_adjunto")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
 
 
     <div class="box-footer">
-    <button type="submit" class="btn btn-primary">Guardar</button>
-    <a class="btn btn-default" href="@Url.Action("Index","Tarea",new { Area = "General" },null)">Cancelar</a>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","Tarea",new { Area = "General" },null)">Cancelar</a>
     </div>
 
 
     @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-            }
+        @Scripts.Render("~/bundles/jqueryval")
+    }
 }
 
 
@@ -313,7 +312,7 @@
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 success: function (data) {
-               
+
                     $("#IdUsuarioAsignado").val(data.IdUsuario);
                     $("#nomb_jef_grupo").val(data.nomb_jef_grupo);
                 },

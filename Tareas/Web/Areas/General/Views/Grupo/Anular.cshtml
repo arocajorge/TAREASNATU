@@ -9,7 +9,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 @using (Html.BeginForm("Anular", "Grupo", FormMethod.Post, new { @class = "from", @role = "form" }))
 {
     @Html.HiddenFor(v => v.IdGrupo);

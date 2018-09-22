@@ -19,7 +19,7 @@
     //}
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 
 @using (Html.BeginForm("Modificar", "Tarea", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
@@ -94,7 +94,7 @@
             </div>
         </div>
     </div>
-    
+
 
     <div class="row">
         <div class="col-md-12">
@@ -283,15 +283,15 @@
 
 
 
-            <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Guardar</button>
-                <a class="btn btn-default" href="@Url.Action("Index","Tarea",new { Area = "General" },null)">Cancelar</a>
-            </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","Tarea",new { Area = "General" },null)">Cancelar</a>
+    </div>
 
 
-            @section Scripts {
-                @Scripts.Render("~/bundles/jqueryval")
-            }
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
 }
 
 

@@ -20,7 +20,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 @using (Html.BeginForm("Nuevo", "Grupo", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
 
@@ -70,7 +70,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="IdUsuario">Usuarios conforman el grupo*</label>
-                   
+
                     @Html.Action("GridViewPartial_grupo_det")
                 </div>
             </div>
