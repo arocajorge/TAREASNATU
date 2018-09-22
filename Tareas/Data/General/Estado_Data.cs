@@ -44,7 +44,7 @@ namespace Data
                 {
                     Estado Entity = new Estado
                     {
-                        IdEstado = info.IdEstado = get_id(info.IdEstadoTipo),
+                        IdEstado = info.IdEstado = get_id(),
                         Descripcion = info.Descripcion,
                         IdEstadoTipo=info.IdEstadoTipo,
                         Estado1 = true,
@@ -108,7 +108,7 @@ namespace Data
                 throw;
             }
         }
-        public int get_id( int IdEstadoTipo)
+        public int get_id()
         {
             try
             {
@@ -116,7 +116,6 @@ namespace Data
                 using (EntityTareas Context = new EntityTareas())
                 {
                     var lst = from q in Context.Estado
-                              where q.IdEstadoTipo== IdEstadoTipo
                               select q;
                     if (lst.Count() > 0)
                         ID = lst.Max(q => q.IdEstado) + 1;
