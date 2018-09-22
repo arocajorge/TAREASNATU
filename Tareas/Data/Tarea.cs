@@ -17,9 +17,9 @@ namespace Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Tarea()
         {
-            this.Tarea_det = new HashSet<Tarea_det>();
             this.TareaArchivoAdjunto = new HashSet<TareaArchivoAdjunto>();
             this.TareaEstado = new HashSet<TareaEstado>();
+            this.Tarea_det = new HashSet<Tarea_det>();
         }
     
         public decimal IdTarea { get; set; }
@@ -43,10 +43,10 @@ namespace Data
         public Nullable<System.DateTime> FechaAnulacion { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tarea_det> Tarea_det { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TareaArchivoAdjunto> TareaArchivoAdjunto { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TareaEstado> TareaEstado { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tarea_det> Tarea_det { get; set; }
     }
 }

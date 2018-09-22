@@ -168,9 +168,9 @@
           <Property Name="IdTarea" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Secuancial" Type="int" Nullable="false" />
           <Property Name="Descripcion" Type="varchar(max)" />
-          <Property Name="OrdenEjecuacion" Type="int" Nullable="false" />
           <Property Name="FechaInicio" Type="date" Nullable="false" />
           <Property Name="FechaFin" Type="date" Nullable="false" />
+          <Property Name="NumHoras" Type="float" Nullable="false" />
           <Property Name="IdUsuario" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="IdEstadoEstado" Type="int" Nullable="false" />
           <Property Name="FechaUltimaModif" Type="datetime" Nullable="false" />
@@ -402,7 +402,6 @@
           <EntitySet Name="Grupo" EntityType="ModelGeneral.Grupo" />
           <EntitySet Name="Grupo_Usuario" EntityType="ModelGeneral.Grupo_Usuario" />
           <EntitySet Name="Parametro" EntityType="ModelGeneral.Parametro" />
-          <EntitySet Name="Tarea_det" EntityType="ModelGeneral.Tarea_det" />
           <EntitySet Name="TareaArchivoAdjunto" EntityType="ModelGeneral.TareaArchivoAdjunto" />
           <EntitySet Name="Usuario" EntityType="ModelGeneral.Usuario" />
           <AssociationSet Name="FK_Estado_EstadoTipo" Association="ModelGeneral.FK_Estado_EstadoTipo">
@@ -421,15 +420,7 @@
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Grupo_Usuario" EntitySet="Grupo_Usuario" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tarea_det_Usuario" Association="ModelGeneral.FK_Tarea_det_Usuario">
-            <End Role="Usuario" EntitySet="Usuario" />
-            <End Role="Tarea_det" EntitySet="Tarea_det" />
-          </AssociationSet>
           <EntitySet Name="Tarea" EntityType="ModelGeneral.Tarea" />
-          <AssociationSet Name="FK_Tarea_det_Tarea" Association="ModelGeneral.FK_Tarea_det_Tarea">
-            <End Role="Tarea" EntitySet="Tarea" />
-            <End Role="Tarea_det" EntitySet="Tarea_det" />
-          </AssociationSet>
           <AssociationSet Name="FK_TareaArchivoAdjunto_Tarea" Association="ModelGeneral.FK_TareaArchivoAdjunto_Tarea">
             <End Role="Tarea" EntitySet="Tarea" />
             <End Role="TareaArchivoAdjunto" EntitySet="TareaArchivoAdjunto" />
@@ -448,6 +439,15 @@
           <AssociationSet Name="FK_TareaEstado_Tarea" Association="ModelGeneral.FK_TareaEstado_Tarea">
             <End Role="Tarea" EntitySet="Tarea" />
             <End Role="TareaEstado" EntitySet="TareaEstado" />
+          </AssociationSet>
+          <EntitySet Name="Tarea_det" EntityType="ModelGeneral.Tarea_det" />
+          <AssociationSet Name="FK_Tarea_det_Tarea" Association="ModelGeneral.FK_Tarea_det_Tarea">
+            <End Role="Tarea" EntitySet="Tarea" />
+            <End Role="Tarea_det" EntitySet="Tarea_det" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tarea_det_Usuario" Association="ModelGeneral.FK_Tarea_det_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Tarea_det" EntitySet="Tarea_det" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Area">
@@ -553,24 +553,6 @@
           <Property Name="FtpURLArchivo" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
           <Property Name="FtpURLAdjunto" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="Tarea_det">
-          <Key>
-            <PropertyRef Name="IdTarea" />
-            <PropertyRef Name="Secuancial" />
-          </Key>
-          <Property Name="IdTarea" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="Secuancial" Type="Int32" Nullable="false" />
-          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="OrdenEjecuacion" Type="Int32" Nullable="false" />
-          <Property Name="FechaInicio" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="FechaFin" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdEstadoEstado" Type="Int32" Nullable="false" />
-          <Property Name="FechaUltimaModif" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Usuario" Relationship="ModelGeneral.FK_Tarea_det_Usuario" FromRole="Tarea_det" ToRole="Usuario" />
-          <NavigationProperty Name="Tarea" Relationship="ModelGeneral.FK_Tarea_det_Tarea" FromRole="Tarea_det" ToRole="Tarea" />
-        </EntityType>
         <EntityType Name="TareaArchivoAdjunto">
           <Key>
             <PropertyRef Name="IdTarea" />
@@ -598,8 +580,8 @@
           <Property Name="FechaAnulacion" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Grupo" Relationship="ModelGeneral.FK_Grupo_Usuario" FromRole="Usuario" ToRole="Grupo" />
           <NavigationProperty Name="Grupo_Usuario" Relationship="ModelGeneral.FK_Grupo_Usuario_Usuario" FromRole="Usuario" ToRole="Grupo_Usuario" />
-          <NavigationProperty Name="Tarea_det" Relationship="ModelGeneral.FK_Tarea_det_Usuario" FromRole="Usuario" ToRole="Tarea_det" />
           <NavigationProperty Name="Seg_Menu_x_usuario" Relationship="ModelGeneral.FK_Seg_Menu_x_usuario_Usuario" FromRole="Usuario" ToRole="Seg_Menu_x_usuario" />
+          <NavigationProperty Name="Tarea_det" Relationship="ModelGeneral.FK_Tarea_det_Usuario" FromRole="Usuario" ToRole="Tarea_det" />
         </EntityType>
         <Association Name="FK_Estado_EstadoTipo">
           <End Type="ModelGeneral.EstadoTipo" Role="EstadoTipo" Multiplicity="1" />
@@ -649,18 +631,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Tarea_det_Usuario">
-          <End Type="ModelGeneral.Usuario" Role="Usuario" Multiplicity="1" />
-          <End Type="ModelGeneral.Tarea_det" Role="Tarea_det" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Usuario">
-              <PropertyRef Name="IdUsuario" />
-            </Principal>
-            <Dependent Role="Tarea_det">
-              <PropertyRef Name="IdUsuario" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Tarea">
           <Key>
             <PropertyRef Name="IdTarea" />
@@ -684,22 +654,10 @@
           <Property Name="FechaTransaccion" Type="DateTime" Precision="3" />
           <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
           <Property Name="FechaAnulacion" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Tarea_det" Relationship="ModelGeneral.FK_Tarea_det_Tarea" FromRole="Tarea" ToRole="Tarea_det" />
           <NavigationProperty Name="TareaArchivoAdjunto" Relationship="ModelGeneral.FK_TareaArchivoAdjunto_Tarea" FromRole="Tarea" ToRole="TareaArchivoAdjunto" />
           <NavigationProperty Name="TareaEstado" Relationship="ModelGeneral.FK_TareaEstado_Tarea" FromRole="Tarea" ToRole="TareaEstado" />
+          <NavigationProperty Name="Tarea_det" Relationship="ModelGeneral.FK_Tarea_det_Tarea" FromRole="Tarea" ToRole="Tarea_det" />
         </EntityType>
-        <Association Name="FK_Tarea_det_Tarea">
-          <End Type="ModelGeneral.Tarea" Role="Tarea" Multiplicity="1" />
-          <End Type="ModelGeneral.Tarea_det" Role="Tarea_det" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tarea">
-              <PropertyRef Name="IdTarea" />
-            </Principal>
-            <Dependent Role="Tarea_det">
-              <PropertyRef Name="IdTarea" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_TareaArchivoAdjunto_Tarea">
           <End Type="ModelGeneral.Tarea" Role="Tarea" Multiplicity="1" />
           <End Type="ModelGeneral.TareaArchivoAdjunto" Role="TareaArchivoAdjunto" Multiplicity="*" />
@@ -796,6 +754,48 @@
             </Principal>
             <Dependent Role="TareaEstado">
               <PropertyRef Name="IdTarea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Tarea_det">
+          <Key>
+            <PropertyRef Name="IdTarea" />
+            <PropertyRef Name="Secuancial" />
+          </Key>
+          <Property Name="IdTarea" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Secuancial" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FechaInicio" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FechaFin" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="NumHoras" Type="Double" Nullable="false" />
+          <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdEstadoEstado" Type="Int32" Nullable="false" />
+          <Property Name="FechaUltimaModif" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Tarea" Relationship="ModelGeneral.FK_Tarea_det_Tarea" FromRole="Tarea_det" ToRole="Tarea" />
+          <NavigationProperty Name="Usuario" Relationship="ModelGeneral.FK_Tarea_det_Usuario" FromRole="Tarea_det" ToRole="Usuario" />
+        </EntityType>
+        <Association Name="FK_Tarea_det_Tarea">
+          <End Type="ModelGeneral.Tarea" Role="Tarea" Multiplicity="1" />
+          <End Type="ModelGeneral.Tarea_det" Role="Tarea_det" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tarea">
+              <PropertyRef Name="IdTarea" />
+            </Principal>
+            <Dependent Role="Tarea_det">
+              <PropertyRef Name="IdTarea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tarea_det_Usuario">
+          <End Type="ModelGeneral.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="ModelGeneral.Tarea_det" Role="Tarea_det" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Tarea_det">
+              <PropertyRef Name="IdUsuario" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -907,22 +907,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tarea_det">
-            <EntityTypeMapping TypeName="ModelGeneral.Tarea_det">
-              <MappingFragment StoreEntitySet="Tarea_det">
-                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
-                <ScalarProperty Name="FechaUltimaModif" ColumnName="FechaUltimaModif" />
-                <ScalarProperty Name="IdEstadoEstado" ColumnName="IdEstadoEstado" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
-                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
-                <ScalarProperty Name="OrdenEjecuacion" ColumnName="OrdenEjecuacion" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="Secuancial" ColumnName="Secuancial" />
-                <ScalarProperty Name="IdTarea" ColumnName="IdTarea" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="TareaArchivoAdjunto">
             <EntityTypeMapping TypeName="ModelGeneral.TareaArchivoAdjunto">
               <MappingFragment StoreEntitySet="TareaArchivoAdjunto">
@@ -1017,6 +1001,22 @@
                 <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
                 <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
                 <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
+                <ScalarProperty Name="Secuancial" ColumnName="Secuancial" />
+                <ScalarProperty Name="IdTarea" ColumnName="IdTarea" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tarea_det">
+            <EntityTypeMapping TypeName="ModelGeneral.Tarea_det">
+              <MappingFragment StoreEntitySet="Tarea_det">
+                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+                <ScalarProperty Name="FechaUltimaModif" ColumnName="FechaUltimaModif" />
+                <ScalarProperty Name="IdEstadoEstado" ColumnName="IdEstadoEstado" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="NumHoras" ColumnName="NumHoras" />
+                <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="Secuancial" ColumnName="Secuancial" />
                 <ScalarProperty Name="IdTarea" ColumnName="IdTarea" />
               </MappingFragment>

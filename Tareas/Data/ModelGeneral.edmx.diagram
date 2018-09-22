@@ -12,16 +12,13 @@
         <EntityTypeShape EntityType="ModelGeneral.Grupo" Width="1.5" PointX="3" PointY="7.25" />
         <EntityTypeShape EntityType="ModelGeneral.Grupo_Usuario" Width="1.5" PointX="5.25" PointY="5.875" />
         <EntityTypeShape EntityType="ModelGeneral.Parametro" Width="1.5" PointX="5.75" PointY="9.75" />
-        <EntityTypeShape EntityType="ModelGeneral.Tarea_det" Width="1.5" PointX="3" PointY="3.25" />
         <EntityTypeShape EntityType="ModelGeneral.TareaArchivoAdjunto" Width="1.5" PointX="3" PointY="11.5" />
         <EntityTypeShape EntityType="ModelGeneral.Usuario" Width="1.5" PointX="0.75" PointY="3" />
         <AssociationConnector Association="ModelGeneral.FK_Estado_EstadoTipo" />
         <AssociationConnector Association="ModelGeneral.FK_Grupo_Usuario" />
         <AssociationConnector Association="ModelGeneral.FK_Grupo_Usuario_Grupo" />
         <AssociationConnector Association="ModelGeneral.FK_Grupo_Usuario_Usuario" />
-        <AssociationConnector Association="ModelGeneral.FK_Tarea_det_Usuario" />
         <EntityTypeShape EntityType="ModelGeneral.Tarea" Width="1.5" PointX="0.75" PointY="8.125" />
-        <AssociationConnector Association="ModelGeneral.FK_Tarea_det_Tarea" />
         <AssociationConnector Association="ModelGeneral.FK_TareaArchivoAdjunto_Tarea" />
         <EntityTypeShape EntityType="ModelGeneral.Seg_Menu_x_usuario" Width="1.5" PointX="3" PointY="1.625" />
         <AssociationConnector Association="ModelGeneral.FK_Seg_Menu_x_usuario_Usuario" />
@@ -29,6 +26,9 @@
         <AssociationConnector Association="ModelGeneral.FK_Seg_Menu_x_usuario_Seg_Menu" />
         <EntityTypeShape EntityType="ModelGeneral.TareaEstado" Width="1.5" PointX="3" PointY="14.5" />
         <AssociationConnector Association="ModelGeneral.FK_TareaEstado_Tarea" />
+        <EntityTypeShape EntityType="ModelGeneral.Tarea_det" Width="1.5" PointX="6" PointY="13.5" />
+        <AssociationConnector Association="ModelGeneral.FK_Tarea_det_Tarea" />
+        <AssociationConnector Association="ModelGeneral.FK_Tarea_det_Usuario" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

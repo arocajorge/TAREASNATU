@@ -84,7 +84,7 @@ namespace Data
                             IdTarea = info.IdTarea,
                             Secuancial = item.Secuancial,
                             Descripcion = item.Descripcion,
-                            OrdenEjecuacion = item.OrdenEjecuacion,
+                            NumHoras = item.NumHoras,
                             FechaInicio = item.FechaInicio,
                             FechaFin = item.FechaFin,
                             IdUsuario=item.IdUsuario,
@@ -174,7 +174,7 @@ namespace Data
                             IdTarea = info.IdTarea,
                             Secuancial = item.Secuancial,
                             Descripcion = item.Descripcion,
-                            OrdenEjecuacion = item.OrdenEjecuacion,
+                            NumHoras = item.NumHoras,
                             FechaInicio = item.FechaInicio,
                             FechaFin = item.FechaFin
 

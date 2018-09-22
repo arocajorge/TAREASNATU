@@ -14,7 +14,7 @@ namespace Info
         public int Secuancial { get; set; }
         [Required(ErrorMessage = "La descripción de la tarea es obligatorio")]
         public string Descripcion { get; set; }
-        public int OrdenEjecuacion { get; set; }
+        public double NumHoras { get; set; }
         [Required(ErrorMessage = "El campo fecha inicio es obligatorio")]
         public System.DateTime FechaInicio { get; set; }
         [Required(ErrorMessage = "El campo fecha fin es obligatorio")]

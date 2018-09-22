@@ -9,7 +9,7 @@
         settings.Width = Unit.Percentage(100);
 
 
-        settings.SettingsEditing.Mode = GridViewEditingMode.Inline;
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
         settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Tarea", Action = "EditingAddNew", Area = "General" };
         settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Tarea", Action = "EditingUpdate", Area = "General" };
         settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Tarea", Action = "EditingDelete", Area = "General" };
@@ -33,7 +33,7 @@
         {
             column.FieldName = "Descripcion";
             column.Caption = "Descripción";
-            column.Width = Unit.Percentage(60);
+            column.Width = Unit.Percentage(40);
             column.EditorProperties().TextBox(sp =>
             {
                 sp.Width = Unit.Percentage(100);
@@ -66,9 +66,22 @@
         });
         settings.Columns.Add(column =>
         {
+            column.FieldName = "NumHoras";
+            column.Caption = "#Horas";
+            column.Width = Unit.Percentage(10);
+            column.PropertiesEdit.DisplayFormatString = "d";
+            column.EditorProperties().DateEdit(sp =>
+            {
+                column.PropertiesEdit.DisplayFormatString = "d";
+                sp.Width = Unit.Percentage(100);
+            });
+        });
+        
+        settings.Columns.Add(column =>
+        {
             column.FieldName = "IdUsuario";
             column.Caption = "Usuario";
-            column.Width = Unit.Percentage(80);
+            column.Width = Unit.Percentage(20);
             column.EditorProperties().ComboBox(p =>
             {
                 p.Columns.Add("IdUsuario", "Usuario").Width = Unit.Percentage(30);

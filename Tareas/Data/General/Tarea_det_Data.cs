@@ -25,7 +25,7 @@ namespace Data
                                  IdTarea = q.IdTarea,
                                  Secuancial = q.Secuancial,
                                  Descripcion=q.Descripcion,
-                                 OrdenEjecuacion=q.OrdenEjecuacion,
+                                 NumHoras=q.NumHoras,
                                  FechaInicio=q.FechaInicio,
                                  FechaFin=q.FechaFin
                                 

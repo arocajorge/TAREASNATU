@@ -331,7 +331,7 @@ namespace Web.Areas.General.Controllers
             edited_info.FechaFin = info_det.FechaFin;
             edited_info.FechaInicio = info_det.FechaInicio;
             edited_info.Descripcion = info_det.Descripcion;
-            edited_info.OrdenEjecuacion = info_det.OrdenEjecuacion;
+            edited_info.NumHoras = info_det.NumHoras;
         }
     }
 
