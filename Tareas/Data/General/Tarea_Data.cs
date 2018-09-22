@@ -86,7 +86,11 @@ namespace Data
                             Descripcion = item.Descripcion,
                             OrdenEjecuacion = item.OrdenEjecuacion,
                             FechaInicio = item.FechaInicio,
-                            FechaFin = item.FechaFin
+                            FechaFin = item.FechaFin,
+                            IdUsuario=item.IdUsuario,
+                            FechaUltimaModif=DateTime.Now,
+                            IdEstadoEstado=item.IdEstadoEstado,
+                           
 
                         };
                         Context.Tarea_det.Add(det);
@@ -118,7 +122,8 @@ namespace Data
                             IdUsuario = info.IdUsuario,
                             Observacion=info.Observacion,
                             IdEstado=info.EstadoActual,
-                            FechaModificacion=DateTime.Now
+                            FechaModificacion=DateTime.Now,
+                            IdUsuarioModifica=info.IdUsuario
                             
 
                         };
