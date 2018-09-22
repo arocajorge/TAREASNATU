@@ -9,6 +9,8 @@ namespace Info
 {
    public class Grupo_Info
     {
+        
+        public decimal IdTransaccionSession { get; set; }
         public int IdGrupo { get; set; }
         [Required(ErrorMessage = "El usuario jefe del grupo es obligatorio")]
         public string IdUsuario { get; set; }

@@ -37,7 +37,8 @@ namespace Web.Areas.General.Controllers
         {
             cargar_combo();
             Grupo_Info model = new Grupo_Info();
-            model.list_grupo_usuario = Lis_Grupo_Usuario_Info_lis.get_list();
+
+            model.list_grupo_usuario = Lis_Grupo_Usuario_Info_lis.get_list(Convert.ToDecimal(SessionTareas.IdTransaccionSession));
             return PartialView("_GridViewPartial_grupo_det", model);
         }
 
@@ -47,8 +48,18 @@ namespace Web.Areas.General.Controllers
 
         public ActionResult Nuevo()
         {
-            Grupo_Info model = new Grupo_Info();
-            Lis_Grupo_Usuario_Info_lis.set_list(new List<Grupo_Usuario_Info>());
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionTareas.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionTareas.IdTransaccionSession = (Convert.ToDecimal(SessionTareas.IdTransaccionSession) + 1).ToString();
+            SessionTareas.IdTransaccionSessionActual = SessionTareas.IdTransaccionSession;
+            #endregion
+            Grupo_Info model = new Grupo_Info
+            {
+                IdTransaccionSession = Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual),
+            };
+            Lis_Grupo_Usuario_Info_lis.set_list(new List<Grupo_Usuario_Info>(), model.IdTransaccionSession);
+
             cargar_combo();
             return View(model);
         }
@@ -56,7 +67,7 @@ namespace Web.Areas.General.Controllers
         [HttpPost]
         public ActionResult Nuevo(Grupo_Info model)
         {
-            model.list_grupo_usuario = Lis_Grupo_Usuario_Info_lis.get_list();
+            model.list_grupo_usuario = Lis_Grupo_Usuario_Info_lis.get_list(Convert.ToDecimal(model.IdTransaccionSession));
             model.IdUsuarioCreacion = SessionTareas.IdUsuario.ToString();
             if (model.list_grupo_usuario==null)
             {
@@ -83,9 +94,16 @@ namespace Web.Areas.General.Controllers
 
         public ActionResult Modificar(int IdGrupo = 0)
         {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionTareas.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionTareas.IdTransaccionSession = (Convert.ToDecimal(SessionTareas.IdTransaccionSession) + 1).ToString();
+            SessionTareas.IdTransaccionSessionActual = SessionTareas.IdTransaccionSession;
+            #endregion
             Grupo_Info model = bus_Grupo.get_info(IdGrupo);
+            model.IdTransaccionSession = Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual);
             model.list_grupo_usuario = bus_grupo_det.get_lis(IdGrupo);
-            Lis_Grupo_Usuario_Info_lis.set_list(model.list_grupo_usuario);
+            Lis_Grupo_Usuario_Info_lis.set_list(model.list_grupo_usuario, model.IdTransaccionSession);
             cargar_combo();
             if (model == null)
                 return RedirectToAction("Index");
@@ -95,7 +113,7 @@ namespace Web.Areas.General.Controllers
         [HttpPost]
         public ActionResult Modificar(Grupo_Info model)
         {
-            model.list_grupo_usuario = Lis_Grupo_Usuario_Info_lis.get_list();
+            model.list_grupo_usuario = Lis_Grupo_Usuario_Info_lis.get_list(Convert.ToDecimal(model.IdTransaccionSession));
             model.IdUsuarioModifica = SessionTareas.IdUsuario.ToString();
             if (model.list_grupo_usuario == null)
             {
@@ -122,9 +140,15 @@ namespace Web.Areas.General.Controllers
 
         public ActionResult Anular(int IdGrupo = 0)
         {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionTareas.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionTareas.IdTransaccionSession = (Convert.ToDecimal(SessionTareas.IdTransaccionSession) + 1).ToString();
+            SessionTareas.IdTransaccionSessionActual = SessionTareas.IdTransaccionSession;
+            #endregion
             Grupo_Info model = bus_Grupo.get_info(IdGrupo);
             model.list_grupo_usuario = bus_grupo_det.get_lis(IdGrupo);
-            Lis_Grupo_Usuario_Info_lis.set_list(model.list_grupo_usuario);
+            Lis_Grupo_Usuario_Info_lis.set_list(model.list_grupo_usuario, model.IdTransaccionSession);
             cargar_combo();
             if (model == null)
                 return RedirectToAction("Index");
@@ -168,9 +192,9 @@ namespace Web.Areas.General.Controllers
         public ActionResult EditingAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] Grupo_Usuario_Info info_det)
         {
             if (ModelState.IsValid)
-                Lis_Grupo_Usuario_Info_lis.AddRow(info_det);
+                Lis_Grupo_Usuario_Info_lis.AddRow(info_det, Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual));
             Grupo_Info model = new Grupo_Info();
-            model.list_grupo_usuario = Lis_Grupo_Usuario_Info_lis.get_list();
+            model.list_grupo_usuario = Lis_Grupo_Usuario_Info_lis.get_list( Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual));
             cargar_combo();
             return PartialView("_GridViewPartial_grupo_det", model);
         }
@@ -178,9 +202,9 @@ namespace Web.Areas.General.Controllers
       
         public ActionResult EditingDelete([ModelBinder(typeof(DevExpressEditorsBinder))] Grupo_Usuario_Info info_det)
         {
-            Lis_Grupo_Usuario_Info_lis.DeleteRow(info_det.IdUsuario);
+            Lis_Grupo_Usuario_Info_lis.DeleteRow(info_det.IdUsuario , Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual));
             Grupo_Info model = new Grupo_Info();
-            model.list_grupo_usuario = Lis_Grupo_Usuario_Info_lis.get_list();
+            model.list_grupo_usuario = Lis_Grupo_Usuario_Info_lis.get_list(Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual));
             cargar_combo();
             return PartialView("_GridViewPartial_grupo_det", model);
         }
@@ -202,32 +226,33 @@ namespace Web.Areas.General.Controllers
 
     public class Grupo_Usuario_Info_lis
     {
-        public List<Grupo_Usuario_Info> get_list()
+        string variable = "Grupo_Usuario_Info";
+        public List<Grupo_Usuario_Info> get_list(decimal IdTransaccionSession)
         {
-            if (HttpContext.Current.Session["Grupo_Usuario_Info"] == null)
+            if (HttpContext.Current.Session[variable+ variable.ToString()] == null)
             {
                 List<Grupo_Usuario_Info> list = new List<Grupo_Usuario_Info>();
 
-                HttpContext.Current.Session["Grupo_Usuario_Info"] = list;
+                HttpContext.Current.Session[variable + variable.ToString()] = list;
             }
-            return (List<Grupo_Usuario_Info>)HttpContext.Current.Session["Grupo_Usuario_Info"];
+            return (List<Grupo_Usuario_Info>)HttpContext.Current.Session[variable + IdTransaccionSession.ToString()];
         }
 
-        public void set_list(List<Grupo_Usuario_Info> list)
+        public void set_list(List<Grupo_Usuario_Info> list, decimal IdTransaccionSession)
         {
-            HttpContext.Current.Session["Grupo_Usuario_Info"] = list;
+            HttpContext.Current.Session[variable+IdTransaccionSession.ToString()] = list;
         }
 
-        public void AddRow(Grupo_Usuario_Info info_det)
+        public void AddRow(Grupo_Usuario_Info info_det, decimal IdTransaccionSession)
         {
-            List<Grupo_Usuario_Info> list = get_list();
+            List<Grupo_Usuario_Info> list = get_list(IdTransaccionSession);
             list.Add(info_det);
         }
 
      
-        public void DeleteRow(string IdUsuario)
+        public void DeleteRow(string IdUsuario, decimal IdTransaccionSession)
         {
-            List<Grupo_Usuario_Info> list = get_list();
+            List<Grupo_Usuario_Info> list = get_list(IdTransaccionSession);
             list.Remove(list.Where(m => m.IdUsuario == IdUsuario).First());
         }
     }

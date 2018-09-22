@@ -13,6 +13,9 @@
 @using (Html.BeginForm("Modificar", "Grupo", FormMethod.Post, new { @class = "from", @role = "form" }))
 {
     @Html.HiddenFor(v => v.IdGrupo);
+    @Html.HiddenFor(v => v.IdTransaccionSession);
+
+
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-12">

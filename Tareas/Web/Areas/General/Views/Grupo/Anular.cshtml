@@ -13,7 +13,8 @@
 @using (Html.BeginForm("Anular", "Grupo", FormMethod.Post, new { @class = "from", @role = "form" }))
 {
     @Html.HiddenFor(v => v.IdGrupo);
-    <div class="row">
+    @Html.HiddenFor(v => v.IdTransaccionSession);
+        <div class="row">
         <div class="col-md-12">
             <div class="col-md-12">
                 <div class="form-group">

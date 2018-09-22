@@ -36,6 +36,9 @@ namespace Web.Controllers
             if (usuario_clave_exist)
             {
                 SessionTareas.IdUsuario = model.IdUsuario;
+
+                SessionTareas.IdTransaccionSession = 1 + "000000000";
+                SessionTareas.IdTransaccionSessionActual = SessionTareas.IdTransaccionSession;
                 return RedirectToAction("Index", "Home");
             }
             ViewBag.mensaje = "Credenciales incorrectas";
