@@ -22,6 +22,7 @@
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 @using (Html.BeginForm("Nuevo", "Tarea", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
+    @Html.HiddenFor(v => v.IdTransaccionSession);
 
 
     <div class="row">
