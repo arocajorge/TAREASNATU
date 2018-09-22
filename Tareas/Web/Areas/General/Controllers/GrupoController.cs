@@ -147,6 +147,7 @@ namespace Web.Areas.General.Controllers
             SessionTareas.IdTransaccionSessionActual = SessionTareas.IdTransaccionSession;
             #endregion
             Grupo_Info model = bus_Grupo.get_info(IdGrupo);
+            model.IdTransaccionSession = Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual);
             model.list_grupo_usuario = bus_grupo_det.get_lis(IdGrupo);
             Lis_Grupo_Usuario_Info_lis.set_list(model.list_grupo_usuario, model.IdTransaccionSession);
             cargar_combo();

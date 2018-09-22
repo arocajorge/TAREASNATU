@@ -9,7 +9,7 @@ namespace Info
 {
    public class Tarea_Info
     {
-
+        public decimal IdTransaccionSession { get; set; }
         public decimal IdTarea { get; set; }
         [Required(ErrorMessage = "El campo usuario que solicita es obligatorio")]
         public string IdUsuarioSolicitante { get; set; }

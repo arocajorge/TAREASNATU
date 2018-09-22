@@ -40,14 +40,14 @@ namespace Web.Areas.General.Controllers
         {
             cargar_combo();
             Tarea_Info model = new Tarea_Info();
-            model.list_detalle = Lis_Tarea_det_Info_lis.get_list();
+            model.list_detalle = Lis_Tarea_det_Info_lis.get_list(Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_Tarea_det", model);
         }
         public ActionResult GridViewPartial_tarea_det_adjunto()
         {
             cargar_combo();
             Tarea_Info model = new Tarea_Info();
-            model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list();
+            model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_tarea_det_adjunto", model);
         }
 
@@ -58,16 +58,24 @@ namespace Web.Areas.General.Controllers
 
         public ActionResult Nuevo()
         {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionTareas.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionTareas.IdTransaccionSession = (Convert.ToDecimal(SessionTareas.IdTransaccionSession) + 1).ToString();
+            SessionTareas.IdTransaccionSessionActual = SessionTareas.IdTransaccionSession;
+            #endregion
+
             Tarea_Info model = new Tarea_Info()
             {
                 FechaInicio = DateTime.Now,
                 FechaCulmina = DateTime.Now.AddDays(7),
                 IdUsuarioSolicitante = SessionTareas.IdUsuario.ToString(),
                 IdEstadoPrioridad=1,
-                EstadoActual=1
+                EstadoActual=1,
+                IdTransaccionSession = Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual),
 
             };
-            Lis_Tarea_det_Info_lis.set_list(new List<Tarea_det_Info>());
+            Lis_Tarea_det_Info_lis.set_list(new List<Tarea_det_Info>(),model.IdTransaccionSession);
             cargar_combo();
             return View(model);
         }
@@ -75,8 +83,8 @@ namespace Web.Areas.General.Controllers
         [HttpPost]
         public ActionResult Nuevo(Tarea_Info model)
         {
-            model.list_detalle = Lis_Tarea_det_Info_lis.get_list();
-            model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list();
+            model.list_detalle = Lis_Tarea_det_Info_lis.get_list(model.IdTransaccionSession);
+            model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(model.IdTransaccionSession);
             model.IdUsuario = SessionTareas.IdUsuario.ToString();
             if (model.list_detalle == null)
             {
@@ -103,12 +111,20 @@ namespace Web.Areas.General.Controllers
 
         public ActionResult Modificar(int IdTarea = 0)
         
-{
+        {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionTareas.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionTareas.IdTransaccionSession = (Convert.ToDecimal(SessionTareas.IdTransaccionSession) + 1).ToString();
+            SessionTareas.IdTransaccionSessionActual = SessionTareas.IdTransaccionSession;
+            #endregion
+
             Tarea_Info model = bus_tarea.get_info(IdTarea);
+            model.IdTransaccionSession = Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual);
             model.list_detalle = bus_tarea_det.get_lis(IdTarea);
-            Lis_Tarea_det_Info_lis.set_list(model.list_detalle);
+            Lis_Tarea_det_Info_lis.set_list(model.list_detalle, model.IdTransaccionSession);
             model.list_adjuntos = bus_adjunto.get_lis(IdTarea);
-            TareaArchivoAdjunto_Info_lis.set_list(model.list_adjuntos);
+            TareaArchivoAdjunto_Info_lis.set_list(model.list_adjuntos, model.IdTransaccionSession);
             cargar_combo();
             if (model == null)
                 return RedirectToAction("Index");
@@ -118,8 +134,8 @@ namespace Web.Areas.General.Controllers
         [HttpPost]
         public ActionResult Modificar(Tarea_Info model)
         {
-            model.list_detalle = Lis_Tarea_det_Info_lis.get_list();
-            model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list();
+            model.list_detalle = Lis_Tarea_det_Info_lis.get_list(model.IdTransaccionSession);
+            model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(model.IdTransaccionSession);
 
             if (model.list_detalle == null)
             {
@@ -146,13 +162,21 @@ namespace Web.Areas.General.Controllers
 
         public ActionResult Anular(decimal IdTarea = 0)
         {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionTareas.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionTareas.IdTransaccionSession = (Convert.ToDecimal(SessionTareas.IdTransaccionSession) + 1).ToString();
+            SessionTareas.IdTransaccionSessionActual = SessionTareas.IdTransaccionSession;
+            #endregion
+
             Tarea_Info model = bus_tarea.get_info(IdTarea);
             if (model == null)
                 model = new Tarea_Info();
+            model.IdTransaccionSession = Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual);
             model.list_detalle = bus_tarea_det.get_lis(IdTarea);
-            Lis_Tarea_det_Info_lis.set_list(model.list_detalle);
+            Lis_Tarea_det_Info_lis.set_list(model.list_detalle, model.IdTransaccionSession);
             model.list_adjuntos = bus_adjunto.get_lis(IdTarea);
-            TareaArchivoAdjunto_Info_lis.set_list(model.list_adjuntos);
+            TareaArchivoAdjunto_Info_lis.set_list(model.list_adjuntos, model.IdTransaccionSession);
             cargar_combo();
             if (model == null)
                 return RedirectToAction("Index");
@@ -206,9 +230,9 @@ namespace Web.Areas.General.Controllers
         public ActionResult EditingAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] Tarea_det_Info info_det)
         {
             if (ModelState.IsValid)
-                Lis_Tarea_det_Info_lis.AddRow(info_det);
+                Lis_Tarea_det_Info_lis.AddRow(info_det, Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual));
             Tarea_Info model = new Tarea_Info();
-            model.list_detalle = Lis_Tarea_det_Info_lis.get_list();
+            model.list_detalle = Lis_Tarea_det_Info_lis.get_list(Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual));
             cargar_combo();
             return PartialView("_GridViewPartial_tarea_det", model);
         }
@@ -216,18 +240,18 @@ namespace Web.Areas.General.Controllers
         public ActionResult EditingUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] Tarea_det_Info info_det)
         {
             if (ModelState.IsValid)
-                Lis_Tarea_det_Info_lis.AddRow(info_det);
+                Lis_Tarea_det_Info_lis.AddRow(info_det, Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual));
             Tarea_Info model = new Tarea_Info();
-            model.list_detalle = Lis_Tarea_det_Info_lis.get_list();
+            model.list_detalle = Lis_Tarea_det_Info_lis.get_list(Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual));
             cargar_combo();
             return PartialView("_GridViewPartial_tarea_det", model);
         }
 
         public ActionResult EditingDelete([ModelBinder(typeof(DevExpressEditorsBinder))] Tarea_det_Info info_det)
         {
-            Lis_Tarea_det_Info_lis.DeleteRow(info_det.Secuancial);
+            Lis_Tarea_det_Info_lis.DeleteRow(info_det.Secuancial, Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual));
             Tarea_Info model = new Tarea_Info();
-            model.list_detalle = Lis_Tarea_det_Info_lis.get_list();
+            model.list_detalle = Lis_Tarea_det_Info_lis.get_list(Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual));
             cargar_combo();
             return PartialView("_GridViewPartial_tarea_det", model);
         }
@@ -237,16 +261,16 @@ namespace Web.Areas.General.Controllers
         #region funciones de los adjuntos
         public ActionResult EditingDelete_adjunto([ModelBinder(typeof(DevExpressEditorsBinder))] TareaArchivoAdjunto_Info info_det)
         {
-            TareaArchivoAdjunto_Info_lis.DeleteRow(info_det.Secuencial);
+            TareaArchivoAdjunto_Info_lis.DeleteRow(info_det.Secuencial, Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual));
             Tarea_Info model = new Tarea_Info();
-            model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list();
+            model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_tarea_det_adjunto", model);
         }
         #endregion
         public ActionResult UploadControl_adjuntoUpload()
         {
             UploadControlExtension.GetUploadedFiles("UploadControl_adjunto", TareaControllerUploadControl_adjuntoSettings.UploadValidationSettings, TareaControllerUploadControl_adjuntoSettings.FileUploadComplete);
-            return PartialView("_GridViewPartial_tarea_det_adjunto", TareaArchivoAdjunto_Info_lis.get_list());
+            return PartialView("_GridViewPartial_tarea_det_adjunto", TareaArchivoAdjunto_Info_lis.get_list(Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual)));
 
         }
     }
@@ -273,36 +297,37 @@ namespace Web.Areas.General.Controllers
 
     public class Tarea_det_Info_lis
     {
-        public List<Tarea_det_Info> get_list()
+        string variable = "";
+        public List<Tarea_det_Info> get_list( decimal IdTransaccionSessionActual)
         {
-            if (HttpContext.Current.Session["Tarea_det_Info"] == null)
+            if (HttpContext.Current.Session[variable+IdTransaccionSessionActual.ToString()] == null)
             {
                 List<Tarea_det_Info> list = new List<Tarea_det_Info>();
 
-                HttpContext.Current.Session["Tarea_det_Info"] = list;
+                HttpContext.Current.Session[variable + IdTransaccionSessionActual.ToString()] = list;
             }
-            return (List<Tarea_det_Info>)HttpContext.Current.Session["Tarea_det_Info"];
+            return (List<Tarea_det_Info>)HttpContext.Current.Session[variable + IdTransaccionSessionActual.ToString()];
         }
 
-        public void set_list(List<Tarea_det_Info> list)
+        public void set_list(List<Tarea_det_Info> list, decimal IdTransaccionSessionActual)
         {
-            HttpContext.Current.Session["Tarea_det_Info"] = list;
+            HttpContext.Current.Session[variable + IdTransaccionSessionActual.ToString()] = list;
         }
 
-        public void AddRow(Tarea_det_Info info_det)
+        public void AddRow(Tarea_det_Info info_det, decimal IdTransaccionSessionActual)
         {
-            List<Tarea_det_Info> list = get_list();
+            List<Tarea_det_Info> list = get_list(IdTransaccionSessionActual);
             info_det.Secuancial = list.Count() + 1;
             list.Add(info_det);
         }
-        public void DeleteRow(int Secuancial)
+        public void DeleteRow(int Secuancial, decimal IdTransaccionSessionActual)
         {
-            List<Tarea_det_Info> list = get_list();
+            List<Tarea_det_Info> list = get_list(IdTransaccionSessionActual);
             list.Remove(list.Where(m => m.Secuancial == Secuancial).First());
         }
         public void UpdateRow(Tarea_det_Info info_det)
         {
-            Tarea_det_Info edited_info = get_list().Where(m => m.Secuancial == info_det.Secuancial).First();
+            Tarea_det_Info edited_info = get_list(Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual)).Where(m => m.Secuancial == info_det.Secuancial).First();
             edited_info.FechaFin = info_det.FechaFin;
             edited_info.FechaInicio = info_det.FechaInicio;
             edited_info.Descripcion = info_det.Descripcion;
@@ -314,37 +339,38 @@ namespace Web.Areas.General.Controllers
 
     public static class TareaArchivoAdjunto_Info_lis
     {
-        public static List<TareaArchivoAdjunto_Info> get_list()
+       static string  variable = "TareaArchivoAdjunto_Info";
+        public static List<TareaArchivoAdjunto_Info> get_list(decimal IdTransaccionSessionActual)
         {
-            if (HttpContext.Current.Session["TareaArchivoAdjunto_Info"] == null)
+            if (HttpContext.Current.Session[variable+ IdTransaccionSessionActual.ToString()] == null)
             {
                 List<TareaArchivoAdjunto_Info> list = new List<TareaArchivoAdjunto_Info>();
 
-                HttpContext.Current.Session["TareaArchivoAdjunto_Info"] = list;
+                HttpContext.Current.Session[variable + IdTransaccionSessionActual.ToString()] = list;
             }
-            var lis= (List<TareaArchivoAdjunto_Info>)HttpContext.Current.Session["TareaArchivoAdjunto_Info"];
-            return (List<TareaArchivoAdjunto_Info>)HttpContext.Current.Session["TareaArchivoAdjunto_Info"];
+            var lis= (List<TareaArchivoAdjunto_Info>)HttpContext.Current.Session[variable + IdTransaccionSessionActual.ToString()];
+            return (List<TareaArchivoAdjunto_Info>)HttpContext.Current.Session[variable + IdTransaccionSessionActual.ToString()];
         }
 
-        public static void set_list(List<TareaArchivoAdjunto_Info> list)
+        public static void set_list(List<TareaArchivoAdjunto_Info> list, decimal IdTransaccionSessionActual)
         {
-            HttpContext.Current.Session["TareaArchivoAdjunto_Info"] = list;
+            HttpContext.Current.Session[variable + IdTransaccionSessionActual.ToString()] = list;
         }
 
         public static void AddRow(TareaArchivoAdjunto_Info info_det)
         {
-            List<TareaArchivoAdjunto_Info> list = get_list();
+            List<TareaArchivoAdjunto_Info> list = get_list(Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual));
             info_det.Secuencial = list.Count() + 1;
             list.Add(info_det);
         }
-        public static void DeleteRow(int Secuancial)
+        public static void DeleteRow(int Secuancial, decimal IdTransaccionSessionActual)
         {
-            List<TareaArchivoAdjunto_Info> list = get_list();
+            List<TareaArchivoAdjunto_Info> list = get_list(IdTransaccionSessionActual);
             list.Remove(list.Where(m => m.Secuencial == Secuancial).First());
         }
         public static void UpdateRow(TareaArchivoAdjunto_Info info_det)
         {
-            TareaArchivoAdjunto_Info edited_info = get_list().Where(m => m.Secuencial == info_det.Secuencial).First();
+            TareaArchivoAdjunto_Info edited_info = get_list(Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual)).Where(m => m.Secuencial == info_det.Secuencial).First();
             edited_info.NombreArchivo = info_det.NombreArchivo;
             edited_info.tamanio_file = info_det.tamanio_file;
         }
