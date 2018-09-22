@@ -2,18 +2,18 @@
 
 @{
     ViewBag.Title = "Nuevo";
-    if (Session["IdUsuario"] == null )
+    if (Session["IdUsuario"] == null)
     {
         Response.Redirect("~/Account/Login");
     }
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 
 @using (Html.BeginForm("Nuevo", "EstadoTipo", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
 
-    
+
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-12">
@@ -25,7 +25,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="box-footer">
         <button type="submit" class="btn btn-primary">Guardar</button>
         <a class="btn btn-default" href="@Url.Action("Index","EstadoTipo",new { Area = "General" },null)">Cancelar</a>
