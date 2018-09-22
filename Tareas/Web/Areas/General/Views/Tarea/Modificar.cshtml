@@ -24,6 +24,7 @@
 @using (Html.BeginForm("Modificar", "Tarea", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
 
+    @Html.HiddenFor(v => v.IdTransaccionSession);
 
     <div class="row">
         <div class="col-md-12">

@@ -69,15 +69,17 @@
         });
         settings.Columns.Add(column =>
         {
-            column.FieldName = "OrdenEjecuacion";
-            column.Caption = "Orden";
-            column.Width = Unit.Percentage(10);
-            column.EditorProperties().SpinEdit(sp =>
+            column.FieldName = "IdUsuario";
+            column.Caption = "Usuario";
+            column.Width = Unit.Percentage(80);
+            column.EditorProperties().ComboBox(p =>
             {
-                sp.MinValue = 0;
-                sp.MaxValue = 999999999;
-                sp.Width = Unit.Percentage(100);
-
+                p.Columns.Add("IdUsuario", "Usuario").Width = Unit.Percentage(30);
+                p.Columns.Add("Nombre", "Nombres").Width = Unit.Percentage(70);
+                p.ValueField = "IdUsuario";
+                p.ValueType = typeof(string);
+                p.DataSource = ViewBag.list_usuarios;
+                p.Width = Unit.Percentage(100);
             });
         });
 
