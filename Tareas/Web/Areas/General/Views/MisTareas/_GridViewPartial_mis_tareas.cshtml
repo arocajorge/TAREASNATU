@@ -1,0 +1,30 @@
+@using System.Web.UI.WebControls;
+
+@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "grid";
+    settings.CallbackRouteValues = new { Controller = "MisTareas", Action = "GridViewPartial_mis_tareas" };
+    settings.Width = Unit.Percentage(100);
+
+    settings.KeyFieldName = "IdTarea";
+    settings.Columns.Add("Observacion");
+    settings.SetDetailRowTemplateContent(c =>
+    {
+        ViewContext.Writer.Write(
+            "Contact IdTarea: <b>" +
+                DataBinder.Eval(c.DataItem, "Observacion") + "</b>, Fax: <b>" +
+                    DataBinder.Eval(c.DataItem, "Observacion") + "</b>" +
+            "<br />" +
+            "<br />"
+        );
+        Html.RenderAction("GridViewPartial_mis_tareas_det", new { CustomerID = DataBinder.Eval(c.DataItem, "IdTarea") });
+    });
+    settings.SettingsDetail.AllowOnlyOneMasterRowExpanded = false;
+    settings.SettingsDetail.ShowDetailRow = true;
+
+    settings.PreRender = (sender, e) =>
+    {
+        ((MVCxGridView)sender).DetailRows.ExpandRow(0);
+    };
+
+}).Bind(Model).GetHtml()

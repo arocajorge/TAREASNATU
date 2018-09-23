@@ -20,7 +20,7 @@ namespace Data
         public bool Escritura { get; set; }
         public bool Eliminacion { get; set; }
     
-        public virtual Usuario Usuario { get; set; }
         public virtual Seg_Menu Seg_Menu { get; set; }
+        public virtual Usuario Usuario { get; set; }
     }
 }

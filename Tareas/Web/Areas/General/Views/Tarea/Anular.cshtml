@@ -36,7 +36,7 @@
                {
                    settings.Name = "IdGrupo";
                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                   settings.Properties.DisplayFormatString = "[{0}]";
+                   settings.Properties.DisplayFormatString = "{0}";
                    settings.Properties.Columns.Add("Descripcion", "Grupo").Width = System.Web.UI.WebControls.Unit.Percentage(10);
                    //Campo ID
                    settings.Properties.ValueField = "IdGrupo";
@@ -59,7 +59,7 @@
                {
                    settings.Name = "IdUsuarioSolicitante";
                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                   settings.Properties.DisplayFormatString = "[{0}]";
+                   settings.Properties.DisplayFormatString = "{0}";
                    settings.Properties.Columns.Add("Nombre", "Usuario").Width = System.Web.UI.WebControls.Unit.Percentage(10);
                    //Campo ID
                    settings.Properties.ValueField = "IdUsuario";
@@ -79,23 +79,46 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="form-group">
                     <label for="IdUsuarioAsignado">Usuario Jefe grupo</label>
-                    @Html.TextBoxFor(v => v.IdUsuarioAsignado, new { @class = "form-control", @id = "IdUsuarioAsignado" })
+                    @Html.TextBoxFor(v => v.IdUsuarioAsignado, new { @class = "form-control", @id = "IdUsuarioAsignado", @disabled = "disabled" })
                     @Html.ValidationMessageFor(m => m.IdUsuarioAsignado, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-9">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label for="nomb_jef_grupo">Nombre jefe grupo</label>
-                    @Html.TextBoxFor(v => v.nomb_jef_grupo, new { @class = "form-control", @id = "nomb_jef_grupo" })
+                    @Html.TextBoxFor(v => v.nomb_jef_grupo, new { @class = "form-control", @id = "nomb_jef_grupo", @disabled = "disabled" })
                     @Html.ValidationMessageFor(m => m.nomb_jef_grupo, "", new { @class = "text-danger" })
                 </div>
             </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="AprobadoSolicitado"></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.AprobadoSolicitado, settings =>
+               {
+                   settings.Name = "AprobadoSolicitado";
+                   settings.Text = "Aprobado solicitante";
+               }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="AprobadoSolicitado"></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.AprobadoEncargado, settings =>
+               {
+                   settings.Name = "AprobadoEncargado";
+                   settings.Text = "Aprobado encargado";
+               }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
         </div>
     </div>
-
 
     <div class="row">
         <div class="col-md-12">
@@ -139,16 +162,14 @@
                     </div>
                 </div>
             </div>
-
-
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="form-group">
                     <label for="IdCtaCblePadre">Estado actual*</label>
                     @Html.DevExpress().ComboBoxFor(q => q.EstadoActual, settings =>
                {
                    settings.Name = "EstadoActual";
                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                   settings.Properties.DisplayFormatString = "[{0}]";
+                   settings.Properties.DisplayFormatString = "{0}";
                    settings.Properties.Columns.Add("Descripcion", "Estado").Width = System.Web.UI.WebControls.Unit.Percentage(10);
                    //Campo ID
                    settings.Properties.ValueField = "IdEstado";
@@ -163,15 +184,14 @@
                     @Html.ValidationMessageFor(q => q.EstadoActual, "", new { @class = "text-danger" })
                 </div>
             </div>
-
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="form-group">
                     <label for="IdCtaCblePadre">Prioridad de la tarea*</label>
                     @Html.DevExpress().ComboBoxFor(q => q.IdEstadoPrioridad, settings =>
                {
                    settings.Name = "IdEstadoPrioridad";
                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                   settings.Properties.DisplayFormatString = "[{0}]";
+                   settings.Properties.DisplayFormatString = "{0}";
                    settings.Properties.Columns.Add("Descripcion", "Estado").Width = System.Web.UI.WebControls.Unit.Percentage(10);
                    //Campo ID
                    settings.Properties.ValueField = "IdEstado";
@@ -186,7 +206,6 @@
                     @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
                 </div>
             </div>
-
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="TareaConcurrente"></label>
@@ -245,23 +264,19 @@
 
 
                                 @Html.DevExpress().UploadControl(settings =>
-                                       {
-                                           settings.Name = "UploadControl_adjunto";
-                                           settings.CallbackRouteValues = new { Controller = "Tarea", Action = "UploadControl_adjuntoUpload" };
+                           {
+                               settings.Name = "UploadControl_adjunto";
+                               settings.CallbackRouteValues = new { Controller = "Tarea", Action = "UploadControl_adjuntoUpload" };
 
-                                           settings.AdvancedModeSettings.EnableMultiSelect = true;
-                                           settings.AdvancedModeSettings.EnableFileList = true;
-                                           settings.AdvancedModeSettings.EnableDragAndDrop = true;
+                               settings.AdvancedModeSettings.EnableMultiSelect = true;
+                               settings.AdvancedModeSettings.EnableFileList = true;
+                               settings.AdvancedModeSettings.EnableDragAndDrop = true;
 
-                                           settings.ShowUploadButton = true;
-                                           settings.ShowProgressPanel = true;
-                                           settings.ClientSideEvents.FileUploadComplete = "function(s,e){refres_grid();}";
-                                           settings.ValidationSettings.Assign(Web.Areas.General.Controllers.TareaControllerUploadControl_adjuntoSettings.UploadValidationSettings);
-                                       }).GetHtml()
-
-
-
-
+                               settings.ShowUploadButton = true;
+                               settings.ShowProgressPanel = true;
+                               settings.ClientSideEvents.FileUploadComplete = "function(s,e){refres_grid();}";
+                               settings.ValidationSettings.Assign(Web.Areas.General.Controllers.TareaControllerUploadControl_adjuntoSettings.UploadValidationSettings);
+                           }).GetHtml()
 
                             </div>
                         </div>
@@ -279,7 +294,6 @@
             </div>
         </div>
     </div>
-
 
 
 

@@ -39,6 +39,8 @@ namespace Info
 
 
 
+       
+
 
         public List<Tarea_det_Info> list_detalle { get; set; }
         public List<TareaArchivoAdjunto_Info> list_adjuntos { get; set; }
@@ -50,5 +52,14 @@ namespace Info
             list_detalle = new List<Tarea_det_Info>();
             list_adjuntos = new List<TareaArchivoAdjunto_Info>();
         }
+
+
+        #region campos adicionales
+        public string solicitante { get; set; }
+        public string Asignado { get; set; }
+        public string Prioridad { get; set; }
+        public string EstadoTarea { get; set; }
+        public string NombreGrupo { get; set; }
+        #endregion
     }
 }

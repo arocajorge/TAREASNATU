@@ -11,11 +11,23 @@ namespace Bus
    public class Tarea_Bus
     {
         Tarea_Data odata = new Tarea_Data();
-        public List<Tarea_Info> get_lis()
+        public List<Tarea_Info> get_lis(DateTime FechaiInicio, DateTime FehcaFin)
         {
             try
             {
-                return odata.get_lis();
+                return odata.get_lis(FechaiInicio, FehcaFin);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public List<Tarea_Info> get_lis(string IdUsuario)
+        {
+            try
+            {
+                return odata.get_lis(IdUsuario);
             }
             catch (Exception)
             {
@@ -28,6 +40,9 @@ namespace Bus
         {
             try
             {
+                Grupo_Data data_grupo = new Grupo_Data();
+                var grupo = data_grupo.get_info(info.IdGrupo);
+                info.IdUsuarioAsignado = grupo.IdUsuario;
                 return odata.guardarDB(info);
             }
             catch (Exception)

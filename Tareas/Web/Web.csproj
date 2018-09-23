@@ -227,6 +227,7 @@
     <Compile Include="Areas\General\Controllers\GrupoController.cs" />
     <Compile Include="Areas\General\Controllers\MenuController.cs" />
     <Compile Include="Areas\General\Controllers\MenuPorUsuarioController.cs" />
+    <Compile Include="Areas\General\Controllers\MisTareasController.cs" />
     <Compile Include="Areas\General\Controllers\ParametroController.cs" />
     <Compile Include="Areas\General\Controllers\TareaController.cs" />
     <Compile Include="Areas\General\Controllers\UsuarioController.cs" />
@@ -7436,6 +7437,9 @@
     <Content Include="Areas\General\Views\Menu\_TreeListPartial_menu.cshtml" />
     <Content Include="Areas\General\Views\MenuPorUsuario\Index.cshtml" />
     <Content Include="Areas\General\Views\MenuPorUsuario\_TreeListPartial_menu_x_usuario.cshtml" />
+    <Content Include="Areas\General\Views\MisTareas\Index.cshtml" />
+    <Content Include="Areas\General\Views\MisTareas\_GridViewPartial_mis_tareas.cshtml" />
+    <Content Include="Areas\General\Views\MisTareas\_GridViewPartial_mis_tareas_det.cshtml" />
     <None Include="Properties\PublishProfiles\Erp_web.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\web.pubxml" />
@@ -7481,6 +7485,7 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Layout\_LayoutConsulta.cshtml" />
     <Content Include="Scripts\knockout-3.3.0.js" />
+    <Content Include="Views\Account\CambiarContrasena.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Adjuntos\" />

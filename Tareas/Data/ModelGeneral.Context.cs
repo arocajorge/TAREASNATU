@@ -32,12 +32,13 @@ namespace Data
         public virtual DbSet<Grupo> Grupo { get; set; }
         public virtual DbSet<Grupo_Usuario> Grupo_Usuario { get; set; }
         public virtual DbSet<Parametro> Parametro { get; set; }
-        public virtual DbSet<TareaArchivoAdjunto> TareaArchivoAdjunto { get; set; }
-        public virtual DbSet<Usuario> Usuario { get; set; }
-        public virtual DbSet<Tarea> Tarea { get; set; }
-        public virtual DbSet<Seg_Menu_x_usuario> Seg_Menu_x_usuario { get; set; }
         public virtual DbSet<Seg_Menu> Seg_Menu { get; set; }
-        public virtual DbSet<TareaEstado> TareaEstado { get; set; }
+        public virtual DbSet<Seg_Menu_x_usuario> Seg_Menu_x_usuario { get; set; }
+        public virtual DbSet<Tarea> Tarea { get; set; }
         public virtual DbSet<Tarea_det> Tarea_det { get; set; }
+        public virtual DbSet<TareaArchivoAdjunto> TareaArchivoAdjunto { get; set; }
+        public virtual DbSet<TareaEstado> TareaEstado { get; set; }
+        public virtual DbSet<Usuario> Usuario { get; set; }
+        public virtual DbSet<vw_Tarea> vw_Tarea { get; set; }
     }
 }

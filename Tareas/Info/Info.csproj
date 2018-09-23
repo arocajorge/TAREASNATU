@@ -51,6 +51,7 @@
     <Compile Include="General\Parametro_Info.cs" />
     <Compile Include="General\Seg_Menu_Info.cs" />
     <Compile Include="General\Seg_Menu_x_usuario_Info.cs" />
+    <Compile Include="Helps\cl_filtros_Info.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="General\TareaArchivoAdjunto_Info.cs" />
     <Compile Include="General\TareaEstado_Info.cs" />

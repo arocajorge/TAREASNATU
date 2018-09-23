@@ -21,10 +21,13 @@ namespace Data
         public System.DateTime FechaFin { get; set; }
         public double NumHoras { get; set; }
         public string IdUsuario { get; set; }
-        public int IdEstadoEstado { get; set; }
+        public int IdEstado { get; set; }
         public System.DateTime FechaUltimaModif { get; set; }
         public string Observacion { get; set; }
+        public Nullable<double> NumHorasReales { get; set; }
+        public Nullable<System.DateTime> FechaTerminoTarea { get; set; }
     
+        public virtual Estado Estado { get; set; }
         public virtual Tarea Tarea { get; set; }
         public virtual Usuario Usuario { get; set; }
     }

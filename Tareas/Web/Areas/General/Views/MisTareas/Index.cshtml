@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Formatos ISO";
+    ViewBag.Title = "Mis tareas";
     //if (Session["IdUsuario"] == null )
     //{
     //    Response.Redirect("~/Account/Login");
@@ -8,8 +8,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
 @using (Html.BeginForm())
 {
-    @Html.Action("FileManagerPartial")
+    @Html.Action("GridViewPartial_mis_tareas")
 }

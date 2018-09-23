@@ -100,5 +100,19 @@ namespace Bus
             }
         }
 
+        public bool modificarDB(string IdUsuario, string old_Contrasena, string new_Contrasena)
+        {
+            try
+            {
+                return odata.modificarDB(IdUsuario, old_Contrasena, new_Contrasena);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
+
+
+    }
 }

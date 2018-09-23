@@ -15,7 +15,7 @@
         settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Tarea", Action = "EditingDelete", Area = "General" };
 
         settings.CommandColumn.Visible = true;
-        
+
 
         settings.SettingsContextMenu.Enabled = true;
 
@@ -27,6 +27,15 @@
         settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
         settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
         //Funcion para inicializar fila al presionar nuevo
+        settings.InitNewRow = (s, e) =>
+        {
+            e.NewValues["NumHoras"] = 0;
+            e.NewValues["FechaFin"] = DateTime.Now;
+            e.NewValues["FechaInicio"] = DateTime.Now;
+            e.NewValues["IdEstado"] = 8;
+
+
+        };
 
 
         settings.Columns.Add(column =>
@@ -69,14 +78,15 @@
             column.FieldName = "NumHoras";
             column.Caption = "#Horas";
             column.Width = Unit.Percentage(10);
-            column.PropertiesEdit.DisplayFormatString = "d";
-            column.EditorProperties().DateEdit(sp =>
+            column.EditorProperties().SpinEdit(sp =>
             {
-                column.PropertiesEdit.DisplayFormatString = "d";
+                sp.MinValue = 0;
+                sp.MaxValue = 999999999;
                 sp.Width = Unit.Percentage(100);
+
             });
         });
-        
+
         settings.Columns.Add(column =>
         {
             column.FieldName = "IdUsuario";
@@ -89,6 +99,23 @@
                 p.ValueField = "IdUsuario";
                 p.ValueType = typeof(string);
                 p.DataSource = ViewBag.list_usuarios;
+                p.Width = Unit.Percentage(100);
+            });
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+
+            column.FieldName = "IdEstado";
+            column.Caption = "Estado";
+            column.Width = Unit.Percentage(10);
+            column.EditorProperties().ComboBox(p =>
+            {
+                p.Columns.Add("Descripcion", "Descripcion").Width = Unit.Percentage(70);
+                p.ValueField = "IdEstado";
+                p.ValueType = typeof(int);
+                p.DataSource = ViewBag.list_estado_detalle;
                 p.Width = Unit.Percentage(100);
             });
         });

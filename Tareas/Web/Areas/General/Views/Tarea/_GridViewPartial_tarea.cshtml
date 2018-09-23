@@ -77,16 +77,16 @@
             });
             c.Settings.AllowDragDrop = DefaultBoolean.False;
             c.Settings.AllowSort = DefaultBoolean.False;
-            c.Width = Unit.Pixel(150);
+            c.Width = Unit.Pixel(130);
         });
 
         settings.Columns.Add("IdTarea", "ID").Width = Unit.Percentage(5);
-        settings.Columns.Add("Observacion", "Observación").Width = Unit.Percentage(50);
+        settings.Columns.Add("Observacion", "Observación").Width = Unit.Percentage(30);
         settings.Columns.Add(column =>
         {
             column.FieldName = "FechaInicio";
             column.Caption = "Fecha inicio";
-            column.Width = Unit.Percentage(15);
+            column.Width = Unit.Percentage(10);
             column.PropertiesEdit.DisplayFormatString = "d";
             column.EditorProperties().DateEdit(sp =>
             {
@@ -98,7 +98,7 @@
         {
             column.FieldName = "FechaCulmina";
             column.Caption = "Fecha fin";
-            column.Width = Unit.Percentage(15);
+            column.Width = Unit.Percentage(10);
             column.PropertiesEdit.DisplayFormatString = "d";
             column.EditorProperties().DateEdit(sp =>
             {
@@ -106,7 +106,11 @@
                 sp.Width = Unit.Percentage(100);
             });
         });
-        settings.Columns.Add("TareaConcurrente", "Tarea concurrente").Width = Unit.Percentage(5);
+        settings.Columns.Add("solicitante", "Solicitante").Width = Unit.Percentage(10);
+        settings.Columns.Add("Asignado", "Asignado").Width = Unit.Percentage(10);
+        settings.Columns.Add("Prioridad", "Prioridad").Width = Unit.Percentage(10);
+        settings.Columns.Add("EstadoTarea", "Estado").Width = Unit.Percentage(10);
+        settings.Columns.Add("NombreGrupo", "Grupo").Width = Unit.Percentage(10);
 
 
 

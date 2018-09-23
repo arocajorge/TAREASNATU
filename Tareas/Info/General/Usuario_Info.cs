@@ -21,5 +21,6 @@ namespace Info
         public Nullable<System.DateTime> FechaTransaccion { get; set; }
         public Nullable<System.DateTime> FechaModificacion { get; set; }
         public Nullable<System.DateTime> FechaAnulacion { get; set; }
+        public string new_clave { get; set; }
     }
 }

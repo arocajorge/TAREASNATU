@@ -12,18 +12,26 @@ namespace Data
 {
    public class Tarea_Data
     {
+        #region variables
         Grupo_Usuario_Data data_usuarios_grup = new Grupo_Usuario_Data();
         Usuario_Data data_usuario = new Usuario_Data();
         TareaEstado_Data odta_estado = new TareaEstado_Data();
-        public List< Tarea_Info> get_lis()
+        #endregion
+        public List< Tarea_Info> get_lis(DateTime FechaInicio, DateTime FechaFin)
         {
             try
             {
+                FechaInicio = Convert.ToDateTime(FechaInicio.ToShortDateString());
+                FechaFin = Convert.ToDateTime(FechaFin.ToShortDateString());
+
                 List< Tarea_Info> Lista = new List< Tarea_Info>();
 
                 using (EntityTareas Context = new EntityTareas())
                 {
-                    Lista = (from q in Context.Tarea
+                    Lista = (from q in Context.vw_Tarea
+                             where q.FechaInicio>=FechaInicio
+                             && q.FechaInicio<=FechaFin
+
                              select new  Tarea_Info
                              {
                                  IdTarea = q.IdTarea,
@@ -36,7 +44,14 @@ namespace Data
                                  Observacion=q.Observacion,
                                  IdEstadoPrioridad=q.IdEstadoPrioridad,
                                  TareaConcurrente=q.TareaConcurrente,
-                                 Estado=q.Estado
+                                 Estado=q.Estado,
+
+                                 solicitante=q.solicitante,
+                                 Asignado=q.Asignado,
+                                 Prioridad=q.Prioridad,
+                                 EstadoTarea=q.EstadoTarea,
+                                 NombreGrupo=q.NombreGrupo
+                                 
 
                              }).ToList();
                 }
@@ -49,6 +64,53 @@ namespace Data
                 throw;
             }
         }
+        public List<Tarea_Info> get_lis(string IdUsuario)
+        {
+            try
+            {
+               
+
+                List<Tarea_Info> Lista = new List<Tarea_Info>();
+
+                using (EntityTareas Context = new EntityTareas())
+                {
+                    Lista = (from q in Context.vw_Tarea
+                             //where q.FechaInicio >= FechaInicio
+                             //&& q.FechaInicio <= FechaFin
+
+                             select new Tarea_Info
+                             {
+                                 IdTarea = q.IdTarea,
+                                 IdUsuarioSolicitante = q.IdUsuarioSolicitante,
+                                 IdGrupo = q.IdGrupo,
+                                 IdUsuarioAsignado = q.IdUsuarioAsignado,
+                                 EstadoActual = q.EstadoActual,
+                                 FechaInicio = q.FechaInicio,
+                                 FechaCulmina = q.FechaCulmina,
+                                 Observacion = q.Observacion,
+                                 IdEstadoPrioridad = q.IdEstadoPrioridad,
+                                 TareaConcurrente = q.TareaConcurrente,
+                                 Estado = q.Estado,
+
+                                 solicitante = q.solicitante,
+                                 Asignado = q.Asignado,
+                                 Prioridad = q.Prioridad,
+                                 EstadoTarea = q.EstadoTarea,
+                                 NombreGrupo = q.NombreGrupo
+
+
+                             }).ToList();
+                }
+
+                return Lista;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public bool guardarDB( Tarea_Info info)
         {
             try
@@ -89,7 +151,7 @@ namespace Data
                             FechaFin = item.FechaFin,
                             IdUsuario=item.IdUsuario,
                             FechaUltimaModif=DateTime.Now,
-                            IdEstadoEstado=item.IdEstadoEstado,
+                            IdEstado = item.IdEstado,
                            
 
                         };

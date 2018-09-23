@@ -18,7 +18,8 @@ namespace Web.Controllers
 {
     public class AccountController : Controller
     {
-       
+        Usuario_Bus bus_usuario = new Usuario_Bus();
+
         [AllowAnonymous]
         public ActionResult Login()
         {
@@ -31,7 +32,6 @@ namespace Web.Controllers
         public ActionResult Login(Usuario_Info model)
         {
 
-            Usuario_Bus bus_usuario = new Usuario_Bus();
             bool usuario_clave_exist = bus_usuario.validar_login(model.IdUsuario, model.Clave);
             if (usuario_clave_exist)
             {
@@ -54,6 +54,30 @@ namespace Web.Controllers
             Session.Contents.RemoveAll();
             return RedirectToAction("Login");
         }
-        
+
+        public ActionResult CambiarContrasena(string IdUsuario = "")
+        {
+            Usuario_Info model = new Usuario_Info { IdUsuario = IdUsuario };
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult CambiarContrasena(Usuario_Info model)
+        {
+            model.Clave = string.IsNullOrEmpty(model.Clave) ? "" : model.Clave.Trim();
+            model.new_clave = string.IsNullOrEmpty(model.new_clave) ? "" : model.new_clave.Trim();
+            if (model.Clave == model.new_clave)
+            {
+                ViewBag.mensaje = "La nueva contraseña no debe ser igual a la anterior";
+                return View(model);
+            }
+            if (!bus_usuario.modificarDB(model.IdUsuario, model.Clave, model.new_clave))
+            {
+                ViewBag.mensaje = "Credenciales incorrectas, por favor corrija";
+                return View(model);
+            }
+            return RedirectToAction("Login");
+        }
+
+
     }
 }

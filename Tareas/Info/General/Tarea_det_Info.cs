@@ -22,7 +22,7 @@ namespace Info
         [Required(ErrorMessage = "El campo usuario asignado es obligatorio")]
         public string IdUsuario { get; set; }
         [Required(ErrorMessage = "El campo estado es obligatorio")]
-        public int IdEstadoEstado { get; set; }
+        public int IdEstado { get; set; }
 
         public System.DateTime FechaUltimaModif { get; set; }
         public string Observacion { get; set; }

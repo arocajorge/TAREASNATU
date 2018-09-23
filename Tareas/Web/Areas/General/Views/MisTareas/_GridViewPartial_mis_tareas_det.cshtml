@@ -1,0 +1,14 @@
+@using System.Web.UI.WebControls;
+
+@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "GridViewPartial_mis_tareas_det" + ViewBag.IdTarea;
+    settings.SettingsDetail.MasterGridName = "grid";
+    settings.CallbackRouteValues = new { Controller = "MisTareas", Action = "GridViewPartial_mis_tareas_det", IdTarea = ViewBag.IdTarea };
+    settings.Width = Unit.Percentage(100);
+
+    settings.KeyFieldName = "Secuancial";
+    settings.Columns.Add("Observacion");
+
+
+}).Bind(Model).GetHtml()

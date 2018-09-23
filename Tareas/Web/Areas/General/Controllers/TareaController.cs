@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Web.Helps;
+using Info.Helps;
 namespace Web.Areas.General.Controllers
 {
     
@@ -22,23 +23,31 @@ namespace Web.Areas.General.Controllers
         TareaArchivoAdjunto_Bus bus_adjunto = new TareaArchivoAdjunto_Bus();
         #endregion
 
-        #region Index
+        #region Vistas tareas
         public ActionResult Index()
         {
-            return View();
+            cl_filtros_Info model = new cl_filtros_Info();
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult Index(cl_filtros_Info model)
+        {
+            return View(model);
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_Tarea()
+        public ActionResult GridViewPartial_Tarea(DateTime? fecha_ini, DateTime? fecha_fin)
         {
             List<Tarea_Info> model = new List<Tarea_Info>();
-            model = bus_tarea.get_lis();
+            ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : fecha_ini;
+            ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date : fecha_fin;
+            model = bus_tarea.get_lis(ViewBag.fecha_ini, ViewBag.fecha_fin);
             return PartialView("_GridViewPartial_tarea", model);
         }
         [ValidateInput(false)]
         public ActionResult GridViewPartial_Tarea_det()
         {
-            cargar_combo();
+            cargar_combo_detalle();
             Tarea_Info model = new Tarea_Info();
             model.list_detalle = Lis_Tarea_det_Info_lis.get_list(Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_Tarea_det", model);
@@ -68,10 +77,11 @@ namespace Web.Areas.General.Controllers
             Tarea_Info model = new Tarea_Info()
             {
                 FechaInicio = DateTime.Now,
-                FechaCulmina = DateTime.Now.AddDays(7),
+                FechaCulmina = DateTime.Now,
                 IdUsuarioSolicitante = SessionTareas.IdUsuario.ToString(),
-                IdEstadoPrioridad=1,
+                IdEstadoPrioridad=2,
                 EstadoActual=1,
+                AprobadoSolicitado=true,
                 IdTransaccionSession = Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual),
 
             };
@@ -201,8 +211,7 @@ namespace Web.Areas.General.Controllers
         {
             try
             {
-                var list_tarea = bus_tarea.get_lis();
-                ViewBag.list_tarea = list_tarea;
+                
 
                 var list_usuarios = bus_usuario.get_lis(false);
                 ViewBag.list_usuarios = list_usuarios;
@@ -223,6 +232,28 @@ namespace Web.Areas.General.Controllers
                 throw;
             }
         }
+        public void cargar_combo_detalle()
+        {
+            try
+            {
+                
+                var list_usuarios = bus_usuario.get_lis(false);
+                ViewBag.list_usuarios = list_usuarios;
+
+                var list_estado_detalle = bus_estado.get_lis(3);
+                ViewBag.list_estado_detalle = list_estado_detalle;
+
+                var list_grupo = bus_grupo.get_lis();
+                ViewBag.list_grupo = list_grupo;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         #endregion
 
         #region funciones del detalle
@@ -233,7 +264,7 @@ namespace Web.Areas.General.Controllers
                 Lis_Tarea_det_Info_lis.AddRow(info_det, Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual));
             Tarea_Info model = new Tarea_Info();
             model.list_detalle = Lis_Tarea_det_Info_lis.get_list(Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual));
-            cargar_combo();
+            cargar_combo_detalle();
             return PartialView("_GridViewPartial_tarea_det", model);
         }
 
@@ -243,7 +274,7 @@ namespace Web.Areas.General.Controllers
                 Lis_Tarea_det_Info_lis.AddRow(info_det, Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual));
             Tarea_Info model = new Tarea_Info();
             model.list_detalle = Lis_Tarea_det_Info_lis.get_list(Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual));
-            cargar_combo();
+            cargar_combo_detalle();
             return PartialView("_GridViewPartial_tarea_det", model);
         }
 
@@ -252,7 +283,7 @@ namespace Web.Areas.General.Controllers
             Lis_Tarea_det_Info_lis.DeleteRow(info_det.Secuancial, Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual));
             Tarea_Info model = new Tarea_Info();
             model.list_detalle = Lis_Tarea_det_Info_lis.get_list(Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual));
-            cargar_combo();
+            cargar_combo_detalle();
             return PartialView("_GridViewPartial_tarea_det", model);
         }
 
@@ -294,13 +325,14 @@ namespace Web.Areas.General.Controllers
     }
 
 
+    #region Tarea detalle
 
     public class Tarea_det_Info_lis
     {
         string variable = "";
-        public List<Tarea_det_Info> get_list( decimal IdTransaccionSessionActual)
+        public List<Tarea_det_Info> get_list(decimal IdTransaccionSessionActual)
         {
-            if (HttpContext.Current.Session[variable+IdTransaccionSessionActual.ToString()] == null)
+            if (HttpContext.Current.Session[variable + IdTransaccionSessionActual.ToString()] == null)
             {
                 List<Tarea_det_Info> list = new List<Tarea_det_Info>();
 
@@ -335,20 +367,22 @@ namespace Web.Areas.General.Controllers
         }
     }
 
+    #endregion
 
+    #region Tarea Adjunto
 
     public static class TareaArchivoAdjunto_Info_lis
     {
-       static string  variable = "TareaArchivoAdjunto_Info";
+        static string variable = "TareaArchivoAdjunto_Info";
         public static List<TareaArchivoAdjunto_Info> get_list(decimal IdTransaccionSessionActual)
         {
-            if (HttpContext.Current.Session[variable+ IdTransaccionSessionActual.ToString()] == null)
+            if (HttpContext.Current.Session[variable + IdTransaccionSessionActual.ToString()] == null)
             {
                 List<TareaArchivoAdjunto_Info> list = new List<TareaArchivoAdjunto_Info>();
 
                 HttpContext.Current.Session[variable + IdTransaccionSessionActual.ToString()] = list;
             }
-            var lis= (List<TareaArchivoAdjunto_Info>)HttpContext.Current.Session[variable + IdTransaccionSessionActual.ToString()];
+            var lis = (List<TareaArchivoAdjunto_Info>)HttpContext.Current.Session[variable + IdTransaccionSessionActual.ToString()];
             return (List<TareaArchivoAdjunto_Info>)HttpContext.Current.Session[variable + IdTransaccionSessionActual.ToString()];
         }
 
@@ -375,6 +409,7 @@ namespace Web.Areas.General.Controllers
             edited_info.tamanio_file = info_det.tamanio_file;
         }
     }
+    #endregion
 
 
 }

@@ -194,5 +194,27 @@ namespace Data
                 throw;
             }
         }
+
+        public bool modificarDB(string IdUsuario, string old_Contrasena, string new_Contrasena)
+        {
+            try
+            {
+                using (EntityTareas Context = new EntityTareas())
+                {
+                    Usuario Entity = Context.Usuario.FirstOrDefault(q => q.IdUsuario == IdUsuario && q.Clave == old_Contrasena && q.Estado == true);
+                    if (Entity == null)
+                        return false;
+                    Entity.Clave = new_Contrasena;
+                    Context.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
     }
 }
