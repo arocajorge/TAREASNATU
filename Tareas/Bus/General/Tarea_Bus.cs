@@ -55,6 +55,7 @@ namespace Bus
         {
             try
             {
+                odata=new Tarea_Data();
                 Grupo_Data data_grupo = new Grupo_Data();
                 var grupo = data_grupo.get_info(info.IdGrupo);
                 info.IdUsuarioAsignado = grupo.IdUsuario;

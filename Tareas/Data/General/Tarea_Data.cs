@@ -188,7 +188,15 @@ namespace Data
 
                     Context.SaveChanges();
                 }
-               // EnviarCorreo(info);
+               
+                try
+                {
+                    EnviarCorreo(info);
+                }
+                catch (Exception)
+                {
+
+                }
                 return true;
             }
             catch (Exception e)
@@ -267,7 +275,7 @@ namespace Data
                         IdTarea = info.IdTarea,
                         Secuancial = odta_estado.get_id(info.IdTarea),
                         IdUsuario = info.IdUsuarioModifica,
-                        Observacion = info.Observacion,
+                        Observacion = info.Observacion==null?" ":info.Observacion,
                         IdEstado = info.EstadoActual,
                         FechaModificacion = DateTime.Now
 
@@ -277,7 +285,16 @@ namespace Data
 
                     #endregion
                     Context.SaveChanges();
+                    try
+                    {
+                        EnviarCorreo(info);
+                    }
+                    catch (Exception)
+                    {
+
+                    }
                 }
+
                 return true;
             }
             catch (Exception e)
@@ -427,10 +444,11 @@ namespace Data
                     Body += "<br/>";
                     Body += "<br/>";
                     Body += "Para para acceder a la tarea acceder al link:<br/><br/>";
-                   // Body += "<a href='http://evaluaciones.degeremcia.com/" + "Resolucion_formulario/LoginID?p1=" + item.IdEmpleado + "'>Encuestar colaboradores</a>";
+                    Body += "<a href='http://localhost:27043/General/Tarea/Modificar?p1="+info.IdTarea+"'>Tareas</a>";
+
                     Body += "<br/>";
                     Body += "<br/>";
-                    Body += "<table>";
+                    Body += "<table>"; 
                     Body += "<tr>";
                     Body += "</tr>";
                     Body += "</table>";
@@ -443,7 +461,7 @@ namespace Data
                     smtp.Host = infoParametros.Host;
                     smtp.EnableSsl = true;// infoParametros.PermitirSSL;
                     smtp.Port = infoParametros.Puerto;
-                    smtp.Credentials = new NetworkCredential(infoParametros.CorreoCuenta, "xxxxxxx");
+                    smtp.Credentials = new NetworkCredential(infoParametros.CorreoCuenta, "dianaycarlos1985");
                     smtp.Send(mail);
 
                    
