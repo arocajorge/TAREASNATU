@@ -444,7 +444,7 @@ namespace Data
                     Body += "<br/>";
                     Body += "<br/>";
                     Body += "Para para acceder a la tarea acceder al link:<br/><br/>";
-                    Body += "<a href='http://localhost:27043/General/Tarea/Modificar?p1="+info.IdTarea+"'>Tareas</a>";
+                    Body += "<a href='http://localhost:27043/General/Tarea/Modificar?IdTarea="+info.IdTarea+"'>Tareas</a>";
 
                     Body += "<br/>";
                     Body += "<br/>";
@@ -459,7 +459,7 @@ namespace Data
 
                     SmtpClient smtp = new SmtpClient();
                     smtp.Host = infoParametros.Host;
-                    smtp.EnableSsl = true;// infoParametros.PermitirSSL;
+                    smtp.EnableSsl =  infoParametros.PermitirSSL;
                     smtp.Port = infoParametros.Puerto;
                     smtp.Credentials = new NetworkCredential(infoParametros.CorreoCuenta, "dianaycarlos1985");
                     smtp.Send(mail);

@@ -24,6 +24,7 @@ namespace Data
                                  IdTarea = q.IdTarea,
                                  Secuencial = q.Secuencial,
                                  NombreArchivo = q.NombreArchivo,
+                                 Archivo=q.Archivo
                              }).ToList();
                 }
 
