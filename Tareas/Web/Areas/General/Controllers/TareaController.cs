@@ -93,6 +93,7 @@ namespace Web.Areas.General.Controllers
         [HttpPost]
         public ActionResult Nuevo(Tarea_Info model)
         {
+            string mensaje = "";
             model.list_detalle = Lis_Tarea_det_Info_lis.get_list(model.IdTransaccionSession);
             model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(model.IdTransaccionSession);
             model.IdUsuario = SessionTareas.IdUsuario.ToString();
@@ -110,6 +111,13 @@ namespace Web.Areas.General.Controllers
                     ViewBag.mensaje = "La tarea debe tener un detalle";
                     return View(model);
                 }
+            }
+            mensaje = Validaciones(model);
+            if(mensaje!="")
+            {
+                cargar_combo();
+                ViewBag.mensaje =mensaje;
+                return View(model);
             }
             if (!bus_tarea.guardarDB(model))
             {
@@ -144,6 +152,7 @@ namespace Web.Areas.General.Controllers
         [HttpPost]
         public ActionResult Modificar(Tarea_Info model)
         {
+            string mensaje = "";
             model.list_detalle = Lis_Tarea_det_Info_lis.get_list(model.IdTransaccionSession);
             model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(model.IdTransaccionSession);
             model.IdUsuarioModifica = SessionTareas.IdUsuario.ToString();
@@ -161,6 +170,13 @@ namespace Web.Areas.General.Controllers
                     ViewBag.mensaje = "El Tarea debe tener almenos un usuario miembro del Tarea";
                     return View(model);
                 }
+            }
+            mensaje = Validaciones(model);
+            if (mensaje != "")
+            {
+                cargar_combo();
+                ViewBag.mensaje = mensaje;
+                return View(model);
             }
             if (!bus_tarea.modificarDB(model))
             {
@@ -304,6 +320,33 @@ namespace Web.Areas.General.Controllers
             return PartialView("_GridViewPartial_tarea_det_adjunto", model);
         }
         #endregion
+
+        private string Validaciones(Tarea_Info info)
+        {
+            try
+            {
+                string mensaje = "";
+                if(info.FechaCulmina.Date<info.FechaInicio.Date)
+                {
+                    mensaje = "Fecha inicio no puede ser mayor que fecha fin";
+                }
+
+                foreach (var item in info.list_detalle)
+                {
+                    if (item.FechaFin.Date < item.FechaInicio.Date)
+                    {
+                        mensaje = "Las fecha de: "+item.Descripcion+", no son correctas";
+                    }
+                }
+
+                return mensaje;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         public ActionResult UploadControl_adjuntoUpload()
         {
             UploadControlExtension.GetUploadedFiles("UploadControl_adjunto", TareaControllerUploadControl_adjuntoSettings.UploadValidationSettings, TareaControllerUploadControl_adjuntoSettings.FileUploadComplete);

@@ -180,6 +180,7 @@
                    settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
                    settings.Properties.NullText = "== Seleccione ==";
                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                   settings.ReadOnly = true;
 
                }).BindList(ViewBag.list_estado).GetHtml()
                     @Html.ValidationMessageFor(q => q.EstadoActual, "", new { @class = "text-danger" })
