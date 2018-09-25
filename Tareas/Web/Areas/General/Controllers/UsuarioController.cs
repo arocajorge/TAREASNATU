@@ -33,6 +33,7 @@ namespace Web.Areas.General.Controllers
         public ActionResult Nuevo()
         {
             Usuario_Info model = new Usuario_Info();
+            model.TipoUsuario = 2;
             return View(model);
         }
 
