@@ -46,6 +46,22 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="IdTipoServicio">Tipo de servicio</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.TipoUsuario, setting =>
+               {
+                   setting.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   setting.Properties.Items.Add("Administrador", "1");
+                   setting.Properties.Items.Add("Usuario", "2");
+               }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.TipoUsuario, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="box-footer">
         <button type="submit" class="btn btn-primary">Guardar</button>
         <a class="btn btn-default" href="@Url.Action("Index","Usuario",new { Area = "General" },null)">Cancelar</a>
