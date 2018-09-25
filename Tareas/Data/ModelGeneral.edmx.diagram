@@ -15,20 +15,20 @@
         <EntityTypeShape EntityType="ModelGeneral.Tarea_det" Width="1.5" PointX="10.5" PointY="14.75" />
         <EntityTypeShape EntityType="ModelGeneral.TareaArchivoAdjunto" Width="1.5" PointX="7.5" PointY="22.25" />
         <EntityTypeShape EntityType="ModelGeneral.TareaEstado" Width="1.5" PointX="7.5" PointY="12.25" />
-        <EntityTypeShape EntityType="ModelGeneral.Usuario" Width="1.5" PointX="0.75" PointY="13.375" />
         <AssociationConnector Association="ModelGeneral.FK_Estado_EstadoTipo" />
         <AssociationConnector Association="ModelGeneral.FK_Tarea_det_Estado" />
         <AssociationConnector Association="ModelGeneral.FK_Tarea_Estado" />
         <AssociationConnector Association="ModelGeneral.FK_Tarea_Estado1" />
-        <AssociationConnector Association="ModelGeneral.FK_Grupo_Usuario" />
         <AssociationConnector Association="ModelGeneral.FK_Grupo_Usuario_Grupo" />
         <AssociationConnector Association="ModelGeneral.FK_Tarea_Grupo" />
-        <AssociationConnector Association="ModelGeneral.FK_Grupo_Usuario_Usuario" />
         <AssociationConnector Association="ModelGeneral.FK_Tarea_det_Tarea" />
-        <AssociationConnector Association="ModelGeneral.FK_Tarea_Usuario" />
-        <AssociationConnector Association="ModelGeneral.FK_Tarea_Usuario1" />
         <AssociationConnector Association="ModelGeneral.FK_TareaArchivoAdjunto_Tarea" />
         <AssociationConnector Association="ModelGeneral.FK_TareaEstado_Tarea" />
+        <EntityTypeShape EntityType="ModelGeneral.Usuario" Width="1.5" PointX="0.75" PointY="14.875" />
+        <AssociationConnector Association="ModelGeneral.FK_Grupo_Usuario" />
+        <AssociationConnector Association="ModelGeneral.FK_Grupo_Usuario_Usuario" />
+        <AssociationConnector Association="ModelGeneral.FK_Tarea_Usuario" />
+        <AssociationConnector Association="ModelGeneral.FK_Tarea_Usuario1" />
         <AssociationConnector Association="ModelGeneral.FK_Tarea_det_Usuario" />
       </Diagram>
     </edmx:Diagrams>

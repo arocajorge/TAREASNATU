@@ -24,7 +24,8 @@ namespace Data
                                 Clave=q.Clave,
                                 Correo=q.Correo,
                                 Nombre=q.Nombre,
-                                Estado=q.Estado
+                                Estado=q.Estado,
+                                TipoUsuario=q.TipoUsuario
                              }).ToList();
                     else
                         Lista = (from q in Context.Usuario
@@ -35,7 +36,9 @@ namespace Data
                                      Clave = q.Clave,
                                      Correo = q.Correo,
                                      Nombre = q.Nombre,
-                                     Estado = q.Estado
+                                     Estado = q.Estado,
+                                     TipoUsuario = q.TipoUsuario
+
                                  }).ToList();
 
                 }
@@ -60,6 +63,7 @@ namespace Data
                         Clave = info.Clave,
                         Nombre = info.Nombre,
                         Correo = info.Correo,
+                        TipoUsuario=info.TipoUsuario,
                         Estado = true,
                         FechaTransaccion=info.FechaTransaccion=DateTime.Now,
                         IdUsuarioCreacion=info.IdUsuarioCreacion
@@ -87,6 +91,7 @@ namespace Data
                         return false;
                     Entity.Nombre = info.Nombre;
                     Entity.Correo = info.Correo;
+                    Entity.TipoUsuario = info.TipoUsuario;
                     Entity.IdUsuarioModifica = info.IdUsuarioModifica;
                     Entity.FechaModificacion = info.FechaModificacion=DateTime.Now;
                     Context.SaveChanges();
@@ -182,7 +187,8 @@ namespace Data
                         Clave = Entity.Clave,
                         Nombre = Entity.Nombre,
                         Correo = Entity.Correo,
-                        Estado = Entity.Estado
+                        Estado = Entity.Estado,
+                        TipoUsuario=Entity.TipoUsuario
 
                     };
                 }

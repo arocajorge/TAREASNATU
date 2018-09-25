@@ -144,8 +144,9 @@
           </Key>
           <Property Name="IdUsuario" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Clave" Type="varchar" MaxLength="200" Nullable="false" />
-          <Property Name="Nombre" Type="varchar" MaxLength="500" />
+          <Property Name="Nombre" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="Correo" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="TipoUsuario" Type="int" Nullable="false" />
           <Property Name="Estado" Type="bit" Nullable="false" />
           <Property Name="IdUsuarioCreacion" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="IdUsuarioModifica" Type="varchar" MaxLength="50" />
@@ -472,7 +473,6 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_Tarea' no tiene definida ni
           <EntitySet Name="Tarea_det" EntityType="ModelGeneral.Tarea_det" />
           <EntitySet Name="TareaArchivoAdjunto" EntityType="ModelGeneral.TareaArchivoAdjunto" />
           <EntitySet Name="TareaEstado" EntityType="ModelGeneral.TareaEstado" />
-          <EntitySet Name="Usuario" EntityType="ModelGeneral.Usuario" />
           <AssociationSet Name="FK_Estado_EstadoTipo" Association="ModelGeneral.FK_Estado_EstadoTipo">
             <End Role="EstadoTipo" EntitySet="EstadoTipo" />
             <End Role="Estado" EntitySet="Estado" />
@@ -489,10 +489,6 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_Tarea' no tiene definida ni
             <End Role="Estado" EntitySet="Estado" />
             <End Role="Tarea" EntitySet="Tarea" />
           </AssociationSet>
-          <AssociationSet Name="FK_Grupo_Usuario" Association="ModelGeneral.FK_Grupo_Usuario">
-            <End Role="Usuario" EntitySet="Usuario" />
-            <End Role="Grupo" EntitySet="Grupo" />
-          </AssociationSet>
           <AssociationSet Name="FK_Grupo_Usuario_Grupo" Association="ModelGeneral.FK_Grupo_Usuario_Grupo">
             <End Role="Grupo" EntitySet="Grupo" />
             <End Role="Grupo_Usuario" EntitySet="Grupo_Usuario" />
@@ -501,21 +497,9 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_Tarea' no tiene definida ni
             <End Role="Grupo" EntitySet="Grupo" />
             <End Role="Tarea" EntitySet="Tarea" />
           </AssociationSet>
-          <AssociationSet Name="FK_Grupo_Usuario_Usuario" Association="ModelGeneral.FK_Grupo_Usuario_Usuario">
-            <End Role="Usuario" EntitySet="Usuario" />
-            <End Role="Grupo_Usuario" EntitySet="Grupo_Usuario" />
-          </AssociationSet>
           <AssociationSet Name="FK_Tarea_det_Tarea" Association="ModelGeneral.FK_Tarea_det_Tarea">
             <End Role="Tarea" EntitySet="Tarea" />
             <End Role="Tarea_det" EntitySet="Tarea_det" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tarea_Usuario" Association="ModelGeneral.FK_Tarea_Usuario">
-            <End Role="Usuario" EntitySet="Usuario" />
-            <End Role="Tarea" EntitySet="Tarea" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tarea_Usuario1" Association="ModelGeneral.FK_Tarea_Usuario1">
-            <End Role="Usuario" EntitySet="Usuario" />
-            <End Role="Tarea" EntitySet="Tarea" />
           </AssociationSet>
           <AssociationSet Name="FK_TareaArchivoAdjunto_Tarea" Association="ModelGeneral.FK_TareaArchivoAdjunto_Tarea">
             <End Role="Tarea" EntitySet="Tarea" />
@@ -524,6 +508,23 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_Tarea' no tiene definida ni
           <AssociationSet Name="FK_TareaEstado_Tarea" Association="ModelGeneral.FK_TareaEstado_Tarea">
             <End Role="Tarea" EntitySet="Tarea" />
             <End Role="TareaEstado" EntitySet="TareaEstado" />
+          </AssociationSet>
+          <EntitySet Name="Usuario" EntityType="ModelGeneral.Usuario" />
+          <AssociationSet Name="FK_Grupo_Usuario" Association="ModelGeneral.FK_Grupo_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Grupo" EntitySet="Grupo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Grupo_Usuario_Usuario" Association="ModelGeneral.FK_Grupo_Usuario_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Grupo_Usuario" EntitySet="Grupo_Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tarea_Usuario" Association="ModelGeneral.FK_Tarea_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Tarea" EntitySet="Tarea" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tarea_Usuario1" Association="ModelGeneral.FK_Tarea_Usuario1">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Tarea" EntitySet="Tarea" />
           </AssociationSet>
           <AssociationSet Name="FK_Tarea_det_Usuario" Association="ModelGeneral.FK_Tarea_det_Usuario">
             <End Role="Usuario" EntitySet="Usuario" />
@@ -631,9 +632,9 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_Tarea' no tiene definida ni
           <Property Name="FechaTransaccion" Type="DateTime" Precision="3" />
           <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
           <Property Name="FechaAnulacion" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Usuario" Relationship="ModelGeneral.FK_Grupo_Usuario" FromRole="Grupo" ToRole="Usuario" />
           <NavigationProperty Name="Grupo_Usuario" Relationship="ModelGeneral.FK_Grupo_Usuario_Grupo" FromRole="Grupo" ToRole="Grupo_Usuario" />
           <NavigationProperty Name="Tarea" Relationship="ModelGeneral.FK_Tarea_Grupo" FromRole="Grupo" ToRole="Tarea" />
+          <NavigationProperty Name="Usuario" Relationship="ModelGeneral.FK_Grupo_Usuario" FromRole="Grupo" ToRole="Usuario" />
         </EntityType>
         <EntityType Name="Grupo_Usuario">
           <Key>
@@ -688,10 +689,10 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_Tarea' no tiene definida ni
           <NavigationProperty Name="Estado2" Relationship="ModelGeneral.FK_Tarea_Estado1" FromRole="Tarea" ToRole="Estado" />
           <NavigationProperty Name="Grupo" Relationship="ModelGeneral.FK_Tarea_Grupo" FromRole="Tarea" ToRole="Grupo" />
           <NavigationProperty Name="Tarea_det" Relationship="ModelGeneral.FK_Tarea_det_Tarea" FromRole="Tarea" ToRole="Tarea_det" />
-          <NavigationProperty Name="Usuario" Relationship="ModelGeneral.FK_Tarea_Usuario" FromRole="Tarea" ToRole="Usuario" />
-          <NavigationProperty Name="Usuario1" Relationship="ModelGeneral.FK_Tarea_Usuario1" FromRole="Tarea" ToRole="Usuario" />
           <NavigationProperty Name="TareaArchivoAdjunto" Relationship="ModelGeneral.FK_TareaArchivoAdjunto_Tarea" FromRole="Tarea" ToRole="TareaArchivoAdjunto" />
           <NavigationProperty Name="TareaEstado" Relationship="ModelGeneral.FK_TareaEstado_Tarea" FromRole="Tarea" ToRole="TareaEstado" />
+          <NavigationProperty Name="Usuario" Relationship="ModelGeneral.FK_Tarea_Usuario" FromRole="Tarea" ToRole="Usuario" />
+          <NavigationProperty Name="Usuario1" Relationship="ModelGeneral.FK_Tarea_Usuario1" FromRole="Tarea" ToRole="Usuario" />
         </EntityType>
         <EntityType Name="Tarea_det">
           <Key>
@@ -738,27 +739,6 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_Tarea' no tiene definida ni
           <Property Name="Observacion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="IdUsuarioModifica" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Tarea" Relationship="ModelGeneral.FK_TareaEstado_Tarea" FromRole="TareaEstado" ToRole="Tarea" />
-        </EntityType>
-        <EntityType Name="Usuario">
-          <Key>
-            <PropertyRef Name="IdUsuario" />
-          </Key>
-          <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Clave" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Nombre" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="Correo" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="Estado" Type="Boolean" Nullable="false" />
-          <Property Name="IdUsuarioCreacion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdUsuarioModifica" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdUsuarioAnula" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="FechaTransaccion" Type="DateTime" Precision="3" />
-          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
-          <Property Name="FechaAnulacion" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Grupo" Relationship="ModelGeneral.FK_Grupo_Usuario" FromRole="Usuario" ToRole="Grupo" />
-          <NavigationProperty Name="Grupo_Usuario" Relationship="ModelGeneral.FK_Grupo_Usuario_Usuario" FromRole="Usuario" ToRole="Grupo_Usuario" />
-          <NavigationProperty Name="Tarea" Relationship="ModelGeneral.FK_Tarea_Usuario" FromRole="Usuario" ToRole="Tarea" />
-          <NavigationProperty Name="Tarea1" Relationship="ModelGeneral.FK_Tarea_Usuario1" FromRole="Usuario" ToRole="Tarea" />
-          <NavigationProperty Name="Tarea_det" Relationship="ModelGeneral.FK_Tarea_det_Usuario" FromRole="Usuario" ToRole="Tarea_det" />
         </EntityType>
         <Association Name="FK_Estado_EstadoTipo">
           <End Type="ModelGeneral.EstadoTipo" Role="EstadoTipo" Multiplicity="1" />
@@ -808,18 +788,6 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_Tarea' no tiene definida ni
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Grupo_Usuario">
-          <End Type="ModelGeneral.Usuario" Role="Usuario" Multiplicity="1" />
-          <End Type="ModelGeneral.Grupo" Role="Grupo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Usuario">
-              <PropertyRef Name="IdUsuario" />
-            </Principal>
-            <Dependent Role="Grupo">
-              <PropertyRef Name="IdUsuario" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Grupo_Usuario_Grupo">
           <End Type="ModelGeneral.Grupo" Role="Grupo" Multiplicity="1" />
           <End Type="ModelGeneral.Grupo_Usuario" Role="Grupo_Usuario" Multiplicity="*" />
@@ -844,18 +812,6 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_Tarea' no tiene definida ni
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Grupo_Usuario_Usuario">
-          <End Type="ModelGeneral.Usuario" Role="Usuario" Multiplicity="1" />
-          <End Type="ModelGeneral.Grupo_Usuario" Role="Grupo_Usuario" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Usuario">
-              <PropertyRef Name="IdUsuario" />
-            </Principal>
-            <Dependent Role="Grupo_Usuario">
-              <PropertyRef Name="IdUsuario" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Tarea_det_Tarea">
           <End Type="ModelGeneral.Tarea" Role="Tarea" Multiplicity="1" />
           <End Type="ModelGeneral.Tarea_det" Role="Tarea_det" Multiplicity="*" />
@@ -865,30 +821,6 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_Tarea' no tiene definida ni
             </Principal>
             <Dependent Role="Tarea_det">
               <PropertyRef Name="IdTarea" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tarea_Usuario">
-          <End Type="ModelGeneral.Usuario" Role="Usuario" Multiplicity="1" />
-          <End Type="ModelGeneral.Tarea" Role="Tarea" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Usuario">
-              <PropertyRef Name="IdUsuario" />
-            </Principal>
-            <Dependent Role="Tarea">
-              <PropertyRef Name="IdUsuarioSolicitante" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tarea_Usuario1">
-          <End Type="ModelGeneral.Usuario" Role="Usuario" Multiplicity="1" />
-          <End Type="ModelGeneral.Tarea" Role="Tarea" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Usuario">
-              <PropertyRef Name="IdUsuario" />
-            </Principal>
-            <Dependent Role="Tarea">
-              <PropertyRef Name="IdUsuarioAsignado" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -913,6 +845,76 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_Tarea' no tiene definida ni
             </Principal>
             <Dependent Role="TareaEstado">
               <PropertyRef Name="IdTarea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Clave" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Correo" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="TipoUsuario" Type="Int32" Nullable="false" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <Property Name="IdUsuarioCreacion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuarioModifica" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuarioAnula" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaTransaccion" Type="DateTime" Precision="3" />
+          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+          <Property Name="FechaAnulacion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Grupo" Relationship="ModelGeneral.FK_Grupo_Usuario" FromRole="Usuario" ToRole="Grupo" />
+          <NavigationProperty Name="Grupo_Usuario" Relationship="ModelGeneral.FK_Grupo_Usuario_Usuario" FromRole="Usuario" ToRole="Grupo_Usuario" />
+          <NavigationProperty Name="Tarea" Relationship="ModelGeneral.FK_Tarea_Usuario" FromRole="Usuario" ToRole="Tarea" />
+          <NavigationProperty Name="Tarea1" Relationship="ModelGeneral.FK_Tarea_Usuario1" FromRole="Usuario" ToRole="Tarea" />
+          <NavigationProperty Name="Tarea_det" Relationship="ModelGeneral.FK_Tarea_det_Usuario" FromRole="Usuario" ToRole="Tarea_det" />
+        </EntityType>
+        <Association Name="FK_Grupo_Usuario">
+          <End Type="ModelGeneral.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="ModelGeneral.Grupo" Role="Grupo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Grupo">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Grupo_Usuario_Usuario">
+          <End Type="ModelGeneral.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="ModelGeneral.Grupo_Usuario" Role="Grupo_Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Grupo_Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tarea_Usuario">
+          <End Type="ModelGeneral.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="ModelGeneral.Tarea" Role="Tarea" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Tarea">
+              <PropertyRef Name="IdUsuarioSolicitante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tarea_Usuario1">
+          <End Type="ModelGeneral.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="ModelGeneral.Tarea" Role="Tarea" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Tarea">
+              <PropertyRef Name="IdUsuarioAsignado" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1126,6 +1128,7 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_Tarea' no tiene definida ni
                 <ScalarProperty Name="IdUsuarioModifica" ColumnName="IdUsuarioModifica" />
                 <ScalarProperty Name="IdUsuarioCreacion" ColumnName="IdUsuarioCreacion" />
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="TipoUsuario" ColumnName="TipoUsuario" />
                 <ScalarProperty Name="Correo" ColumnName="Correo" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Clave" ColumnName="Clave" />

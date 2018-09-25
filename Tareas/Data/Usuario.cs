@@ -28,6 +28,7 @@ namespace Data
         public string Clave { get; set; }
         public string Nombre { get; set; }
         public string Correo { get; set; }
+        public int TipoUsuario { get; set; }
         public bool Estado { get; set; }
         public string IdUsuarioCreacion { get; set; }
         public string IdUsuarioModifica { get; set; }
