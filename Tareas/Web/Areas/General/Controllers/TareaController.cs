@@ -97,7 +97,7 @@ namespace Web.Areas.General.Controllers
             model.list_detalle = Lis_Tarea_det_Info_lis.get_list(model.IdTransaccionSession);
             model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(model.IdTransaccionSession);
             model.IdUsuario = SessionTareas.IdUsuario.ToString();
-            if (model.list_detalle == null)
+            if (model.list_detalle == null &&(model.IdUsuarioSolicitante==model.IdUsuarioAsignado))
             {
                 cargar_combo();
                 ViewBag.mensaje = "La tarea debe tener un detalle";

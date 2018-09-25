@@ -32,5 +32,6 @@ namespace Data
         public string EstadoTarea { get; set; }
         public string NombreGrupo { get; set; }
         public bool Estado { get; set; }
+        public Nullable<System.DateTime> FechaAprobacion { get; set; }
     }
 }
