@@ -9,7 +9,9 @@
     [FechaTransaccion]  DATETIME       NULL,
     [FechaModificacion] DATETIME       NULL,
     [FechaAnulacion]    DATETIME       NULL,
-    CONSTRAINT [PK_Estado] PRIMARY KEY CLUSTERED ([IdEstado] ASC, [IdEstadoTipo] ASC),
+    CONSTRAINT [PK_Estado_1] PRIMARY KEY CLUSTERED ([IdEstado] ASC),
     CONSTRAINT [FK_Estado_EstadoTipo] FOREIGN KEY ([IdEstadoTipo]) REFERENCES [dbo].[EstadoTipo] ([IdEstadoTipo])
 );
+
+
 

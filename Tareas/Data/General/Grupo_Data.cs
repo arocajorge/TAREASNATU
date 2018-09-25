@@ -187,6 +187,7 @@ namespace Data
                      info = (from grupo in Context.Grupo
                                       join usuario in Context.Usuario
                                       on grupo.IdUsuario equals usuario.IdUsuario
+                                       where grupo.IdGrupo==IdGrupo
                                       select new Grupo_Info
                                       {
                                           IdUsuario = grupo.IdUsuario,

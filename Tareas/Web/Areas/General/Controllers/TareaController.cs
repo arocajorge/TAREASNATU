@@ -93,6 +93,10 @@ namespace Web.Areas.General.Controllers
         [HttpPost]
         public ActionResult Nuevo(Tarea_Info model)
         {
+            var grupo = bus_grupo.get_info(model.IdGrupo);
+            model.IdUsuarioAsignado = grupo.IdUsuario;
+
+
             string mensaje = "";
             model.list_detalle = Lis_Tarea_det_Info_lis.get_list(model.IdTransaccionSession);
             model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(model.IdTransaccionSession);
@@ -152,6 +156,8 @@ namespace Web.Areas.General.Controllers
         [HttpPost]
         public ActionResult Modificar(Tarea_Info model)
         {
+            var grupo = bus_grupo.get_info(model.IdGrupo);
+            model.IdUsuarioAsignado = grupo.IdUsuario;
             string mensaje = "";
             model.list_detalle = Lis_Tarea_det_Info_lis.get_list(model.IdTransaccionSession);
             model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(model.IdTransaccionSession);
