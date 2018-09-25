@@ -19,7 +19,6 @@ namespace Data
         {
             this.Grupo = new HashSet<Grupo>();
             this.Grupo_Usuario = new HashSet<Grupo_Usuario>();
-            this.Seg_Menu_x_usuario = new HashSet<Seg_Menu_x_usuario>();
             this.Tarea = new HashSet<Tarea>();
             this.Tarea1 = new HashSet<Tarea>();
             this.Tarea_det = new HashSet<Tarea_det>();
@@ -41,8 +40,6 @@ namespace Data
         public virtual ICollection<Grupo> Grupo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Grupo_Usuario> Grupo_Usuario { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Seg_Menu_x_usuario> Seg_Menu_x_usuario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tarea> Tarea { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

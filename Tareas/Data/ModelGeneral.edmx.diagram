@@ -6,15 +6,11 @@
     <edmx:Diagrams>
       <Diagram DiagramId="d4a43452c29842239b34801f696e004f" Name="Diagram1" ZoomLevel="31">
         <EntityTypeShape EntityType="ModelGeneral.vw_Tarea" Width="1.5" PointX="9.375" PointY="0.75" />
-        <EntityTypeShape EntityType="ModelGeneral.Area" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="ModelGeneral.Departamento" Width="1.5" PointX="2.75" PointY="0.75" />
         <EntityTypeShape EntityType="ModelGeneral.Estado" Width="1.5" PointX="3" PointY="22" />
         <EntityTypeShape EntityType="ModelGeneral.EstadoTipo" Width="1.5" PointX="0.75" PointY="22.375" />
         <EntityTypeShape EntityType="ModelGeneral.Grupo" Width="1.5" PointX="3" PointY="16.875" />
         <EntityTypeShape EntityType="ModelGeneral.Grupo_Usuario" Width="1.5" PointX="8.25" PointY="15.875" />
         <EntityTypeShape EntityType="ModelGeneral.Parametro" Width="1.5" PointX="4.75" PointY="0.75" />
-        <EntityTypeShape EntityType="ModelGeneral.Seg_Menu" Width="1.5" PointX="0.75" PointY="7.125" />
-        <EntityTypeShape EntityType="ModelGeneral.Seg_Menu_x_usuario" Width="1.5" PointX="3" PointY="13.375" />
         <EntityTypeShape EntityType="ModelGeneral.Tarea" Width="1.5" PointX="5.25" PointY="13.75" />
         <EntityTypeShape EntityType="ModelGeneral.Tarea_det" Width="1.5" PointX="10.5" PointY="14.75" />
         <EntityTypeShape EntityType="ModelGeneral.TareaArchivoAdjunto" Width="1.5" PointX="7.5" PointY="22.25" />
@@ -28,8 +24,6 @@
         <AssociationConnector Association="ModelGeneral.FK_Grupo_Usuario_Grupo" />
         <AssociationConnector Association="ModelGeneral.FK_Tarea_Grupo" />
         <AssociationConnector Association="ModelGeneral.FK_Grupo_Usuario_Usuario" />
-        <AssociationConnector Association="ModelGeneral.FK_Seg_Menu_x_usuario_Seg_Menu" />
-        <AssociationConnector Association="ModelGeneral.FK_Seg_Menu_x_usuario_Usuario" />
         <AssociationConnector Association="ModelGeneral.FK_Tarea_det_Tarea" />
         <AssociationConnector Association="ModelGeneral.FK_Tarea_Usuario" />
         <AssociationConnector Association="ModelGeneral.FK_Tarea_Usuario1" />

@@ -74,8 +74,6 @@
     <Build Include="dbo\Tables\Estado.sql" />
     <Build Include="dbo\Tables\Departamento.sql" />
     <Build Include="dbo\Tables\Area.sql" />
-    <Build Include="dbo\Tables\Seg_Menu_x_usuario.sql" />
-    <Build Include="dbo\Tables\Seg_Menu.sql" />
     <Build Include="dbo\Stored Procedures\spseg_corregir_menu.sql" />
   </ItemGroup>
 </Project>

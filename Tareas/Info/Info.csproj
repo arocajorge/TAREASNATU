@@ -42,15 +42,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="General\Archivo_Info.cs" />
-    <Compile Include="General\Area_Info.cs" />
-    <Compile Include="General\Departamento_Info.cs" />
     <Compile Include="General\EstadoTipo_Info.cs" />
     <Compile Include="General\Estado_Info.cs" />
     <Compile Include="General\Grupo_Info.cs" />
     <Compile Include="General\Grupo_Usuario_Info.cs" />
     <Compile Include="General\Parametro_Info.cs" />
-    <Compile Include="General\Seg_Menu_Info.cs" />
-    <Compile Include="General\Seg_Menu_x_usuario_Info.cs" />
     <Compile Include="Helps\cl_filtros_Info.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="General\TareaArchivoAdjunto_Info.cs" />

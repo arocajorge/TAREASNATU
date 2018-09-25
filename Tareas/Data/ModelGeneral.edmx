@@ -5,34 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="ModelGeneral.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Area">
-          <Key>
-            <PropertyRef Name="IdArea" />
-          </Key>
-          <Property Name="IdArea" Type="int" Nullable="false" />
-          <Property Name="Descripcion" Type="varchar" MaxLength="1000" Nullable="false" />
-          <Property Name="Estado" Type="bit" Nullable="false" />
-          <Property Name="IdUsuario" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="IdUsuarioModifica" Type="varchar" MaxLength="50" />
-          <Property Name="UdUsuarioAnula" Type="varchar" MaxLength="50" />
-          <Property Name="FechaTransaccion" Type="datetime" />
-          <Property Name="FechaModificacion" Type="datetime" />
-          <Property Name="FechaAnulacion" Type="datetime" />
-        </EntityType>
-        <EntityType Name="Departamento">
-          <Key>
-            <PropertyRef Name="IdDepartamento" />
-          </Key>
-          <Property Name="IdDepartamento" Type="int" Nullable="false" />
-          <Property Name="Descripcion" Type="varchar" MaxLength="1000" Nullable="false" />
-          <Property Name="Estado" Type="bit" Nullable="false" />
-          <Property Name="IdUsuario" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="IdUsuarioModifica" Type="varchar" MaxLength="50" />
-          <Property Name="IdUsuarioAnula" Type="varchar" MaxLength="50" />
-          <Property Name="FechaTransaccion" Type="datetime" />
-          <Property Name="FechaModificacion" Type="datetime" />
-          <Property Name="FechaAnulacion" Type="datetime" />
-        </EntityType>
         <EntityType Name="Estado">
           <Key>
             <PropertyRef Name="IdEstado" />
@@ -100,40 +72,6 @@
           <Property Name="FtpClave" Type="varchar" MaxLength="200" />
           <Property Name="FtpURLArchivo" Type="varchar" MaxLength="400" />
           <Property Name="FtpURLAdjunto" Type="varchar" MaxLength="400" />
-        </EntityType>
-        <EntityType Name="Seg_Menu">
-          <Key>
-            <PropertyRef Name="IdMenu" />
-          </Key>
-          <Property Name="IdMenu" Type="int" Nullable="false" />
-          <Property Name="IdMenuPadre" Type="int" />
-          <Property Name="DescripcionMenu" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="PosicionMenu" Type="int" Nullable="false" />
-          <Property Name="Habilitado" Type="bit" Nullable="false" />
-          <Property Name="Tiene_FormularioAsociado" Type="bit" Nullable="false" />
-          <Property Name="nom_Formulario" Type="varchar" MaxLength="255" />
-          <Property Name="web_nom_Area" Type="varchar" MaxLength="200" />
-          <Property Name="web_nom_Controller" Type="varchar" MaxLength="200" />
-          <Property Name="web_nom_Action" Type="varchar" MaxLength="300" />
-          <Property Name="nivel" Type="int" />
-          <Property Name="Estado" Type="bit" Nullable="false" />
-          <Property Name="IdUsuario" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="IdUsuarioModifica" Type="varchar" MaxLength="50" />
-          <Property Name="IdUsuarioAnula" Type="varchar" MaxLength="50" />
-          <Property Name="FechaTransaccion" Type="datetime" />
-          <Property Name="FechaModificacion" Type="datetime" />
-          <Property Name="FechaAnulacion" Type="datetime" />
-        </EntityType>
-        <EntityType Name="Seg_Menu_x_usuario">
-          <Key>
-            <PropertyRef Name="IdUsuario" />
-            <PropertyRef Name="IdMenu" />
-          </Key>
-          <Property Name="IdUsuario" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="IdMenu" Type="int" Nullable="false" />
-          <Property Name="Lectura" Type="bit" Nullable="false" />
-          <Property Name="Escritura" Type="bit" Nullable="false" />
-          <Property Name="Eliminacion" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Tarea">
           <Key>
@@ -303,30 +241,6 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_Tarea' no tiene definida ni
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Seg_Menu_x_usuario_Seg_Menu">
-          <End Role="Seg_Menu" Type="Self.Seg_Menu" Multiplicity="1" />
-          <End Role="Seg_Menu_x_usuario" Type="Self.Seg_Menu_x_usuario" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Seg_Menu">
-              <PropertyRef Name="IdMenu" />
-            </Principal>
-            <Dependent Role="Seg_Menu_x_usuario">
-              <PropertyRef Name="IdMenu" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Seg_Menu_x_usuario_Usuario">
-          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
-          <End Role="Seg_Menu_x_usuario" Type="Self.Seg_Menu_x_usuario" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Usuario">
-              <PropertyRef Name="IdUsuario" />
-            </Principal>
-            <Dependent Role="Seg_Menu_x_usuario">
-              <PropertyRef Name="IdUsuario" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Tarea_det_Estado">
           <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
           <End Role="Tarea_det" Type="Self.Tarea_det" Multiplicity="*" />
@@ -451,15 +365,11 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_Tarea' no tiene definida ni
           <Parameter Name="IdUsuario" Type="varchar" Mode="In" />
         </Function>
         <EntityContainer Name="ModelGeneralStoreContainer">
-          <EntitySet Name="Area" EntityType="Self.Area" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Departamento" EntityType="Self.Departamento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Estado" EntityType="Self.Estado" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EstadoTipo" EntityType="Self.EstadoTipo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Grupo" EntityType="Self.Grupo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Grupo_Usuario" EntityType="Self.Grupo_Usuario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Parametro" EntityType="Self.Parametro" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Seg_Menu" EntityType="Self.Seg_Menu" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Seg_Menu_x_usuario" EntityType="Self.Seg_Menu_x_usuario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tarea" EntityType="Self.Tarea" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tarea_det" EntityType="Self.Tarea_det" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TareaArchivoAdjunto" EntityType="Self.TareaArchivoAdjunto" Schema="dbo" store:Type="Tables" />
@@ -502,14 +412,6 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_Tarea' no tiene definida ni
           <AssociationSet Name="FK_Grupo_Usuario_Usuario" Association="Self.FK_Grupo_Usuario_Usuario">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Grupo_Usuario" EntitySet="Grupo_Usuario" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Seg_Menu_x_usuario_Seg_Menu" Association="Self.FK_Seg_Menu_x_usuario_Seg_Menu">
-            <End Role="Seg_Menu" EntitySet="Seg_Menu" />
-            <End Role="Seg_Menu_x_usuario" EntitySet="Seg_Menu_x_usuario" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Seg_Menu_x_usuario_Usuario" Association="Self.FK_Seg_Menu_x_usuario_Usuario">
-            <End Role="Usuario" EntitySet="Usuario" />
-            <End Role="Seg_Menu_x_usuario" EntitySet="Seg_Menu_x_usuario" />
           </AssociationSet>
           <AssociationSet Name="FK_Tarea_det_Estado" Association="Self.FK_Tarea_det_Estado">
             <End Role="Estado" EntitySet="Estado" />
@@ -561,15 +463,11 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_Tarea' no tiene definida ni
           <FunctionImport Name="sp_Tareas_X_Usuarios" ReturnType="Collection(ModelGeneral.sp_Tareas_X_Usuarios_Result)">
           <Parameter Name="IdUsuario" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="Area" EntityType="ModelGeneral.Area" />
-          <EntitySet Name="Departamento" EntityType="ModelGeneral.Departamento" />
           <EntitySet Name="Estado" EntityType="ModelGeneral.Estado" />
           <EntitySet Name="EstadoTipo" EntityType="ModelGeneral.EstadoTipo" />
           <EntitySet Name="Grupo" EntityType="ModelGeneral.Grupo" />
           <EntitySet Name="Grupo_Usuario" EntityType="ModelGeneral.Grupo_Usuario" />
           <EntitySet Name="Parametro" EntityType="ModelGeneral.Parametro" />
-          <EntitySet Name="Seg_Menu" EntityType="ModelGeneral.Seg_Menu" />
-          <EntitySet Name="Seg_Menu_x_usuario" EntityType="ModelGeneral.Seg_Menu_x_usuario" />
           <EntitySet Name="Tarea" EntityType="ModelGeneral.Tarea" />
           <EntitySet Name="Tarea_det" EntityType="ModelGeneral.Tarea_det" />
           <EntitySet Name="TareaArchivoAdjunto" EntityType="ModelGeneral.TareaArchivoAdjunto" />
@@ -606,14 +504,6 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_Tarea' no tiene definida ni
           <AssociationSet Name="FK_Grupo_Usuario_Usuario" Association="ModelGeneral.FK_Grupo_Usuario_Usuario">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Grupo_Usuario" EntitySet="Grupo_Usuario" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Seg_Menu_x_usuario_Seg_Menu" Association="ModelGeneral.FK_Seg_Menu_x_usuario_Seg_Menu">
-            <End Role="Seg_Menu" EntitySet="Seg_Menu" />
-            <End Role="Seg_Menu_x_usuario" EntitySet="Seg_Menu_x_usuario" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Seg_Menu_x_usuario_Usuario" Association="ModelGeneral.FK_Seg_Menu_x_usuario_Usuario">
-            <End Role="Usuario" EntitySet="Usuario" />
-            <End Role="Seg_Menu_x_usuario" EntitySet="Seg_Menu_x_usuario" />
           </AssociationSet>
           <AssociationSet Name="FK_Tarea_det_Tarea" Association="ModelGeneral.FK_Tarea_det_Tarea">
             <End Role="Tarea" EntitySet="Tarea" />
@@ -693,34 +583,6 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_Tarea' no tiene definida ni
           <Property Type="Boolean" Name="Estado" Nullable="false" />
           <Property Type="String" Name="IdUsuario" Nullable="false" MaxLength="50" />
         </ComplexType>
-        <EntityType Name="Area">
-          <Key>
-            <PropertyRef Name="IdArea" />
-          </Key>
-          <Property Name="IdArea" Type="Int32" Nullable="false" />
-          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="Estado" Type="Boolean" Nullable="false" />
-          <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdUsuarioModifica" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="UdUsuarioAnula" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="FechaTransaccion" Type="DateTime" Precision="3" />
-          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
-          <Property Name="FechaAnulacion" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="Departamento">
-          <Key>
-            <PropertyRef Name="IdDepartamento" />
-          </Key>
-          <Property Name="IdDepartamento" Type="Int32" Nullable="false" />
-          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="Estado" Type="Boolean" Nullable="false" />
-          <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdUsuarioModifica" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdUsuarioAnula" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="FechaTransaccion" Type="DateTime" Precision="3" />
-          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
-          <Property Name="FechaAnulacion" Type="DateTime" Precision="3" />
-        </EntityType>
         <EntityType Name="Estado">
           <Key>
             <PropertyRef Name="IdEstado" />
@@ -798,43 +660,6 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_Tarea' no tiene definida ni
           <Property Name="FtpClave" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="FtpURLArchivo" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
           <Property Name="FtpURLAdjunto" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="Seg_Menu">
-          <Key>
-            <PropertyRef Name="IdMenu" />
-          </Key>
-          <Property Name="IdMenu" Type="Int32" Nullable="false" />
-          <Property Name="IdMenuPadre" Type="Int32" />
-          <Property Name="DescripcionMenu" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="PosicionMenu" Type="Int32" Nullable="false" />
-          <Property Name="Habilitado" Type="Boolean" Nullable="false" />
-          <Property Name="Tiene_FormularioAsociado" Type="Boolean" Nullable="false" />
-          <Property Name="nom_Formulario" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="web_nom_Area" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="web_nom_Controller" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="web_nom_Action" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="nivel" Type="Int32" />
-          <Property Name="Estado" Type="Boolean" Nullable="false" />
-          <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdUsuarioModifica" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdUsuarioAnula" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="FechaTransaccion" Type="DateTime" Precision="3" />
-          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
-          <Property Name="FechaAnulacion" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Seg_Menu_x_usuario" Relationship="ModelGeneral.FK_Seg_Menu_x_usuario_Seg_Menu" FromRole="Seg_Menu" ToRole="Seg_Menu_x_usuario" />
-        </EntityType>
-        <EntityType Name="Seg_Menu_x_usuario">
-          <Key>
-            <PropertyRef Name="IdUsuario" />
-            <PropertyRef Name="IdMenu" />
-          </Key>
-          <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdMenu" Type="Int32" Nullable="false" />
-          <Property Name="Lectura" Type="Boolean" Nullable="false" />
-          <Property Name="Escritura" Type="Boolean" Nullable="false" />
-          <Property Name="Eliminacion" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Seg_Menu" Relationship="ModelGeneral.FK_Seg_Menu_x_usuario_Seg_Menu" FromRole="Seg_Menu_x_usuario" ToRole="Seg_Menu" />
-          <NavigationProperty Name="Usuario" Relationship="ModelGeneral.FK_Seg_Menu_x_usuario_Usuario" FromRole="Seg_Menu_x_usuario" ToRole="Usuario" />
         </EntityType>
         <EntityType Name="Tarea">
           <Key>
@@ -931,7 +756,6 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_Tarea' no tiene definida ni
           <Property Name="FechaAnulacion" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Grupo" Relationship="ModelGeneral.FK_Grupo_Usuario" FromRole="Usuario" ToRole="Grupo" />
           <NavigationProperty Name="Grupo_Usuario" Relationship="ModelGeneral.FK_Grupo_Usuario_Usuario" FromRole="Usuario" ToRole="Grupo_Usuario" />
-          <NavigationProperty Name="Seg_Menu_x_usuario" Relationship="ModelGeneral.FK_Seg_Menu_x_usuario_Usuario" FromRole="Usuario" ToRole="Seg_Menu_x_usuario" />
           <NavigationProperty Name="Tarea" Relationship="ModelGeneral.FK_Tarea_Usuario" FromRole="Usuario" ToRole="Tarea" />
           <NavigationProperty Name="Tarea1" Relationship="ModelGeneral.FK_Tarea_Usuario1" FromRole="Usuario" ToRole="Tarea" />
           <NavigationProperty Name="Tarea_det" Relationship="ModelGeneral.FK_Tarea_det_Usuario" FromRole="Usuario" ToRole="Tarea_det" />
@@ -1028,30 +852,6 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_Tarea' no tiene definida ni
               <PropertyRef Name="IdUsuario" />
             </Principal>
             <Dependent Role="Grupo_Usuario">
-              <PropertyRef Name="IdUsuario" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Seg_Menu_x_usuario_Seg_Menu">
-          <End Type="ModelGeneral.Seg_Menu" Role="Seg_Menu" Multiplicity="1" />
-          <End Type="ModelGeneral.Seg_Menu_x_usuario" Role="Seg_Menu_x_usuario" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Seg_Menu">
-              <PropertyRef Name="IdMenu" />
-            </Principal>
-            <Dependent Role="Seg_Menu_x_usuario">
-              <PropertyRef Name="IdMenu" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Seg_Menu_x_usuario_Usuario">
-          <End Type="ModelGeneral.Usuario" Role="Usuario" Multiplicity="1" />
-          <End Type="ModelGeneral.Seg_Menu_x_usuario" Role="Seg_Menu_x_usuario" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Usuario">
-              <PropertyRef Name="IdUsuario" />
-            </Principal>
-            <Dependent Role="Seg_Menu_x_usuario">
               <PropertyRef Name="IdUsuario" />
             </Dependent>
           </ReferentialConstraint>
@@ -1178,36 +978,6 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_Tarea' no tiene definida ni
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="Area">
-            <EntityTypeMapping TypeName="ModelGeneral.Area">
-              <MappingFragment StoreEntitySet="Area">
-                <ScalarProperty Name="FechaAnulacion" ColumnName="FechaAnulacion" />
-                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
-                <ScalarProperty Name="FechaTransaccion" ColumnName="FechaTransaccion" />
-                <ScalarProperty Name="UdUsuarioAnula" ColumnName="UdUsuarioAnula" />
-                <ScalarProperty Name="IdUsuarioModifica" ColumnName="IdUsuarioModifica" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="IdArea" ColumnName="IdArea" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Departamento">
-            <EntityTypeMapping TypeName="ModelGeneral.Departamento">
-              <MappingFragment StoreEntitySet="Departamento">
-                <ScalarProperty Name="FechaAnulacion" ColumnName="FechaAnulacion" />
-                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
-                <ScalarProperty Name="FechaTransaccion" ColumnName="FechaTransaccion" />
-                <ScalarProperty Name="IdUsuarioAnula" ColumnName="IdUsuarioAnula" />
-                <ScalarProperty Name="IdUsuarioModifica" ColumnName="IdUsuarioModifica" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="IdDepartamento" ColumnName="IdDepartamento" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Estado">
             <EntityTypeMapping TypeName="ModelGeneral.Estado">
               <MappingFragment StoreEntitySet="Estado">
@@ -1277,41 +1047,6 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_Tarea' no tiene definida ni
                 <ScalarProperty Name="CorreoClave" ColumnName="CorreoClave" />
                 <ScalarProperty Name="CorreoCuenta" ColumnName="CorreoCuenta" />
                 <ScalarProperty Name="IdParametro" ColumnName="IdParametro" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Seg_Menu">
-            <EntityTypeMapping TypeName="ModelGeneral.Seg_Menu">
-              <MappingFragment StoreEntitySet="Seg_Menu">
-                <ScalarProperty Name="FechaAnulacion" ColumnName="FechaAnulacion" />
-                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
-                <ScalarProperty Name="FechaTransaccion" ColumnName="FechaTransaccion" />
-                <ScalarProperty Name="IdUsuarioAnula" ColumnName="IdUsuarioAnula" />
-                <ScalarProperty Name="IdUsuarioModifica" ColumnName="IdUsuarioModifica" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="nivel" ColumnName="nivel" />
-                <ScalarProperty Name="web_nom_Action" ColumnName="web_nom_Action" />
-                <ScalarProperty Name="web_nom_Controller" ColumnName="web_nom_Controller" />
-                <ScalarProperty Name="web_nom_Area" ColumnName="web_nom_Area" />
-                <ScalarProperty Name="nom_Formulario" ColumnName="nom_Formulario" />
-                <ScalarProperty Name="Tiene_FormularioAsociado" ColumnName="Tiene_FormularioAsociado" />
-                <ScalarProperty Name="Habilitado" ColumnName="Habilitado" />
-                <ScalarProperty Name="PosicionMenu" ColumnName="PosicionMenu" />
-                <ScalarProperty Name="DescripcionMenu" ColumnName="DescripcionMenu" />
-                <ScalarProperty Name="IdMenuPadre" ColumnName="IdMenuPadre" />
-                <ScalarProperty Name="IdMenu" ColumnName="IdMenu" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Seg_Menu_x_usuario">
-            <EntityTypeMapping TypeName="ModelGeneral.Seg_Menu_x_usuario">
-              <MappingFragment StoreEntitySet="Seg_Menu_x_usuario">
-                <ScalarProperty Name="Eliminacion" ColumnName="Eliminacion" />
-                <ScalarProperty Name="Escritura" ColumnName="Escritura" />
-                <ScalarProperty Name="Lectura" ColumnName="Lectura" />
-                <ScalarProperty Name="IdMenu" ColumnName="IdMenu" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
