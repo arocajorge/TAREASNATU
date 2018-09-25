@@ -146,7 +146,7 @@ namespace Web.Areas.General.Controllers
         {
             model.list_detalle = Lis_Tarea_det_Info_lis.get_list(model.IdTransaccionSession);
             model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(model.IdTransaccionSession);
-
+            model.IdUsuarioModifica = SessionTareas.IdUsuario.ToString();
             if (model.list_detalle == null)
             {
                 cargar_combo();
@@ -204,6 +204,13 @@ namespace Web.Areas.General.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        public FileResult DolowarFille(decimal IdTarea, int Secuencial)
+        {
+           var info= bus_adjunto.get_info(IdTarea, Secuencial);
+            return File(info.Archivo, "application/pdf", info.NombreArchivo);
+        }
+
         #endregion
 
         #region cargar combo
@@ -243,8 +250,7 @@ namespace Web.Areas.General.Controllers
                 var list_estado_detalle = bus_estado.get_lis(3);
                 ViewBag.list_estado_detalle = list_estado_detalle;
 
-                var list_grupo = bus_grupo.get_lis();
-                ViewBag.list_grupo = list_grupo;
+                
 
             }
             catch (Exception)
@@ -271,7 +277,7 @@ namespace Web.Areas.General.Controllers
         public ActionResult EditingUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] Tarea_det_Info info_det)
         {
             if (ModelState.IsValid)
-                Lis_Tarea_det_Info_lis.AddRow(info_det, Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual));
+                Lis_Tarea_det_Info_lis.UpdateRow(info_det, Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual));
             Tarea_Info model = new Tarea_Info();
             model.list_detalle = Lis_Tarea_det_Info_lis.get_list(Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual));
             cargar_combo_detalle();
@@ -317,7 +323,7 @@ namespace Web.Areas.General.Controllers
             if (e.UploadedFile.IsValid)
             {
                 TareaArchivoAdjunto_Info info_documento = new TareaArchivoAdjunto_Info();
-                info_documento.tamanio_file = e.UploadedFile.FileBytes;
+                info_documento.Archivo = e.UploadedFile.FileBytes;
                 info_documento.NombreArchivo = e.UploadedFile.FileName;
                 TareaArchivoAdjunto_Info_lis.AddRow(info_documento);
             }
@@ -357,13 +363,14 @@ namespace Web.Areas.General.Controllers
             List<Tarea_det_Info> list = get_list(IdTransaccionSessionActual);
             list.Remove(list.Where(m => m.Secuancial == Secuancial).First());
         }
-        public void UpdateRow(Tarea_det_Info info_det)
+        public void UpdateRow(Tarea_det_Info info_det, decimal IdTransaccionSessionActual)
         {
-            Tarea_det_Info edited_info = get_list(Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual)).Where(m => m.Secuancial == info_det.Secuancial).First();
+            Tarea_det_Info edited_info = get_list(IdTransaccionSessionActual).Where(m => m.Secuancial == info_det.Secuancial).First();
             edited_info.FechaFin = info_det.FechaFin;
             edited_info.FechaInicio = info_det.FechaInicio;
             edited_info.Descripcion = info_det.Descripcion;
             edited_info.NumHoras = info_det.NumHoras;
+            
         }
     }
 
@@ -406,7 +413,7 @@ namespace Web.Areas.General.Controllers
         {
             TareaArchivoAdjunto_Info edited_info = get_list(Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual)).Where(m => m.Secuencial == info_det.Secuencial).First();
             edited_info.NombreArchivo = info_det.NombreArchivo;
-            edited_info.tamanio_file = info_det.tamanio_file;
+            edited_info.Archivo = info_det.Archivo;
         }
     }
     #endregion

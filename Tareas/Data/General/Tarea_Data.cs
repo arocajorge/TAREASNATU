@@ -74,10 +74,8 @@ namespace Data
 
                 using (EntityTareas Context = new EntityTareas())
                 {
-                    Lista = (from q in Context.vw_Tarea
-                             //where q.FechaInicio >= FechaInicio
-                             //&& q.FechaInicio <= FechaFin
-
+                    Lista = (from q in Context.sp_Tareas_X_Usuarios(IdUsuario)
+                             
                              select new Tarea_Info
                              {
                                  IdTarea = q.IdTarea,
@@ -91,14 +89,6 @@ namespace Data
                                  IdEstadoPrioridad = q.IdEstadoPrioridad,
                                  TareaConcurrente = q.TareaConcurrente,
                                  Estado = q.Estado,
-
-                                 solicitante = q.solicitante,
-                                 Asignado = q.Asignado,
-                                 Prioridad = q.Prioridad,
-                                 EstadoTarea = q.EstadoTarea,
-                                 NombreGrupo = q.NombreGrupo
-
-
                              }).ToList();
                 }
 
@@ -131,6 +121,8 @@ namespace Data
                         Observacion = info.Observacion,
                         IdEstadoPrioridad = info.IdEstadoPrioridad,
                         TareaConcurrente = info.TareaConcurrente,
+                        AprobadoEncargado=info.AprobadoEncargado,
+                        AprobadoSolicitado=info.AprobadoSolicitado,
                         FechaTransaccion = DateTime.Now,
                         IdUsuario = info.IdUsuario,
                         Estado = true
@@ -151,7 +143,7 @@ namespace Data
                             FechaFin = item.FechaFin,
                             IdUsuario=item.IdUsuario,
                             FechaUltimaModif=DateTime.Now,
-                            IdEstado = item.IdEstado,
+                            IdEstado = 8,
                            
 
                         };
@@ -167,7 +159,7 @@ namespace Data
                             IdTarea = info.IdTarea,
                             Secuencial = secuencia,
                             NombreArchivo = item.NombreArchivo,
-
+                            Archivo=item.Archivo
 
                         };
                         secuencia++;
@@ -182,7 +174,7 @@ namespace Data
                             IdTarea = info.IdTarea,
                             Secuancial = odta_estado.get_id(info.IdTarea),
                             IdUsuario = info.IdUsuario,
-                            Observacion=info.Observacion,
+                            Observacion=info.Observacion==null?" ":info.Observacion,
                             IdEstado=info.EstadoActual,
                             FechaModificacion=DateTime.Now,
                             IdUsuarioModifica=info.IdUsuario
@@ -224,6 +216,8 @@ namespace Data
                     Entity.Observacion = info.Observacion;
                     Entity.IdEstadoPrioridad = info.IdEstadoPrioridad;
                     Entity.TareaConcurrente = info.TareaConcurrente;
+                    Entity.AprobadoSolicitado = info.AprobadoSolicitado;
+                    Entity.AprobadoEncargado = info.AprobadoEncargado;
                     Entity.FechaModificacion = DateTime.Now;
                     Entity.IdUsuarioModifica = info.IdUsuarioModifica;
 
@@ -238,7 +232,10 @@ namespace Data
                             Descripcion = item.Descripcion,
                             NumHoras = item.NumHoras,
                             FechaInicio = item.FechaInicio,
-                            FechaFin = item.FechaFin
+                            FechaFin = item.FechaFin,
+                            IdUsuario = item.IdUsuario,
+                            FechaUltimaModif = DateTime.Now,
+                            IdEstado = 8,
 
                         };
                         Context.Tarea_det.Add(det);
@@ -254,6 +251,7 @@ namespace Data
                             IdTarea = info.IdTarea,
                             Secuencial = secuencia,
                             NombreArchivo = item.NombreArchivo,
+                            Archivo = item.Archivo
 
 
                         };
@@ -268,7 +266,7 @@ namespace Data
                     {
                         IdTarea = info.IdTarea,
                         Secuancial = odta_estado.get_id(info.IdTarea),
-                        IdUsuario = info.IdUsuario,
+                        IdUsuario = info.IdUsuarioModifica,
                         Observacion = info.Observacion,
                         IdEstado = info.EstadoActual,
                         FechaModificacion = DateTime.Now
@@ -282,7 +280,7 @@ namespace Data
                 }
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
                 throw;
@@ -337,12 +335,12 @@ namespace Data
                  Tarea_Info info = new  Tarea_Info();
                 using (EntityTareas Context = new EntityTareas())
                 {
-                     Tarea Entity = Context. Tarea.FirstOrDefault(q => q.IdTarea == IdTarea);
+                    vw_Tarea Entity = Context. vw_Tarea.FirstOrDefault(q => q.IdTarea == IdTarea);
                     if (Entity == null) return null;
 
                     info = new  Tarea_Info
                     {
-                        IdTarea = Entity.IdTarea,
+                        IdTarea=Entity.IdTarea,
                         IdUsuarioSolicitante = Entity.IdUsuarioSolicitante,
                         IdGrupo = Entity.IdGrupo,
                         IdUsuarioAsignado = Entity.IdUsuarioAsignado,
@@ -352,6 +350,9 @@ namespace Data
                         Observacion = Entity.Observacion,
                         IdEstadoPrioridad = Entity.IdEstadoPrioridad,
                         TareaConcurrente = Entity.TareaConcurrente,
+                        AprobadoEncargado = Entity.AprobadoEncargado,
+                        AprobadoSolicitado = Entity.AprobadoSolicitado,
+                        nomb_jef_grupo=Entity.Asignado
 
                     };
                 }
@@ -394,7 +395,7 @@ namespace Data
                     {
                         foreach (var item in info.list_adjuntos)
                         {
-                            mail.Attachments.Add(new Attachment(new MemoryStream(item.tamanio_file), item.NombreArchivo));
+                            mail.Attachments.Add(new Attachment(new MemoryStream(item.Archivo), item.NombreArchivo));
 
                         }
                     }

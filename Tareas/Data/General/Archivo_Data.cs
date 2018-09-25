@@ -42,14 +42,14 @@ namespace Data
                     
 
                     Stream streamObj = System.IO.Stream.Null;
-                    streamObj.Read(item.tamanio_file, 0, item.tamanio_file.Length);
+                    streamObj.Read(item.Archivo, 0, item.Archivo.Length);
                     streamObj.Close();
                     streamObj = null;
                     var requestObj = FtpWebRequest.Create(ftpurl) as FtpWebRequest;
                     requestObj.Method = WebRequestMethods.Ftp.UploadFile;
                     requestObj.Credentials = new NetworkCredential(info_ftp.FtpUsuario, info_ftp.FtpClave);
                     Stream requestStream = requestObj.GetRequestStream();
-                    requestStream.Write(item.tamanio_file, 0, item.tamanio_file.Length);
+                    requestStream.Write(item.Archivo, 0, item.Archivo.Length);
                     requestStream.Flush();
                     requestStream.Close();
                     requestObj = null;

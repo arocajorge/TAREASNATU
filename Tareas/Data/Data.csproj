@@ -104,6 +104,9 @@
     <Compile Include="Seg_Menu_x_usuario.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
+    <Compile Include="sp_Tareas_X_Usuarios_Result.cs">
+      <DependentUpon>ModelGeneral.tt</DependentUpon>
+    </Compile>
     <Compile Include="Tarea.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>

@@ -55,6 +55,9 @@ namespace Bus
         {
             try
             {
+                Grupo_Data data_grupo = new Grupo_Data();
+                var grupo = data_grupo.get_info(info.IdGrupo);
+                info.IdUsuarioAsignado = grupo.IdUsuario;
                 return odata.modificarDB(info);
             }
             catch (Exception)

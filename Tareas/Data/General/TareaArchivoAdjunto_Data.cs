@@ -23,7 +23,7 @@ namespace Data
                              {
                                  IdTarea = q.IdTarea,
                                  Secuencial = q.Secuencial,
-                                 NombreArchivo = q.NombreArchivo
+                                 NombreArchivo = q.NombreArchivo,
                              }).ToList();
                 }
 
@@ -35,5 +35,37 @@ namespace Data
                 throw;
             }
         }
+
+        public TareaArchivoAdjunto_Info get_info(decimal IdTarea, int Secuancial)
+        {
+            try
+            {
+                TareaArchivoAdjunto_Info info = new TareaArchivoAdjunto_Info();
+
+                using (EntityTareas Context = new EntityTareas())
+                {
+                    TareaArchivoAdjunto Entity = Context.TareaArchivoAdjunto.FirstOrDefault(q => q.IdTarea == IdTarea && q.Secuencial==Secuancial);
+                    if (Entity == null)
+                        return null;
+
+                    info = new TareaArchivoAdjunto_Info
+                    {
+                        IdTarea = Entity.IdTarea,
+                        Secuencial = Entity.Secuencial,
+                        NombreArchivo = Entity.NombreArchivo,
+                        Archivo=Entity.Archivo
+
+                    };
+                }
+
+                return info;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
     }
 }

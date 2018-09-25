@@ -1,4 +1,5 @@
 ﻿using Bus;
+using DevExpress.Web.Mvc;
 using Info;
 using System;
 using System.Collections.Generic;
@@ -22,18 +23,56 @@ namespace Web.Areas.General.Controllers
         public ActionResult GridViewPartial_mis_tareas()
         {
             List<Tarea_Info> model = new List<Tarea_Info>();
-           
-            model = bus_tarea.get_lis("");
-            return PartialView("_GridViewPartial_mis_tareas", model);
+            string IdUsuario = "";
+            if (SessionTareas.IdUsuario != null)
+            {
+                IdUsuario = SessionTareas.IdUsuario.ToString();
+                model = bus_tarea.get_lis(IdUsuario);
+                return PartialView("_GridViewPartial_mis_tareas", model);
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
         }
         [ValidateInput(false)]
         public ActionResult GridViewPartial_mis_tareas_det(decimal IdTarea=0)
         {
             cargar_combo_detalle();
-            Tarea_Info model = new Tarea_Info();
-            model.list_detalle = bus_detalle.get_lis(IdTarea);
-            return PartialView("_GridViewPartial_mis_tareas_det", model.list_detalle);
+
+            ViewBag.IdTarea = IdTarea;
+            string IdUsuario = "";
+            if (SessionTareas.IdUsuario != null)
+            {
+                IdUsuario = SessionTareas.IdUsuario.ToString();
+                Tarea_Info model = new Tarea_Info();
+                model.list_detalle = bus_detalle.get_lis(IdTarea, IdUsuario);
+                return PartialView("_GridViewPartial_mis_tareas_det", model.list_detalle);
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
         }
+
+        public ActionResult EditingUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] Tarea_det_Info info_det)
+        {
+            string IdUsuario = "";
+            cargar_combo_detalle();
+            if (SessionTareas.IdUsuario != null)
+                {
+                    IdUsuario = SessionTareas.IdUsuario.ToString();
+                    Tarea_Info model = new Tarea_Info();
+                    bus_detalle.cambiar_estado(info_det);
+                    model.list_detalle = bus_detalle.get_lis(info_det.IdTarea, IdUsuario);
+                return RedirectToAction("Index");
+            }
+            else
+                {
+                    return RedirectToAction("Login");
+                }
+        }
+
 
         public void cargar_combo_detalle()
         {

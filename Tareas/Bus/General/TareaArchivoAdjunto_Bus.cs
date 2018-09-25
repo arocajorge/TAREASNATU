@@ -22,5 +22,18 @@ namespace Bus
                 throw;
             }
         }
-    }
+
+        public TareaArchivoAdjunto_Info get_info(decimal IdTarea, int Secuancial)
+        {
+            try
+            {
+                return odata.get_info(IdTarea, Secuancial);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        }
 }

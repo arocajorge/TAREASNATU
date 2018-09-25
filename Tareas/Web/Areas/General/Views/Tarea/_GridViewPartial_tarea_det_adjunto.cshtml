@@ -39,19 +39,8 @@
 
             });
         });
-        settings.Columns.Add("tamanio_file","...", MVCxGridViewColumnType.Image);
 
-        settings.Columns.Add(column =>
-        {
-            column.FieldName = "NombreArchivo";
-            column.Caption = "Nombre archivo";
-            column.Width = Unit.Percentage(100);
-            column.EditorProperties().TextBox(sp =>
-            {
-                sp.Width = Unit.Percentage(100);
-
-            });
-        });
+       
 
         settings.Columns.Add(column =>
         {
@@ -60,7 +49,7 @@
             {
                 if (DataBinder.Eval(c.DataItem, "NombreArchivo") != null)
                 {
-                    ViewContext.Writer.Write("<span class=\"glyphicon glyphicon-download-alt\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("Nuevo", "Tarea", new { Area = "General", IdTarea = DataBinder.Eval(c.DataItem, "IdTarea") }, Request.Url.Scheme) + "');\"></span>");
+                    ViewContext.Writer.Write("<span class=\"glyphicon glyphicon-download-alt\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("DolowarFille", "Tarea", new { Area = "General", IdTarea = DataBinder.Eval(c.DataItem, "IdTarea"), Secuencial= DataBinder.Eval(c.DataItem, "Secuencial") }, Request.Url.Scheme) + "');\"></span>");
                 }
             });
             column.Width = Unit.Percentage(5);

@@ -12,6 +12,8 @@ namespace Data
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class EntityTareas : DbContext
     {
@@ -25,6 +27,7 @@ namespace Data
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<vw_Tarea> vw_Tarea { get; set; }
         public virtual DbSet<Area> Area { get; set; }
         public virtual DbSet<Departamento> Departamento { get; set; }
         public virtual DbSet<Estado> Estado { get; set; }
@@ -39,6 +42,14 @@ namespace Data
         public virtual DbSet<TareaArchivoAdjunto> TareaArchivoAdjunto { get; set; }
         public virtual DbSet<TareaEstado> TareaEstado { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
-        public virtual DbSet<vw_Tarea> vw_Tarea { get; set; }
+    
+        public virtual ObjectResult<sp_Tareas_X_Usuarios_Result> sp_Tareas_X_Usuarios(string idUsuario)
+        {
+            var idUsuarioParameter = idUsuario != null ?
+                new ObjectParameter("IdUsuario", idUsuario) :
+                new ObjectParameter("IdUsuario", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_Tareas_X_Usuarios_Result>("sp_Tareas_X_Usuarios", idUsuarioParameter);
+        }
     }
 }

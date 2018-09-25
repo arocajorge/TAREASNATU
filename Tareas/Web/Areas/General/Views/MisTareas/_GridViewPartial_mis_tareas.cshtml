@@ -5,19 +5,55 @@
     settings.Name = "grid";
     settings.CallbackRouteValues = new { Controller = "MisTareas", Action = "GridViewPartial_mis_tareas" };
     settings.Width = Unit.Percentage(100);
+    //Configuración para que la grilla no muestre texto completo
+    settings.SettingsBehavior.AllowEllipsisInText = true;
+    settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
+    settings.SettingsDetail.AllowOnlyOneMasterRowExpanded = false;
 
     settings.KeyFieldName = "IdTarea";
-    settings.Columns.Add("Observacion");
+    settings.Columns.Add("Observacion", "Tarea").Width = Unit.Percentage(30);
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "FechaInicio";
+        column.Caption = "Fecha inicio";
+        column.Width = Unit.Percentage(10);
+        column.PropertiesEdit.DisplayFormatString = "d";
+        column.EditorProperties().DateEdit(sp =>
+        {
+            column.PropertiesEdit.DisplayFormatString = "d";
+            sp.Width = Unit.Percentage(100);
+        });
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "FechaCulmina";
+        column.Caption = "Fecha fin";
+        column.Width = Unit.Percentage(10);
+        column.PropertiesEdit.DisplayFormatString = "d";
+        column.EditorProperties().DateEdit(sp =>
+        {
+            column.PropertiesEdit.DisplayFormatString = "d";
+            sp.Width = Unit.Percentage(100);
+        });
+    });
+
     settings.SetDetailRowTemplateContent(c =>
     {
         ViewContext.Writer.Write(
-            "Contact IdTarea: <b>" +
-                DataBinder.Eval(c.DataItem, "Observacion") + "</b>, Fax: <b>" +
-                    DataBinder.Eval(c.DataItem, "Observacion") + "</b>" +
-            "<br />" +
+
+            //DataBinder.Eval(c.DataItem, "Observacion") + "</b>, Fecha Inicio: <b>" +
+            //    DataBinder.Eval(c.DataItem, "FechaInicio") + "</b>" +
+            //  "<br />" +
             "<br />"
         );
-        Html.RenderAction("GridViewPartial_mis_tareas_det", new { CustomerID = DataBinder.Eval(c.DataItem, "IdTarea") });
+        Html.RenderAction("GridViewPartial_mis_tareas_det", new { IdTarea = DataBinder.Eval(c.DataItem, "IdTarea") });
+        ViewContext.Writer.Write(
+
+           //DataBinder.Eval(c.DataItem, "Observacion") + "</b>, Fecha Inicio: <b>" +
+           //    DataBinder.Eval(c.DataItem, "FechaInicio") + "</b>" +
+           //  "<br />" +
+           "<br />"
+       );
     });
     settings.SettingsDetail.AllowOnlyOneMasterRowExpanded = false;
     settings.SettingsDetail.ShowDetailRow = true;

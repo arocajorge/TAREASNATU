@@ -25,6 +25,7 @@
 {
 
     @Html.HiddenFor(v => v.IdTransaccionSession);
+    @Html.HiddenFor(v => v.IdTarea);
 
     <div class="row">
         <div class="col-md-12">
@@ -32,7 +33,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="IdGrupo">Grupo*</label>
-                    @Html.DevExpress().ComboBoxFor(q => q.IdUsuario, settings =>
+                    @Html.DevExpress().ComboBoxFor(q => q.IdGrupo, settings =>
                {
                    settings.Name = "IdGrupo";
                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
