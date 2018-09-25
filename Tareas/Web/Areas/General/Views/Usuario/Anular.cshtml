@@ -17,7 +17,7 @@
         <div class="col-md-12">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="IdUsuario"> Usuario*</label>
+                    <label for="IdUsuario"> Cédula*</label>
                     @Html.TextBoxFor(v => v.IdUsuario, new { @class = "form-control", @disabled = "disabled" })
                     @Html.ValidationMessageFor(v => v.IdUsuario, "", new { @class = "text-danger" })
                 </div>
@@ -50,7 +50,7 @@
         <div class="col-md-12">
             <div class="col-md-2">
                 <div class="form-group">
-                    <label for="IdTipoServicio">Tipo de servicio</label>
+                    <label for="IdTipoServicio">Tipo de usuario</label>
                     @Html.DevExpress().ComboBoxFor(q => q.TipoUsuario, setting =>
                {
                    setting.Width = System.Web.UI.WebControls.Unit.Percentage(100);
