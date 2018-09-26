@@ -70,8 +70,20 @@ namespace Web.Areas.General.Controllers
         {
             List<Tarea_Info> model = new List<Tarea_Info>();
           
-            model = bus_tarea.get_lis(ViewBag.fecha_ini, ViewBag.fecha_fin);
-            return PartialView("_GridViewPartial_tarea", model);
+            model = bus_tarea.get_lis(SessionTareas.IdUsuario.ToString(), cl_enumeradores.eTipoTarea.ASIGNADA);
+            return PartialView("_GridViewPartial_buzon_entrada", model);
+        }
+        public ActionResult Buzon_salida()
+        {
+            return View();
+        }
+        [ValidateInput(false)]
+        public ActionResult GridViewPartial_buzon_salida()
+        {
+            List<Tarea_Info> model = new List<Tarea_Info>();
+
+            model = bus_tarea.get_lis(SessionTareas.IdUsuario.ToString(), cl_enumeradores.eTipoTarea.GENERADAS);
+            return PartialView("_GridViewPartial_buzon_salida", model);
         }
         #endregion
 
@@ -238,6 +250,43 @@ namespace Web.Areas.General.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        public ActionResult Aprobar(int IdTarea = 0)
+
+        {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionTareas.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionTareas.IdTransaccionSession = (Convert.ToDecimal(SessionTareas.IdTransaccionSession) + 1).ToString();
+            SessionTareas.IdTransaccionSessionActual = SessionTareas.IdTransaccionSession;
+            #endregion
+
+            Tarea_Info model = bus_tarea.get_info(IdTarea);
+            model.IdTransaccionSession = Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual);
+            model.list_detalle = bus_tarea_det.get_lis(IdTarea);
+            Lis_Tarea_det_Info_lis.set_list(model.list_detalle, model.IdTransaccionSession);
+            model.list_adjuntos = bus_adjunto.get_lis(IdTarea);
+            TareaArchivoAdjunto_Info_lis.set_list(model.list_adjuntos, model.IdTransaccionSession);
+            cargar_combo();
+            if (model == null)
+                return RedirectToAction("Index");
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Aprobar(Tarea_Info model)
+        {
+            var grupo = bus_grupo.get_info(model.IdGrupo);
+            model.IdUsuarioAsignado = grupo.IdUsuario;
+            
+            if (!bus_tarea.modificarDB(model))
+            {
+                cargar_combo();
+                return View(model);
+            }
+            return RedirectToAction("Index");
+        }
+
 
         public FileResult DolowarFille(decimal IdTarea, int Secuencial)
         {

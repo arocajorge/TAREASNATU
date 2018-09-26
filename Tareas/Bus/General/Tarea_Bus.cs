@@ -1,5 +1,6 @@
 ﻿using Data;
 using Info;
+using Info.Helps;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,18 @@ namespace Bus
             try
             {
                 return odata.get_lis(FechaiInicio, FehcaFin);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public List<Tarea_Info> get_lis(string IdUsuario, cl_enumeradores.eTipoTarea Tipo)
+        {
+            try
+            {
+                return odata.get_lis(IdUsuario, Tipo);
             }
             catch (Exception)
             {

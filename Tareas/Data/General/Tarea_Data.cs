@@ -1,4 +1,5 @@
 ﻿using Info;
+using Info.Helps;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -64,6 +65,76 @@ namespace Data
                 throw;
             }
         }
+        public List<Tarea_Info> get_lis(string IdUsuario,  cl_enumeradores.eTipoTarea Tipo)
+        {
+            try
+            {
+              
+                List<Tarea_Info> Lista = new List<Tarea_Info>();
+
+                using (EntityTareas Context = new EntityTareas())
+                {
+                    if(Tipo==cl_enumeradores.eTipoTarea.ASIGNADA)
+                    Lista = (from q in Context.vw_Tarea
+                             where q.IdUsuarioAsignado ==IdUsuario
+                             select new Tarea_Info
+                             {
+                                 IdTarea = q.IdTarea,
+                                 IdUsuarioSolicitante = q.IdUsuarioSolicitante,
+                                 IdGrupo = q.IdGrupo,
+                                 IdUsuarioAsignado = q.IdUsuarioAsignado,
+                                 EstadoActual = q.EstadoActual,
+                                 FechaInicio = q.FechaInicio,
+                                 FechaCulmina = q.FechaCulmina,
+                                 Observacion = q.Observacion,
+                                 IdEstadoPrioridad = q.IdEstadoPrioridad,
+                                 TareaConcurrente = q.TareaConcurrente,
+                                 Estado = q.Estado,
+
+                                 solicitante = q.solicitante,
+                                 Asignado = q.Asignado,
+                                 Prioridad = q.Prioridad,
+                                 EstadoTarea = q.EstadoTarea,
+                                 NombreGrupo = q.NombreGrupo
+
+
+                             }).ToList();
+                    else
+                        Lista = (from q in Context.vw_Tarea
+                                 where q.IdUsuarioAsignado == IdUsuario
+                                 select new Tarea_Info
+                                 {
+                                     IdTarea = q.IdTarea,
+                                     IdUsuarioSolicitante = q.IdUsuarioSolicitante,
+                                     IdGrupo = q.IdGrupo,
+                                     IdUsuarioAsignado = q.IdUsuarioAsignado,
+                                     EstadoActual = q.EstadoActual,
+                                     FechaInicio = q.FechaInicio,
+                                     FechaCulmina = q.FechaCulmina,
+                                     Observacion = q.Observacion,
+                                     IdEstadoPrioridad = q.IdEstadoPrioridad,
+                                     TareaConcurrente = q.TareaConcurrente,
+                                     Estado = q.Estado,
+
+                                     solicitante = q.solicitante,
+                                     Asignado = q.Asignado,
+                                     Prioridad = q.Prioridad,
+                                     EstadoTarea = q.EstadoTarea,
+                                     NombreGrupo = q.NombreGrupo
+
+
+                                 }).ToList();
+                }
+
+                return Lista;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public List<Tarea_Info> get_lis(string IdUsuario)
         {
             try

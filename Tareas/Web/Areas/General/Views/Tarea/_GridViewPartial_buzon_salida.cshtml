@@ -3,8 +3,8 @@
 @{
     var grid = Html.DevExpress().GridView(settings =>
     {
-        settings.Name = "GridViewPartial_buzon_entrada";
-        settings.CallbackRouteValues = new { Controller = "Tarea", Action = "GridViewPartial_buzon_entrada" };
+        settings.Name = "GridViewPartial_buzon_salida";
+        settings.CallbackRouteValues = new { Controller = "Tarea", Action = "GridViewPartial_buzon_salida" };
         settings.Width = Unit.Percentage(100);
         settings.KeyFieldName = "IdTarea";
         //Configuración para que la grilla no muestre texto completo
@@ -43,6 +43,7 @@
                 e.Row.ForeColor = System.Drawing.Color.Red;
             }
         };     
+        settings.Columns.Add("IdTarea", "ID").Width = Unit.Percentage(5);
         settings.Columns.Add("Observacion", "Observación").Width = Unit.Percentage(30);
         settings.Columns.Add(column =>
         {
@@ -68,7 +69,7 @@
                 sp.Width = Unit.Percentage(100);
             });
         });
-        settings.Columns.Add("solicitante", "Solicitante").Width = Unit.Percentage(10);
+        settings.Columns.Add("Asignado", "Asignado").Width = Unit.Percentage(10);
         settings.Columns.Add("Prioridad", "Prioridad").Width = Unit.Percentage(10);
         settings.Columns.Add("EstadoTarea", "Estado").Width = Unit.Percentage(10);
         settings.Columns.Add("NombreGrupo", "Grupo").Width = Unit.Percentage(10);
