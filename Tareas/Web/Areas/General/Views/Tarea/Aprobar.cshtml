@@ -314,7 +314,8 @@
 
 
     <div class="box-footer">
-        <button type="submit" class="btn btn-primary">Guardar</button>
+        <button type="button" class="btn btn-primary">Aprobar</button>
+        <button type="submit" class="btn btn-danger">Desaprobar</button>
         <a class="btn btn-default" href="@Url.Action("Buszon_entrada","Tarea",new { Area = "General" },null)">Cancelar</a>
     </div>
 
@@ -327,8 +328,6 @@
 
 <script>
     function get_grupo() {
-
-
         if (IdGrupo.GetValue() > 0 ) {
             var datos = {
                 IdGrupo: IdGrupo.GetValue()

@@ -29,7 +29,7 @@
         settings.Settings.ShowFilterRow = true;
         settings.Settings.ShowHeaderFilterButton = true;
         settings.SettingsBehavior.AllowSelectByRowClick = true;
-     
+
         settings.SettingsExport.RenderBrick = (sender, e) =>
         {
             if (e.RowType == GridViewRowType.Data && e.VisibleIndex % 2 == 0)
@@ -42,7 +42,7 @@
             {
                 e.Row.ForeColor = System.Drawing.Color.Red;
             }
-        };     
+        };
         settings.Columns.Add("Observacion", "Observación").Width = Unit.Percentage(30);
         settings.Columns.Add(column =>
         {
@@ -73,6 +73,18 @@
         settings.Columns.Add("EstadoTarea", "Estado").Width = Unit.Percentage(10);
         settings.Columns.Add("NombreGrupo", "Grupo").Width = Unit.Percentage(10);
 
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "";
+            column.SetDataItemTemplateContent(c =>
+            {
+                if (DataBinder.Eval(c.DataItem, "IdTarea") != null)
+                {
+                    ViewContext.Writer.Write("<span class=\"glyphicon glyphicon-download-alt\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("Aprobar", "Tarea", new { Area = "General", IdTarea = DataBinder.Eval(c.DataItem, "IdTarea") }, Request.Url.Scheme) + "');\"></span>");
+                }
+            });
+            column.Width = Unit.Percentage(5);
+        });
 
 
 

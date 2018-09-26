@@ -252,7 +252,6 @@ namespace Web.Areas.General.Controllers
         }
 
         public ActionResult Aprobar(int IdTarea = 0)
-
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionTareas.IdTransaccionSession))
@@ -262,6 +261,11 @@ namespace Web.Areas.General.Controllers
             #endregion
 
             Tarea_Info model = bus_tarea.get_info(IdTarea);
+            if(model==null)
+            {
+                model = new Tarea_Info();
+                return View(model);
+            }
             model.IdTransaccionSession = Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual);
             model.list_detalle = bus_tarea_det.get_lis(IdTarea);
             Lis_Tarea_det_Info_lis.set_list(model.list_detalle, model.IdTransaccionSession);
