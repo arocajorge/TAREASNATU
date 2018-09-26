@@ -1,0 +1,24 @@
+﻿@model Info.Helps.cl_filtros_Info
+@{
+    ViewBag.Title = "Tareas pendientes de aprobar";
+    if (Session["IdUsuario"] == null )
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Layout/_LayoutConsulta.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm())
+{
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    @Html.Action("GridViewPartial_buzon_entrada")
+                </div>
+            </div>
+        </div>
+    </div>
+}

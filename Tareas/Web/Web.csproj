@@ -7415,10 +7415,12 @@
     <Content Include="Areas\General\Views\EstadoTipo\Modificar.cshtml" />
     <Content Include="Areas\General\Views\EstadoTipo\Nuevo.cshtml" />
     <Content Include="Areas\General\Views\Parametro\Index.cshtml" />
-    <Content Include="Areas\General\Views\Tarea\_GridViewPartial_tarea_det_adjunto.cshtml" />
+    <Content Include="Areas\General\Views\Tarea\_GridViewPartial_buzon_entrada.cshtml" />
     <Content Include="Areas\General\Views\MisTareas\Index.cshtml" />
     <Content Include="Areas\General\Views\MisTareas\_GridViewPartial_mis_tareas.cshtml" />
     <Content Include="Areas\General\Views\MisTareas\_GridViewPartial_mis_tareas_det.cshtml" />
+    <Content Include="Areas\General\Views\Tarea\Buzon_entrada.cshtml" />
+    <Content Include="Areas\General\Views\Tarea\_GridViewPartial_tarea_det_adjunto.cshtml" />
     <None Include="Properties\PublishProfiles\Erp_web.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\web.pubxml" />

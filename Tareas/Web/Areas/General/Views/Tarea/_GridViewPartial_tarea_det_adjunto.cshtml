@@ -4,7 +4,7 @@
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "GridViewPartial_tarea_det_adjunto";
-        settings.CallbackRouteValues = new { Controller = "Tarea", Action = "GridViewPartial_tarea_det_adjunto", IdGrupo = Model.IdGrupo};
+        settings.CallbackRouteValues = new { Controller = "Tarea", Action = "GridViewPartial_tarea_det_adjunto", IdGrupo = Model.IdGrupo };
         settings.KeyFieldName = "Secuencial";
         settings.Width = Unit.Percentage(100);
 
@@ -40,7 +40,6 @@
             });
         });
 
-       
 
         settings.Columns.Add(column =>
         {
@@ -49,7 +48,7 @@
             {
                 if (DataBinder.Eval(c.DataItem, "NombreArchivo") != null)
                 {
-                    ViewContext.Writer.Write("<span class=\"glyphicon glyphicon-download-alt\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("DolowarFille", "Tarea", new { Area = "General", IdTarea = DataBinder.Eval(c.DataItem, "IdTarea"), Secuencial= DataBinder.Eval(c.DataItem, "Secuencial") }, Request.Url.Scheme) + "');\"></span>");
+                    ViewContext.Writer.Write("<span class=\"glyphicon glyphicon-download-alt\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("FileResult", "Tarea", new { Area = "General", IdTarea = DataBinder.Eval(c.DataItem, "IdTarea") }, Request.Url.Scheme) + "');\"></span>");
                 }
             });
             column.Width = Unit.Percentage(5);

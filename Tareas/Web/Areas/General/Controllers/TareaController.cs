@@ -60,7 +60,19 @@ namespace Web.Areas.General.Controllers
             return PartialView("_GridViewPartial_tarea_det_adjunto", model);
         }
 
-        
+
+        public ActionResult Buzon_entrada()
+        {
+            return View();
+        }
+        [ValidateInput(false)]
+        public ActionResult GridViewPartial_buzon_entrada()
+        {
+            List<Tarea_Info> model = new List<Tarea_Info>();
+          
+            model = bus_tarea.get_lis(ViewBag.fecha_ini, ViewBag.fecha_fin);
+            return PartialView("_GridViewPartial_tarea", model);
+        }
         #endregion
 
         #region Acciones
@@ -109,7 +121,7 @@ namespace Web.Areas.General.Controllers
             }
             else
             {
-                if (model.list_detalle.Count() == 0)
+                if (model.list_detalle.Count() == 0 && (model.IdUsuarioSolicitante == model.IdUsuarioAsignado))
                 {
                     cargar_combo();
                     ViewBag.mensaje = "La tarea debe tener un detalle";

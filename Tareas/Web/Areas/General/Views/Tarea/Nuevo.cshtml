@@ -264,7 +264,7 @@
     <div id="Tabs" role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
             <li class="active">
-                <a href="#tab_detalle" aria-controls="informacion_items" role="tab" data-toggle="tab" id="detalle">Detalle tarea</a>
+                <a href="#tab_detalle" aria-controls="informacion_items" role="tab" data-toggle="tab" id="link_detalle">Detalle tarea</a>
             </li>
             <li>
                 <a href="#tab_adjuntos" aria-controls="otros" role="tab" data-toggle="tab">Archivos adjuntos</a>
@@ -377,11 +377,11 @@
         var IdUsuarioSolicitant = IdUsuarioSolicitante.GetValue();
         if (IdUsuarioAsignad == IdUsuarioSolicitant)
         {
-            $("#detalle").show();
+            $("#link_detalle").show();
         }
         else
         {
-            $("#detalle").hide();
+            $("#link_detalle").hide();
         }
 
     };
