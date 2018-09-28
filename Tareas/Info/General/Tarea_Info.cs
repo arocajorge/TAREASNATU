@@ -29,6 +29,8 @@ namespace Info
         public bool TareaConcurrente { get; set; }
         public bool AprobadoSolicitado { get; set; }
         public bool AprobadoEncargado { get; set; }
+        public Nullable<System.DateTime> FechaFinConcurrencia { get; set; }
+        public Nullable<int> DiasIntervaloProximaTarea { get; set; }
         public bool Estado { get; set; }
         public string IdUsuario { get; set; }
         public string IdUsuarioModifica { get; set; }

@@ -46,6 +46,10 @@ namespace Data
                                  IdEstadoPrioridad=q.IdEstadoPrioridad,
                                  TareaConcurrente=q.TareaConcurrente,
                                  Estado=q.Estado,
+                                 AprobadoSolicitado=q.AprobadoSolicitado,
+                                 AprobadoEncargado=q.AprobadoEncargado,
+                                 DiasIntervaloProximaTarea=q.DiasIntervaloProximaTarea,
+                                 FechaFinConcurrencia=q.FechaFinConcurrencia,
 
                                  solicitante=q.solicitante,
                                  Asignado=q.Asignado,
@@ -65,11 +69,12 @@ namespace Data
                 throw;
             }
         }
-        public List<Tarea_Info> get_lis(string IdUsuario,  cl_enumeradores.eTipoTarea Tipo)
+        public List<Tarea_Info> get_lis(string IdUsuario,  cl_enumeradores.eTipoTarea Tipo, DateTime FechaInicio, DateTime FechaFin)
         {
             try
             {
-              
+                FechaInicio = Convert.ToDateTime(FechaInicio.ToShortDateString());
+                FechaFin = Convert.ToDateTime(FechaFin.ToShortDateString());
                 List<Tarea_Info> Lista = new List<Tarea_Info>();
 
                 using (EntityTareas Context = new EntityTareas())
@@ -77,6 +82,8 @@ namespace Data
                     if(Tipo==cl_enumeradores.eTipoTarea.ASIGNADA)
                     Lista = (from q in Context.vw_Tarea
                              where q.IdUsuarioAsignado ==IdUsuario
+                             && q.FechaInicio >= FechaInicio
+                         && q.FechaInicio <= FechaFin
                              select new Tarea_Info
                              {
                                  IdTarea = q.IdTarea,
@@ -90,6 +97,8 @@ namespace Data
                                  IdEstadoPrioridad = q.IdEstadoPrioridad,
                                  TareaConcurrente = q.TareaConcurrente,
                                  Estado = q.Estado,
+                                 AprobadoEncargado=q.AprobadoEncargado,
+                                 AprobadoSolicitado=q.AprobadoSolicitado,
 
                                  solicitante = q.solicitante,
                                  Asignado = q.Asignado,
@@ -194,6 +203,8 @@ namespace Data
                         TareaConcurrente = info.TareaConcurrente,
                         AprobadoEncargado=info.AprobadoEncargado,
                         AprobadoSolicitado=info.AprobadoSolicitado,
+                        DiasIntervaloProximaTarea=info.DiasIntervaloProximaTarea,
+                        FechaFinConcurrencia=info.FechaFinConcurrencia,
                         FechaTransaccion = DateTime.Now,
                         IdUsuario = info.IdUsuario,
                         Estado = true
@@ -299,6 +310,8 @@ namespace Data
                     Entity.AprobadoEncargado = info.AprobadoEncargado;
                     Entity.FechaModificacion = DateTime.Now;
                     Entity.IdUsuarioModifica = info.IdUsuarioModifica;
+                    Entity.FechaFinConcurrencia = info.FechaFinConcurrencia;
+                    Entity.DiasIntervaloProximaTarea = info.DiasIntervaloProximaTarea;
 
                     var resul = Context.Tarea_det.Where(v => v.IdTarea==info.IdTarea);
                     Context.Tarea_det.RemoveRange(resul);
@@ -374,13 +387,14 @@ namespace Data
                 throw;
             }
         }
-        public bool anularDB( Tarea_Info info)
+
+        public bool anularDB(Tarea_Info info)
         {
             try
             {
                 using (EntityTareas Context = new EntityTareas())
                 {
-                    var Entity = Context. Tarea.Where(v => v.IdTarea == info.IdTarea).FirstOrDefault();
+                    var Entity = Context.Tarea.Where(v => v.IdTarea == info.IdTarea).FirstOrDefault();
                     if (Entity == null)
                         return false;
                     Entity.Estado = false;
@@ -391,6 +405,152 @@ namespace Data
                 return true;
             }
             catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public bool Aprobar(Tarea_Info info)
+        {
+            try
+            {
+                using (EntityTareas Context = new EntityTareas())
+                {
+                    var Entity = Context.Tarea.Where(v => v.IdTarea == info.IdTarea).FirstOrDefault();
+                    if (Entity == null)
+                        return false;
+                    Entity.AprobadoEncargado = true;
+                    Entity.FechaAprobacion = DateTime.Now;
+
+                    #region Estado tarea
+
+                    TareaEstado New_estado = new TareaEstado
+                    {
+                        IdTarea = info.IdTarea,
+                        Secuancial = odta_estado.get_id(info.IdTarea),
+                        IdUsuario = info.IdUsuario,
+                        Observacion = info.Observacion == null ? " " : info.Observacion,
+                        IdEstado = info.EstadoActual,
+                        FechaModificacion = DateTime.Now,
+                        IdUsuarioModifica = info.IdUsuario
+
+
+                    };
+                    Context.TareaEstado.Add(New_estado);
+
+                    #endregion
+
+
+                    Context.SaveChanges();
+                    try
+                    {
+                        EnviarCorreo(info);
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+                }
+
+                return true;
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+        }
+
+        public bool Desaprobar(Tarea_Info info)
+        {
+            try
+            {
+                using (EntityTareas Context = new EntityTareas())
+                {
+                    var Entity = Context.Tarea.Where(v => v.IdTarea == info.IdTarea).FirstOrDefault();
+                    if (Entity == null)
+                        return false;
+                    Entity.AprobadoSolicitado = false;
+                    #region Estado tarea
+
+                    TareaEstado New_estado = new TareaEstado
+                    {
+                        IdTarea = info.IdTarea,
+                        Secuancial = odta_estado.get_id(info.IdTarea),
+                        IdUsuario = info.IdUsuario,
+                        Observacion = info.Observacion == null ? " " : info.Observacion,
+                        IdEstado = info.EstadoActual,
+                        FechaModificacion = DateTime.Now,
+                        IdUsuarioModifica = info.IdUsuario
+
+
+                    };
+                    Context.TareaEstado.Add(New_estado);
+
+                    #endregion
+
+                    Context.SaveChanges();
+                    try
+                    {
+                        EnviarCorreo(info);
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+                }
+
+                return true;
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+        }
+
+        public bool Cerrar(Tarea_Info info)
+        {
+            try
+            {
+                using (EntityTareas Context = new EntityTareas())
+                {
+                    var Entity = Context.Tarea.Where(v => v.IdTarea == info.IdTarea).FirstOrDefault();
+                    if (Entity == null)
+                        return false;
+                    Entity.FechaCierre = DateTime.Now;
+                    #region Estado tarea
+
+                    TareaEstado New_estado = new TareaEstado
+                    {
+                        IdTarea = info.IdTarea,
+                        Secuancial = odta_estado.get_id(info.IdTarea),
+                        IdUsuario = info.IdUsuario,
+                        Observacion = info.Observacion == null ? " " : info.Observacion,
+                        IdEstado = info.EstadoActual,
+                        FechaModificacion = DateTime.Now,
+                        IdUsuarioModifica = info.IdUsuario
+
+
+                    };
+                    Context.TareaEstado.Add(New_estado);
+
+                    #endregion
+
+                    Context.SaveChanges();
+                    try
+                    {
+                        EnviarCorreo(info);
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+                }
+
+                return true;
+            }
+            catch (Exception e)
             {
 
                 throw;
@@ -440,7 +600,9 @@ namespace Data
                         TareaConcurrente = Entity.TareaConcurrente,
                         AprobadoEncargado = Entity.AprobadoEncargado,
                         AprobadoSolicitado = Entity.AprobadoSolicitado,
-                        nomb_jef_grupo=Entity.Asignado
+                        nomb_jef_grupo=Entity.Asignado,
+                        DiasIntervaloProximaTarea=Entity.DiasIntervaloProximaTarea,
+                        FechaFinConcurrencia=Entity.FechaFinConcurrencia
 
                     };
                 }
@@ -475,10 +637,7 @@ namespace Data
                     mail.From = new MailAddress(infoParametros.CorreoCuenta);
                    
                     mail.Subject = "Nueva tarea";
-                    foreach (var item in lisr_usuarios_miembro_grup)
-                    {
-                        mail.CC.Add(item.Correo);
-                    }
+                   
                     try
                     {
                         foreach (var item in info.list_adjuntos)
@@ -499,7 +658,7 @@ namespace Data
                     foreach (var item in info.list_detalle)
                     {
                         
-                        Body += item.Descripcion+" Fecha inicio"+ info.FechaInicio.ToShortDateString()+"Fecha fin "+ info.FechaCulmina.ToShortDateString();
+                        Body += item.Descripcion+" Fecha inicio "+ info.FechaInicio.ToShortDateString()+" Fecha fin "+ info.FechaCulmina.ToShortDateString();
                         Body += "<br/>";
                     }
                     Body += "<table>";

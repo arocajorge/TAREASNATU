@@ -13,19 +13,32 @@
 
     }
     ViewBag.Title = "Modificar tarea";
-    //if (Session["IdUsuario"] == null )
-    //{
-    //    Response.Redirect("~/Account/Login");
-    //}
+    if (Session["IdUsuario"] == null )
+    {
+        Response.Redirect("~/Account/Login");
+    }
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 
+<script>
+
+
+
+    $(function () {
+
+        mostrar_detalle();
+    });
+
+
+
+</script>
 @using (Html.BeginForm("Modificar", "Tarea", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
-
     @Html.HiddenFor(v => v.IdTransaccionSession);
     @Html.HiddenFor(v => v.IdTarea);
+
+
 
     <div class="row">
         <div class="col-md-12">
@@ -47,7 +60,7 @@
                    settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
                    settings.Properties.NullText = "== Seleccione ==";
                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                   settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){get_grupo();}";
+                   settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){get_grupo();mostrar_detalle();}";
 
                }).BindList(ViewBag.list_grupo).GetHtml()
                     @Html.ValidationMessageFor(q => q.IdGrupo, "", new { @class = "text-danger" })
@@ -70,6 +83,7 @@
                    settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
                    settings.Properties.NullText = "== Seleccione ==";
                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                   settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){mostrar_detalle();}";
 
                }).BindList(ViewBag.list_usuarios).GetHtml()
                     @Html.ValidationMessageFor(q => q.IdUsuarioSolicitante, "", new { @class = "text-danger" })
@@ -180,6 +194,7 @@
                    settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
                    settings.Properties.NullText = "== Seleccione ==";
                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                   settings.ReadOnly = true;
 
                }).BindList(ViewBag.list_estado).GetHtml()
                     @Html.ValidationMessageFor(q => q.EstadoActual, "", new { @class = "text-danger" })
@@ -214,6 +229,8 @@
                {
                    settings.Name = "TareaConcurrente";
                    settings.Text = "Tarea concurrente";
+                   settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){mostrar_parametros()}";
+
                }).GetHtml()
                     @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
                 </div>
@@ -237,12 +254,14 @@
     <div id="Tabs" role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
             <li class="active">
-                <a href="#tab_detalle" aria-controls="informacion_items" role="tab" data-toggle="tab">Detalle tarea</a>
+                <a href="#tab_detalle" aria-controls="detalle" role="tab" data-toggle="tab" id="link_detalle">Detalle tarea</a>
             </li>
             <li>
-                <a href="#tab_adjuntos" aria-controls="otros" role="tab" data-toggle="tab">Archivos adjuntos</a>
+                <a href="#tab_adjuntos" aria-controls="adjunto" role="tab" data-toggle="tab">Archivos adjuntos</a>
             </li>
-
+            <li>
+                <a href="#tab_parametros" aria-controls="parametros" role="tab" data-toggle="tab" id="link_parametro">Parametros</a>
+            </li>
 
         </ul>
         <div class="tab-content" style="padding-top: 20px">
@@ -275,14 +294,9 @@
 
                                settings.ShowUploadButton = true;
                                settings.ShowProgressPanel = true;
-                               settings.ClientSideEvents.FileUploadComplete = "function(s,e){refres_grid();}";
+                               settings.ClientSideEvents.FileUploadComplete = "function(s,e){refres_grid_adjunto();}";
                                settings.ValidationSettings.Assign(Web.Areas.General.Controllers.TareaControllerUploadControl_adjuntoSettings.UploadValidationSettings);
                            }).GetHtml()
-
-
-
-
-
                             </div>
                         </div>
                     </div>
@@ -297,12 +311,42 @@
                     </div>
                 </div>
             </div>
+
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_parametros">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="FechaInicio">Expira</label>
+                                <div class="input-group date">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    @Html.DevExpress().DateEditFor(q => q.FechaFinConcurrencia, settings =>
+                                   {
+                                       settings.Name = "FechaFinConcurrencia";
+                                       settings.Properties.UseMaskBehavior = true;
+                                       settings.Properties.EditFormat = EditFormat.Date;
+                                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                   }).GetHtml()
+                                    @Html.ValidationMessageFor(q => q.FechaFinConcurrencia, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="DiasIntervaloProximaTarea">Días intervalo</label>
+                                @Html.TextBoxFor(v => v.DiasIntervaloProximaTarea, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.DiasIntervaloProximaTarea, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
-
-
-
 
     <div class="box-footer">
         <button type="submit" class="btn btn-primary">Guardar</button>
@@ -318,8 +362,6 @@
 
 <script>
     function get_grupo() {
-
-
         if (IdGrupo.GetValue() > 0 ) {
             var datos = {
                 IdGrupo: IdGrupo.GetValue()
@@ -346,11 +388,38 @@
 
 
 
-    function refres_grid() {
-
-
+    function refres_grid_adjunto() {
         GridViewPartial_tarea_det_adjunto.PerformCallback();
     };
+
+    function mostrar_detalle()
+    {
+        var IdUsuarioAsignad = $("#IdUsuarioAsignado").val();
+        var IdUsuarioSolicitant = IdUsuarioSolicitante.GetValue();
+        if (IdUsuarioAsignad == IdUsuarioSolicitant)
+        {
+            $("#link_detalle").show();
+        }
+        else
+        {
+            $("#link_detalle").hide();
+        }
+
+    };
+    function mostrar_parametros() {
+        if (TareaConcurrente.GetValue()) {
+            $("#link_parametro").show();
+        }
+        else {
+            $("#link_parametro").hide();
+        }
+
+    };
+    $(function () {
+
+        mostrar_detalle();
+    });
+
 
 
 </script>

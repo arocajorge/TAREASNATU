@@ -28,7 +28,7 @@ namespace Web.Areas.General.Controllers
     }
     public class ArchivoControllerFileManagerSettings
     {
-        public const string RootFolder = @"~\FormatoISO";
+        public const string RootFolder = @"~/FormatoISO";
 
         public static string Model { get { return RootFolder; } }
         public static DevExpress.Web.Mvc.FileManagerSettings DownloadSettings

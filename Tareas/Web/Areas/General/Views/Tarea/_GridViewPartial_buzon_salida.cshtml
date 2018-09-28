@@ -4,7 +4,7 @@
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "GridViewPartial_buzon_salida";
-        settings.CallbackRouteValues = new { Controller = "Tarea", Action = "GridViewPartial_buzon_salida" };
+        settings.CallbackRouteValues = new { Controller = "Tarea", Action = "GridViewPartial_buzon_salida", fecha_ini =ViewBag.fecha_ini , fecha_fin = ViewBag.fecha_fin  };
         settings.Width = Unit.Percentage(100);
         settings.KeyFieldName = "IdTarea";
         //Configuración para que la grilla no muestre texto completo
@@ -29,7 +29,7 @@
         settings.Settings.ShowFilterRow = true;
         settings.Settings.ShowHeaderFilterButton = true;
         settings.SettingsBehavior.AllowSelectByRowClick = true;
-     
+
         settings.SettingsExport.RenderBrick = (sender, e) =>
         {
             if (e.RowType == GridViewRowType.Data && e.VisibleIndex % 2 == 0)
@@ -42,7 +42,7 @@
             {
                 e.Row.ForeColor = System.Drawing.Color.Red;
             }
-        };     
+        };
         settings.Columns.Add("IdTarea", "ID").Width = Unit.Percentage(5);
         settings.Columns.Add("Observacion", "Observación").Width = Unit.Percentage(30);
         settings.Columns.Add(column =>
@@ -71,9 +71,21 @@
         });
         settings.Columns.Add("Asignado", "Asignado").Width = Unit.Percentage(10);
         settings.Columns.Add("Prioridad", "Prioridad").Width = Unit.Percentage(10);
-        settings.Columns.Add("EstadoTarea", "Estado").Width = Unit.Percentage(10);
         settings.Columns.Add("NombreGrupo", "Grupo").Width = Unit.Percentage(10);
 
+
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "Modificar";
+            column.SetDataItemTemplateContent(c =>
+            {
+                if (DataBinder.Eval(c.DataItem, "IdTarea") != null && Convert.ToBoolean(DataBinder.Eval(c.DataItem, "AprobadoEncargado")) == false)
+                {
+                    ViewContext.Writer.Write("<span class=\"fa fa-pencil-square-o\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("Modificar", "Tarea", new { Area = "General", IdTarea = DataBinder.Eval(c.DataItem, "IdTarea") }, Request.Url.Scheme) + "');\"></span>");
+                }
+            });
+            column.Width = Unit.Percentage(5);
+        });
 
 
 

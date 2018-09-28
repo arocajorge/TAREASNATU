@@ -4,7 +4,7 @@
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "GridViewPartial_buzon_entrada";
-        settings.CallbackRouteValues = new { Controller = "Tarea", Action = "GridViewPartial_buzon_entrada" };
+        settings.CallbackRouteValues = new { Controller = "Tarea", Action = "GridViewPartial_buzon_entrada" , fecha_ini = ViewBag.fecha_ini, fecha_fin = ViewBag.fecha_fin };
         settings.Width = Unit.Percentage(100);
         settings.KeyFieldName = "IdTarea";
         //Configuración para que la grilla no muestre texto completo
@@ -73,17 +73,26 @@
         settings.Columns.Add("EstadoTarea", "Estado").Width = Unit.Percentage(10);
         settings.Columns.Add("NombreGrupo", "Grupo").Width = Unit.Percentage(10);
 
-        settings.Columns.Add(column =>
+        settings.Columns.Add(c =>
         {
-            column.Caption = "";
-            column.SetDataItemTemplateContent(c =>
+            c.Caption = "Acciones";
+            c.SetDataItemTemplateContent(tc =>
             {
-                if (DataBinder.Eval(c.DataItem, "IdTarea") != null)
+                if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "Estado")) == true && Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "AprobadoEncargado")) == false)
                 {
-                    ViewContext.Writer.Write("<span class=\"glyphicon glyphicon-download-alt\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("Aprobar", "Tarea", new { Area = "General", IdTarea = DataBinder.Eval(c.DataItem, "IdTarea") }, Request.Url.Scheme) + "');\"></span>");
+                    ViewContext.Writer.Write(
+                Html.ActionLink("Aprobar/Desaprobar", "Aprobar", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }) 
+                    );
+                }
+                else
+                {
+                    ViewContext.Writer.Write(
+                Html.ActionLink("Cerrar", "Cerrar", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }) + "&nbsp;"
+
+                    );
                 }
             });
-            column.Width = Unit.Percentage(5);
+           
         });
 
 

@@ -20,8 +20,8 @@
         <AssociationConnector Association="ModelGeneral.FK_Grupo_Usuario" />
         <AssociationConnector Association="ModelGeneral.FK_Grupo_Usuario_Usuario" />
         <AssociationConnector Association="ModelGeneral.FK_Tarea_det_Usuario" />
-        <EntityTypeShape EntityType="ModelGeneral.Tarea" Width="1.5" PointX="5.625" PointY="17.125" />
         <EntityTypeShape EntityType="ModelGeneral.vw_Tarea" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ModelGeneral.Tarea" Width="1.5" PointX="5.25" PointY="16.75" />
         <AssociationConnector Association="ModelGeneral.FK_Tarea_Estado" />
         <AssociationConnector Association="ModelGeneral.FK_Tarea_Estado1" />
         <AssociationConnector Association="ModelGeneral.FK_Tarea_Grupo" />
@@ -30,7 +30,7 @@
         <AssociationConnector Association="ModelGeneral.FK_Tarea_Usuario1" />
         <AssociationConnector Association="ModelGeneral.FK_TareaArchivoAdjunto_Tarea" />
         <AssociationConnector Association="ModelGeneral.FK_TareaEstado_Tarea" />
-      </Diagram>
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

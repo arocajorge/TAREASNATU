@@ -24,11 +24,11 @@ namespace Bus
                 throw;
             }
         }
-        public List<Tarea_Info> get_lis(string IdUsuario, cl_enumeradores.eTipoTarea Tipo)
+        public List<Tarea_Info> get_lis(string IdUsuario, cl_enumeradores.eTipoTarea Tipo, DateTime FechaInicio, DateTime FechaFin)
         {
             try
             {
-                return odata.get_lis(IdUsuario, Tipo);
+                return odata.get_lis(IdUsuario, Tipo, FechaInicio, FechaFin);
             }
             catch (Exception)
             {
@@ -76,11 +76,51 @@ namespace Bus
                 throw;
             }
         }
+
         public bool anularDB(Tarea_Info info)
         {
             try
             {
                 return odata.anularDB(info);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public bool Aprobar(Tarea_Info info)
+        {
+            try
+            {
+                odata = new Tarea_Data();
+                return odata.Aprobar(info);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public bool Desaprobar(Tarea_Info info)
+        {
+            try
+            {
+                odata = new Tarea_Data();
+                return odata.Desaprobar(info);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public bool Cerrar(Tarea_Info info)
+        {
+            try
+            {
+                return odata.Cerrar(info);
             }
             catch (Exception)
             {

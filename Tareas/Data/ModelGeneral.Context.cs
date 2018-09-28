@@ -36,8 +36,8 @@ namespace Data
         public virtual DbSet<TareaArchivoAdjunto> TareaArchivoAdjunto { get; set; }
         public virtual DbSet<TareaEstado> TareaEstado { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
-        public virtual DbSet<Tarea> Tarea { get; set; }
         public virtual DbSet<vw_Tarea> vw_Tarea { get; set; }
+        public virtual DbSet<Tarea> Tarea { get; set; }
     
         public virtual ObjectResult<sp_Tareas_X_Usuarios_Result> sp_Tareas_X_Usuarios(string idUsuario)
         {
@@ -46,6 +46,15 @@ namespace Data
                 new ObjectParameter("IdUsuario", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_Tareas_X_Usuarios_Result>("sp_Tareas_X_Usuarios", idUsuarioParameter);
+        }
+    
+        public virtual int sp_crear_tarea_concurrente(Nullable<decimal> idTarea)
+        {
+            var idTareaParameter = idTarea.HasValue ?
+                new ObjectParameter("IdTarea", idTarea) :
+                new ObjectParameter("IdTarea", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_crear_tarea_concurrente", idTareaParameter);
         }
     }
 }

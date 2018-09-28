@@ -12,20 +12,20 @@
         </div>
 
     }
-    ViewBag.Title = "Modificar tarea";
+    ViewBag.Title = "Consultar tarea";
     if (Session["IdUsuario"] == null)
     {
         Response.Redirect("~/Account/Login");
     }
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
-
-@using (Html.BeginForm("Aprobar", "Tarea", FormMethod.Post, new { @class = "form", @role = "form" }))
+@using (Html.BeginForm("Consultar", "Tarea", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
+    @Html.HiddenFor(v => v.IdTransaccionSession);
+    @Html.HiddenFor(v => v.IdTarea);
 
-    @Html.HiddenFor(v => v.IdTransaccionSession, new {@id= "IdTransaccionSession" });
-    @Html.HiddenFor(v => v.IdTarea, new  { @id= "IdTarea" });
+
+
     <div class="row">
         <div class="col-md-12">
 
@@ -38,16 +38,15 @@
                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                    settings.Properties.DisplayFormatString = "{0}";
                    settings.Properties.Columns.Add("Descripcion", "Grupo").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   //Campo ID
                    settings.Properties.ValueField = "IdGrupo";
                    settings.Properties.ValueType = typeof(int);
                    settings.Properties.TextField = "Descripcion";
+                   //Boton para seleccionar ningun registro
                    settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
                    settings.Properties.NullText = "== Seleccione ==";
                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                   settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){get_grupo();}";
-
-                   settings.Properties.DropDownButton.Enabled = false;
-                   settings.ReadOnly = true;
+                   settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){get_grupo();mostrar_detalle();}";
 
                }).BindList(ViewBag.list_grupo).GetHtml()
                     @Html.ValidationMessageFor(q => q.IdGrupo, "", new { @class = "text-danger" })
@@ -70,9 +69,8 @@
                    settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
                    settings.Properties.NullText = "== Seleccione ==";
                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                   settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){mostrar_detalle();}";
 
-                   settings.Properties.DropDownButton.Enabled = false;
-                   settings.ReadOnly = true;
                }).BindList(ViewBag.list_usuarios).GetHtml()
                     @Html.ValidationMessageFor(q => q.IdUsuarioSolicitante, "", new { @class = "text-danger" })
                 </div>
@@ -103,7 +101,6 @@
                {
                    settings.Name = "AprobadoSolicitado";
                    settings.Text = "Aprobado solicitante";
-                   settings.Enabled = false;
                }).GetHtml()
                     @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
                 </div>
@@ -115,7 +112,6 @@
                {
                    settings.Name = "AprobadoEncargado";
                    settings.Text = "Aprobado encargado";
-                   settings.Enabled = false;
                }).GetHtml()
                     @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
                 </div>
@@ -142,7 +138,6 @@
                        settings.Properties.EditFormatString = "dd/MM/yyyy";
                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                       settings.Enabled = false;
                    }).GetHtml()
                         @Html.ValidationMessageFor(q => q.FechaInicio, "", new { @class = "text-danger" })
                     </div>
@@ -163,7 +158,6 @@
                        settings.Properties.EditFormatString = "dd/MM/yyyy";
                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                       settings.Enabled = false;
                    }).GetHtml()
                         @Html.ValidationMessageFor(q => q.FechaCulmina, "", new { @class = "text-danger" })
                     </div>
@@ -186,8 +180,6 @@
                    settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
                    settings.Properties.NullText = "== Seleccione ==";
                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-
-                   settings.Properties.DropDownButton.Enabled = false;
                    settings.ReadOnly = true;
 
                }).BindList(ViewBag.list_estado).GetHtml()
@@ -212,9 +204,6 @@
                    settings.Properties.NullText = "== Seleccione ==";
                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
 
-                   settings.Properties.DropDownButton.Enabled = false;
-                   settings.ReadOnly = true;
-
                }).BindList(ViewBag.list_prioridad).GetHtml()
                     @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
                 </div>
@@ -226,7 +215,8 @@
                {
                    settings.Name = "TareaConcurrente";
                    settings.Text = "Tarea concurrente";
-                   settings.Enabled = false;
+                   settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){mostrar_parametros()}";
+
                }).GetHtml()
                     @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
                 </div>
@@ -240,7 +230,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="IdUsuario">Observación</label>
-                    @Html.TextAreaFor(v => v.Observacion, new { @class = "form-control", @row = 2 ,@disabled="disabled"})
+                    @Html.TextAreaFor(v => v.Observacion, new { @class = "form-control", @row = 2 })
                     @Html.ValidationMessageFor(m => m.Observacion, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -250,12 +240,14 @@
     <div id="Tabs" role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
             <li class="active">
-                <a href="#tab_detalle" aria-controls="informacion_items" role="tab" data-toggle="tab">Detalle tarea</a>
+                <a href="#tab_detalle" aria-controls="detalle" role="tab" data-toggle="tab" id="link_detalle">Detalle tarea</a>
             </li>
             <li>
-                <a href="#tab_adjuntos" aria-controls="otros" role="tab" data-toggle="tab">Archivos adjuntos</a>
+                <a href="#tab_adjuntos" aria-controls="adjunto" role="tab" data-toggle="tab">Archivos adjuntos</a>
             </li>
-
+            <li>
+                <a href="#tab_parametros" aria-controls="parametros" role="tab" data-toggle="tab" id="link_parametro">Parametros</a>
+            </li>
 
         </ul>
         <div class="tab-content" style="padding-top: 20px">
@@ -276,6 +268,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
 
+
                                 @Html.DevExpress().UploadControl(settings =>
                            {
                                settings.Name = "UploadControl_adjunto";
@@ -287,11 +280,9 @@
 
                                settings.ShowUploadButton = true;
                                settings.ShowProgressPanel = true;
-
-                               settings.ClientSideEvents.FileUploadComplete = "function(s,e){refres_grid();}";
+                               settings.ClientSideEvents.FileUploadComplete = "function(s,e){refres_grid_adjunto();}";
                                settings.ValidationSettings.Assign(Web.Areas.General.Controllers.TareaControllerUploadControl_adjuntoSettings.UploadValidationSettings);
                            }).GetHtml()
-
                             </div>
                         </div>
                     </div>
@@ -306,17 +297,45 @@
                     </div>
                 </div>
             </div>
+
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_parametros">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="FechaInicio">Expira</label>
+                                <div class="input-group date">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    @Html.DevExpress().DateEditFor(q => q.FechaFinConcurrencia, settings =>
+                                   {
+                                       settings.Name = "FechaFinConcurrencia";
+                                       settings.Properties.UseMaskBehavior = true;
+                                       settings.Properties.EditFormat = EditFormat.Date;
+                                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                   }).GetHtml()
+                                    @Html.ValidationMessageFor(q => q.FechaFinConcurrencia, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="DiasIntervaloProximaTarea">Días intervalo</label>
+                                @Html.TextBoxFor(v => v.DiasIntervaloProximaTarea, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.DiasIntervaloProximaTarea, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-
-
-
-
     <div class="box-footer">
-        <button type="button" class="btn btn-primary" onclick="Aprobar();">Aprobar</button>
-        <button type="submit" class="btn btn-danger" onclick="Desaprobar();">Desaprobar</button>
-        <a class="btn btn-default" href="@Url.Action("Buszon_entrada","Tarea",new { Area = "General" },null)">Cancelar</a>
+        <a class="btn btn-default" href="@Url.Action("Index","Tarea",new { Area = "General" },null)">Volver</a>
     </div>
 
 
@@ -325,65 +344,3 @@
     }
 }
 
-
-<script>
-    function Aprobar() {
-        if (IdGrupo.GetValue() > 0)
-        {
-            var IdTarea = $("#IdTarea").val();
-            var IdTransaccionSession = $("#IdTransaccionSession").val();
-            var datos = {
-                IdTarea: IdTarea,
-                IdTransaccionSession: IdTransaccionSession
-            }
-            $.ajax({
-                type: 'POST',
-                data: JSON.stringify(datos),
-                url: '@Url.Action("AprobarTarea", "Tarea", new { Area = "General" })',
-                async: false,
-                bDeferRender: true,
-                bProcessing: true,
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                success: function (data) {
-                    if(data)
-                    {
-                        window.location.href = "@Url.Action("Buzon_entrada","Tarea")";
-                    }
-                },
-                error: function (error) {
-                }
-                });
-                }
-    };
-
-    function Desaprobar() {
-        if (IdGrupo.GetValue() > 0) {
-            var IdTarea = $("#IdTarea").val();
-            var IdTransaccionSession = $("#IdTransaccionSession").val();
-            var datos = {
-                IdTarea: IdTarea,
-                IdTransaccionSession: IdTransaccionSession
-
-            }
-            $.ajax({
-                type: 'POST',
-                data: JSON.stringify(datos),
-                url: '@Url.Action("DesaprobarTarea", "Tarea", new { Area = "General" })',
-                async: false,
-                bDeferRender: true,
-                bProcessing: true,
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                success: function (data) {
-                    if(data)
-                    {
-                        window.location.href = "@Url.Action("Buzon_entrada","Tarea")";
-                    }
-                },
-                error: function (error) {
-                }
-            });
-        }
-    };
-</script>

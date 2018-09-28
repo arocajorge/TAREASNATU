@@ -42,6 +42,9 @@ namespace Data
         public Nullable<System.DateTime> FechaModificacion { get; set; }
         public Nullable<System.DateTime> FechaAnulacion { get; set; }
         public Nullable<System.DateTime> FechaAprobacion { get; set; }
+        public Nullable<System.DateTime> FechaFinConcurrencia { get; set; }
+        public Nullable<int> DiasIntervaloProximaTarea { get; set; }
+        public Nullable<System.DateTime> FechaCierre { get; set; }
     
         public virtual Estado Estado1 { get; set; }
         public virtual Estado Estado2 { get; set; }

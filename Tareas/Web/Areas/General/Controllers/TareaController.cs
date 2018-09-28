@@ -63,26 +63,45 @@ namespace Web.Areas.General.Controllers
 
         public ActionResult Buzon_entrada()
         {
-            return View();
+            cl_filtros_Info model = new cl_filtros_Info();
+
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult Buzon_entrada(cl_filtros_Info model)
+        {
+            return View(model);
         }
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_buzon_entrada()
+        public ActionResult GridViewPartial_buzon_entrada(DateTime? fecha_ini, DateTime? fecha_fin)
         {
             List<Tarea_Info> model = new List<Tarea_Info>();
-          
-            model = bus_tarea.get_lis(SessionTareas.IdUsuario.ToString(), cl_enumeradores.eTipoTarea.ASIGNADA);
+            ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : fecha_ini;
+            ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date : fecha_fin;
+            model = bus_tarea.get_lis(ViewBag.fecha_ini, ViewBag.fecha_fin);
+            model = bus_tarea.get_lis(SessionTareas.IdUsuario.ToString(), cl_enumeradores.eTipoTarea.ASIGNADA, ViewBag.fecha_ini, ViewBag.fecha_fin);
             return PartialView("_GridViewPartial_buzon_entrada", model);
         }
         public ActionResult Buzon_salida()
         {
-            return View();
+            cl_filtros_Info model = new cl_filtros_Info();
+
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult Buzon_salida(cl_filtros_Info model)
+        {
+            return View(model);
         }
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_buzon_salida()
+        public ActionResult GridViewPartial_buzon_salida(DateTime? fecha_ini, DateTime? fecha_fin)
         {
             List<Tarea_Info> model = new List<Tarea_Info>();
+            ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : fecha_ini;
+            ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date : fecha_fin;
+            model = bus_tarea.get_lis(ViewBag.fecha_ini, ViewBag.fecha_fin);
 
-            model = bus_tarea.get_lis(SessionTareas.IdUsuario.ToString(), cl_enumeradores.eTipoTarea.GENERADAS);
+            model = bus_tarea.get_lis(SessionTareas.IdUsuario.ToString(), cl_enumeradores.eTipoTarea.GENERADAS, ViewBag.fecha_ini, ViewBag.fecha_fin);
             return PartialView("_GridViewPartial_buzon_salida", model);
         }
         #endregion
@@ -113,7 +132,6 @@ namespace Web.Areas.General.Controllers
             cargar_combo();
             return View(model);
         }
-
         [HttpPost]
         public ActionResult Nuevo(Tarea_Info model)
         {
@@ -155,6 +173,7 @@ namespace Web.Areas.General.Controllers
             return RedirectToAction("Index");
         }
 
+
         public ActionResult Modificar(int IdTarea = 0)
         
         {
@@ -176,7 +195,6 @@ namespace Web.Areas.General.Controllers
                 return RedirectToAction("Index");
             return View(model);
         }
-
         [HttpPost]
         public ActionResult Modificar(Tarea_Info model)
         {
@@ -216,6 +234,7 @@ namespace Web.Areas.General.Controllers
             return RedirectToAction("Index");
         }
 
+
         public ActionResult Anular(decimal IdTarea = 0)
         {
             #region Validar Session
@@ -238,7 +257,6 @@ namespace Web.Areas.General.Controllers
                 return RedirectToAction("Index");
             return View(model);
         }
-
         [HttpPost]
         public ActionResult Anular(Tarea_Info model)
         {
@@ -251,6 +269,29 @@ namespace Web.Areas.General.Controllers
             return RedirectToAction("Index");
         }
 
+
+        public ActionResult Consultar(decimal IdTarea = 0)
+        {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionTareas.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionTareas.IdTransaccionSession = (Convert.ToDecimal(SessionTareas.IdTransaccionSession) + 1).ToString();
+            SessionTareas.IdTransaccionSessionActual = SessionTareas.IdTransaccionSession;
+            #endregion
+
+            Tarea_Info model = bus_tarea.get_info(IdTarea);
+            if (model == null)
+                model = new Tarea_Info();
+            model.IdTransaccionSession = Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual);
+            model.list_detalle = bus_tarea_det.get_lis(IdTarea);
+            Lis_Tarea_det_Info_lis.set_list(model.list_detalle, model.IdTransaccionSession);
+            model.list_adjuntos = bus_adjunto.get_lis(IdTarea);
+            TareaArchivoAdjunto_Info_lis.set_list(model.list_adjuntos, model.IdTransaccionSession);
+            cargar_combo();
+            if (model == null)
+                return RedirectToAction("Index");
+            return View(model);
+        }
         public ActionResult Aprobar(int IdTarea = 0)
         {
             #region Validar Session
@@ -273,22 +314,75 @@ namespace Web.Areas.General.Controllers
             TareaArchivoAdjunto_Info_lis.set_list(model.list_adjuntos, model.IdTransaccionSession);
             cargar_combo();
             if (model == null)
-                return RedirectToAction("Index");
+                return RedirectToAction("Buzon_entrada");
             return View(model);
         }
 
+
+        public ActionResult Cerrar(int IdTarea = 0)
+
+        {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionTareas.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionTareas.IdTransaccionSession = (Convert.ToDecimal(SessionTareas.IdTransaccionSession) + 1).ToString();
+            SessionTareas.IdTransaccionSessionActual = SessionTareas.IdTransaccionSession;
+            #endregion
+
+            Tarea_Info model = bus_tarea.get_info(IdTarea);
+            model.IdTransaccionSession = Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual);
+            model.list_detalle = bus_tarea_det.get_lis(IdTarea);
+            Lis_Tarea_det_Info_lis.set_list(model.list_detalle, model.IdTransaccionSession);
+            model.list_adjuntos = bus_adjunto.get_lis(IdTarea);
+            TareaArchivoAdjunto_Info_lis.set_list(model.list_adjuntos, model.IdTransaccionSession);
+            cargar_combo();
+            if (model == null)
+                return RedirectToAction("Buzon_entrada");
+            return View(model);
+        }
         [HttpPost]
-        public ActionResult Aprobar(Tarea_Info model)
+        public ActionResult Cerrar(Tarea_Info model)
         {
             var grupo = bus_grupo.get_info(model.IdGrupo);
             model.IdUsuarioAsignado = grupo.IdUsuario;
-            
-            if (!bus_tarea.modificarDB(model))
+            string mensaje = "";
+            model.list_detalle = Lis_Tarea_det_Info_lis.get_list(model.IdTransaccionSession);
+            model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(model.IdTransaccionSession);
+            model.IdUsuarioModifica = SessionTareas.IdUsuario.ToString();
+            if (model.list_detalle == null)
+            {
+                cargar_combo();
+                ViewBag.mensaje = "El Tarea debe tener almenos un usuario miembro del Tarea";
+                return View(model);
+            }
+            else
+            {
+                if (model.list_detalle.Count() == 0)
+                {
+                    cargar_combo();
+                    ViewBag.mensaje = "El Tarea debe tener almenos un usuario miembro del Tarea";
+                    return View(model);
+                }
+                if(model.list_detalle.Where(v=>v.IdEstado==0).Count()>0)
+                {
+                    cargar_combo();
+                    ViewBag.mensaje = "Existen subtareas pendientes no se puede cerrar!!!!";
+                    return View(model);
+                }
+            }
+            mensaje = Validaciones(model);
+            if (mensaje != "")
+            {
+                cargar_combo();
+                ViewBag.mensaje = mensaje;
+                return View(model);
+            }
+            if (!bus_tarea.Cerrar(model))
             {
                 cargar_combo();
                 return View(model);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Buzon_entrada");
         }
 
 
@@ -392,6 +486,36 @@ namespace Web.Areas.General.Controllers
         }
         #endregion
 
+        #region json
+        public JsonResult AprobarTarea(int IdTarea = 0, decimal IdTransaccionSession=0)
+        {
+            var model = bus_tarea.get_info(IdTarea);
+            if (model != null)
+            {
+                model.list_detalle = Lis_Tarea_det_Info_lis.get_list(IdTransaccionSession);
+                model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(IdTransaccionSession);
+            }
+
+            var resultado = bus_tarea.Aprobar(model);
+
+            return Json(resultado, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult DesaprobarTarea(int IdTarea = 0, decimal IdTransaccionSession = 0)
+        {
+
+            var model = bus_tarea.get_info(IdTarea);
+            if (model != null)
+            {
+                model.list_detalle = Lis_Tarea_det_Info_lis.get_list(IdTransaccionSession);
+                model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(IdTransaccionSession);
+            }
+
+            var resultado = bus_tarea.Desaprobar(model);
+
+            return Json(resultado, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
         private string Validaciones(Tarea_Info info)
         {
             try
@@ -409,7 +533,17 @@ namespace Web.Areas.General.Controllers
                         mensaje = "Las fecha de: "+item.Descripcion+", no son correctas";
                     }
                 }
+                if(info.TareaConcurrente)
+                {
+                    if(info.DiasIntervaloProximaTarea==null| info.DiasIntervaloProximaTarea==0)
+                        mensaje = "Los dias de intervalo es obligatorio";
+                    if (info.FechaFinConcurrencia == null)
+                        mensaje = "La fecha de expiracion es obligatoria";
+                    else
+                        if(Convert.ToDateTime( info.FechaFinConcurrencia).Year==1)
+                        mensaje = "La fecha de expiracion no es valida";
 
+                }
                 return mensaje;
             }
             catch (Exception)

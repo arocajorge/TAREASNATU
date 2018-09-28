@@ -7424,6 +7424,8 @@
     <Content Include="Areas\General\Views\Tarea\Buzon_salida.cshtml" />
     <Content Include="Areas\General\Views\Tarea\_GridViewPartial_buzon_salida.cshtml" />
     <Content Include="Areas\General\Views\Tarea\Aprobar.cshtml" />
+    <Content Include="Areas\General\Views\Tarea\Consultar.cshtml" />
+    <Content Include="Areas\General\Views\Tarea\Cerrar.cshtml" />
     <None Include="Properties\PublishProfiles\Erp_web.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\web.pubxml" />
