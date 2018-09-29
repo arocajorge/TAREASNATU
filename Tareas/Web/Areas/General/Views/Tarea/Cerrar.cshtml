@@ -21,22 +21,11 @@
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 
-<script>
-   
 
-   
-    $(function () {
-
-        mostrar_detalle();
-    });
-
-
-
-</script>
 @using (Html.BeginForm("Cerrar", "Tarea", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     @Html.HiddenFor(v => v.IdTransaccionSession);
-   // @Html.HiddenFor(v => v.IdUsuarioAsignado);
+    @Html.HiddenFor(v => v.IdTarea);
 
     
 

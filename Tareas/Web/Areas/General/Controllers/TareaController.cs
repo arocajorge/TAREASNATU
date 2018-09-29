@@ -363,7 +363,7 @@ namespace Web.Areas.General.Controllers
                     ViewBag.mensaje = "El Tarea debe tener almenos un usuario miembro del Tarea";
                     return View(model);
                 }
-                if(model.list_detalle.Where(v=>v.IdEstado==0).Count()>0)
+                if(model.list_detalle.Where(v=>v.IdEstado==8).Count()>0)
                 {
                     cargar_combo();
                     ViewBag.mensaje = "Existen subtareas pendientes no se puede cerrar!!!!";
@@ -377,6 +377,7 @@ namespace Web.Areas.General.Controllers
                 ViewBag.mensaje = mensaje;
                 return View(model);
             }
+            model.IdUsuario = SessionTareas.IdUsuario.ToString();
             if (!bus_tarea.Cerrar(model))
             {
                 cargar_combo();
