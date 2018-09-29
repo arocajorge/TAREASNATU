@@ -21,6 +21,7 @@ namespace Web.Areas.General.Controllers
         Usuario_Bus bus_usuario = new Usuario_Bus();
         Estado_Bus bus_estado = new Estado_Bus();
         TareaArchivoAdjunto_Bus bus_adjunto = new TareaArchivoAdjunto_Bus();
+     
         #endregion
 
         #region Vistas tareas

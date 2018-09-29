@@ -15,11 +15,12 @@
 {
     @Html.HiddenFor(q => q.IdEstado)
     @Html.HiddenFor(q => q.IdEstadoTipo)
+
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="IdCtaCblePadre">Tipo estado*</label>
+                    <label for="IdEstadoTipo">Tipo estado*</label>
                     @Html.DevExpress().ComboBoxFor(q => q.IdEstadoTipo, settings =>
                {
                    settings.Name = "IdEstadoTipo";

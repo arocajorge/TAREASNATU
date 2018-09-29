@@ -24,5 +24,12 @@ namespace Data
         public string FtpClave { get; set; }
         public string FtpURLArchivo { get; set; }
         public string FtpURLAdjunto { get; set; }
+        public int IdEstadoCierreTarea { get; set; }
+        public int IdEstadoAprobarTarea { get; set; }
+        public int IdEstadoTareaDevuelta { get; set; }
+    
+        public virtual Estado Estado { get; set; }
+        public virtual Estado Estado1 { get; set; }
+        public virtual Estado Estado2 { get; set; }
     }
 }

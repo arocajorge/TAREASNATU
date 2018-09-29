@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Info;
 using System.Net;
 using System.IO;
-
+using Data.General;
 namespace Data
 {
   public  class Archivo_Data

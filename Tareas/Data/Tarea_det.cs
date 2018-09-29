@@ -27,8 +27,8 @@ namespace Data
         public Nullable<double> NumHorasReales { get; set; }
         public Nullable<System.DateTime> FechaTerminoTarea { get; set; }
     
-        public virtual Estado Estado { get; set; }
         public virtual Usuario Usuario { get; set; }
         public virtual Tarea Tarea { get; set; }
+        public virtual Estado Estado { get; set; }
     }
 }

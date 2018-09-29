@@ -46,8 +46,6 @@ namespace Data
         public Nullable<int> DiasIntervaloProximaTarea { get; set; }
         public Nullable<System.DateTime> FechaCierre { get; set; }
     
-        public virtual Estado Estado1 { get; set; }
-        public virtual Estado Estado2 { get; set; }
         public virtual Grupo Grupo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tarea_det> Tarea_det { get; set; }
@@ -57,5 +55,7 @@ namespace Data
         public virtual ICollection<TareaArchivoAdjunto> TareaArchivoAdjunto { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TareaEstado> TareaEstado { get; set; }
+        public virtual Estado Estado1 { get; set; }
+        public virtual Estado Estado2 { get; set; }
     }
 }

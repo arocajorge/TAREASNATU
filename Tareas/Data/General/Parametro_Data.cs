@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data
+namespace Data.General
 {
    public class Parametro_Data
     {
@@ -30,6 +30,10 @@ namespace Data
                             FtpClave = info.FtpClave,
                             FtpURLArchivo = info.FtpURLArchivo,
                             FtpURLAdjunto = info.FtpURLAdjunto,
+                            IdEstadoAprobarTarea=info.IdEstadoAprobarTarea,
+                            IdEstadoCierreTarea=info.IdEstadoCierreTarea,
+                            IdEstadoTareaDevuelta=info.IdEstadoTareaDevuelta
+
 
                         };
                         Context.Parametro.Add(Entity);
@@ -45,6 +49,10 @@ namespace Data
                         Entity.FtpClave = info.FtpClave;
                         Entity.FtpURLArchivo = info.FtpURLArchivo;
                         Entity.FtpURLAdjunto = info.FtpURLAdjunto;
+                        Entity.IdEstadoAprobarTarea = info.IdEstadoAprobarTarea;
+                        Entity.IdEstadoCierreTarea = info.IdEstadoCierreTarea;
+                        Entity.IdEstadoTareaDevuelta = info.IdEstadoTareaDevuelta;
+
 
                     }
 
@@ -58,8 +66,6 @@ namespace Data
                 throw;
             }
         }
-
-
         public Parametro_Info get_info()
         {
             try
@@ -82,7 +88,9 @@ namespace Data
                         FtpClave = Entity.FtpClave,
                         FtpURLArchivo = Entity.FtpURLArchivo,
                         FtpURLAdjunto = Entity.FtpURLAdjunto,
-
+                        IdEstadoAprobarTarea = Entity.IdEstadoAprobarTarea,
+                        IdEstadoCierreTarea = Entity.IdEstadoCierreTarea,
+                        IdEstadoTareaDevuelta = Entity.IdEstadoTareaDevuelta
                     };
                 }
                 return info;

@@ -8,7 +8,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
-
+using Data.General;
 namespace Data
 {
    public class Tarea_Data
@@ -17,6 +17,8 @@ namespace Data
         Grupo_Usuario_Data data_usuarios_grup = new Grupo_Usuario_Data();
         Usuario_Data data_usuario = new Usuario_Data();
         TareaEstado_Data odta_estado = new TareaEstado_Data();
+        Parametro_Info info_parametro = new Parametro_Info();
+        Parametro_Data data_parametro = new Parametro_Data();
         #endregion
         public List< Tarea_Info> get_lis(DateTime FechaInicio, DateTime FechaFin)
         {
@@ -414,6 +416,7 @@ namespace Data
         {
             try
             {
+                info_parametro = data_parametro.get_info();
                 using (EntityTareas Context = new EntityTareas())
                 {
                     var Entity = Context.Tarea.Where(v => v.IdTarea == info.IdTarea).FirstOrDefault();
@@ -421,7 +424,7 @@ namespace Data
                         return false;
                     Entity.AprobadoEncargado = true;
                     Entity.FechaAprobacion = DateTime.Now;
-
+                    Entity.EstadoActual = info_parametro.IdEstadoAprobarTarea;
                     #region Estado tarea
 
                     TareaEstado New_estado = new TareaEstado
@@ -465,12 +468,14 @@ namespace Data
         {
             try
             {
+                info_parametro = data_parametro.get_info();
                 using (EntityTareas Context = new EntityTareas())
                 {
                     var Entity = Context.Tarea.Where(v => v.IdTarea == info.IdTarea).FirstOrDefault();
                     if (Entity == null)
                         return false;
                     Entity.AprobadoSolicitado = false;
+                    Entity.EstadoActual = info_parametro.IdEstadoTareaDevuelta;
                     #region Estado tarea
 
                     TareaEstado New_estado = new TareaEstado
@@ -513,12 +518,14 @@ namespace Data
         {
             try
             {
+                info_parametro = data_parametro.get_info();
                 using (EntityTareas Context = new EntityTareas())
                 {
                     var Entity = Context.Tarea.Where(v => v.IdTarea == info.IdTarea).FirstOrDefault();
                     if (Entity == null)
                         return false;
                     Entity.FechaCierre = DateTime.Now;
+                    Entity.EstadoActual = info_parametro.IdEstadoCierreTarea;
                     #region Estado tarea
 
                     TareaEstado New_estado = new TareaEstado

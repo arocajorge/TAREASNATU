@@ -1,4 +1,5 @@
-﻿using Info;
+﻿using Data.General;
+using Info;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Data
 {
    public class Tarea_det_Data
     {
-
+       
         public List<Tarea_det_Info> get_lis(decimal IdTarea, string IdUsuario)
         {
             try

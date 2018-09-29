@@ -27,5 +27,11 @@ namespace Info
         public string FtpURLArchivo { get; set; }
         [Required(ErrorMessage = "El campo url de la FTP es obligatorio, para archivos adjuntos ISO")]
         public string FtpURLAdjunto { get; set; }
+        [Required(ErrorMessage = "El campo estado para tarea cerrada es obligatorio")]
+        public int IdEstadoCierreTarea { get; set; }
+        [Required(ErrorMessage = "El campo estado para tarea aprobada es obligatorio")]
+        public int IdEstadoAprobarTarea { get; set; }
+        [Required(ErrorMessage = "El campo estado para tarea rechazada es obligatorio")]
+        public int IdEstadoTareaDevuelta { get; set; }
     }
 }
