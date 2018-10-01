@@ -252,9 +252,7 @@
             <li class="active">
                 <a href="#tab_detalle" aria-controls="informacion_items" role="tab" data-toggle="tab">Detalle tarea</a>
             </li>
-            <li>
-                <a href="#tab_adjuntos" aria-controls="otros" role="tab" data-toggle="tab">Archivos adjuntos</a>
-            </li>
+            
 
 
         </ul>
@@ -264,43 +262,7 @@
                     <div class="col-md-12">
                         <div class="col-md-12">
                             <div class="form-group">
-                                @Html.Action("GridViewPartial_tarea_det_readonly", "Tarea")
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_adjuntos">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-12">
-                            <div class="form-group">
-
-                                @Html.DevExpress().UploadControl(settings =>
-                           {
-                               settings.Name = "UploadControl_adjunto";
-                               settings.CallbackRouteValues = new { Controller = "Tarea", Action = "UploadControl_adjuntoUpload" };
-
-                               settings.AdvancedModeSettings.EnableMultiSelect = true;
-                               settings.AdvancedModeSettings.EnableFileList = true;
-                               settings.AdvancedModeSettings.EnableDragAndDrop = true;
-
-                               settings.ShowUploadButton = true;
-                               settings.ShowProgressPanel = true;
-
-                               settings.ClientSideEvents.FileUploadComplete = "function(s,e){refres_grid();}";
-                               settings.ValidationSettings.Assign(Web.Areas.General.Controllers.TareaControllerUploadControl_adjuntoSettings.UploadValidationSettings);
-                           }).GetHtml()
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                @Html.Action("GridViewPartial_tarea_det_adjunto","Tarea")
+                                @Html.Action("GridViewPartial_tarea_det", "Tarea")
                             </div>
                         </div>
                     </div>

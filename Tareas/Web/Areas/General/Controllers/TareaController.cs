@@ -533,6 +533,7 @@ namespace Web.Areas.General.Controllers
             edited_info.FechaInicio = info_det.FechaInicio;
             edited_info.Descripcion = info_det.Descripcion;
             edited_info.NumHoras = info_det.NumHoras;
+            edited_info.IdUsuario = info_det.IdUsuario;
             
         }
     }

@@ -77,7 +77,6 @@ namespace Web.Areas.General.Controllers
             model.IdUsuarioAsignado = grupo.IdUsuario;
             string mensaje = "";
             model.list_detalle = Lis_Tarea_det_Info_lis.get_list(model.IdTransaccionSession);
-            model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(model.IdTransaccionSession);
             model.IdUsuarioModifica = SessionTareas.IdUsuario.ToString();
             if (model.list_detalle == null)
             {
@@ -93,12 +92,7 @@ namespace Web.Areas.General.Controllers
                     ViewBag.mensaje = "El Tarea debe tener almenos un usuario miembro del Tarea";
                     return View(model);
                 }
-                if (model.list_detalle.Where(v => v.IdEstado == 8).Count() > 0)
-                {
-                    cargar_combo();
-                    ViewBag.mensaje = "Existen subtareas pendientes no se puede cerrar!!!!";
-                    return View(model);
-                }
+                
             }
             mensaje = Validaciones(model);
             if (mensaje != "")
@@ -108,7 +102,7 @@ namespace Web.Areas.General.Controllers
                 return View(model);
             }
             model.IdUsuario = SessionTareas.IdUsuario.ToString();
-            if (!bus_tarea.Cerrar(model))
+            if (!bus_tarea.Asignacion(model))
             {
                 cargar_combo();
                 return View(model);
@@ -190,17 +184,7 @@ namespace Web.Areas.General.Controllers
                         mensaje = "Las fecha de: " + item.Descripcion + ", no son correctas";
                     }
                 }
-                if (info.TareaConcurrente)
-                {
-                    if (info.DiasIntervaloProximaTarea == null | info.DiasIntervaloProximaTarea == 0)
-                        mensaje = "Los dias de intervalo es obligatorio";
-                    if (info.FechaFinConcurrencia == null)
-                        mensaje = "La fecha de expiracion es obligatoria";
-                    else
-                        if (Convert.ToDateTime(info.FechaFinConcurrencia).Year == 1)
-                        mensaje = "La fecha de expiracion no es valida";
-
-                }
+                
                 return mensaje;
             }
             catch (Exception)

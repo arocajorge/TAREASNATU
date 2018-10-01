@@ -128,6 +128,18 @@ namespace Bus
                 throw;
             }
         }
+        public bool Asignacion(Tarea_Info info)
+        {
+            try
+            {
+                return odata.Asignacion(info);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         public Tarea_Info get_info(decimal IdTarea)
         {
             try

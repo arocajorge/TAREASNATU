@@ -566,6 +566,56 @@ namespace Data
                 throw;
             }
         }
+
+        public bool Asignacion(Tarea_Info info)
+        {
+            try
+            {
+                info_parametro = data_parametro.get_info();
+                using (EntityTareas Context = new EntityTareas())
+                {
+                    var Entity = Context.Tarea.Where(v => v.IdTarea == info.IdTarea).FirstOrDefault();
+                    if (Entity == null)
+                        return false;
+
+                    #region Estado tarea
+                    if (info.list_detalle != null)
+                    {
+                        foreach (var item in info.list_detalle)
+                        {
+                            var Entity_det = Context.Tarea_det.Where(v => v.IdTarea == info.IdTarea && v.Secuancial==item.Secuancial).FirstOrDefault();
+                            if(Entity_det!=null)
+                            {
+                                Entity_det.IdUsuario = item.IdUsuario;
+                                Entity_det.FechaInicio = item.FechaInicio.Date;
+                                Entity_det.FechaFin = item.FechaFin;
+                                Entity_det.NumHoras = item.NumHoras;
+                                Context.SaveChanges();
+                            }
+
+                        }
+                    }
+
+                    #endregion
+
+                    try
+                    {
+                        EnviarCorreo(info);
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+                }
+
+                return true;
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+        }
         public decimal get_id()
         {
             try
