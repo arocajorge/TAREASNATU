@@ -62,6 +62,11 @@ namespace Info
         public string Prioridad { get; set; }
         public string EstadoTarea { get; set; }
         public string NombreGrupo { get; set; }
+
+        public Nullable<int> NumTareaDia { get; set; }
+        public Nullable<int> NumTareaVencidas { get; set; }
+        public Nullable<int> TotalTareaResueltas { get; set; }
+        public Nullable<int> TotalTareaPendiente { get; set; }
         #endregion
     }
 }

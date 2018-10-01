@@ -62,49 +62,7 @@ namespace Web.Areas.General.Controllers
         }
 
 
-        public ActionResult Buzon_entrada()
-        {
-            cl_filtros_Info model = new cl_filtros_Info();
-
-            return View(model);
-        }
-        [HttpPost]
-        public ActionResult Buzon_entrada(cl_filtros_Info model)
-        {
-            return View(model);
-        }
-        [ValidateInput(false)]
-        public ActionResult GridViewPartial_buzon_entrada(DateTime? fecha_ini, DateTime? fecha_fin)
-        {
-            List<Tarea_Info> model = new List<Tarea_Info>();
-            ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : fecha_ini;
-            ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date : fecha_fin;
-            model = bus_tarea.get_lis(ViewBag.fecha_ini, ViewBag.fecha_fin);
-            model = bus_tarea.get_lis(SessionTareas.IdUsuario.ToString(), cl_enumeradores.eTipoTarea.ASIGNADA, ViewBag.fecha_ini, ViewBag.fecha_fin);
-            return PartialView("_GridViewPartial_buzon_entrada", model);
-        }
-        public ActionResult Buzon_salida()
-        {
-            cl_filtros_Info model = new cl_filtros_Info();
-
-            return View(model);
-        }
-        [HttpPost]
-        public ActionResult Buzon_salida(cl_filtros_Info model)
-        {
-            return View(model);
-        }
-        [ValidateInput(false)]
-        public ActionResult GridViewPartial_buzon_salida(DateTime? fecha_ini, DateTime? fecha_fin)
-        {
-            List<Tarea_Info> model = new List<Tarea_Info>();
-            ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : fecha_ini;
-            ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date : fecha_fin;
-            model = bus_tarea.get_lis(ViewBag.fecha_ini, ViewBag.fecha_fin);
-
-            model = bus_tarea.get_lis(SessionTareas.IdUsuario.ToString(), cl_enumeradores.eTipoTarea.GENERADAS, ViewBag.fecha_ini, ViewBag.fecha_fin);
-            return PartialView("_GridViewPartial_buzon_salida", model);
-        }
+     
         #endregion
 
         #region Acciones
@@ -293,32 +251,7 @@ namespace Web.Areas.General.Controllers
                 return RedirectToAction("Index");
             return View(model);
         }
-        public ActionResult Aprobar(int IdTarea = 0)
-        {
-            #region Validar Session
-            if (string.IsNullOrEmpty(SessionTareas.IdTransaccionSession))
-                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
-            SessionTareas.IdTransaccionSession = (Convert.ToDecimal(SessionTareas.IdTransaccionSession) + 1).ToString();
-            SessionTareas.IdTransaccionSessionActual = SessionTareas.IdTransaccionSession;
-            #endregion
-
-            Tarea_Info model = bus_tarea.get_info(IdTarea);
-            if(model==null)
-            {
-                model = new Tarea_Info();
-                return View(model);
-            }
-            model.IdTransaccionSession = Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual);
-            model.list_detalle = bus_tarea_det.get_lis(IdTarea);
-            Lis_Tarea_det_Info_lis.set_list(model.list_detalle, model.IdTransaccionSession);
-            model.list_adjuntos = bus_adjunto.get_lis(IdTarea);
-            TareaArchivoAdjunto_Info_lis.set_list(model.list_adjuntos, model.IdTransaccionSession);
-            cargar_combo();
-            if (model == null)
-                return RedirectToAction("Buzon_entrada");
-            return View(model);
-        }
-
+       
 
         public ActionResult Cerrar(int IdTarea = 0)
 
@@ -386,6 +319,7 @@ namespace Web.Areas.General.Controllers
             }
             return RedirectToAction("Buzon_entrada");
         }
+
 
 
         public FileResult DolowarFille(decimal IdTarea, int Secuencial)
@@ -488,36 +422,7 @@ namespace Web.Areas.General.Controllers
         }
         #endregion
 
-        #region json
-        public JsonResult AprobarTarea(int IdTarea = 0, decimal IdTransaccionSession=0)
-        {
-            var model = bus_tarea.get_info(IdTarea);
-            if (model != null)
-            {
-                model.list_detalle = Lis_Tarea_det_Info_lis.get_list(IdTransaccionSession);
-                model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(IdTransaccionSession);
-            }
-
-            var resultado = bus_tarea.Aprobar(model);
-
-            return Json(resultado, JsonRequestBehavior.AllowGet);
-        }
-        public JsonResult DesaprobarTarea(int IdTarea = 0, decimal IdTransaccionSession = 0)
-        {
-
-            var model = bus_tarea.get_info(IdTarea);
-            if (model != null)
-            {
-                model.list_detalle = Lis_Tarea_det_Info_lis.get_list(IdTransaccionSession);
-                model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(IdTransaccionSession);
-            }
-
-            var resultado = bus_tarea.Desaprobar(model);
-
-            return Json(resultado, JsonRequestBehavior.AllowGet);
-        }
-        #endregion
-
+       
         private string Validaciones(Tarea_Info info)
         {
             try
@@ -533,6 +438,14 @@ namespace Web.Areas.General.Controllers
                     if (item.FechaFin.Date < item.FechaInicio.Date)
                     {
                         mensaje = "Las fecha de: "+item.Descripcion+", no son correctas";
+                    }
+                    if( (item.FechaInicio.Date <info.FechaInicio.Date) | (item.FechaInicio.Date > info.FechaCulmina.Date))
+                    {
+                        mensaje = "Las fecha de: " + item.Descripcion + ", no son correctas";
+                    }
+                    if ((item.FechaFin.Date < info.FechaInicio.Date) | (item.FechaFin.Date > info.FechaCulmina.Date))
+                    {
+                        mensaje = "Las fecha de: " + item.Descripcion + ", no son correctas";
                     }
                 }
                 if(info.TareaConcurrente)

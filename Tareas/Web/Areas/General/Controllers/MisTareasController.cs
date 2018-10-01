@@ -1,13 +1,13 @@
 ﻿using Bus;
 using DevExpress.Web.Mvc;
 using Info;
+using Info.Helps;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Web.Helps;
-
 namespace Web.Areas.General.Controllers
 {
     public class MisTareasController : Controller
@@ -16,7 +16,23 @@ namespace Web.Areas.General.Controllers
         Tarea_det_Bus bus_detalle = new Tarea_det_Bus();
         public ActionResult Index()
         {
-            return View();
+            cl_filtros_Info model = new cl_filtros_Info();
+            return View(model);
+        }
+      
+        public ActionResult CargaLaboral()
+        {
+            cargar_combo();
+            Tarea_Info model = new Tarea_Info();
+            model = bus_tarea.get_carga_laboral(SessionTareas.IdUsuario, DateTime.Now.Date);
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult CargaLaboral(Tarea_Info model)
+        {
+            cargar_combo();
+             model = bus_tarea.get_carga_laboral(model.IdUsuario, model.FechaInicio.Date);
+            return View(model);
         }
 
         [ValidateInput(false)]
@@ -94,5 +110,24 @@ namespace Web.Areas.General.Controllers
             }
         }
 
+        public void cargar_combo()
+        {
+            try
+            {
+
+                Usuario_Bus bus_usuario = new Usuario_Bus();
+
+                var list_usuario = bus_usuario.get_lis(false);
+                ViewBag.list_usuario = list_usuario;
+
+
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

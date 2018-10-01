@@ -47,7 +47,7 @@
                    settings.Properties.NullText = "== Seleccione ==";
                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
                    settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){get_grupo();mostrar_detalle();}";
-
+                   settings.ReadOnly = true;
                }).BindList(ViewBag.list_grupo).GetHtml()
                     @Html.ValidationMessageFor(q => q.IdGrupo, "", new { @class = "text-danger" })
                 </div>
@@ -70,7 +70,7 @@
                    settings.Properties.NullText = "== Seleccione ==";
                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
                    settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){mostrar_detalle();}";
-
+                   settings.ReadOnly = true;
                }).BindList(ViewBag.list_usuarios).GetHtml()
                     @Html.ValidationMessageFor(q => q.IdUsuarioSolicitante, "", new { @class = "text-danger" })
                 </div>
@@ -101,6 +101,7 @@
                {
                    settings.Name = "AprobadoSolicitado";
                    settings.Text = "Aprobado solicitante";
+                   settings.ReadOnly = true;
                }).GetHtml()
                     @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
                 </div>
@@ -112,6 +113,7 @@
                {
                    settings.Name = "AprobadoEncargado";
                    settings.Text = "Aprobado encargado";
+                   settings.ReadOnly = true;
                }).GetHtml()
                     @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
                 </div>
@@ -138,6 +140,7 @@
                        settings.Properties.EditFormatString = "dd/MM/yyyy";
                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.ReadOnly = true;
                    }).GetHtml()
                         @Html.ValidationMessageFor(q => q.FechaInicio, "", new { @class = "text-danger" })
                     </div>
@@ -158,6 +161,8 @@
                        settings.Properties.EditFormatString = "dd/MM/yyyy";
                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.ReadOnly = true;
+
                    }).GetHtml()
                         @Html.ValidationMessageFor(q => q.FechaCulmina, "", new { @class = "text-danger" })
                     </div>
@@ -203,6 +208,7 @@
                    settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
                    settings.Properties.NullText = "== Seleccione ==";
                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                   settings.ReadOnly = true;
 
                }).BindList(ViewBag.list_prioridad).GetHtml()
                     @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
@@ -215,6 +221,8 @@
                {
                    settings.Name = "TareaConcurrente";
                    settings.Text = "Tarea concurrente";
+                   settings.ReadOnly = true;
+
                    settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){mostrar_parametros()}";
 
                }).GetHtml()
@@ -230,7 +238,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="IdUsuario">Observación</label>
-                    @Html.TextAreaFor(v => v.Observacion, new { @class = "form-control", @row = 2 })
+                    @Html.TextAreaFor(v => v.Observacion, new { @class = "form-control", @row = 2 ,@disabled="disabled"})
                     @Html.ValidationMessageFor(m => m.Observacion, "", new { @class = "text-danger" })
                 </div>
             </div>

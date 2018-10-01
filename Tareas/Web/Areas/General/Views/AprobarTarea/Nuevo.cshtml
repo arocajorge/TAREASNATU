@@ -21,7 +21,7 @@
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 
-@using (Html.BeginForm("Aprobar", "Tarea", FormMethod.Post, new { @class = "form", @role = "form" }))
+@using (Html.BeginForm("Nuevo", "AprobarTarea", FormMethod.Post, new { @class = "form", @role = "form",@id="formAprobar" }))
 {
 
     @Html.HiddenFor(v => v.IdTransaccionSession, new {@id= "IdTransaccionSession" });
@@ -115,7 +115,6 @@
                {
                    settings.Name = "AprobadoEncargado";
                    settings.Text = "Aprobado encargado";
-                   settings.Enabled = false;
                }).GetHtml()
                     @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
                 </div>
@@ -240,7 +239,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="IdUsuario">Observación</label>
-                    @Html.TextAreaFor(v => v.Observacion, new { @class = "form-control", @row = 2 ,@disabled="disabled"})
+                    @Html.TextAreaFor(v => v.Observacion, new { @class = "form-control", @row = 2 ,@id= "Observacion" })
                     @Html.ValidationMessageFor(m => m.Observacion, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -264,7 +263,7 @@
                     <div class="col-md-12">
                         <div class="col-md-12">
                             <div class="form-group">
-                                @Html.Action("GridViewPartial_tarea_det")
+                                @Html.Action("GridViewPartial_tarea_det","Tarea")
                             </div>
                         </div>
                     </div>
@@ -300,7 +299,7 @@
                     <div class="col-md-12">
                         <div class="col-md-12">
                             <div class="form-group">
-                                @Html.Action("GridViewPartial_tarea_det_adjunto")
+                                @Html.Action("GridViewPartial_tarea_det_adjunto", "Tarea")
                             </div>
                         </div>
                     </div>
@@ -314,8 +313,8 @@
 
 
     <div class="box-footer">
-        <button type="button" class="btn btn-primary" onclick="Aprobar();">Aprobar</button>
-        <button type="submit" class="btn btn-danger" onclick="Desaprobar();">Desaprobar</button>
+        <button type="button" class="btn btn-primary" onclick="Aprobar();" id="btbAprobar">Aprobar</button>
+        <button type="button" class="btn btn-danger" onclick="Desaprobar();" id="btnDesaprobar">Desaprobar</button>
         <a class="btn btn-default" href="@Url.Action("Buszon_entrada","Tarea",new { Area = "General" },null)">Cancelar</a>
     </div>
 
@@ -330,6 +329,7 @@
     function Aprobar() {
         if (IdGrupo.GetValue() > 0)
         {
+            document.getElementById("btnAprobar").disabled = true;
             var IdTarea = $("#IdTarea").val();
             var IdTransaccionSession = $("#IdTransaccionSession").val();
             var datos = {
@@ -339,7 +339,7 @@
             $.ajax({
                 type: 'POST',
                 data: JSON.stringify(datos),
-                url: '@Url.Action("AprobarTarea", "Tarea", new { Area = "General" })',
+                url: '@Url.Action("AprobarTarea", "AprobarTarea")',
                 async: false,
                 bDeferRender: true,
                 bProcessing: true,
@@ -348,7 +348,7 @@
                 success: function (data) {
                     if(data)
                     {
-                        window.location.href = "@Url.Action("Buzon_entrada","Tarea")";
+                        window.location.href = "@Url.Action("Buzon_entrada", "Buzon")";
                     }
                 },
                 error: function (error) {
@@ -358,32 +358,44 @@
     };
 
     function Desaprobar() {
-        if (IdGrupo.GetValue() > 0) {
-            var IdTarea = $("#IdTarea").val();
-            var IdTransaccionSession = $("#IdTransaccionSession").val();
-            var datos = {
-                IdTarea: IdTarea,
-                IdTransaccionSession: IdTransaccionSession
+        if (IdGrupo.GetValue() > 0)
+        {
+           
+            var obse = $("#Observacion").val();
+            if (obse == "") {
+                alert('La observación es obligatoria');
 
             }
-            $.ajax({
-                type: 'POST',
-                data: JSON.stringify(datos),
-                url: '@Url.Action("DesaprobarTarea", "Tarea", new { Area = "General" })',
-                async: false,
-                bDeferRender: true,
-                bProcessing: true,
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                success: function (data) {
-                    if(data)
-                    {
-                        window.location.href = "@Url.Action("Buzon_entrada","Tarea")";
-                    }
-                },
-                error: function (error) {
+            else {
+                document.getElementById("btnDesaprobar").disabled = true;
+                var IdTarea = $("#IdTarea").val();
+                var IdTransaccionSession = $("#IdTransaccionSession").val();
+                var Observacion = $("#Observacion").val();
+
+                var datos = {
+                    IdTarea: IdTarea,
+                    IdTransaccionSession: IdTransaccionSession,
+                    Observacion
+
                 }
-            });
+                $.ajax({
+                    type: 'POST',
+                    data: JSON.stringify(datos),
+                    url: '@Url.Action("DesaprobarTarea", "AprobarTarea", new { Area = "General" })',
+                    async: false,
+                    bDeferRender: true,
+                    bProcessing: true,
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        if (data) {
+                            window.location.href = "@Url.Action("Buzon_entrada","Buzon", new { Area = "General" })";
+                        }
+                    },
+                    error: function (error) {
+                    }
+                });
+            }
         }
     };
 </script>

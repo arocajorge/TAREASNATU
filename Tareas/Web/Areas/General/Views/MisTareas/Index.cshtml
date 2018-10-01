@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "Mis tareas";
-    //if (Session["IdUsuario"] == null )
+    //if (Session["IdUsuario"] == null)
     //{
     //    Response.Redirect("~/Account/Login");
     //}
@@ -9,6 +9,6 @@
 }
 
 @using (Html.BeginForm())
-{
+{ 
     @Html.Action("GridViewPartial_mis_tareas")
 }

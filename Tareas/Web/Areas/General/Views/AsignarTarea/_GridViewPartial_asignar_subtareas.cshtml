@@ -3,8 +3,8 @@
 @{
     var grid = Html.DevExpress().GridView(settings =>
     {
-        settings.Name = "GridViewPartial_buzon_entrada";
-        settings.CallbackRouteValues = new { Controller = "Tarea", Action = "GridViewPartial_buzon_entrada" , fecha_ini = ViewBag.fecha_ini, fecha_fin = ViewBag.fecha_fin };
+        settings.Name = "_GridViewPartial_asignar_subtareas";
+        settings.CallbackRouteValues = new { Controller = "AsignarTarea", Action = "GridViewPartial_asignar_subtareas", fecha_ini = ViewBag.fecha_ini, fecha_fin = ViewBag.fecha_fin };
         settings.Width = Unit.Percentage(100);
         settings.KeyFieldName = "IdTarea";
         //Configuración para que la grilla no muestre texto completo
@@ -29,7 +29,19 @@
         settings.Settings.ShowFilterRow = true;
         settings.Settings.ShowHeaderFilterButton = true;
         settings.SettingsBehavior.AllowSelectByRowClick = true;
-
+        //Configuracion exportacion
+        settings.SettingsExport.EnableClientSideExportAPI = true;
+        settings.SettingsExport.ExcelExportMode = DevExpress.Export.ExportType.WYSIWYG;
+        settings.Toolbars.Add(t =>
+        {
+            t.EnableAdaptivity = true;
+            t.Items.Add(GridViewToolbarCommand.ExportToPdf);
+            t.Items.Add(GridViewToolbarCommand.ExportToXls);
+            t.Items.Add(GridViewToolbarCommand.ExportToXlsx);
+            t.Items.Add(GridViewToolbarCommand.ExportToDocx);
+            t.Items.Add(GridViewToolbarCommand.ExportToRtf);
+            t.Items.Add(GridViewToolbarCommand.ExportToCsv);
+        });
         settings.SettingsExport.RenderBrick = (sender, e) =>
         {
             if (e.RowType == GridViewRowType.Data && e.VisibleIndex % 2 == 0)
@@ -43,6 +55,30 @@
                 e.Row.ForeColor = System.Drawing.Color.Red;
             }
         };
+
+        settings.Columns.Add(c =>
+        {
+            c.Caption = "#";
+            c.Width = Unit.Percentage(10);
+            c.SetDataItemTemplateContent(tc =>
+            {
+                if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "Estado")) == true && Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "AprobadoEncargado")) == true)
+                {
+                    ViewContext.Writer.Write(
+                Html.ActionLink("Asignar", "Nuevo", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }) + "&nbsp;"
+                    );
+                }
+                else
+                {
+                    ViewContext.Writer.Write(
+                Html.ActionLink("Consultar", "Consultar", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }) + "&nbsp;"
+
+                    );
+                }
+            });
+
+        });
+        settings.Columns.Add("IdTarea", "ID").Width = Unit.Percentage(5);
         settings.Columns.Add("Observacion", "Observación").Width = Unit.Percentage(30);
         settings.Columns.Add(column =>
         {
@@ -69,31 +105,11 @@
             });
         });
         settings.Columns.Add("solicitante", "Solicitante").Width = Unit.Percentage(10);
+        settings.Columns.Add("Asignado", "Asignado").Width = Unit.Percentage(10);
         settings.Columns.Add("Prioridad", "Prioridad").Width = Unit.Percentage(10);
         settings.Columns.Add("EstadoTarea", "Estado").Width = Unit.Percentage(10);
         settings.Columns.Add("NombreGrupo", "Grupo").Width = Unit.Percentage(10);
 
-        settings.Columns.Add(c =>
-        {
-            c.Caption = "Acciones";
-            c.SetDataItemTemplateContent(tc =>
-            {
-                if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "Estado")) == true && Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "AprobadoEncargado")) == false)
-                {
-                    ViewContext.Writer.Write(
-                Html.ActionLink("Aprobar/Desaprobar", "Aprobar", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }) 
-                    );
-                }
-                else
-                {
-                    ViewContext.Writer.Write(
-                Html.ActionLink("Cerrar", "Cerrar", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }) + "&nbsp;"
-
-                    );
-                }
-            });
-           
-        });
 
 
 

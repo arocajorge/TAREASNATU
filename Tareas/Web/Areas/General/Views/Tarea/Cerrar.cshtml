@@ -27,7 +27,6 @@
     @Html.HiddenFor(v => v.IdTransaccionSession);
     @Html.HiddenFor(v => v.IdTarea);
 
-    
 
     <div class="row">
         <div class="col-md-12">
@@ -50,7 +49,7 @@
                    settings.Properties.NullText = "== Seleccione ==";
                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
                    settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){get_grupo();mostrar_detalle();}";
-
+                   settings.ReadOnly = true;
                }).BindList(ViewBag.list_grupo).GetHtml()
                     @Html.ValidationMessageFor(q => q.IdGrupo, "", new { @class = "text-danger" })
                 </div>
@@ -73,7 +72,7 @@
                    settings.Properties.NullText = "== Seleccione ==";
                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
                    settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){mostrar_detalle();}";
-
+                   settings.ReadOnly = true;
                }).BindList(ViewBag.list_usuarios).GetHtml()
                     @Html.ValidationMessageFor(q => q.IdUsuarioSolicitante, "", new { @class = "text-danger" })
                 </div>
@@ -86,7 +85,7 @@
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="IdUsuarioAsignado">Usuario Jefe grupo</label>
-                    @Html.TextBoxFor(v => v.IdUsuarioAsignado, new { @class = "form-control", @id = "IdUsuarioAsignado" , @disabled="disabled"})
+                    @Html.TextBoxFor(v => v.IdUsuarioAsignado, new { @class = "form-control", @id = "IdUsuarioAsignado", @disabled = "disabled" })
                     @Html.ValidationMessageFor(m => m.IdUsuarioAsignado, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -101,10 +100,11 @@
                 <div class="form-group">
                     <label for="AprobadoSolicitado"></label>
                     @Html.DevExpress().CheckBoxFor(q => q.AprobadoSolicitado, settings =>
-                     {
-                    settings.Name = "AprobadoSolicitado";
-                    settings.Text = "Aprobado solicitante";
-                     }).GetHtml()
+               {
+                   settings.Name = "AprobadoSolicitado";
+                   settings.Text = "Aprobado solicitante";
+                   settings.ReadOnly = true;
+               }).GetHtml()
                     @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -115,6 +115,7 @@
                {
                    settings.Name = "AprobadoEncargado";
                    settings.Text = "Aprobado encargado";
+                   settings.ReadOnly = true;
                }).GetHtml()
                     @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
                 </div>
@@ -141,6 +142,7 @@
                        settings.Properties.EditFormatString = "dd/MM/yyyy";
                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.ReadOnly = true;
                    }).GetHtml()
                         @Html.ValidationMessageFor(q => q.FechaInicio, "", new { @class = "text-danger" })
                     </div>
@@ -161,6 +163,8 @@
                        settings.Properties.EditFormatString = "dd/MM/yyyy";
                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.ReadOnly = true;
+
                    }).GetHtml()
                         @Html.ValidationMessageFor(q => q.FechaCulmina, "", new { @class = "text-danger" })
                     </div>
@@ -206,6 +210,7 @@
                    settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
                    settings.Properties.NullText = "== Seleccione ==";
                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                   settings.ReadOnly = true;
 
                }).BindList(ViewBag.list_prioridad).GetHtml()
                     @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
@@ -218,6 +223,8 @@
                {
                    settings.Name = "TareaConcurrente";
                    settings.Text = "Tarea concurrente";
+                   settings.ReadOnly = true;
+
                    settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){mostrar_parametros()}";
 
                }).GetHtml()
@@ -233,7 +240,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="IdUsuario">Observación</label>
-                    @Html.TextAreaFor(v => v.Observacion, new { @class = "form-control", @row = 2 })
+                    @Html.TextAreaFor(v => v.Observacion, new { @class = "form-control", @row = 2, @disabled = "disabled" })
                     @Html.ValidationMessageFor(m => m.Observacion, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -273,7 +280,7 @@
 
 
                                 @Html.DevExpress().UploadControl(settings =>
-                               {
+                           {
                                settings.Name = "UploadControl_adjunto";
                                settings.CallbackRouteValues = new { Controller = "Tarea", Action = "UploadControl_adjuntoUpload" };
 
@@ -283,7 +290,7 @@
 
                                settings.ShowUploadButton = true;
                                settings.ShowProgressPanel = true;
-                               settings.ClientSideEvents.FileUploadComplete= "function(s,e){refres_grid_adjunto();}";
+                               settings.ClientSideEvents.FileUploadComplete = "function(s,e){refres_grid_adjunto();}";
                                settings.ValidationSettings.Assign(Web.Areas.General.Controllers.TareaControllerUploadControl_adjuntoSettings.UploadValidationSettings);
                            }).GetHtml()
                             </div>
@@ -336,6 +343,7 @@
             </div>
         </div>
     </div>
+
 
     <div class="box-footer">
         <button type="submit" class="btn btn-primary">Dar po terminada</button>

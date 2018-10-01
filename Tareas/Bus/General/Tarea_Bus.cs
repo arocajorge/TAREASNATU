@@ -142,6 +142,21 @@ namespace Bus
                 throw;
             }
         }
+
+        public Tarea_Info get_carga_laboral(string IdUsuario, DateTime Fecha)
+        {
+            try
+            {
+                return odata.get_carga_laboral(IdUsuario, Fecha);
+
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
 

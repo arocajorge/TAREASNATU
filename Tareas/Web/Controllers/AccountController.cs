@@ -39,7 +39,7 @@ namespace Web.Controllers
 
                 SessionTareas.IdTransaccionSession = 1 + "000000000";
                 SessionTareas.IdTransaccionSessionActual = SessionTareas.IdTransaccionSession;
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("CargaLaboral", "MisTareas", new  {@Area="General" });
             }
             ViewBag.mensaje = "Credenciales incorrectas";
             return View(model);

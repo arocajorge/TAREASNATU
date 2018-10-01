@@ -1,7 +1,8 @@
-﻿@model Info.Helps.cl_filtros_Info
+﻿
+@model Info.Helps.cl_filtros_Info
 @{
-    ViewBag.Title = "Tareas";
-    if (Session["IdUsuario"] == null )
+    ViewBag.Title = "Asignación de subtareas";
+    if (Session["IdUsuario"] == null)
     {
         Response.Redirect("~/Account/Login");
     }
@@ -59,14 +60,14 @@
                                     <i class="fa fa-calendar"></i>
                                 </div>
                                 @Html.DevExpress().DateEditFor(q => q.fecha_fin, settings =>
-                               {
-                                   settings.Name = "fecha_fin";
-                                   settings.Properties.UseMaskBehavior = true;
-                                   settings.Properties.EditFormat = EditFormat.Date;
-                                   settings.Properties.EditFormatString = "dd/MM/yyyy";
-                                   settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
-                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                               }).GetHtml()
+                           {
+                               settings.Name = "fecha_fin";
+                               settings.Properties.UseMaskBehavior = true;
+                               settings.Properties.EditFormat = EditFormat.Date;
+                               settings.Properties.EditFormatString = "dd/MM/yyyy";
+                               settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                               settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                           }).GetHtml()
                                 @Html.ValidationMessageFor(q => q.fecha_fin, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -90,10 +91,9 @@
             </div>
         </div>
         <div class="box-body">
-            @Html.Action("GridViewPartial_tarea", new { fecha_ini = Model.fecha_ini, fecha_fin = Model.fecha_fin })
+            @Html.Action("GridViewPartial_asignar_subtareas", new { fecha_ini = Model.fecha_ini, fecha_fin = Model.fecha_fin })
         </div>
         <!-- /.box-body -->
-      
         <!-- /.box-footer-->
     </div>
 }

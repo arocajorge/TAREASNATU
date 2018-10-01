@@ -410,6 +410,10 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_Tarea' no tiene definida ni
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="sp_carga_laboral" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdUsuario" Type="varchar" Mode="In" />
+          <Parameter Name="Fecha" Type="date" Mode="In" />
+        </Function>
         <Function Name="sp_crear_tarea_concurrente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdTarea" Type="numeric" Mode="In" />
         </Function>
@@ -611,6 +615,10 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_Tarea' no tiene definida ni
             <End Role="Estado" EntitySet="Estado" />
             <End Role="Tarea" EntitySet="Tarea" />
           </AssociationSet>
+          <FunctionImport Name="sp_carga_laboral" ReturnType="Collection(ModelGeneral.sp_carga_laboral_Result)">
+            <Parameter Name="IdUsuario" Mode="In" Type="String" />
+            <Parameter Name="Fecha" Mode="In" Type="DateTime" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="sp_Tareas_X_Usuarios_Result">
           <Property Type="Decimal" Name="IdTarea" Nullable="false" Precision="18" Scale="0" />
@@ -1065,6 +1073,12 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_Tarea' no tiene definida ni
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="sp_carga_laboral_Result">
+          <Property Type="Int32" Name="NumTareaDia" Nullable="true" />
+          <Property Type="Int32" Name="NumTareaVencidas" Nullable="true" />
+          <Property Type="Int32" Name="TotalTareaResueltas" Nullable="true" />
+          <Property Type="Int32" Name="TotalTareaPendiente" Nullable="true" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1282,6 +1296,16 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_Tarea' no tiene definida ni
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_carga_laboral" FunctionName="ModelGeneral.Store.sp_carga_laboral">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModelGeneral.sp_carga_laboral_Result">
+                <ScalarProperty Name="NumTareaDia" ColumnName="NumTareaDia" />
+                <ScalarProperty Name="NumTareaVencidas" ColumnName="NumTareaVencidas" />
+                <ScalarProperty Name="TotalTareaResueltas" ColumnName="TotalTareaResueltas" />
+                <ScalarProperty Name="TotalTareaPendiente" ColumnName="TotalTareaPendiente" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

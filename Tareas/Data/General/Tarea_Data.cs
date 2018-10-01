@@ -126,6 +126,8 @@ namespace Data
                                      IdEstadoPrioridad = q.IdEstadoPrioridad,
                                      TareaConcurrente = q.TareaConcurrente,
                                      Estado = q.Estado,
+                                     AprobadoEncargado = q.AprobadoEncargado,
+                                     AprobadoSolicitado = q.AprobadoSolicitado,
 
                                      solicitante = q.solicitante,
                                      Asignado = q.Asignado,
@@ -545,6 +547,7 @@ namespace Data
                     #endregion
 
                     Context.SaveChanges();
+                    Context.sp_crear_tarea_concurrente(info.IdTarea);
                     try
                     {
                         EnviarCorreo(info);
@@ -710,6 +713,34 @@ namespace Data
             {
 
                 return false;
+            }
+        }
+        public Tarea_Info get_carga_laboral(string IdUsuario, DateTime fecha)
+        {
+            try
+            {
+                Tarea_Info info = new Tarea_Info();
+                using (EntityTareas Context = new EntityTareas())
+                {
+                    var Entity = Context.sp_carga_laboral(IdUsuario,fecha).FirstOrDefault();
+                    if (Entity == null)
+                        return new Tarea_Info();
+                    else
+                    {
+                        info.NumTareaDia = Entity.NumTareaDia;
+                        info.NumTareaVencidas = Entity.NumTareaVencidas;
+                        info.TotalTareaPendiente = Entity.TotalTareaPendiente;
+                        info.TotalTareaResueltas = Entity.TotalTareaResueltas;
+                        info.FechaInicio = fecha;
+                        info.IdUsuario = IdUsuario;
+                    }
+                  }
+                return info;
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
     }
