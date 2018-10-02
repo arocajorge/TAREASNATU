@@ -73,6 +73,8 @@ namespace Web.Areas.General.Controllers
         [HttpPost]
         public ActionResult Nuevo(Tarea_Info model)
         {
+            model = bus_tarea.get_info(model.IdTarea);
+            model.IdTransaccionSession = Convert.ToDecimal(SessionTareas.IdTransaccionSession);
             var grupo = bus_grupo.get_info(model.IdGrupo);
             model.IdUsuarioAsignado = grupo.IdUsuario;
             string mensaje = "";
@@ -107,7 +109,7 @@ namespace Web.Areas.General.Controllers
                 cargar_combo();
                 return View(model);
             }
-            return RedirectToAction("Asignar_subtareas");
+            return RedirectToAction("Index");
         }
 
         #region cargar combo
