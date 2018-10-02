@@ -64,20 +64,20 @@
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label for="">Fecha*</label>
+                            <label for="FechaCulmina">Fecha*</label>
                             <div class="input-group date">
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
                                 @Html.DevExpress().DateEditFor(q => q.FechaCulmina, settings =>
-                           {
-                               settings.Name = "FechaCulmina";
-                               settings.Properties.UseMaskBehavior = true;
-                               settings.Properties.EditFormat = EditFormat.Date;
-                               settings.Properties.EditFormatString = "dd/MM/yyyy";
-                               settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
-                               settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                           }).GetHtml()
+                          {
+                              settings.Name = "FechaCulmina";
+                              settings.Properties.UseMaskBehavior = true;
+                              settings.Properties.EditFormat = EditFormat.Date;
+                              settings.Properties.EditFormatString = "dd/MM/yyyy";
+                              settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                              settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                          }).GetHtml()
                                 @Html.ValidationMessageFor(q => q.FechaCulmina, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -193,10 +193,6 @@
             </div>
 
 
-
-
-
-
             @*<div class="box box-primary">
                 <div class="box-body no-padding">
                     <!-- THE CALENDAR -->
@@ -206,11 +202,7 @@
             </div>*@
 
 
-
-
          </div>
-
-
 
 
     </div>
