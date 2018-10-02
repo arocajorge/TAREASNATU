@@ -23,7 +23,10 @@ namespace Web.Areas.General.Controllers
         public ActionResult CargaLaboral()
         {
             cargar_combo();
-            Tarea_Info model = new Tarea_Info();
+            Tarea_Info model = new Tarea_Info
+            {
+                FechaCulmina = DateTime.Now.Date
+            };
             model = bus_tarea.get_carga_laboral(SessionTareas.IdUsuario, DateTime.Now.Date);
             return View(model);
         }
