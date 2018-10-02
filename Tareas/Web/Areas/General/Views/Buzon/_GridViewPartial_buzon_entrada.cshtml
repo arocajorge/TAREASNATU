@@ -87,7 +87,7 @@
                 else
                 {
                     ViewContext.Writer.Write(
-                Html.ActionLink("Cerrar", "Nuevo", "Tarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }, null)
+                Html.ActionLink("Cerrar", "Cerrar", "Tarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }, null)
 
                     );
                 }

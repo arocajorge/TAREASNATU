@@ -21,28 +21,12 @@
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 
-<script>
-   
-
-   
-    $(function () {
-
-        mostrar_detalle();
-    });
-
-
-
-</script>
 @using (Html.BeginForm("Nuevo", "Tarea", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     @Html.HiddenFor(v => v.IdTransaccionSession);
    // @Html.HiddenFor(v => v.IdUsuarioAsignado);
-
-    
-
     <div class="row">
         <div class="col-md-12">
-
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="IdGrupo">Grupo*</label>
@@ -255,11 +239,12 @@
 
     <div id="Tabs" role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
+
             <li class="active">
-                <a href="#tab_detalle" aria-controls="detalle" role="tab" data-toggle="tab" id="link_detalle">Detalle tarea</a>
+                <a href="#tab_adjunto" aria-controls="adjunto" role="tab" data-toggle="tab" id="link_adjunto">Archivos adjuntos</a>
             </li>
-            <li hidden>
-                <a href="#tab_adjunto" aria-controls="adjunto" role="tab" data-toggle="tab">Archivos adjuntos</a>
+            <li  hidden>
+                <a href="#tab_detalle" aria-controls="detalle" role="tab" data-toggle="tab" id="link_detalle">Detalle tarea</a>
             </li>
             <li hidden>
                 <a href="#tab_parametro" aria-controls="parametros" role="tab" data-toggle="tab" id="link_parametro">Parametros</a>
@@ -267,18 +252,8 @@
 
         </ul>
         <div class="tab-content" style="padding-top: 20px">
-            <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_detalle">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                @Html.Action("GridViewPartial_tarea_det")
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_adjunto">
+
+            <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_adjunto">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="col-md-12">
@@ -313,7 +288,17 @@
                     </div>
                 </div>
             </div>
-
+            <div role="tabpanel" class="tab-pane " style="margin-left: 1em;" id="tab_detalle">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.Action("GridViewPartial_tarea_det")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_parametro">
                 <div class="row">
                     <div class="col-md-12">
@@ -360,9 +345,10 @@
         @Scripts.Render("~/bundles/jqueryval")
     }
 }
-
-
 <script>
+    mostrar_parametros();
+    mostrar_detalle();
+
     function get_grupo() {
         if (IdGrupo.GetValue() > 0 ) {
             var datos = {
@@ -398,6 +384,7 @@
     {
         var IdUsuarioAsignad = $("#IdUsuarioAsignado").val();
         var IdUsuarioSolicitant = IdUsuarioSolicitante.GetValue();
+        $("#link_adjunto").click();
         if (IdUsuarioAsignad == IdUsuarioSolicitant)
         {
             $("#link_detalle").show();
@@ -406,8 +393,8 @@
         {
             $("#link_detalle").hide();
         }
-
     };
+
     function mostrar_parametros() {
         if (TareaConcurrente.GetValue()) {
             $("#link_parametro").show();
@@ -417,11 +404,4 @@
         }
 
     };
-    $(function () {
-       
-        mostrar_detalle();
-    });
-
-
-
 </script>

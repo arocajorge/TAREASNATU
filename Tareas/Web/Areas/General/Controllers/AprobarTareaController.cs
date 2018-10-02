@@ -57,6 +57,7 @@ namespace Web.Areas.General.Controllers
             var model = bus_tarea.get_info(IdTarea);
             if (model != null)
             {
+                model.IdUsuario = SessionTareas.IdUsuario;
                 if (Observacion != "")
                     model.Observacion = Observacion;
                 model.list_detalle = Lis_Tarea_det_Info_lis.get_list(IdTransaccionSession);
@@ -75,6 +76,7 @@ namespace Web.Areas.General.Controllers
             var model = bus_tarea.get_info(IdTarea);
             if (model != null)
             {
+                model.IdUsuario = SessionTareas.IdUsuario;
                 model.Observacion = Observacion;
                 model.list_detalle = Lis_Tarea_det_Info_lis.get_list(IdTransaccionSession);
                 model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(IdTransaccionSession);
