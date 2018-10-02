@@ -13,5 +13,15 @@ namespace Info.Helps
             ASIGNADA,
             GENERADAS
         }
+        public enum eAsuntoCorreo
+        {
+            NUEVA,
+            ACEPTADA,
+            CERRADA,
+            DEVUELTA,
+            TAREA,
+            MODIFICADA,
+            DISTRIBUIDA
+        }
     }
 }

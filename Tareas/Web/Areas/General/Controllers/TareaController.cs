@@ -53,6 +53,15 @@ namespace Web.Areas.General.Controllers
             model.list_detalle = Lis_Tarea_det_Info_lis.get_list(Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_Tarea_det", model);
         }
+        [ValidateInput(false)]
+        public ActionResult GridViewPartial_Tarea_det_readonly()
+        {
+            cargar_combo_detalle();
+            Tarea_Info model = new Tarea_Info();
+            model.list_detalle = Lis_Tarea_det_Info_lis.get_list(Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual));
+            return PartialView("_GridViewPartial_Tarea_det_readonly", model);
+        }
+        
         public ActionResult GridViewPartial_tarea_det_adjunto()
         {
             cargar_combo();

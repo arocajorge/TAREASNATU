@@ -277,7 +277,7 @@ namespace Data
                
                 try
                 {
-                    EnviarCorreo(info);
+                    EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.NUEVA.ToString()+" "+cl_enumeradores.eAsuntoCorreo.TAREA.ToString());
                 }
                 catch (Exception)
                 {
@@ -375,7 +375,7 @@ namespace Data
                     Context.SaveChanges();
                     try
                     {
-                        EnviarCorreo(info);
+                        EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.TAREA.ToString() + " " + cl_enumeradores.eAsuntoCorreo.MODIFICADA.ToString());
                     }
                     catch (Exception)
                     {
@@ -449,7 +449,7 @@ namespace Data
                     Context.SaveChanges();
                     try
                     {
-                        EnviarCorreo(info);
+                        EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.TAREA.ToString() + " " + cl_enumeradores.eAsuntoCorreo.ACEPTADA.ToString());
                     }
                     catch (Exception)
                     {
@@ -499,7 +499,7 @@ namespace Data
                     Context.SaveChanges();
                     try
                     {
-                        EnviarCorreo(info);
+                        EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.TAREA.ToString() + " " + cl_enumeradores.eAsuntoCorreo.DEVUELTA.ToString());
                     }
                     catch (Exception)
                     {
@@ -550,7 +550,7 @@ namespace Data
                     Context.sp_crear_tarea_concurrente(info.IdTarea);
                     try
                     {
-                        EnviarCorreo(info);
+                        EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.TAREA.ToString() + " " + cl_enumeradores.eAsuntoCorreo.CERRADA.ToString());
                     }
                     catch (Exception)
                     {
@@ -600,7 +600,7 @@ namespace Data
 
                     try
                     {
-                        EnviarCorreo(info);
+                        EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.TAREA.ToString() + " " + cl_enumeradores.eAsuntoCorreo.DISTRIBUIDA.ToString());
                     }
                     catch (Exception)
                     {
@@ -674,7 +674,7 @@ namespace Data
                 throw;
             }
         }
-        public bool EnviarCorreo(Tarea_Info info)
+        public bool EnviarCorreo(Tarea_Info info, string AsuntoCorreo)
         {
             try
             {
@@ -696,7 +696,7 @@ namespace Data
                     mail.To.Add(inf_usu_dirigido.Correo);
                     mail.From = new MailAddress(infoParametros.CorreoCuenta);
                    
-                    mail.Subject = "Nueva tarea";
+                    mail.Subject = AsuntoCorreo;
                    
                     try
                     {
