@@ -60,6 +60,8 @@
     </Compile>
     <Compile Include="General\EstadoTipo_Data.cs" />
     <Compile Include="General\Estado_Data.cs" />
+    <Compile Include="General\GEN_001_Data.cs" />
+    <Compile Include="General\GEN_002_Data.cs" />
     <Compile Include="Grupo.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
@@ -88,6 +90,9 @@
     </Compile>
     <Compile Include="General\Parametro_Data.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SPGEN_001_Result.cs">
+      <DependentUpon>ModelGeneral.tt</DependentUpon>
+    </Compile>
     <Compile Include="sp_carga_laboral_Result.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
@@ -114,6 +119,9 @@
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
     <Compile Include="General\Usuario_Data.cs" />
+    <Compile Include="VWGEN_001.cs">
+      <DependentUpon>ModelGeneral.tt</DependentUpon>
+    </Compile>
     <Compile Include="vw_Tarea.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>

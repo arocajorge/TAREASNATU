@@ -10,15 +10,13 @@
 namespace Data
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class TareaArchivoAdjunto
+    public partial class SPGEN_001_Result
     {
-        public decimal IdTarea { get; set; }
-        public int Secuencial { get; set; }
-        public string NombreArchivo { get; set; }
-        public byte[] Archivo { get; set; }
-    
-        public virtual Tarea Tarea { get; set; }
+        public string IdUsuario { get; set; }
+        public string Nombre { get; set; }
+        public Nullable<int> TotalTarea { get; set; }
+        public Nullable<int> Cumplidas { get; set; }
+        public Nullable<int> Incumplidas { get; set; }
     }
 }
