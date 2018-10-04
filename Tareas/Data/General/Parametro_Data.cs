@@ -32,8 +32,11 @@ namespace Data.General
                             FtpURLAdjunto = info.FtpURLAdjunto,
                             IdEstadoAprobarTarea=info.IdEstadoAprobarTarea,
                             IdEstadoCierreTarea=info.IdEstadoCierreTarea,
-                            IdEstadoTareaDevuelta=info.IdEstadoTareaDevuelta
+                            IdEstadoTareaDevuelta=info.IdEstadoTareaDevuelta,
 
+                            IntervaloEjecucionMin=info.IntervaloEjecucionMin,
+                           
+                           
 
                         };
                         Context.Parametro.Add(Entity);
@@ -53,7 +56,8 @@ namespace Data.General
                         Entity.IdEstadoCierreTarea = info.IdEstadoCierreTarea;
                         Entity.IdEstadoTareaDevuelta = info.IdEstadoTareaDevuelta;
 
-
+                        Entity.IntervaloEjecucionMin = info.IntervaloEjecucionMin;
+                      
                     }
 
                     Context.SaveChanges();

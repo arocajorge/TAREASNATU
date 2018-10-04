@@ -34,9 +34,9 @@ namespace Data
         public virtual DbSet<TareaArchivoAdjunto> TareaArchivoAdjunto { get; set; }
         public virtual DbSet<TareaEstado> TareaEstado { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
-        public virtual DbSet<vw_Tarea> vw_Tarea { get; set; }
         public virtual DbSet<Tarea> Tarea { get; set; }
         public virtual DbSet<Estado> Estado { get; set; }
+        public virtual DbSet<vw_Tarea> vw_Tarea { get; set; }
         public virtual DbSet<Parametro> Parametro { get; set; }
     
         public virtual ObjectResult<sp_Tareas_X_Usuarios_Result> sp_Tareas_X_Usuarios(string idUsuario)

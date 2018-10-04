@@ -33,5 +33,8 @@ namespace Info
         public int IdEstadoAprobarTarea { get; set; }
         [Required(ErrorMessage = "El campo estado para tarea rechazada es obligatorio")]
         public int IdEstadoTareaDevuelta { get; set; }
+
+        [Required(ErrorMessage = "El campo intervalo de cerrar tareas automaticamente es obligatorio")]
+        public int IntervaloEjecucionMin { get; set; }
     }
 }

@@ -326,7 +326,7 @@ namespace Web.Areas.General.Controllers
                 cargar_combo();
                 return View(model);
             }
-            return RedirectToAction("Buzon_entrada");
+            return RedirectToAction("Buzon_entrada","Buzon");
         }
 
 

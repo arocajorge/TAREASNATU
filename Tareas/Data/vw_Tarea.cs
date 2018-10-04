@@ -35,5 +35,6 @@ namespace Data
         public Nullable<System.DateTime> FechaAprobacion { get; set; }
         public Nullable<System.DateTime> FechaFinConcurrencia { get; set; }
         public Nullable<int> DiasIntervaloProximaTarea { get; set; }
+        public Nullable<System.DateTime> FechaCierre { get; set; }
     }
 }

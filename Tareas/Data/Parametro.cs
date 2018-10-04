@@ -27,6 +27,7 @@ namespace Data
         public int IdEstadoCierreTarea { get; set; }
         public int IdEstadoAprobarTarea { get; set; }
         public int IdEstadoTareaDevuelta { get; set; }
+        public int IntervaloEjecucionMin { get; set; }
     
         public virtual Estado Estado { get; set; }
         public virtual Estado Estado1 { get; set; }

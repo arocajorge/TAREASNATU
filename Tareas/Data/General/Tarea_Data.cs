@@ -57,7 +57,8 @@ namespace Data
                                  Asignado=q.Asignado,
                                  Prioridad=q.Prioridad,
                                  EstadoTarea=q.EstadoTarea,
-                                 NombreGrupo=q.NombreGrupo
+                                 NombreGrupo=q.NombreGrupo,
+                                 FechaCierre=q.FechaCierre
                                  
 
                              }).ToList();
@@ -106,7 +107,9 @@ namespace Data
                                  Asignado = q.Asignado,
                                  Prioridad = q.Prioridad,
                                  EstadoTarea = q.EstadoTarea,
-                                 NombreGrupo = q.NombreGrupo
+                                 NombreGrupo = q.NombreGrupo,
+                                 FechaCierre = q.FechaCierre
+
 
 
                              }).ToList();
@@ -133,7 +136,9 @@ namespace Data
                                      Asignado = q.Asignado,
                                      Prioridad = q.Prioridad,
                                      EstadoTarea = q.EstadoTarea,
-                                     NombreGrupo = q.NombreGrupo
+                                     NombreGrupo = q.NombreGrupo,
+                                     FechaCierre = q.FechaCierre
+
 
 
                                  }).ToList();

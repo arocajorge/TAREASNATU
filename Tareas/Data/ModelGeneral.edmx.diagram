@@ -16,7 +16,6 @@
         <AssociationConnector Association="ModelGeneral.FK_Grupo_Usuario" />
         <AssociationConnector Association="ModelGeneral.FK_Grupo_Usuario_Usuario" />
         <AssociationConnector Association="ModelGeneral.FK_Tarea_det_Usuario" />
-        <EntityTypeShape EntityType="ModelGeneral.vw_Tarea" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="ModelGeneral.Tarea" Width="1.5" PointX="5.25" PointY="16.75" />
         <AssociationConnector Association="ModelGeneral.FK_Tarea_Grupo" />
         <AssociationConnector Association="ModelGeneral.FK_Tarea_det_Tarea" />
@@ -25,14 +24,15 @@
         <AssociationConnector Association="ModelGeneral.FK_TareaArchivoAdjunto_Tarea" />
         <AssociationConnector Association="ModelGeneral.FK_TareaEstado_Tarea" />
         <EntityTypeShape EntityType="ModelGeneral.Estado" Width="1.5" PointX="3" PointY="24.75" />
-        <EntityTypeShape EntityType="ModelGeneral.Parametro" Width="1.5" PointX="5.25" PointY="24.75" />
         <AssociationConnector Association="ModelGeneral.FK_Estado_EstadoTipo" />
-        <AssociationConnector Association="ModelGeneral.FK_Parametro_Estado" />
-        <AssociationConnector Association="ModelGeneral.FK_Parametro_Estado1" />
-        <AssociationConnector Association="ModelGeneral.FK_Parametro_Estado2" />
         <AssociationConnector Association="ModelGeneral.FK_Tarea_det_Estado" />
         <AssociationConnector Association="ModelGeneral.FK_Tarea_Estado" />
         <AssociationConnector Association="ModelGeneral.FK_Tarea_Estado1" />
+        <EntityTypeShape EntityType="ModelGeneral.vw_Tarea" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ModelGeneral.Parametro" Width="1.5" PointX="5.25" PointY="24.75" />
+        <AssociationConnector Association="ModelGeneral.FK_Parametro_Estado" />
+        <AssociationConnector Association="ModelGeneral.FK_Parametro_Estado1" />
+        <AssociationConnector Association="ModelGeneral.FK_Parametro_Estado2" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
