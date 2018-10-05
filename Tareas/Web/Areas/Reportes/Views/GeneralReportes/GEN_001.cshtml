@@ -5,7 +5,7 @@
     {
         Response.Redirect("~/Account/Login");
     }
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Areas/Reportes/Views/_Layout_filtros.cshtml";
 }
 @using (Html.BeginForm("GEN_001", "GeneralReportes", FormMethod.Post, new { @class = "form", @role = "form" }))
 {

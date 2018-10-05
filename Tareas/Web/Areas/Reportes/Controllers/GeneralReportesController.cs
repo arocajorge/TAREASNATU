@@ -22,6 +22,7 @@ namespace Web.Areas.Reportes.Controllers
                 IdUsuario = "",
                 Nombre = "TODOS"
             });
+            ViewBag.lst_usuario = lst_usuario;
         }
         public ActionResult GEN_001()
         {

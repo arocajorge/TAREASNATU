@@ -13,13 +13,17 @@ namespace Data.General
         {
             try
             {
+                fechaFin = Convert.ToDateTime(fechaFin.ToShortDateString());
+                fechaInicio = Convert.ToDateTime(fechaInicio.ToShortDateString());
+
                 List<GEN_001_Info> Lista;
                 using (EntityTareas Context = new EntityTareas())
                 {
+                    if(IdUsuario!="")
                     Lista = (from q in Context.VWGEN_001
                              where q.IdUsuario == IdUsuario
-                             && q.FechaInicioSubtarea == fechaInicio
-                             && q.FechaFinSubtarea == fechaFin
+                             && q.FechaInicioSubtarea >= fechaInicio
+                             && q.FechaFinSubtarea <= fechaFin
                              select new GEN_001_Info
                              {
                                  Descripcion = q.Descripcion,
@@ -43,6 +47,34 @@ namespace Data.General
                                  Secuancial = q.Secuancial
 
                              }).ToList();
+                    else
+                        Lista = (from q in Context.VWGEN_001
+                                 where 
+                                  q.FechaInicioSubtarea >= fechaInicio
+                                 && q.FechaFinSubtarea <= fechaFin
+                                 select new GEN_001_Info
+                                 {
+                                     Descripcion = q.Descripcion,
+                                     eSTADO = q.eSTADO,
+                                     EstadoActual = q.EstadoActual,
+                                     FechaFinSubtarea = q.FechaFinSubtarea,
+                                     FechaFinTarea = q.FechaFinTarea,
+                                     FechaInicioSubtarea = q.FechaInicioSubtarea,
+                                     FechaInicioTarea = q.FechaInicioTarea,
+                                     FechaTerminoTarea = q.FechaTerminoTarea,
+                                     IdGrupo = q.IdGrupo,
+                                     IdTarea = q.IdTarea,
+                                     IdUsuario = q.IdUsuario,
+                                     IdUsuarioAsignado = q.IdUsuarioAsignado,
+                                     IdUsuarioSolicitante = q.IdUsuarioSolicitante,
+                                     Nombre = q.Nombre,
+                                     NombreGrupo = q.NombreGrupo,
+                                     NumHoras = q.NumHoras,
+                                     NumHorasReales = q.NumHorasReales,
+                                     Observacion = q.Observacion,
+                                     Secuancial = q.Secuancial
+
+                                 }).ToList();
                 }
                 return Lista;
             }

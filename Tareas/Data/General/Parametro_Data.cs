@@ -70,6 +70,8 @@ namespace Data.General
                 throw;
             }
         }
+
+
         public Parametro_Info get_info()
         {
             try

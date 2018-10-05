@@ -7456,6 +7456,7 @@
     <Content Include="Areas\Reportes\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Reportes\Views\GeneralReportes\GEN_002.cshtml" />
     <Content Include="Areas\Reportes\Views\GeneralReportes\GEN_001.cshtml" />
+    <Content Include="Areas\Reportes\Views\_Layout_filtros.cshtml" />
     <None Include="Properties\PublishProfiles\Erp_web.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\web.pubxml" />

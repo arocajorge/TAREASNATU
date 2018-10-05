@@ -19,22 +19,39 @@ namespace Web.Areas.General.Controllers
             cl_filtros_Info model = new cl_filtros_Info();
             return View(model);
         }
-      
+
         public ActionResult CargaLaboral()
         {
             cargar_combo();
-            Tarea_Info model = new Tarea_Info
-            {
-                FechaCulmina = DateTime.Now.Date
-            };
+            Tarea_Info model = new Tarea_Info();
+
             model = bus_tarea.get_carga_laboral(SessionTareas.IdUsuario, DateTime.Now.Date);
+            model.FechaCulmina = DateTime.Now;
+            if (model == null)
+                model = new Tarea_Info
+                {
+                    FechaCulmina = DateTime.Now,
+                    IdUsuario =SessionTareas.IdUsuario
+                };
             return View(model);
         }
         [HttpPost]
         public ActionResult CargaLaboral(Tarea_Info model)
         {
+            bus_tarea = new Tarea_Bus();
+            DateTime fecha = model.FechaCulmina;
+            string IdUsuario = model.IdUsuario;
             cargar_combo();
-             model = bus_tarea.get_carga_laboral(model.IdUsuario, model.FechaInicio.Date);
+             model = bus_tarea.get_carga_laboral(model.IdUsuario, model.FechaCulmina.Date);
+            if(model==null)
+            {
+                model = new Tarea_Info
+                {
+                    FechaCulmina = DateTime.Now,
+                    IdUsuario = IdUsuario
+                };
+            }
+            model.FechaCulmina = fecha;
             return View(model);
         }
 

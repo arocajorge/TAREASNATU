@@ -13,10 +13,14 @@ namespace Data.General
         {
             try
             {
+                fechaFin = Convert.ToDateTime(fechaFin.ToShortDateString());
+                fechaInicio = Convert.ToDateTime(fechaInicio.ToShortDateString());
+
                 List<GEN_002_Info> Lista;
                 using (EntityTareas Context = new EntityTareas())
                 {
-                    Lista = (from q in Context.SPGEN_001(fechaInicio, fechaFin)
+                    if (IdUsuario != "")
+                        Lista = (from q in Context.SPGEN_001(fechaInicio, fechaFin)
                              where q.IdUsuario == IdUsuario
                              select new GEN_002_Info
                              {
@@ -27,6 +31,17 @@ namespace Data.General
                                  TotalTarea = q.TotalTarea
 
                              }).ToList();
+                    else
+                        Lista = (from q in Context.SPGEN_001(fechaInicio, fechaFin)
+                                 select new GEN_002_Info
+                                 {
+                                     Cumplidas = q.Cumplidas,
+                                     IdUsuario = q.IdUsuario,
+                                     Incumplidas = q.Incumplidas,
+                                     Nombre = q.Nombre,
+                                     TotalTarea = q.TotalTarea
+
+                                 }).ToList();
                 }
                 return Lista;
             }
