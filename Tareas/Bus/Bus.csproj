@@ -43,8 +43,8 @@
     <Compile Include="General\Archivo_Bus.cs" />
     <Compile Include="General\EstadoTipo_Bus.cs" />
     <Compile Include="General\Estado_Bus.cs" />
-    <Compile Include="General\GEN_001_Bus.cs" />
-    <Compile Include="General\GEN_002_Bus.cs" />
+    <Compile Include="Reportes\GEN_001_Bus.cs" />
+    <Compile Include="Reportes\GEN_002_Bus.cs" />
     <Compile Include="General\Grupo_Bus.cs" />
     <Compile Include="General\Grupo_Usuario_Bus.cs" />
     <Compile Include="General\Parametro_Bus.cs" />

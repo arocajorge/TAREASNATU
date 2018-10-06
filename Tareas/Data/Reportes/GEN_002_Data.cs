@@ -20,7 +20,7 @@ namespace Data.General
                 using (EntityTareas Context = new EntityTareas())
                 {
                     if (IdUsuario != "")
-                        Lista = (from q in Context.SPGEN_001(fechaInicio, fechaFin)
+                        Lista = (from q in Context.SPGEN_002(fechaInicio, fechaFin)
                              where q.IdUsuario == IdUsuario
                              select new GEN_002_Info
                              {
@@ -28,18 +28,21 @@ namespace Data.General
                                  IdUsuario = q.IdUsuario,
                                  Incumplidas = q.Incumplidas,
                                  Nombre = q.Nombre,
-                                 TotalTarea = q.TotalTarea
+                                 TotalTarea = q.TotalTarea,
+                                 EnProceso = q.EnProceso
+
 
                              }).ToList();
                     else
-                        Lista = (from q in Context.SPGEN_001(fechaInicio, fechaFin)
+                        Lista = (from q in Context.SPGEN_002(fechaInicio, fechaFin)
                                  select new GEN_002_Info
                                  {
                                      Cumplidas = q.Cumplidas,
                                      IdUsuario = q.IdUsuario,
                                      Incumplidas = q.Incumplidas,
                                      Nombre = q.Nombre,
-                                     TotalTarea = q.TotalTarea
+                                     TotalTarea = q.TotalTarea,
+                                     EnProceso=q.EnProceso
 
                                  }).ToList();
                 }

@@ -13,5 +13,7 @@ namespace Info.General
         public Nullable<int> TotalTarea { get; set; }
         public Nullable<int> Cumplidas { get; set; }
         public Nullable<int> Incumplidas { get; set; }
+        public Nullable<int> EnProceso { get; set; }
+
     }
 }

@@ -96,7 +96,8 @@ namespace Data.General
                         FtpURLAdjunto = Entity.FtpURLAdjunto,
                         IdEstadoAprobarTarea = Entity.IdEstadoAprobarTarea,
                         IdEstadoCierreTarea = Entity.IdEstadoCierreTarea,
-                        IdEstadoTareaDevuelta = Entity.IdEstadoTareaDevuelta
+                        IdEstadoTareaDevuelta = Entity.IdEstadoTareaDevuelta,
+                        IntervaloEjecucionMin=Entity.IntervaloEjecucionMin
                     };
                 }
                 return info;

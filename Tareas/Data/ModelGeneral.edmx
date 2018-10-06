@@ -163,8 +163,8 @@
           <Property Name="FechaModificacion" Type="datetime" />
           <Property Name="FechaAnulacion" Type="datetime" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DB_TAREAS.dbo.vw_Tarea' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_Tarea' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vw_Tarea">
           <Key>
             <PropertyRef Name="IdTarea" />
@@ -208,8 +208,8 @@ warning 6002: The table/view 'DB_TAREAS.dbo.vw_Tarea' does not have a primary ke
           <Property Name="DiasIntervaloProximaTarea" Type="int" />
           <Property Name="FechaCierre" Type="datetime" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="VWGEN_001">
           <Key>
             <PropertyRef Name="IdTarea" />
@@ -462,7 +462,7 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
         <Function Name="sp_Tareas_X_Usuarios" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdUsuario" Type="varchar" Mode="In" />
         </Function>
-        <Function Name="SPGEN_001" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="SPGEN_002" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="FechaInicio" Type="date" Mode="In" />
           <Parameter Name="FechaFin" Type="date" Mode="In" />
         </Function>
@@ -690,7 +690,7 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
             <End Role="Parametro" EntitySet="Parametro" />
           </AssociationSet>
           <EntitySet Name="VWGEN_001" EntityType="ModelGeneral.VWGEN_001" />
-          <FunctionImport Name="SPGEN_001" ReturnType="Collection(ModelGeneral.SPGEN_001_Result)">
+          <FunctionImport Name="SPGEN_002" ReturnType="Collection(ModelGeneral.SPGEN_002_Result)">
             <Parameter Name="FechaInicio" Mode="In" Type="DateTime" />
             <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
           </FunctionImport>
@@ -1194,12 +1194,13 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
           <Property Name="Nombre" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="eSTADO" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
-        <ComplexType Name="SPGEN_001_Result">
+        <ComplexType Name="SPGEN_002_Result">
           <Property Type="String" Name="IdUsuario" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Nombre" Nullable="false" MaxLength="500" />
           <Property Type="Int32" Name="TotalTarea" Nullable="true" />
           <Property Type="Int32" Name="Cumplidas" Nullable="true" />
           <Property Type="Int32" Name="Incumplidas" Nullable="true" />
+          <Property Type="Int32" Name="EnProceso" Nullable="true" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1455,14 +1456,15 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="SPGEN_001" FunctionName="ModelGeneral.Store.SPGEN_001">
+          <FunctionImportMapping FunctionImportName="SPGEN_002" FunctionName="ModelGeneral.Store.SPGEN_002">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="ModelGeneral.SPGEN_001_Result">
+              <ComplexTypeMapping TypeName="ModelGeneral.SPGEN_002_Result">
                 <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="TotalTarea" ColumnName="TotalTarea" />
                 <ScalarProperty Name="Cumplidas" ColumnName="Cumplidas" />
                 <ScalarProperty Name="Incumplidas" ColumnName="Incumplidas" />
+                <ScalarProperty Name="EnProceso" ColumnName="EnProceso" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
