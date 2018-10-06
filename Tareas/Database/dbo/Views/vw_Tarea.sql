@@ -2,7 +2,8 @@
 AS
 SELECT        dbo.Tarea.IdTarea, dbo.Tarea.IdUsuarioSolicitante, dbo.Tarea.IdGrupo, dbo.Tarea.IdUsuarioAsignado, dbo.Tarea.EstadoActual, dbo.Tarea.FechaInicio, dbo.Tarea.FechaCulmina, dbo.Tarea.Observacion, 
                          dbo.Tarea.IdEstadoPrioridad, dbo.Tarea.TareaConcurrente, dbo.Tarea.AprobadoSolicitado, dbo.Tarea.AprobadoEncargado, Usuario_1.Nombre AS solicitante, dbo.Usuario.Nombre AS Asignado, Estado_1.Descripcion AS Prioridad,
-                          dbo.Estado.Descripcion AS EstadoTarea, dbo.Grupo.Descripcion AS NombreGrupo, dbo.Tarea.Estado, dbo.Tarea.FechaAprobacion
+                          dbo.Estado.Descripcion AS EstadoTarea, dbo.Grupo.Descripcion AS NombreGrupo, dbo.Tarea.Estado, dbo.Tarea.FechaAprobacion, dbo.Tarea.FechaFinConcurrencia, dbo.Tarea.DiasIntervaloProximaTarea, 
+                         dbo.Tarea.FechaCierre
 FROM            dbo.Tarea INNER JOIN
                          dbo.Grupo ON dbo.Tarea.IdGrupo = dbo.Grupo.IdGrupo INNER JOIN
                          dbo.Usuario ON dbo.Tarea.IdUsuarioAsignado = dbo.Usuario.IdUsuario INNER JOIN
@@ -14,7 +15,7 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @leve
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N' Width = 1500
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'Width = 1500
          Width = 1500
          Width = 1500
          Width = 1500
@@ -41,6 +42,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N' Width = 1
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vw_Tarea';
+
+
 
 
 GO
@@ -119,11 +122,11 @@ Begin DesignProperties =
             Begin Extent = 
                Top = 6
                Left = 38
-               Bottom = 249
+               Bottom = 316
                Right = 236
             End
             DisplayFlags = 280
-            TopColumn = 10
+            TopColumn = 0
          End
          Begin Table = "Grupo"
             Begin Extent = 
@@ -186,5 +189,7 @@ Begin DesignProperties =
          Width = 284
          Width = 1500
          Width = 1500
-        ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vw_Tarea';
+         ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vw_Tarea';
+
+
 

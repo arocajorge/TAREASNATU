@@ -73,8 +73,13 @@
     <Build Include="dbo\Tables\Grupo.sql" />
     <Build Include="dbo\Tables\EstadoTipo.sql" />
     <Build Include="dbo\Tables\Estado.sql" />
-    <Build Include="dbo\Stored Procedures\spseg_corregir_menu.sql" />
     <Build Include="dbo\Views\vw_Tarea.sql" />
     <Build Include="dbo\Stored Procedures\sp_Tareas_X_Usuarios.sql" />
+    <Build Include="dbo\Views\VWGEN_001.sql" />
+    <Build Include="dbo\Stored Procedures\SPGEN_002.sql" />
+    <Build Include="dbo\Stored Procedures\SPGEN_001.sql" />
+    <Build Include="dbo\Stored Procedures\sp_tareas_culminadas_sin_cerrar.sql" />
+    <Build Include="dbo\Stored Procedures\sp_crear_tarea_concurrente.sql" />
+    <Build Include="dbo\Stored Procedures\sp_carga_laboral.sql" />
   </ItemGroup>
 </Project>
