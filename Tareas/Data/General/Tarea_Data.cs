@@ -595,8 +595,26 @@ namespace Data
                                 Entity_det.FechaInicio = item.FechaInicio.Date;
                                 Entity_det.FechaFin = item.FechaFin;
                                 Entity_det.NumHoras = item.NumHoras;
-                                Context.SaveChanges();
                             }
+                            else
+                            {
+                                Tarea_det det = new Tarea_det
+                                {
+                                    IdTarea = info.IdTarea,
+                                    Secuancial = item.Secuancial,
+                                    Descripcion = item.Descripcion,
+                                    NumHoras = item.NumHoras,
+                                    FechaInicio = item.FechaInicio,
+                                    FechaFin = item.FechaFin,
+                                    IdUsuario = item.IdUsuario,
+                                    FechaUltimaModif = DateTime.Now,
+                                    IdEstado = 8,
+
+
+                                };
+                                Context.Tarea_det.Add(det);
+                            }
+                            Context.SaveChanges();
 
                         }
                     }

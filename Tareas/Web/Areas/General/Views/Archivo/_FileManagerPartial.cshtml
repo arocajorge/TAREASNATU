@@ -23,10 +23,10 @@
     settings.SettingsUpload.Enabled = true;
     settings.SettingsUpload.UseAdvancedUploadMode = true;
     settings.SettingsUpload.AdvancedModeSettings.EnableMultiSelect = true;
-    settings.Settings.ThumbnailFolder = Url.Content("~/FormatoISO/FileManager/Thumbnails",);
+    //settings.Settings.ThumbnailFolder = Url.RouteUrl(,);
 
+    settings.Settings.ThumbnailFolder = Url.Content("~/FormatoISO/FileManager/Thumbnails");
 
-    // settings.Settings.ThumbnailFolder = Url.RouteUrl("ftp://198.12.157.155:20001/Content/Documentos");
     settings.Settings.InitialFolder= "FormatoISO";
 
 

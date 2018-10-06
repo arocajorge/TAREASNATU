@@ -389,13 +389,13 @@
         var IdUsuarioAsignad = $("#IdUsuarioAsignado").val();
         var IdUsuarioSolicitant = IdUsuarioSolicitante.GetValue();
         $("#link_adjunto").click();
-         if (IdUsuarioAsignad == IdUsuarioSolicitant)
-        {
+        if (IdUsuarioAsignad == IdUsuarioSolicitant) {
             $("#link_detalle").show();
+            AprobadoEncargado.SetChecked(true);
         }
-        else
-        {
+        else {
             $("#link_detalle").hide();
+            AprobadoEncargado.SetChecked(false);
         }
 
     };

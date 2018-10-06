@@ -528,6 +528,7 @@ namespace Web.Areas.General.Controllers
         {
             List<Tarea_det_Info> list = get_list(IdTransaccionSessionActual);
             info_det.Secuancial = list.Count() + 1;
+            info_det.IdEstado = 8;
             list.Add(info_det);
         }
         public void DeleteRow(int Secuancial, decimal IdTransaccionSessionActual)

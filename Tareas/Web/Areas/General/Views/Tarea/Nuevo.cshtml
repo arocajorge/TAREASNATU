@@ -389,10 +389,12 @@
         if (IdUsuarioAsignad == IdUsuarioSolicitant)
         {
             $("#link_detalle").show();
+            AprobadoEncargado.SetChecked(true);
         }
         else
         {
             $("#link_detalle").hide();
+            AprobadoEncargado.SetChecked(false);
         }
     };
 
