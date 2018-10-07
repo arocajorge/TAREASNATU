@@ -165,8 +165,9 @@
             // xrTableCell18
             // 
             this.xrTableCell18.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Cumplidas]/([TotalTarea]-[EnProceso])*100")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Cumplidas]/([TotalTarea]-[EnProceso])")});
             this.xrTableCell18.Name = "xrTableCell18";
+            this.xrTableCell18.TextFormatString = "{0:0.00%}";
             this.xrTableCell18.Weight = 0.663303505016115D;
             // 
             // TopMargin
@@ -485,10 +486,11 @@
             // xrTableCell23
             // 
             this.xrTableCell23.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "Sum([Cumplidas]/[TotalTarea]*100)")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Cumplidas]/([TotalTarea]-[EnProceso])")});
             this.xrTableCell23.Name = "xrTableCell23";
             xrSummary5.Running = DevExpress.XtraReports.UI.SummaryRunning.Report;
             this.xrTableCell23.Summary = xrSummary5;
+            this.xrTableCell23.TextFormatString = "{0:0.00%}";
             this.xrTableCell23.Weight = 0.663303705436199D;
             // 
             // GEN_002_Rpt
