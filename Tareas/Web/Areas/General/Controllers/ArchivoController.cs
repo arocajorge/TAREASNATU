@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
+using Bus;
 namespace Web.Areas.General.Controllers
 {
     public class ArchivoController : Controller
     {
         // GET: General/Archivo
+        Archivo_Bus bus_archivo = new Archivo_Bus();
         public ActionResult Index()
         {
             return View();
@@ -37,6 +38,7 @@ namespace Web.Areas.General.Controllers
             {
                 var settings = new DevExpress.Web.Mvc.FileManagerSettings { Name = "FileManager" };
                 settings.SettingsEditing.AllowDownload = true;
+                
                 return settings;
             }
         }

@@ -62,26 +62,7 @@
                             @Html.ValidationMessageFor(q => q.IdUsuario, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <label for="FechaCulmina">Fecha*</label>
-                            <div class="input-group date">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
-                                </div>
-                                @Html.DevExpress().DateEditFor(q => q.FechaCulmina, settings =>
-                          {
-                              settings.Name = "FechaCulmina";
-                              settings.Properties.UseMaskBehavior = true;
-                              settings.Properties.EditFormat = EditFormat.Date;
-                              settings.Properties.EditFormatString = "dd/MM/yyyy";
-                              settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
-                              settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                          }).GetHtml()
-                                @Html.ValidationMessageFor(q => q.FechaCulmina, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                    </div>
+                  
                 </div>
             </div>
         </div>

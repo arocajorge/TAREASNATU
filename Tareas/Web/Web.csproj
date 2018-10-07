@@ -37,6 +37,13 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <FilesToIncludeForPublish>AllFilesInProjectFolder</FilesToIncludeForPublish>
+    <ExcludeGeneratedDebugSymbol>true</ExcludeGeneratedDebugSymbol>
+    <IncludeIisSettings>true</IncludeIisSettings>
+    <PublishDatabaseSettings>
+      <Objects>
+      </Objects>
+    </PublishDatabaseSettings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -244,6 +251,11 @@
     <Compile Include="Helps\SessionTareas.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\GEN_001_Rpt.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -7457,10 +7469,16 @@
     <Content Include="Areas\Reportes\Views\GeneralReportes\GEN_002.cshtml" />
     <Content Include="Areas\Reportes\Views\GeneralReportes\GEN_001.cshtml" />
     <Content Include="Areas\Reportes\Views\_Layout_filtros.cshtml" />
+    <Content Include="App_Data\Index.cshtml" />
+    <Content Include="FormatoISO\Index.cshtml" />
     <None Include="Properties\PublishProfiles\Erp_web.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\web.pubxml" />
     <None Include="Properties\PublishProfiles\WEBRAPI.pubxml" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -7506,12 +7524,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Adjuntos\" />
-    <Folder Include="App_Data\" />
     <Folder Include="Areas\General\Models\" />
     <Folder Include="Areas\Reportes\Models\" />
     <Folder Include="Content\file\" />
     <Folder Include="Content\imagenes\" />
-    <Folder Include="FormatoISO\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

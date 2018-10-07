@@ -15,7 +15,6 @@ namespace Info
         public string IdUsuarioSolicitante { get; set; }
         [Required(ErrorMessage = "El campo grupo que solicita es obligatorio")]
         public int IdGrupo { get; set; }
-        [Required(ErrorMessage = "El campo usuario asignado es obligatorio")]
         public string IdUsuarioAsignado { get; set; }
         [Required(ErrorMessage = "El campo estado es obligatorio")]
         public int EstadoActual { get; set; }

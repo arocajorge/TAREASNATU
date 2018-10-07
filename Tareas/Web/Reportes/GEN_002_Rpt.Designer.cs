@@ -31,9 +31,9 @@
             this.components = new System.ComponentModel.Container();
             DevExpress.XtraReports.UI.XRSummary xrSummary1 = new DevExpress.XtraReports.UI.XRSummary();
             DevExpress.XtraReports.UI.XRSummary xrSummary2 = new DevExpress.XtraReports.UI.XRSummary();
+            DevExpress.XtraReports.UI.XRSummary xrSummary3 = new DevExpress.XtraReports.UI.XRSummary();
             DevExpress.XtraReports.UI.XRSummary xrSummary4 = new DevExpress.XtraReports.UI.XRSummary();
             DevExpress.XtraReports.UI.XRSummary xrSummary5 = new DevExpress.XtraReports.UI.XRSummary();
-            DevExpress.XtraReports.UI.XRSummary xrSummary3 = new DevExpress.XtraReports.UI.XRSummary();
             this.Detail = new DevExpress.XtraReports.UI.DetailBand();
             this.xrTable4 = new DevExpress.XtraReports.UI.XRTable();
             this.xrTableRow5 = new DevExpress.XtraReports.UI.XRTableRow();
@@ -78,9 +78,9 @@
             this.xrTableCell19 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell20 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell21 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.xrTableCell26 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell22 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell23 = new DevExpress.XtraReports.UI.XRTableCell();
-            this.xrTableCell26 = new DevExpress.XtraReports.UI.XRTableCell();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).BeginInit();
@@ -138,14 +138,14 @@
             this.xrTableCell15.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Cumplidas]")});
             this.xrTableCell15.Name = "xrTableCell15";
-            this.xrTableCell15.Weight = 0.51975981971789587D;
+            this.xrTableCell15.Weight = 0.519759819717896D;
             // 
             // xrTableCell16
             // 
             this.xrTableCell16.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Incumplidas]")});
             this.xrTableCell16.Name = "xrTableCell16";
-            this.xrTableCell16.Weight = 0.57460518830056684D;
+            this.xrTableCell16.Weight = 0.574605188300567D;
             // 
             // xrTableCell25
             // 
@@ -153,19 +153,19 @@
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[EnProceso]")});
             this.xrTableCell25.Name = "xrTableCell25";
             this.xrTableCell25.Text = "xrTableCell25";
-            this.xrTableCell25.Weight = 0.60210632711909207D;
+            this.xrTableCell25.Weight = 0.602106327119092D;
             // 
             // xrTableCell17
             // 
             this.xrTableCell17.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[TotalTarea]")});
             this.xrTableCell17.Name = "xrTableCell17";
-            this.xrTableCell17.Weight = 0.60210632711909207D;
+            this.xrTableCell17.Weight = 0.602106327119092D;
             // 
             // xrTableCell18
             // 
             this.xrTableCell18.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "Sum([Cumplidas]/[TotalTarea]*100)")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Cumplidas]/([TotalTarea]-[EnProceso])*100")});
             this.xrTableCell18.Name = "xrTableCell18";
             this.xrTableCell18.Weight = 0.663303505016115D;
             // 
@@ -372,25 +372,25 @@
             // 
             this.xrTableCell11.Name = "xrTableCell11";
             this.xrTableCell11.Text = "cumplidas";
-            this.xrTableCell11.Weight = 0.51975981971789587D;
+            this.xrTableCell11.Weight = 0.519759819717896D;
             // 
             // xrTableCell12
             // 
             this.xrTableCell12.Name = "xrTableCell12";
             this.xrTableCell12.Text = "Incumplidas";
-            this.xrTableCell12.Weight = 0.57460558914073556D;
+            this.xrTableCell12.Weight = 0.574605589140736D;
             // 
             // xrTableCell24
             // 
             this.xrTableCell24.Name = "xrTableCell24";
             this.xrTableCell24.Text = "En proceso";
-            this.xrTableCell24.Weight = 0.60210612669900776D;
+            this.xrTableCell24.Weight = 0.602106126699008D;
             // 
             // xrTableCell13
             // 
             this.xrTableCell13.Name = "xrTableCell13";
             this.xrTableCell13.Text = "Total tareas";
-            this.xrTableCell13.Weight = 0.60210612669900776D;
+            this.xrTableCell13.Weight = 0.602106126699008D;
             // 
             // xrTableCell14
             // 
@@ -452,7 +452,7 @@
             this.xrTableCell20.Name = "xrTableCell20";
             xrSummary1.Running = DevExpress.XtraReports.UI.SummaryRunning.Report;
             this.xrTableCell20.Summary = xrSummary1;
-            this.xrTableCell20.Weight = 0.51975981971789587D;
+            this.xrTableCell20.Weight = 0.519759819717896D;
             // 
             // xrTableCell21
             // 
@@ -461,25 +461,7 @@
             this.xrTableCell21.Name = "xrTableCell21";
             xrSummary2.Running = DevExpress.XtraReports.UI.SummaryRunning.Report;
             this.xrTableCell21.Summary = xrSummary2;
-            this.xrTableCell21.Weight = 0.57460558914073556D;
-            // 
-            // xrTableCell22
-            // 
-            this.xrTableCell22.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "sumSum([TotalTarea])")});
-            this.xrTableCell22.Name = "xrTableCell22";
-            xrSummary4.Running = DevExpress.XtraReports.UI.SummaryRunning.Report;
-            this.xrTableCell22.Summary = xrSummary4;
-            this.xrTableCell22.Weight = 0.60210682816930294D;
-            // 
-            // xrTableCell23
-            // 
-            this.xrTableCell23.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "Sum([Cumplidas]/[TotalTarea]*100)")});
-            this.xrTableCell23.Name = "xrTableCell23";
-            xrSummary5.Running = DevExpress.XtraReports.UI.SummaryRunning.Report;
-            this.xrTableCell23.Summary = xrSummary5;
-            this.xrTableCell23.Weight = 0.66330370543619943D;
+            this.xrTableCell21.Weight = 0.574605589140736D;
             // 
             // xrTableCell26
             // 
@@ -489,7 +471,25 @@
             xrSummary3.Running = DevExpress.XtraReports.UI.SummaryRunning.Report;
             this.xrTableCell26.Summary = xrSummary3;
             this.xrTableCell26.Text = "xrTableCell26";
-            this.xrTableCell26.Weight = 0.60210522480862827D;
+            this.xrTableCell26.Weight = 0.602105224808628D;
+            // 
+            // xrTableCell22
+            // 
+            this.xrTableCell22.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "sumSum([TotalTarea])")});
+            this.xrTableCell22.Name = "xrTableCell22";
+            xrSummary4.Running = DevExpress.XtraReports.UI.SummaryRunning.Report;
+            this.xrTableCell22.Summary = xrSummary4;
+            this.xrTableCell22.Weight = 0.602106828169303D;
+            // 
+            // xrTableCell23
+            // 
+            this.xrTableCell23.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "Sum([Cumplidas]/[TotalTarea]*100)")});
+            this.xrTableCell23.Name = "xrTableCell23";
+            xrSummary5.Running = DevExpress.XtraReports.UI.SummaryRunning.Report;
+            this.xrTableCell23.Summary = xrSummary5;
+            this.xrTableCell23.Weight = 0.663303705436199D;
             // 
             // GEN_002_Rpt
             // 

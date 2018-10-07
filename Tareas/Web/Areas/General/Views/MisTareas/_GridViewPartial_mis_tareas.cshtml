@@ -10,6 +10,14 @@
     settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
     settings.SettingsDetail.AllowOnlyOneMasterRowExpanded = false;
 
+    //CConfiguracion responsive
+    settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+    settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+    settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+    settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+    settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+
     settings.KeyFieldName = "IdTarea";
     settings.Columns.Add("Observacion", "Tarea").Width = Unit.Percentage(30);
     settings.Columns.Add(column =>

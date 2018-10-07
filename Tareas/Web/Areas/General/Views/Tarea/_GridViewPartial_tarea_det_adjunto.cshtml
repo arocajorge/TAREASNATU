@@ -11,12 +11,17 @@
 
         settings.SettingsEditing.Mode = GridViewEditingMode.Inline;
         settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Tarea", Action = "EditingDelete_adjunto", Area = "General" };
-
         settings.CommandColumn.Visible = true;
         settings.CommandColumn.ShowDeleteButton = true;
-
-        settings.SettingsContextMenu.Enabled = true;
         settings.SettingsBehavior.EnableCustomizationWindow = true;
+
+
+        //CConfiguracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
 
         settings.SettingsPager.Visible = true;
         settings.Settings.ShowGroupPanel = false;

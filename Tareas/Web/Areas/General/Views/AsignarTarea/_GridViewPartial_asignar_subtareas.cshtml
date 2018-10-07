@@ -62,7 +62,7 @@
             c.Width = Unit.Percentage(10);
             c.SetDataItemTemplateContent(tc =>
             {
-                if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "Estado")) == true && Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "AprobadoEncargado")) == true)
+                if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "Estado")) == true && Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "AprobadoEncargado")) == true && Convert.ToInt32(DataBinder.Eval(tc.DataItem, "EstadoActual"))!=3)
                 {
                     ViewContext.Writer.Write(
                 Html.ActionLink("Asignar", "Nuevo", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }) + "&nbsp;"
@@ -71,7 +71,7 @@
                 else
                 {
                     ViewContext.Writer.Write(
-                Html.ActionLink("Consultar", "Consultar", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }) + "&nbsp;"
+                Html.ActionLink("Consultar", "Consultar","Tarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") },null) + "&nbsp;"
 
                     );
                 }

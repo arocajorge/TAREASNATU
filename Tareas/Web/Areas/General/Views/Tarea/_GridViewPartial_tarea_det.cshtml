@@ -13,18 +13,17 @@
         settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Tarea", Action = "EditingAddNew", Area = "General" };
         settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Tarea", Action = "EditingUpdate", Area = "General" };
         settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Tarea", Action = "EditingDelete", Area = "General" };
-
         settings.CommandColumn.Visible = true;
 
 
-        settings.SettingsContextMenu.Enabled = true;
-        settings.SettingsPager.Visible = true;
-        settings.Settings.ShowGroupPanel = false;
-        settings.SettingsBehavior.AllowSelectByRowClick = true;
-        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        //CConfiguracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
         settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
         settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
-        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+        settings.SettingsContextMenu.Enabled = true;
+       
         //Funcion para inicializar fila al presionar nuevo
         settings.InitNewRow = (s, e) =>
         {

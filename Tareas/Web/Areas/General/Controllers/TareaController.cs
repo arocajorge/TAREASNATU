@@ -105,7 +105,7 @@ namespace Web.Areas.General.Controllers
         {
             var grupo = bus_grupo.get_info(model.IdGrupo);
             model.IdUsuarioAsignado = grupo.IdUsuario;
-
+            model.nomb_jef_grupo = grupo.nomb_jef_grupo;
 
             string mensaje = "";
             model.list_detalle = Lis_Tarea_det_Info_lis.get_list(model.IdTransaccionSession);
@@ -168,6 +168,8 @@ namespace Web.Areas.General.Controllers
         {
             var grupo = bus_grupo.get_info(model.IdGrupo);
             model.IdUsuarioAsignado = grupo.IdUsuario;
+            model.nomb_jef_grupo = grupo.nomb_jef_grupo;
+
             string mensaje = "";
             model.list_detalle = Lis_Tarea_det_Info_lis.get_list(model.IdTransaccionSession);
             model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(model.IdTransaccionSession);
@@ -228,6 +230,9 @@ namespace Web.Areas.General.Controllers
         [HttpPost]
         public ActionResult Anular(Tarea_Info model)
         {
+            var grupo = bus_grupo.get_info(model.IdGrupo);
+            model.IdUsuarioAsignado = grupo.IdUsuario;
+            model.nomb_jef_grupo = grupo.nomb_jef_grupo;
             if (!bus_tarea.anularDB(model))
             {
                 cargar_combo();
@@ -441,7 +446,10 @@ namespace Web.Areas.General.Controllers
                 {
                     mensaje = "Fecha inicio no puede ser mayor que fecha fin";
                 }
-
+                if (info.IdGrupo ==0)
+                {
+                    mensaje = "El grupo es obligatorio";
+                }
                 foreach (var item in info.list_detalle)
                 {
                     if (item.FechaFin.Date < item.FechaInicio.Date)

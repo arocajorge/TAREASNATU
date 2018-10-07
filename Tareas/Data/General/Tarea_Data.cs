@@ -802,8 +802,9 @@ namespace Data
                     {
                         info.NumTareaDia = Entity.NumTareaDia;
                         info.NumTareaVencidas = Entity.NumTareaVencidas;
-                        info.TotalTareaPendiente = Entity.TotalTareaPendiente;
+                        info.TotalTareaPendiente = Entity.TotalTareaPendiente+Entity.NumTareaDia;
                         info.TotalTareaResueltas = Entity.TotalTareaResueltas;
+
                         info.FechaInicio = fecha;
                         info.IdUsuario = IdUsuario;
                     }

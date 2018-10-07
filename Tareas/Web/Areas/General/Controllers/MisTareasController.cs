@@ -26,11 +26,9 @@ namespace Web.Areas.General.Controllers
             Tarea_Info model = new Tarea_Info();
 
             model = bus_tarea.get_carga_laboral(SessionTareas.IdUsuario, DateTime.Now.Date);
-            model.FechaCulmina = DateTime.Now;
             if (model == null)
                 model = new Tarea_Info
                 {
-                    FechaCulmina = DateTime.Now,
                     IdUsuario =SessionTareas.IdUsuario
                 };
             return View(model);
@@ -42,7 +40,7 @@ namespace Web.Areas.General.Controllers
             DateTime fecha = model.FechaCulmina;
             string IdUsuario = model.IdUsuario;
             cargar_combo();
-             model = bus_tarea.get_carga_laboral(model.IdUsuario, model.FechaCulmina.Date);
+             model = bus_tarea.get_carga_laboral(model.IdUsuario, DateTime.Now.Date);
             if(model==null)
             {
                 model = new Tarea_Info
