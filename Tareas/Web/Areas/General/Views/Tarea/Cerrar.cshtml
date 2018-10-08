@@ -226,7 +226,7 @@
                     @Html.DevExpress().CheckBoxFor(q => q.TareaConcurrente, settings =>
                {
                    settings.Name = "TareaConcurrente";
-                   settings.Text = "Tarea concurrente";
+                   settings.Text = "Tarea recurrente";
                    settings.ReadOnly = true;
 
                    settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){mostrar_parametros()}";
@@ -243,7 +243,7 @@
         <div class="col-md-12">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="IdUsuario">Observación</label>
+                    <label for="IdUsuario">Detalle</label>
                     @Html.TextAreaFor(v => v.Observacion, new { @class = "form-control", @row = 2, @disabled = "disabled" })
                     @Html.ValidationMessageFor(m => m.Observacion, "", new { @class = "text-danger" })
                 </div>
@@ -350,7 +350,7 @@
 
 
     <div class="box-footer">
-        <button type="submit" class="btn btn-primary">Dar por terminada</button>
+        <button type="submit" class="btn btn-primary">Cerrar</button>
         <a class="btn btn-default" href="@Url.Action("Buzon_entrada","Buzon",new { Area = "General" },null)">Cancelar</a>
     </div>
 

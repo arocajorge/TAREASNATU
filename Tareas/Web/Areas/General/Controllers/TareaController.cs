@@ -341,7 +341,9 @@ namespace Web.Areas.General.Controllers
 
         public FileResult DolowarFille(decimal IdTarea, int Secuencial)
         {
-           var info= bus_adjunto.get_info(IdTarea, Secuencial);
+            var info= bus_adjunto.get_info(IdTarea, Secuencial);
+            if (info == null)
+                info = new TareaArchivoAdjunto_Info();
             return File(info.Archivo, "application/pdf", info.NombreArchivo);
         }
 
@@ -473,10 +475,12 @@ namespace Web.Areas.General.Controllers
                     if(info.DiasIntervaloProximaTarea==null| info.DiasIntervaloProximaTarea==0)
                         mensaje = "Los dias de intervalo es obligatorio";
                     if (info.FechaFinConcurrencia == null)
-                        mensaje = "La fecha de expiracion es obligatoria";
+                    {
+                        info.FechaFinConcurrencia = DateTime.Now.AddYears(1000);
+                    }
                     else
-                        if(Convert.ToDateTime( info.FechaFinConcurrencia).Year==1)
-                        mensaje = "La fecha de expiracion no es valida";
+                        if (Convert.ToDateTime(info.FechaFinConcurrencia)<info.FechaInicio.Date)
+                        mensaje = "La fecha de expiración de concurrencia debe ser mayor a la fehca de inicio de la tarea";
 
                 }
                 return mensaje;

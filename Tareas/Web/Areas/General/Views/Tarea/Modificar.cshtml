@@ -183,7 +183,6 @@
                    settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
                    settings.Properties.NullText = "== Seleccione ==";
                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                   settings.ReadOnly = true;
 
                }).BindList(ViewBag.list_estado).GetHtml()
                     @Html.ValidationMessageFor(q => q.EstadoActual, "", new { @class = "text-danger" })
@@ -217,7 +216,7 @@
                     @Html.DevExpress().CheckBoxFor(q => q.TareaConcurrente, settings =>
                {
                    settings.Name = "TareaConcurrente";
-                   settings.Text = "Tarea concurrente";
+                   settings.Text = "Tarea recurrente";
                    settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){mostrar_parametros()}";
 
                }).GetHtml()
@@ -232,7 +231,7 @@
         <div class="col-md-12">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="IdUsuario">Observación</label>
+                    <label for="IdUsuario">Detalle</label>
                     @Html.TextAreaFor(v => v.Observacion, new { @class = "form-control", @row = 2 })
                     @Html.ValidationMessageFor(m => m.Observacion, "", new { @class = "text-danger" })
                 </div>
