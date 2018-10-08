@@ -86,7 +86,7 @@
                     }
                     else
                     {
-                        if (Convert.ToDateTime(DataBinder.Eval(tc.DataItem, "FechaCierre")) != null)
+                        if (Convert.ToDateTime(DataBinder.Eval(tc.DataItem, "FechaCierre")).Date.Year == 1)
                             ViewContext.Writer.Write(
                            Html.ActionLink("Cerrar", "Cerrar", "Tarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }, null)
                             );

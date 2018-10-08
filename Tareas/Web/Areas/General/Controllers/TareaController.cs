@@ -104,8 +104,11 @@ namespace Web.Areas.General.Controllers
         public ActionResult Nuevo(Tarea_Info model)
         {
             var grupo = bus_grupo.get_info(model.IdGrupo);
-            model.IdUsuarioAsignado = grupo.IdUsuario;
-            model.nomb_jef_grupo = grupo.nomb_jef_grupo;
+            if (grupo != null)
+            {
+                model.IdUsuarioAsignado = grupo.IdUsuario;
+                model.nomb_jef_grupo = grupo.nomb_jef_grupo;
+            }
 
             string mensaje = "";
             model.list_detalle = Lis_Tarea_det_Info_lis.get_list(model.IdTransaccionSession);
@@ -174,7 +177,7 @@ namespace Web.Areas.General.Controllers
             model.list_detalle = Lis_Tarea_det_Info_lis.get_list(model.IdTransaccionSession);
             model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(model.IdTransaccionSession);
             model.IdUsuarioModifica = SessionTareas.IdUsuario.ToString();
-            if (model.list_detalle == null)
+            if (model.list_detalle == null && (model.IdUsuarioSolicitante == model.IdUsuarioAsignado))
             {
                 cargar_combo();
                 ViewBag.mensaje = "El Tarea debe tener almenos un usuario miembro del Tarea";
@@ -182,7 +185,7 @@ namespace Web.Areas.General.Controllers
             }
             else
             {
-                if (model.list_detalle.Count() == 0)
+                if (model.list_detalle.Count() == 0 && (model.IdUsuarioSolicitante == model.IdUsuarioAsignado))
                 {
                     cargar_combo();
                     ViewBag.mensaje = "El Tarea debe tener almenos un usuario miembro del Tarea";

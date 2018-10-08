@@ -1,6 +1,5 @@
 ﻿
-
-create procedure [dbo].[SPGEN_002] 
+CREATE procedure [dbo].[SPGEN_002] 
 
 @FechaInicio date,
 @FechaFin date
@@ -12,8 +11,8 @@ begin
 --@FechaInicio date,
 --@FechaFin date
 
---set @FechaInicio ='2018-10-05'
---set @FechaFin ='2018-10-05'
+--set @FechaInicio ='2018-10-04'
+--set @FechaFin ='2018-12-30'
 
 select TareasResumen.IdUsuario, TareasResumen.Nombre, SUM(TareasResumen.TotalTarea) TotalTarea, sum(TareasResumen.Cumplidas) Cumplidas, sum(TareasResumen.Incumplidas) Incumplidas, SUM(EnProceso)EnProceso
 
@@ -25,11 +24,11 @@ case when  Tarea_det.FechaTerminoTarea is null then COUNT(dbo.Tarea_det.IdUsuari
 FROM            dbo.Tarea_det INNER JOIN
                          dbo.Usuario ON dbo.Tarea_det.IdUsuario = dbo.Usuario.IdUsuario INNER JOIN
                          dbo.Tarea ON dbo.Tarea_det.IdTarea = dbo.Tarea.IdTarea
+						 where Tarea_det.FechaFin between @FechaInicio and @FechaFin
+						 and Tarea_det.FechaFin between @FechaInicio and @FechaFin
 GROUP BY dbo.Usuario.IdUsuario, dbo.Usuario.Nombre, Tarea_det.FechaInicio, Tarea_det.FechaFin, Tarea_det.FechaTerminoTarea
 )TareasResumen
 
-group by TareasResumen.IdUsuario, TareasResumen.Nombre, TareasResumen.EnProceso
+group by TareasResumen.IdUsuario, TareasResumen.Nombre
 
 end
-
-select * from Tarea_det

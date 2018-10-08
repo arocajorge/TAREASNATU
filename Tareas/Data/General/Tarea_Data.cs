@@ -552,7 +552,6 @@ namespace Data
                     #endregion
 
                     Context.SaveChanges();
-                    Context.sp_crear_tarea_concurrente(info.IdTarea);
                     try
                     {
                         EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.TAREA.ToString() + " " + cl_enumeradores.eAsuntoCorreo.CERRADA.ToString());
@@ -561,6 +560,22 @@ namespace Data
                     {
 
                     }
+                    if (info.TareaConcurrente)
+                    {
+                        if (info.FechaFinConcurrencia >= DateTime.Now.Date)
+                        {
+                            Context.sp_crear_tarea_concurrente(info.IdTarea);
+                            try
+                            {
+                                EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.NUEVA.ToString() + " " + cl_enumeradores.eAsuntoCorreo.TAREA.ToString());
+                            }
+                            catch (Exception)
+                            {
+
+                            }
+                        }
+                    }
+                   
                 }
 
                 return true;

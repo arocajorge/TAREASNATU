@@ -1,4 +1,4 @@
-﻿-- exec sp_crear_tarea_concurrente 5
+﻿-- exec sp_crear_tarea_concurrente 1
 CREATE PROCEDURE [dbo].[sp_crear_tarea_concurrente] 
     @IdTarea numeric 
 
@@ -24,10 +24,10 @@ FechaAnulacion,			FechaAprobacion,											FechaFinConcurrencia,					DiasInter
 )
 
  select 
-@IdTareaNew,			IdUsuarioSolicitante,										IdGrupo,								IdUsuarioAsignado,									EstadoActual,
-DATEADD(DAY, DiasIntervaloProximaTarea,FechaInicio),								DATEADD(DAY, DiasIntervaloProximaTarea, FechaCulmina),										Observacion,							
+@IdTareaNew,			IdUsuarioSolicitante,										IdGrupo,								IdUsuarioAsignado,									1,
+DATEADD(DAY,ISNULL( @DiasIntervaloProximaTarea,0),FechaInicio),						DATEADD(DAY, isnull(@DiasIntervaloProximaTarea,0), FechaCulmina),							Observacion,							
 IdEstadoPrioridad,		TareaConcurrente,											AprobadoSolicitado,						AprobadoEncargado,									Estado,									
-IdUsuario,				IdUsuarioModifica,											IdUsuarioAnula,							GETDATE(),									FechaModificacion,	
+IdUsuario,				IdUsuarioModifica,											IdUsuarioAnula,							GETDATE(),									       FechaModificacion,	
 FechaAnulacion,			FechaAprobacion,											FechaFinConcurrencia,					DiasIntervaloProximaTarea
 
  from Tarea where IdTarea=@IdTarea
@@ -42,9 +42,9 @@ Observacion,														NumHorasReales,																FechaTerminoTarea
 select
 
 @IdTareaNew,														Secuancial,																	Descripcion,
-DATEADD(DAY, @DiasIntervaloProximaTarea,FechaInicio),				DATEADD(DAY, @DiasIntervaloProximaTarea,FechaFin),							NumHoras,
+DATEADD(DAY,ISNULL( @DiasIntervaloProximaTarea,0),FechaInicio),				DATEADD(DAY,ISNULL( @DiasIntervaloProximaTarea,0),FechaFin),		NumHoras,
 IdUsuario,															8,																			FechaUltimaModif,
-Observacion,														NumHorasReales,																FechaTerminoTarea
+Observacion,														NumHorasReales,																null
 from Tarea_det where IdTarea=@IdTarea
 
 

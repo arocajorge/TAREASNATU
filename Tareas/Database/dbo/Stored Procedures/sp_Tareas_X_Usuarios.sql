@@ -13,6 +13,7 @@ FROM            dbo.Tarea INNER JOIN
 						 and Tarea.Estado=1
 						 and Tarea.AprobadoEncargado=1
 						 and Tarea.AprobadoSolicitado=1
+						 AND Tarea_det.IdEstado=8
 
 						 group by 
 						  dbo.Tarea.IdTarea, dbo.Tarea.IdUsuarioSolicitante, dbo.Tarea.IdGrupo, dbo.Tarea.IdUsuarioAsignado, dbo.Tarea.EstadoActual, dbo.Tarea.FechaInicio, dbo.Tarea.FechaCulmina, dbo.Tarea.Observacion, 
