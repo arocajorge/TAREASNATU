@@ -22,7 +22,10 @@ namespace Info
         public System.DateTime FechaInicio { get; set; }
         [Required(ErrorMessage = "El campo fecha fin es obligatorio")]
         public System.DateTime FechaCulmina { get; set; }
-        public string Observacion { get; set; }
+        [Required(ErrorMessage = "El campo asunto de la tarea es obligatorio")]
+        public string AsuntoTarea { get; set; }
+        [Required(ErrorMessage = "El campo detalle de la tarea es obligatorio")]
+        public string DescripcionTarea { get; set; }
         [Required(ErrorMessage = "El campo prioridad de la tarea es obligatorio")]
         public int IdEstadoPrioridad { get; set; }
         public bool TareaConcurrente { get; set; }
@@ -30,6 +33,8 @@ namespace Info
         public bool AprobadoEncargado { get; set; }
         public Nullable<System.DateTime> FechaFinConcurrencia { get; set; }
         public Nullable<int> DiasIntervaloProximaTarea { get; set; }
+        public Nullable<System.DateTime> FechaCierreSolicitante { get; set; }
+        public Nullable<System.DateTime> FechaCierreEncargado { get; set; }
         public bool Estado { get; set; }
         public string IdUsuario { get; set; }
         public string IdUsuarioModifica { get; set; }
@@ -38,9 +43,10 @@ namespace Info
         public Nullable<System.DateTime> FechaModificacion { get; set; }
         public Nullable<System.DateTime> FechaAnulacion { get; set; }
 
+        public string ObsevacionModificacion { get; set; }
 
 
-       
+
 
 
         public List<Tarea_det_Info> list_detalle { get; set; }
@@ -66,7 +72,6 @@ namespace Info
         public Nullable<int> NumTareaVencidas { get; set; }
         public Nullable<int> TotalTareaResueltas { get; set; }
         public Nullable<int> TotalTareaPendiente { get; set; }
-        public Nullable<System.DateTime> FechaCierre { get; set; }
 
         #endregion
     }

@@ -29,11 +29,17 @@ namespace Data
         public int EstadoActual { get; set; }
         public System.DateTime FechaInicio { get; set; }
         public System.DateTime FechaCulmina { get; set; }
-        public string Observacion { get; set; }
+        public string AsuntoTarea { get; set; }
+        public string DescripcionTarea { get; set; }
         public int IdEstadoPrioridad { get; set; }
         public bool TareaConcurrente { get; set; }
         public bool AprobadoSolicitado { get; set; }
         public bool AprobadoEncargado { get; set; }
+        public Nullable<System.DateTime> FechaAprobacion { get; set; }
+        public Nullable<System.DateTime> FechaFinConcurrencia { get; set; }
+        public Nullable<int> DiasIntervaloProximaTarea { get; set; }
+        public Nullable<System.DateTime> FechaCierreEncargado { get; set; }
+        public Nullable<System.DateTime> FechaCierreSolicitante { get; set; }
         public bool Estado { get; set; }
         public string IdUsuario { get; set; }
         public string IdUsuarioModifica { get; set; }
@@ -41,11 +47,9 @@ namespace Data
         public Nullable<System.DateTime> FechaTransaccion { get; set; }
         public Nullable<System.DateTime> FechaModificacion { get; set; }
         public Nullable<System.DateTime> FechaAnulacion { get; set; }
-        public Nullable<System.DateTime> FechaAprobacion { get; set; }
-        public Nullable<System.DateTime> FechaFinConcurrencia { get; set; }
-        public Nullable<int> DiasIntervaloProximaTarea { get; set; }
-        public Nullable<System.DateTime> FechaCierre { get; set; }
     
+        public virtual Estado Estado1 { get; set; }
+        public virtual Estado Estado2 { get; set; }
         public virtual Grupo Grupo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tarea_det> Tarea_det { get; set; }
@@ -55,7 +59,5 @@ namespace Data
         public virtual ICollection<TareaArchivoAdjunto> TareaArchivoAdjunto { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TareaEstado> TareaEstado { get; set; }
-        public virtual Estado Estado1 { get; set; }
-        public virtual Estado Estado2 { get; set; }
     }
 }

@@ -21,7 +21,8 @@ namespace Data
         public int EstadoActual { get; set; }
         public System.DateTime FechaInicio { get; set; }
         public System.DateTime FechaCulmina { get; set; }
-        public string Observacion { get; set; }
+        public string AsuntoTarea { get; set; }
+        public string DescripcionTarea { get; set; }
         public int IdEstadoPrioridad { get; set; }
         public bool TareaConcurrente { get; set; }
         public bool AprobadoSolicitado { get; set; }
@@ -35,6 +36,7 @@ namespace Data
         public Nullable<System.DateTime> FechaAprobacion { get; set; }
         public Nullable<System.DateTime> FechaFinConcurrencia { get; set; }
         public Nullable<int> DiasIntervaloProximaTarea { get; set; }
-        public Nullable<System.DateTime> FechaCierre { get; set; }
+        public Nullable<System.DateTime> FechaCierreSolicitante { get; set; }
+        public Nullable<System.DateTime> FechaCierreEncargado { get; set; }
     }
 }

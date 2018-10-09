@@ -11,7 +11,7 @@ namespace Data
 {
     using System;
     
-    public partial class sp_Tareas_X_Usuarios_Result
+    public partial class sp_tareas_culminadas_sin_cerrar_Result
     {
         public decimal IdTarea { get; set; }
         public string IdUsuarioSolicitante { get; set; }
@@ -26,7 +26,12 @@ namespace Data
         public bool TareaConcurrente { get; set; }
         public bool AprobadoSolicitado { get; set; }
         public bool AprobadoEncargado { get; set; }
-        public bool Estado { get; set; }
-        public string IdUsuario { get; set; }
+        public Nullable<System.DateTime> FechaFinConcurrencia { get; set; }
+        public Nullable<System.DateTime> FechaAprobacion { get; set; }
+        public Nullable<int> DiasIntervaloProximaTarea { get; set; }
+        public Nullable<System.DateTime> FechaCierreEncargado { get; set; }
+        public Nullable<System.DateTime> FechaCierreSolicitante { get; set; }
+        public string Correo { get; set; }
+        public string Nombre { get; set; }
     }
 }

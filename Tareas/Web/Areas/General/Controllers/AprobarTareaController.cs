@@ -59,10 +59,11 @@ namespace Web.Areas.General.Controllers
             {
                 model.IdUsuario = SessionTareas.IdUsuario;
                 if (Observacion != "")
-                    model.Observacion = Observacion;
+                    model.ObsevacionModificacion = Observacion;
                 model.list_detalle = Lis_Tarea_det_Info_lis.get_list(IdTransaccionSession);
                 model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(IdTransaccionSession);
                 model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(IdTransaccionSession);
+                model.ObsevacionModificacion = Observacion;
 
             }
 
@@ -77,10 +78,11 @@ namespace Web.Areas.General.Controllers
             if (model != null)
             {
                 model.IdUsuario = SessionTareas.IdUsuario;
-                model.Observacion = Observacion;
+                model.ObsevacionModificacion = Observacion;
                 model.list_detalle = Lis_Tarea_det_Info_lis.get_list(IdTransaccionSession);
                 model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(IdTransaccionSession);
                 model.IdUsuario = SessionTareas.IdUsuario;
+                model.ObsevacionModificacion = Observacion;
             }
 
             var resultado = bus_tarea.Desaprobar(model);

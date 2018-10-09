@@ -14,8 +14,16 @@
         settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
         settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
         settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
-        settings.SettingsContextMenu.Enabled = true;
 
+
+        settings.HtmlRowPrepared = (s, e) =>
+        {
+            if (Convert.ToInt32(e.GetValue("IdEstado")) == 7)
+            {
+                e.Row.ForeColor = System.Drawing.Color.Blue;
+            }
+
+        };
         //Funcion para inicializar fila al presionar nuevo
         settings.InitNewRow = (s, e) =>
         {

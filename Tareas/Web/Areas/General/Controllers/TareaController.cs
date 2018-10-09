@@ -103,7 +103,8 @@ namespace Web.Areas.General.Controllers
         [HttpPost]
         public ActionResult Nuevo(Tarea_Info model)
         {
-            var grupo = bus_grupo.get_info(model.IdGrupo);
+            bus_grupo = new Grupo_Bus();
+            var grupo = bus_grupo.get_info_grup_usuario(model.IdGrupo);
             if (grupo != null)
             {
                 model.IdUsuarioAsignado = grupo.IdUsuario;
@@ -117,7 +118,7 @@ namespace Web.Areas.General.Controllers
             if (model.list_detalle == null &&(model.IdUsuarioSolicitante==model.IdUsuarioAsignado))
             {
                 cargar_combo();
-                ViewBag.mensaje = "La tarea debe tener un detalle";
+                ViewBag.mensaje = "La distribución de la tarea debe tener almenos un detalle";
                 return View(model);
             }
             else
@@ -125,7 +126,7 @@ namespace Web.Areas.General.Controllers
                 if (model.list_detalle.Count() == 0 && (model.IdUsuarioSolicitante == model.IdUsuarioAsignado))
                 {
                     cargar_combo();
-                    ViewBag.mensaje = "La tarea debe tener un detalle";
+                    ViewBag.mensaje = "La distribución de la tarea debe tener almenos un detalle";
                     return View(model);
                 }
             }
@@ -169,9 +170,13 @@ namespace Web.Areas.General.Controllers
         [HttpPost]
         public ActionResult Modificar(Tarea_Info model)
         {
-            var grupo = bus_grupo.get_info(model.IdGrupo);
-            model.IdUsuarioAsignado = grupo.IdUsuario;
-            model.nomb_jef_grupo = grupo.nomb_jef_grupo;
+            var grupo = bus_grupo.get_info_grup_usuario(model.IdGrupo);
+            if (grupo != null)
+            {
+                model.IdUsuarioAsignado = grupo.IdUsuario;
+                model.nomb_jef_grupo = grupo.nomb_jef_grupo;
+            }
+
 
             string mensaje = "";
             model.list_detalle = Lis_Tarea_det_Info_lis.get_list(model.IdTransaccionSession);
@@ -233,9 +238,13 @@ namespace Web.Areas.General.Controllers
         [HttpPost]
         public ActionResult Anular(Tarea_Info model)
         {
-            var grupo = bus_grupo.get_info(model.IdGrupo);
-            model.IdUsuarioAsignado = grupo.IdUsuario;
-            model.nomb_jef_grupo = grupo.nomb_jef_grupo;
+            var grupo = bus_grupo.get_info_grup_usuario(model.IdGrupo);
+            if (grupo != null)
+            {
+                model.IdUsuarioAsignado = grupo.IdUsuario;
+                model.nomb_jef_grupo = grupo.nomb_jef_grupo;
+            }
+
             if (!bus_tarea.anularDB(model))
             {
                 cargar_combo();
@@ -294,16 +303,28 @@ namespace Web.Areas.General.Controllers
         [HttpPost]
         public ActionResult Cerrar(Tarea_Info model)
         {
-            var grupo = bus_grupo.get_info(model.IdGrupo);
-            model.IdUsuarioAsignado = grupo.IdUsuario;
+            var grupo = bus_grupo.get_info_grup_usuario(model.IdGrupo);
+            if (grupo != null)
+            {
+                model.IdUsuarioAsignado = grupo.IdUsuario;
+                model.nomb_jef_grupo = grupo.nomb_jef_grupo;
+            }
+
             string mensaje = "";
             model.list_detalle = Lis_Tarea_det_Info_lis.get_list(model.IdTransaccionSession);
             model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(model.IdTransaccionSession);
             model.IdUsuarioModifica = SessionTareas.IdUsuario.ToString();
+            if(model.ObsevacionModificacion==null|model.ObsevacionModificacion=="")
+            {
+                mensaje = "Ingrese una observación";
+                ViewBag.mensaje = mensaje;
+                cargar_combo();
+                return View(model);
+            }
             if (model.list_detalle == null)
             {
                 cargar_combo();
-                ViewBag.mensaje = "El Tarea debe tener almenos un usuario miembro del Tarea";
+                ViewBag.mensaje = "La Tarea debe tener almenos un detalle en la distribución";
                 return View(model);
             }
             else
@@ -311,13 +332,13 @@ namespace Web.Areas.General.Controllers
                 if (model.list_detalle.Count() == 0)
                 {
                     cargar_combo();
-                    ViewBag.mensaje = "El Tarea debe tener almenos un usuario miembro del Tarea";
+                    ViewBag.mensaje = "La Tarea debe tener almenos un detalle en la distribución";
                     return View(model);
                 }
                 if(model.list_detalle.Where(v=>v.IdEstado==8).Count()>0)
                 {
                     cargar_combo();
-                    ViewBag.mensaje = "Existen subtareas pendientes no se puede cerrar!!!!";
+                    ViewBag.mensaje = "Existen subtareas pendientes no se puede cerrar!!!";
                     return View(model);
                 }
             }

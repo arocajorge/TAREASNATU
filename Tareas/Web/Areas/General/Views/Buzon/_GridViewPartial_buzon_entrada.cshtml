@@ -43,7 +43,7 @@
                     e.Row.ForeColor = System.Drawing.Color.Red;
                 }
             };
-            settings.Columns.Add("Observacion", "Observación").Width = Unit.Percentage(30);
+            settings.Columns.Add("AsuntoTarea", "Asunto").Width = Unit.Percentage(30);
             settings.Columns.Add(column =>
             {
                 column.FieldName = "FechaInicio";
@@ -86,7 +86,7 @@
                     }
                     else
                     {
-                        if (Convert.ToDateTime(DataBinder.Eval(tc.DataItem, "FechaCierre")).Date.Year == 1)
+                        if (Convert.ToDateTime(DataBinder.Eval(tc.DataItem, "FechaCierreEncargado")).Date.Year == 1)
                             ViewContext.Writer.Write(
                            Html.ActionLink("Cerrar", "Cerrar", "Tarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }, null)
                             );

@@ -44,7 +44,8 @@ namespace Data
                                  EstadoActual=q.EstadoActual,
                                  FechaInicio=q.FechaInicio,
                                  FechaCulmina=q.FechaCulmina,
-                                 Observacion=q.Observacion,
+                                 AsuntoTarea=q.AsuntoTarea,
+                                 DescripcionTarea=q.DescripcionTarea,
                                  IdEstadoPrioridad=q.IdEstadoPrioridad,
                                  TareaConcurrente=q.TareaConcurrente,
                                  Estado=q.Estado,
@@ -58,7 +59,8 @@ namespace Data
                                  Prioridad=q.Prioridad,
                                  EstadoTarea=q.EstadoTarea,
                                  NombreGrupo=q.NombreGrupo,
-                                 FechaCierre=q.FechaCierre
+                                 FechaCierreEncargado=q.FechaCierreEncargado,
+                                 FechaCierreSolicitante=q.FechaCierreSolicitante
                                  
 
                              }).ToList();
@@ -96,7 +98,8 @@ namespace Data
                                  EstadoActual = q.EstadoActual,
                                  FechaInicio = q.FechaInicio,
                                  FechaCulmina = q.FechaCulmina,
-                                 Observacion = q.Observacion,
+                                 AsuntoTarea = q.AsuntoTarea,
+                                 DescripcionTarea = q.DescripcionTarea,
                                  IdEstadoPrioridad = q.IdEstadoPrioridad,
                                  TareaConcurrente = q.TareaConcurrente,
                                  Estado = q.Estado,
@@ -108,7 +111,8 @@ namespace Data
                                  Prioridad = q.Prioridad,
                                  EstadoTarea = q.EstadoTarea,
                                  NombreGrupo = q.NombreGrupo,
-                                 FechaCierre = q.FechaCierre
+                                 FechaCierreSolicitante = q.FechaCierreSolicitante,
+                                 FechaCierreEncargado=q.FechaCierreEncargado
 
 
 
@@ -125,7 +129,8 @@ namespace Data
                                      EstadoActual = q.EstadoActual,
                                      FechaInicio = q.FechaInicio,
                                      FechaCulmina = q.FechaCulmina,
-                                     Observacion = q.Observacion,
+                                     AsuntoTarea = q.AsuntoTarea,
+                                     DescripcionTarea = q.DescripcionTarea,
                                      IdEstadoPrioridad = q.IdEstadoPrioridad,
                                      TareaConcurrente = q.TareaConcurrente,
                                      Estado = q.Estado,
@@ -137,8 +142,8 @@ namespace Data
                                      Prioridad = q.Prioridad,
                                      EstadoTarea = q.EstadoTarea,
                                      NombreGrupo = q.NombreGrupo,
-                                     FechaCierre = q.FechaCierre
-
+                                     FechaCierreSolicitante = q.FechaCierreSolicitante,
+                                     FechaCierreEncargado = q.FechaCierreEncargado
 
 
                                  }).ToList();
@@ -174,7 +179,8 @@ namespace Data
                                  EstadoActual = q.EstadoActual,
                                  FechaInicio = q.FechaInicio,
                                  FechaCulmina = q.FechaCulmina,
-                                 Observacion = q.Observacion,
+                                 AsuntoTarea = q.AsuntoTarea,
+                                 DescripcionTarea=q.DescripcionTarea,
                                  IdEstadoPrioridad = q.IdEstadoPrioridad,
                                  TareaConcurrente = q.TareaConcurrente,
                                  Estado = q.Estado,
@@ -204,10 +210,11 @@ namespace Data
                         IdUsuarioSolicitante = info.IdUsuarioSolicitante,
                         IdGrupo = info.IdGrupo,
                         IdUsuarioAsignado = info.IdUsuarioAsignado,
-                        EstadoActual = info.EstadoActual,
+                        EstadoActual = info.EstadoActual = 1,// ESTADO INICIADA,
                         FechaInicio = info.FechaInicio,
                         FechaCulmina = info.FechaCulmina,
-                        Observacion = info.Observacion,
+                        AsuntoTarea = info.AsuntoTarea,
+                        DescripcionTarea=info.DescripcionTarea,
                         IdEstadoPrioridad = info.IdEstadoPrioridad,
                         TareaConcurrente = info.TareaConcurrente,
                         AprobadoEncargado=info.AprobadoEncargado,
@@ -265,10 +272,9 @@ namespace Data
                             IdTarea = info.IdTarea,
                             Secuancial = odta_estado.get_id(info.IdTarea),
                             IdUsuario = info.IdUsuario,
-                            Observacion=info.Observacion==null?" ":info.Observacion,
+                            Observacion=info.DescripcionTarea==null?" ":info.DescripcionTarea,
                             IdEstado=info.EstadoActual,
                             FechaModificacion=DateTime.Now,
-                            IdUsuarioModifica=info.IdUsuario
                             
 
                         };
@@ -312,7 +318,8 @@ namespace Data
                     Entity.EstadoActual = info.EstadoActual;
                     Entity.FechaInicio = info.FechaInicio;
                     Entity.FechaCulmina = info.FechaCulmina;
-                    Entity.Observacion = info.Observacion;
+                    Entity.AsuntoTarea = info.AsuntoTarea;
+                    Entity.DescripcionTarea = info.AsuntoTarea;
                     Entity.IdEstadoPrioridad = info.IdEstadoPrioridad;
                     Entity.TareaConcurrente = info.TareaConcurrente;
                     Entity.AprobadoSolicitado = info.AprobadoSolicitado;
@@ -368,7 +375,7 @@ namespace Data
                         IdTarea = info.IdTarea,
                         Secuancial = odta_estado.get_id(info.IdTarea),
                         IdUsuario = info.IdUsuarioModifica,
-                        Observacion = info.Observacion==null?" ":info.Observacion,
+                        Observacion = info.DescripcionTarea==null?" ":info.DescripcionTarea,
                         IdEstado = info.EstadoActual,
                         FechaModificacion = DateTime.Now
 
@@ -439,10 +446,9 @@ namespace Data
                         IdTarea = info.IdTarea,
                         Secuancial = odta_estado.get_id(info.IdTarea),
                         IdUsuario = info.IdUsuario,
-                        Observacion = info.Observacion == null ? " " : info.Observacion,
+                        Observacion = info.ObsevacionModificacion =info.ObsevacionModificacion,
                         IdEstado = info.EstadoActual,
                         FechaModificacion = DateTime.Now,
-                        IdUsuarioModifica = info.IdUsuario
 
 
                     };
@@ -490,10 +496,9 @@ namespace Data
                         IdTarea = info.IdTarea,
                         Secuancial = odta_estado.get_id(info.IdTarea),
                         IdUsuario = info.IdUsuario,
-                        Observacion = info.Observacion == null ? " " : info.Observacion,
+                        Observacion = info.ObsevacionModificacion = info.ObsevacionModificacion,
                         IdEstado = info.EstadoActual,
                         FechaModificacion = DateTime.Now,
-                        IdUsuarioModifica = info.IdUsuario
 
 
                     };
@@ -531,7 +536,7 @@ namespace Data
                     var Entity = Context.Tarea.Where(v => v.IdTarea == info.IdTarea).FirstOrDefault();
                     if (Entity == null)
                         return false;
-                    Entity.FechaCierre = DateTime.Now;
+                    Entity.FechaCierreEncargado = DateTime.Now;
                     Entity.EstadoActual = info_parametro.IdEstadoCierreTarea;
                     #region Estado tarea
 
@@ -540,10 +545,9 @@ namespace Data
                         IdTarea = info.IdTarea,
                         Secuancial = odta_estado.get_id(info.IdTarea),
                         IdUsuario = info.IdUsuario,
-                        Observacion = info.Observacion == null ? " " : info.Observacion,
+                        Observacion = info.ObsevacionModificacion,
                         IdEstado = info.EstadoActual=3,
                         FechaModificacion = DateTime.Now,
-                        IdUsuarioModifica = info.IdUsuario
 
 
                     };
@@ -629,10 +633,23 @@ namespace Data
                                 };
                                 Context.Tarea_det.Add(det);
                             }
-                            Context.SaveChanges();
 
                         }
                     }
+
+                    TareaEstado New_estado = new TareaEstado
+                    {
+                        IdTarea = info.IdTarea,
+                        Secuancial = odta_estado.get_id(info.IdTarea),
+                        IdUsuario = info.IdUsuario,
+                        Observacion = info.ObsevacionModificacion = info.ObsevacionModificacion,
+                        IdEstado = info.EstadoActual,
+                        FechaModificacion = DateTime.Now,
+
+
+                    };
+                    Context.TareaEstado.Add(New_estado);
+                    Context.SaveChanges();
 
                     #endregion
 
@@ -693,7 +710,8 @@ namespace Data
                         EstadoActual = Entity.EstadoActual,
                         FechaInicio = Entity.FechaInicio,
                         FechaCulmina = Entity.FechaCulmina,
-                        Observacion = Entity.Observacion,
+                        AsuntoTarea = Entity.AsuntoTarea,
+                        DescripcionTarea=Entity.DescripcionTarea,
                         IdEstadoPrioridad = Entity.IdEstadoPrioridad,
                         TareaConcurrente = Entity.TareaConcurrente,
                         AprobadoEncargado = Entity.AprobadoEncargado,
@@ -750,7 +768,10 @@ namespace Data
                         
                     }
                     string Body = "Estimado colaborador <br/><br/>";
-                    Body += "Degeremcia le encomienda la tarea: "+info.Observacion;
+                    Body += "Degeremcia le encomienda la tarea: "+info.AsuntoTarea;
+                    Body += "<br/>";
+                    Body += "<br/>";
+                    Body += "Descripción tarea: " + info.DescripcionTarea;
                     Body += "<br/>";
                     Body += "<br/>";
                     foreach (var item in info.list_detalle)
@@ -772,7 +793,7 @@ namespace Data
                     Body += "<br/>";
                     Body += "<br/>";
                     Body += "Para para acceder a la tarea acceder al link:<br/><br/>";
-                    Body += "<a href='http://localhost:27043/General/Tarea/Modificar?IdTarea="+info.IdTarea+"'>Tareas</a>";
+                    Body += "<a href='http://localhost:27043/General/AprobarTarea/Nuevo?IdTarea=" + info.IdTarea+"'>Tareas</a>";
 
                     Body += "<br/>";
                     Body += "<br/>";

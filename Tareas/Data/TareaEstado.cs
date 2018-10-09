@@ -20,7 +20,6 @@ namespace Data
         public string IdUsuario { get; set; }
         public System.DateTime FechaModificacion { get; set; }
         public string Observacion { get; set; }
-        public string IdUsuarioModifica { get; set; }
     
         public virtual Tarea Tarea { get; set; }
     }

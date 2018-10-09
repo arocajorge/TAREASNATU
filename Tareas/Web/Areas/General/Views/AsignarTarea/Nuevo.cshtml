@@ -26,6 +26,13 @@
 
     @Html.HiddenFor(v => v.IdTransaccionSession, new { @id = "IdTransaccionSession" });
     @Html.HiddenFor(v => v.IdTarea, new { @id = "IdTarea" });
+    @Html.HiddenFor(v => v.FechaInicio);
+    @Html.HiddenFor(v => v.FechaCulmina);
+    @Html.HiddenFor(v => v.AprobadoEncargado);
+    @Html.HiddenFor(v => v.AprobadoSolicitado);
+    @Html.HiddenFor(v => v.TareaConcurrente);
+
+
     <div class="row">
         <div class="col-md-12">
 
@@ -120,6 +127,18 @@
                     @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
                 </div>
             </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="TareaConcurrente"></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.TareaConcurrente, settings =>
+               {
+                   settings.Name = "TareaConcurrente";
+                   settings.Text = "Tarea concurrente";
+                   settings.Enabled = false;
+               }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
 
         </div>
@@ -142,7 +161,7 @@
                        settings.Properties.EditFormatString = "dd/MM/yyyy";
                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                       settings.Enabled = false;
+                       settings.ReadOnly = true;
                    }).GetHtml()
                         @Html.ValidationMessageFor(q => q.FechaInicio, "", new { @class = "text-danger" })
                     </div>
@@ -163,37 +182,13 @@
                        settings.Properties.EditFormatString = "dd/MM/yyyy";
                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                       settings.Enabled = false;
+                       settings.ReadOnly = true;
                    }).GetHtml()
                         @Html.ValidationMessageFor(q => q.FechaCulmina, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label for="IdCtaCblePadre">Estado actual*</label>
-                    @Html.DevExpress().ComboBoxFor(q => q.EstadoActual, settings =>
-               {
-                   settings.Name = "EstadoActual";
-                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                   settings.Properties.DisplayFormatString = "{0}";
-                   settings.Properties.Columns.Add("Descripcion", "Estado").Width = System.Web.UI.WebControls.Unit.Percentage(10);
-                   //Campo ID
-                   settings.Properties.ValueField = "IdEstado";
-                   settings.Properties.ValueType = typeof(int);
-                   settings.Properties.TextField = "Descripcion";
-                   //Boton para seleccionar ningun registro
-                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
-                   settings.Properties.NullText = "== Seleccione ==";
-                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-
-                   settings.Properties.DropDownButton.Enabled = false;
-                   settings.ReadOnly = true;
-
-               }).BindList(ViewBag.list_estado).GetHtml()
-                    @Html.ValidationMessageFor(q => q.EstadoActual, "", new { @class = "text-danger" })
-                </div>
-            </div>
+           
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="IdCtaCblePadre">Prioridad de la tarea*</label>
@@ -219,19 +214,7 @@
                     @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label for="TareaConcurrente"></label>
-                    @Html.DevExpress().CheckBoxFor(q => q.TareaConcurrente, settings =>
-               {
-                   settings.Name = "TareaConcurrente";
-                   settings.Text = "Tarea concurrente";
-                   settings.Enabled = false;
-               }).GetHtml()
-                    @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
+          
         </div>
     </div>
 
@@ -239,9 +222,31 @@
         <div class="col-md-12">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="IdUsuario">Observación</label>
-                    @Html.TextAreaFor(v => v.Observacion, new { @class = "form-control", @row = 2, @id = "Observacion",@disabled="disabled" })
-                    @Html.ValidationMessageFor(m => m.Observacion, "", new { @class = "text-danger" })
+                    <label for="AsuntoTarea">Asunto*</label>
+                    @Html.TextAreaFor(v => v.AsuntoTarea, new { @class = "form-control", @rows = 2, @readonly = "readonly" })
+                    @Html.ValidationMessageFor(m => m.AsuntoTarea, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="DescripcionTarea">Detalle*</label>
+                    @Html.TextAreaFor(v => v.DescripcionTarea, new { @class = "form-control", @rows = 4, @readonly = "readonly" })
+                    @Html.ValidationMessageFor(m => m.DescripcionTarea, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="DescripcionTarea">Observación</label>
+                    @Html.TextAreaFor(v => v.ObsevacionModificacion, new { @class = "form-control", @rows = 2 })
+                    @Html.ValidationMessageFor(m => m.ObsevacionModificacion, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>

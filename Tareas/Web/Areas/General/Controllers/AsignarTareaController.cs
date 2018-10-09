@@ -75,15 +75,25 @@ namespace Web.Areas.General.Controllers
         {
             model = bus_tarea.get_info(model.IdTarea);
             model.IdTransaccionSession = Convert.ToDecimal(SessionTareas.IdTransaccionSession);
-            var grupo = bus_grupo.get_info(model.IdGrupo);
-            model.IdUsuarioAsignado = grupo.IdUsuario;
+            var grupo = bus_grupo.get_info_grup_usuario(model.IdGrupo);
+            if (grupo != null)
+            {
+                model.IdUsuarioAsignado = grupo.IdUsuario;
+                model.nomb_jef_grupo = grupo.nomb_jef_grupo;
+            }
             string mensaje = "";
             model.list_detalle = Lis_Tarea_det_Info_lis.get_list(model.IdTransaccionSession);
             model.IdUsuarioModifica = SessionTareas.IdUsuario.ToString();
+            if (model.ObsevacionModificacion == null | model.ObsevacionModificacion == "")
+            {
+                ViewBag.mensaje = "Ingrese una observación";
+                cargar_combo();
+                return View(model);
+            }
             if (model.list_detalle == null)
             {
                 cargar_combo();
-                ViewBag.mensaje = "El Tarea debe tener almenos un usuario miembro del Tarea";
+                ViewBag.mensaje = "La Tarea debe tener almenos un detalle en la distribución";
                 return View(model);
             }
             else
@@ -91,7 +101,7 @@ namespace Web.Areas.General.Controllers
                 if (model.list_detalle.Count() == 0)
                 {
                     cargar_combo();
-                    ViewBag.mensaje = "El Tarea debe tener almenos un usuario miembro del Tarea";
+                    ViewBag.mensaje = "La Tarea debe tener almenos un detalle en la distribución";
                     return View(model);
                 }
                 

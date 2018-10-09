@@ -32,31 +32,13 @@ namespace Data
         public virtual DbSet<Grupo_Usuario> Grupo_Usuario { get; set; }
         public virtual DbSet<Tarea_det> Tarea_det { get; set; }
         public virtual DbSet<TareaArchivoAdjunto> TareaArchivoAdjunto { get; set; }
-        public virtual DbSet<TareaEstado> TareaEstado { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
-        public virtual DbSet<Tarea> Tarea { get; set; }
         public virtual DbSet<Estado> Estado { get; set; }
-        public virtual DbSet<vw_Tarea> vw_Tarea { get; set; }
         public virtual DbSet<Parametro> Parametro { get; set; }
         public virtual DbSet<VWGEN_001> VWGEN_001 { get; set; }
-    
-        public virtual ObjectResult<sp_Tareas_X_Usuarios_Result> sp_Tareas_X_Usuarios(string idUsuario)
-        {
-            var idUsuarioParameter = idUsuario != null ?
-                new ObjectParameter("IdUsuario", idUsuario) :
-                new ObjectParameter("IdUsuario", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_Tareas_X_Usuarios_Result>("sp_Tareas_X_Usuarios", idUsuarioParameter);
-        }
-    
-        public virtual int sp_crear_tarea_concurrente(Nullable<decimal> idTarea)
-        {
-            var idTareaParameter = idTarea.HasValue ?
-                new ObjectParameter("IdTarea", idTarea) :
-                new ObjectParameter("IdTarea", typeof(decimal));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_crear_tarea_concurrente", idTareaParameter);
-        }
+        public virtual DbSet<Tarea> Tarea { get; set; }
+        public virtual DbSet<TareaEstado> TareaEstado { get; set; }
+        public virtual DbSet<vw_Tarea> vw_Tarea { get; set; }
     
         public virtual ObjectResult<sp_carga_laboral_Result> sp_carga_laboral(string idUsuario, Nullable<System.DateTime> fecha)
         {
@@ -82,6 +64,29 @@ namespace Data
                 new ObjectParameter("FechaFin", typeof(System.DateTime));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPGEN_002_Result>("SPGEN_002", fechaInicioParameter, fechaFinParameter);
+        }
+    
+        public virtual int sp_crear_tarea_concurrente(Nullable<decimal> idTarea)
+        {
+            var idTareaParameter = idTarea.HasValue ?
+                new ObjectParameter("IdTarea", idTarea) :
+                new ObjectParameter("IdTarea", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_crear_tarea_concurrente", idTareaParameter);
+        }
+    
+        public virtual ObjectResult<sp_tareas_culminadas_sin_cerrar_Result> sp_tareas_culminadas_sin_cerrar()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_tareas_culminadas_sin_cerrar_Result>("sp_tareas_culminadas_sin_cerrar");
+        }
+    
+        public virtual ObjectResult<sp_Tareas_X_Usuarios_Result> sp_Tareas_X_Usuarios(string idUsuario)
+        {
+            var idUsuarioParameter = idUsuario != null ?
+                new ObjectParameter("IdUsuario", idUsuario) :
+                new ObjectParameter("IdUsuario", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_Tareas_X_Usuarios_Result>("sp_Tareas_X_Usuarios", idUsuarioParameter);
         }
     }
 }

@@ -120,7 +120,19 @@
                     @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
                 </div>
             </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="TareaConcurrente"></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.TareaConcurrente, settings =>
+               {
+                   settings.Name = "TareaConcurrente";
+                   settings.Text = "Tarea recurrente";
+                   settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){mostrar_parametros()}";
 
+               }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
         </div>
     </div>
@@ -167,29 +179,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label for="IdCtaCblePadre">Estado actual*</label>
-                    @Html.DevExpress().ComboBoxFor(q => q.EstadoActual, settings =>
-               {
-                   settings.Name = "EstadoActual";
-                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                   settings.Properties.DisplayFormatString = "{0}";
-                   settings.Properties.Columns.Add("Descripcion", "Estado").Width = System.Web.UI.WebControls.Unit.Percentage(10);
-                   //Campo ID
-                   settings.Properties.ValueField = "IdEstado";
-                   settings.Properties.ValueType = typeof(int);
-                   settings.Properties.TextField = "Descripcion";
-                   //Boton para seleccionar ningun registro
-                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
-                   settings.Properties.NullText = "== Seleccione ==";
-                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                   settings.ReadOnly = true;
-
-               }).BindList(ViewBag.list_estado).GetHtml()
-                    @Html.ValidationMessageFor(q => q.EstadoActual, "", new { @class = "text-danger" })
-                </div>
-            </div>
+           
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="IdCtaCblePadre">Prioridad de la tarea*</label>
@@ -212,19 +202,7 @@
                     @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label for="TareaConcurrente"></label>
-                    @Html.DevExpress().CheckBoxFor(q => q.TareaConcurrente, settings =>
-               {
-                   settings.Name = "TareaConcurrente";
-                   settings.Text = "Tarea recurrente";
-                   settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){mostrar_parametros()}";
-
-               }).GetHtml()
-                    @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
-                </div>
-            </div>
+            
 
         </div>
     </div>
@@ -233,9 +211,20 @@
         <div class="col-md-12">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="IdUsuario">Detalle</label>
-                    @Html.TextAreaFor(v => v.Observacion, new { @class = "form-control", @row = 2 })
-                    @Html.ValidationMessageFor(m => m.Observacion, "", new { @class = "text-danger" })
+                    <label for="AsuntoTarea">Asunto*</label>
+                    @Html.TextAreaFor(v => v.AsuntoTarea, new { @class = "form-control", @rows = 2, @readonly = "readonly" })
+                    @Html.ValidationMessageFor(m => m.AsuntoTarea, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="DescripcionTarea">Detalle*</label>
+                    @Html.TextAreaFor(v => v.DescripcionTarea, new { @class = "form-control", @rows = 4, @readonly = "readonly" })
+                    @Html.ValidationMessageFor(m => m.DescripcionTarea, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
@@ -248,7 +237,7 @@
                 <a href="#tab_adjunto" aria-controls="adjunto" role="tab" data-toggle="tab" id="link_adjunto">Archivos adjuntos</a>
             </li>
             <li hidden>
-                <a href="#tab_detalle" aria-controls="detalle" role="tab" data-toggle="tab" id="link_detalle">Detalle tarea</a>
+                <a href="#tab_detalle" aria-controls="detalle" role="tab" data-toggle="tab" id="link_detalle">Distribución de Subtareas</a>
             </li>
             <li hidden>
                 <a href="#tab_parametro" aria-controls="parametros" role="tab" data-toggle="tab" id="link_parametro">Parámetros</a>
