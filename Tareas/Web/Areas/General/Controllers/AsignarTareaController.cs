@@ -73,8 +73,7 @@ namespace Web.Areas.General.Controllers
         [HttpPost]
         public ActionResult Nuevo(Tarea_Info model)
         {
-            model = bus_tarea.get_info(model.IdTarea);
-            model.IdTransaccionSession = Convert.ToDecimal(SessionTareas.IdTransaccionSession);
+           
             var grupo = bus_grupo.get_info_grup_usuario(model.IdGrupo);
             if (grupo != null)
             {
