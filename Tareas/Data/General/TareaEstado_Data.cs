@@ -9,7 +9,7 @@ namespace Data
 {
    public class TareaEstado_Data
     {
-        public List<TareaEstado_Info> get_lis()
+        public List<TareaEstado_Info> get_lis(decimal IdTarea)
         {
             try
             {
@@ -18,13 +18,15 @@ namespace Data
                 using (EntityTareas Context = new EntityTareas())
                 {
                     Lista = (from q in Context.TareaEstado
+                             where q.IdTarea==IdTarea
                              select new TareaEstado_Info
                              {
                                  IdTarea = q.IdTarea,
                                  Secuancial = q.Secuancial,
                                  FechaModificacion = q.FechaModificacion,
                                  IdUsuario = q.IdUsuario,
-                                 IdEstado = q.IdEstado
+                                 IdEstado = q.IdEstado,
+                                 Observacion=q.Observacion
                              }).ToList();
                 }
 

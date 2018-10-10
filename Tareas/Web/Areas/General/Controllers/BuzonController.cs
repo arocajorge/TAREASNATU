@@ -67,6 +67,29 @@ namespace Web.Areas.General.Controllers
             return PartialView("_GridViewPartial_buzon_salida", model);
         }
 
+        public ActionResult Buzon_eliminado()
+        {
+            cl_filtros_Info model = new cl_filtros_Info();
+
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult Buzon_eliminado(cl_filtros_Info model)
+        {
+            return View(model);
+        }
+        [ValidateInput(false)]
+        public ActionResult GridViewPartial_eliminada(DateTime? fecha_ini, DateTime? fecha_fin)
+        {
+            List<Tarea_Info> model = new List<Tarea_Info>();
+            ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : fecha_ini;
+            ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date : fecha_fin;
+            model = bus_tarea.get_lis(ViewBag.fecha_ini, ViewBag.fecha_fin);
+
+            model = bus_tarea.get_lis_anulados(SessionTareas.IdUsuario.ToString(), ViewBag.fecha_ini, ViewBag.fecha_fin);
+            return PartialView("_GridViewPartial_eliminada", model);
+        }
+
 
     }
 }

@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace Bus
 {
-   public class TareaEstado
+   public class TareaEstado_Bus
     {
         TareaEstado_Data odata = new TareaEstado_Data();
-        public List<TareaEstado_Info> get_lis()
+        public List<TareaEstado_Info> get_lis(decimal IdTarea)
         {
             try
             {
-                return odata.get_lis();
+                return odata.get_lis(IdTarea);
             }
             catch (Exception)
             {

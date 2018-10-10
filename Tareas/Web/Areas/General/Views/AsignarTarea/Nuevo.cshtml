@@ -257,7 +257,9 @@
             <li class="active">
                 <a href="#tab_detalle" aria-controls="informacion_items" role="tab" data-toggle="tab">Detalle tarea</a>
             </li>
-            
+            <li>
+                <a href="#tab_historico" aria-controls="parametros" role="tab" data-toggle="tab" id="link_historico">Histórico</a>
+            </li>
 
 
         </ul>
@@ -269,6 +271,17 @@
                             <div class="form-group">
                                 @Html.Action("GridViewPartial_tarea_det", "Tarea")
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_historico">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.Action("GridViewPartial_tarea_det_estados", "TareaEstados", new { IdTarea = Model.IdTarea })
                         </div>
                     </div>
                 </div>

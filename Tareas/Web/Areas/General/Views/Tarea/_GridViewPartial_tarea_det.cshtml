@@ -4,7 +4,7 @@
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "GridViewPartial_tarea_det";
-        settings.CallbackRouteValues = new { Controller = "Tarea", Action = "GridViewPartial_tarea_det", IdGrupo = Model.IdGrupo};
+        settings.CallbackRouteValues = new { Controller = "Tarea", Action = "GridViewPartial_tarea_det", IdTarea = Model.IdTarea };
         settings.KeyFieldName = "Secuancial";
         settings.Width = Unit.Percentage(100);
 
@@ -29,7 +29,7 @@
             {
                 e.Row.ForeColor = System.Drawing.Color.Blue;
             }
-           
+
         };
         //Funcion para inicializar fila al presionar nuevo
         settings.InitNewRow = (s, e) =>

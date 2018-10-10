@@ -165,20 +165,27 @@ namespace Web.Areas.General.Controllers
             cargar_combo();
             if (model == null)
                 return RedirectToAction("Index");
+            model.AprobadoSolicitado = true;
             return View(model);
         }
         [HttpPost]
         public ActionResult Modificar(Tarea_Info model)
         {
+            string mensaje = "";
             var grupo = bus_grupo.get_info_grup_usuario(model.IdGrupo);
             if (grupo != null)
             {
                 model.IdUsuarioAsignado = grupo.IdUsuario;
                 model.nomb_jef_grupo = grupo.nomb_jef_grupo;
             }
+            if (model.ObsevacionModificacion == null | model.ObsevacionModificacion == "")
+            {
+                mensaje = "Ingrese una observación";
+                ViewBag.mensaje = mensaje;
+                cargar_combo();
+                return View(model);
+            }
 
-
-            string mensaje = "";
             model.list_detalle = Lis_Tarea_det_Info_lis.get_list(model.IdTransaccionSession);
             model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(model.IdTransaccionSession);
             model.IdUsuarioModifica = SessionTareas.IdUsuario.ToString();
@@ -209,7 +216,7 @@ namespace Web.Areas.General.Controllers
                 cargar_combo();
                 return View(model);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Buzon_salida","Buzon");
         }
 
 
@@ -238,11 +245,19 @@ namespace Web.Areas.General.Controllers
         [HttpPost]
         public ActionResult Anular(Tarea_Info model)
         {
+            string mensaje = "";
             var grupo = bus_grupo.get_info_grup_usuario(model.IdGrupo);
             if (grupo != null)
             {
                 model.IdUsuarioAsignado = grupo.IdUsuario;
                 model.nomb_jef_grupo = grupo.nomb_jef_grupo;
+            }
+            if (model.ObsevacionModificacion == null | model.ObsevacionModificacion == "")
+            {
+                mensaje = "Ingrese una observación";
+                ViewBag.mensaje = mensaje;
+                cargar_combo();
+                return View(model);
             }
 
             if (!bus_tarea.anularDB(model))
@@ -251,7 +266,7 @@ namespace Web.Areas.General.Controllers
 
                 return View(model);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Buzon_salida", "Buzon");
         }
 
 

@@ -4,7 +4,7 @@
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "GridViewPartial_tarea_det_readonly";
-        settings.CallbackRouteValues = new { Controller = "Tarea", Action = "GridViewPartial_Tarea_det_readonly", IdGrupo = Model.IdGrupo};
+        settings.CallbackRouteValues = new { Controller = "Tarea", Action = "GridViewPartial_Tarea_det_readonly", IdTarea = Model.IdTarea };
         settings.KeyFieldName = "Secuancial";
         settings.Width = Unit.Percentage(100);
         settings.CommandColumn.Visible = true;

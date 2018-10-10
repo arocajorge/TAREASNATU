@@ -263,10 +263,12 @@
             <li>
                 <a href="#tab_parametros" aria-controls="parametros" role="tab" data-toggle="tab" id="link_parametro">Parámetros</a>
             </li>
-
+            <li>
+                <a href="#tab_historico" aria-controls="parametros" role="tab" data-toggle="tab" id="link_historico">Histórico</a>
+            </li>
         </ul>
         <div class="tab-content" style="padding-top: 20px">
-            <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_detalle">
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_detalle">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="col-md-12">
@@ -342,6 +344,18 @@
                                 @Html.TextBoxFor(v => v.DiasIntervaloProximaTarea, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(m => m.DiasIntervaloProximaTarea, "", new { @class = "text-danger" })
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_historico">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+
+                                @Html.Action("GridViewPartial_tarea_det_estados", "TareaEstados", new { IdTarea = Model.IdTarea })
+                           </div>
                         </div>
                     </div>
                 </div>

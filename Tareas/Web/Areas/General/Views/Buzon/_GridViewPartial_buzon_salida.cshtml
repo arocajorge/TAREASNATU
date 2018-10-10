@@ -43,6 +43,37 @@
                 e.Row.ForeColor = System.Drawing.Color.Red;
             }
         };
+
+
+
+        settings.Columns.Add(c =>
+        {
+            c.Caption = "#";
+            c.SetDataItemTemplateContent(tc =>
+            {
+                if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "Estado")) == true && Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "AprobadoEncargado")) == false)
+                {
+                    ViewContext.Writer.Write(
+                Html.ActionLink("Modificar", "Modificar","Tarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }) + "&nbsp;" +
+                        Html.ActionLink("Anular","Anular","Tarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") },
+                            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
+                    );
+                }
+                else
+                {
+                    ViewContext.Writer.Write(
+                Html.ActionLink("Consultar", "Consultar", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }) + "&nbsp;"
+
+                    );
+                }
+            });
+           
+            c.Settings.AllowDragDrop = DefaultBoolean.False;
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.Width = Unit.Pixel(130);
+        });
+
+
         settings.Columns.Add("IdTarea", "ID").Width = Unit.Percentage(5);
         settings.Columns.Add("AsuntoTarea", "Asunto").Width = Unit.Percentage(30);
         settings.Columns.Add(column =>
@@ -70,22 +101,8 @@
             });
         });
         settings.Columns.Add("Asignado", "Asignado").Width = Unit.Percentage(10);
-        settings.Columns.Add("Prioridad", "Prioridad").Width = Unit.Percentage(10);
+        settings.Columns.Add("EstadoTarea", "Estado").Width = Unit.Percentage(10);
         settings.Columns.Add("NombreGrupo", "Grupo").Width = Unit.Percentage(10);
-
-
-        settings.Columns.Add(column =>
-        {
-            column.Caption = "Modificar";
-            column.SetDataItemTemplateContent(c =>
-            {
-                if (DataBinder.Eval(c.DataItem, "IdTarea") != null && Convert.ToBoolean(DataBinder.Eval(c.DataItem, "AprobadoEncargado")) == false)
-                {
-                    ViewContext.Writer.Write("<span class=\"fa fa-pencil-square-o\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("Modificar", "Tarea", new { Area = "General", IdTarea = DataBinder.Eval(c.DataItem, "IdTarea") }, Request.Url.Scheme) + "');\"></span>");
-                }
-            });
-            column.Width = Unit.Percentage(5);
-        });
 
 
 

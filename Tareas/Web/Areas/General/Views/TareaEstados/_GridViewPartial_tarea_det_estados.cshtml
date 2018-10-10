@@ -1,0 +1,55 @@
+@using System.Web.UI.WebControls;
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridViewPartial_tarea_det_estados";
+        settings.CallbackRouteValues = new { Controller = "Tarea", Action = "GridViewPartial_tarea_det_estados", IdTarea = ViewBag.IdTarea };
+        settings.KeyFieldName = "Secuancial";
+        settings.Width = Unit.Percentage(100);
+        settings.CommandColumn.Visible = true;
+        //CConfiguracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Secuancial";
+            column.Caption = "Secuancia";
+            column.Width = Unit.Percentage(10);
+           
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdUsuario";
+            column.Caption = "Usuario";
+            column.Width = Unit.Percentage(20);
+            column.EditorProperties().ComboBox(p =>
+            {
+                p.Columns.Add("IdUsuario", "Usuario").Width = Unit.Percentage(30);
+                p.Columns.Add("Nombre", "Nombres").Width = Unit.Percentage(70);
+                p.ValueField = "IdUsuario";
+                p.ValueType = typeof(string);
+                p.DataSource = ViewBag.list_usuarios;
+                p.Width = Unit.Percentage(100);
+            });
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+
+            column.FieldName = "Observacion";
+            column.Caption = "Observación";
+            column.Width = Unit.Percentage(70);
+           
+        });
+
+    });
+
+}
+@grid.Bind(Model).GetHtml()

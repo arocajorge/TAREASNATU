@@ -74,6 +74,62 @@ namespace Data
                 throw;
             }
         }
+
+        public List<Tarea_Info> get_lis_anulados(string IdUsuarioSolicitante, DateTime FechaInicio, DateTime FechaFin)
+        {
+            try
+            {
+                FechaInicio = Convert.ToDateTime(FechaInicio.ToShortDateString());
+                FechaFin = Convert.ToDateTime(FechaFin.ToShortDateString());
+
+                List<Tarea_Info> Lista = new List<Tarea_Info>();
+
+                using (EntityTareas Context = new EntityTareas())
+                {
+                    Lista = (from q in Context.vw_Tarea
+                             where q.FechaInicio >= FechaInicio
+                             && q.FechaInicio <= FechaFin
+                             && q.Estado==false
+                             && q.IdUsuarioSolicitante== IdUsuarioSolicitante
+                             select new Tarea_Info
+                             {
+                                 IdTarea = q.IdTarea,
+                                 IdUsuarioSolicitante = q.IdUsuarioSolicitante,
+                                 IdGrupo = q.IdGrupo,
+                                 IdUsuarioAsignado = q.IdUsuarioAsignado,
+                                 EstadoActual = q.EstadoActual,
+                                 FechaInicio = q.FechaInicio,
+                                 FechaCulmina = q.FechaCulmina,
+                                 AsuntoTarea = q.AsuntoTarea,
+                                 DescripcionTarea = q.DescripcionTarea,
+                                 IdEstadoPrioridad = q.IdEstadoPrioridad,
+                                 TareaConcurrente = q.TareaConcurrente,
+                                 Estado = q.Estado,
+                                 AprobadoSolicitado = q.AprobadoSolicitado,
+                                 AprobadoEncargado = q.AprobadoEncargado,
+                                 DiasIntervaloProximaTarea = q.DiasIntervaloProximaTarea,
+                                 FechaFinConcurrencia = q.FechaFinConcurrencia,
+
+                                 solicitante = q.solicitante,
+                                 Asignado = q.Asignado,
+                                 Prioridad = q.Prioridad,
+                                 EstadoTarea = q.EstadoTarea,
+                                 NombreGrupo = q.NombreGrupo,
+                                 FechaCierreEncargado = q.FechaCierreEncargado,
+                                 FechaCierreSolicitante = q.FechaCierreSolicitante
+
+
+                             }).ToList();
+                }
+
+                return Lista;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         public List<Tarea_Info> get_lis(string IdUsuario,  cl_enumeradores.eTipoTarea Tipo, DateTime FechaInicio, DateTime FechaFin)
         {
             try
@@ -84,12 +140,14 @@ namespace Data
 
                 using (EntityTareas Context = new EntityTareas())
                 {
-                    if(Tipo==cl_enumeradores.eTipoTarea.ASIGNADA)
-                    Lista = (from q in Context.vw_Tarea
-                             where q.IdUsuarioAsignado ==IdUsuario
-                             && q.FechaInicio >= FechaInicio
-                         && q.FechaInicio <= FechaFin
-                             select new Tarea_Info
+                    if(Tipo==cl_enumeradores.eTipoTarea.ASIGNADA)// se muestra en bizon de entrada
+                        Lista = (from q in Context.vw_Tarea
+                                 where q.IdUsuarioAsignado == IdUsuario
+                                 && q.EstadoActual != 5//Diferente de devuelta
+                                 && q.FechaInicio >= FechaInicio
+                               && q.FechaInicio <= FechaFin
+                               && q.Estado==true
+                                 select new Tarea_Info
                              {
                                  IdTarea = q.IdTarea,
                                  IdUsuarioSolicitante = q.IdUsuarioSolicitante,
@@ -117,9 +175,12 @@ namespace Data
 
 
                              }).ToList();
-                    else
+                    else// se muestra en buzon de salida
                         Lista = (from q in Context.vw_Tarea
-                                 where q.IdUsuarioAsignado == IdUsuario
+                                 where q.IdUsuarioSolicitante == IdUsuario
+                                  && q.FechaInicio >= FechaInicio
+                               && q.FechaInicio <= FechaFin
+                               && q.Estado==true
                                  select new Tarea_Info
                                  {
                                      IdTarea = q.IdTarea,
@@ -315,7 +376,7 @@ namespace Data
                     Entity.IdUsuarioSolicitante = info.IdUsuarioSolicitante;
                     Entity.IdGrupo = info.IdGrupo;
                     Entity.IdUsuarioAsignado = info.IdUsuarioAsignado;
-                    Entity.EstadoActual = info.EstadoActual;
+                    Entity.EstadoActual = info.EstadoActual=1;
                     Entity.FechaInicio = info.FechaInicio;
                     Entity.FechaCulmina = info.FechaCulmina;
                     Entity.AsuntoTarea = info.AsuntoTarea;
@@ -375,7 +436,7 @@ namespace Data
                         IdTarea = info.IdTarea,
                         Secuancial = odta_estado.get_id(info.IdTarea),
                         IdUsuario = info.IdUsuarioModifica,
-                        Observacion = info.DescripcionTarea==null?" ":info.DescripcionTarea,
+                        Observacion = info.ObsevacionModificacion==null?" ":info.ObsevacionModificacion,
                         IdEstado = info.EstadoActual,
                         FechaModificacion = DateTime.Now
 
@@ -416,6 +477,7 @@ namespace Data
                     Entity.Estado = false;
                     Entity.IdUsuarioAnula = info.IdUsuarioAnula;
                     Entity.FechaAnulacion = DateTime.Now;
+
                     Context.SaveChanges();
                 }
                 return true;

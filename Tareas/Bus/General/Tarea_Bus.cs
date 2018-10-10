@@ -24,6 +24,18 @@ namespace Bus
                 throw;
             }
         }
+        public List<Tarea_Info> get_lis_anulados(string IdUsuarioSolicitante, DateTime FechaiInicio, DateTime FehcaFin)
+        {
+            try
+            {
+                return odata.get_lis_anulados(IdUsuarioSolicitante,FechaiInicio, FehcaFin);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         public List<Tarea_Info> get_lis(string IdUsuario, cl_enumeradores.eTipoTarea Tipo, DateTime FechaInicio, DateTime FechaFin)
         {
             try

@@ -104,6 +104,7 @@
                {
                    settings.Name = "AprobadoSolicitado";
                    settings.Text = "Aprobado solicitante";
+                   settings.ReadOnly = true;
                }).GetHtml()
                     @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
                 </div>
@@ -115,6 +116,8 @@
                {
                    settings.Name = "AprobadoEncargado";
                    settings.Text = "Aprobado encargado";
+                   settings.ReadOnly = true;
+
                }).GetHtml()
                     @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
                 </div>
@@ -126,6 +129,8 @@
                {
                    settings.Name = "TareaConcurrente";
                    settings.Text = "Tarea recurrente";
+                   settings.ReadOnly = true;
+
                    settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){mostrar_parametros()}";
 
                }).GetHtml()
@@ -228,6 +233,17 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="DescripcionTarea">Observación*</label>
+                    @Html.TextAreaFor(v => v.ObsevacionModificacion, new { @class = "form-control", @rows = 2 })
+                    @Html.ValidationMessageFor(m => m.ObsevacionModificacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="Tabs" role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
 
@@ -240,11 +256,13 @@
             <li hidden>
                 <a href="#tab_parametro" aria-controls="parametros" role="tab" data-toggle="tab" id="link_parametro">Parámetros</a>
             </li>
-
+            <li>
+                <a href="#tab_historico" aria-controls="parametros" role="tab" data-toggle="tab" id="link_historico">Histórico</a>
+            </li>
         </ul>
         <div class="tab-content" style="padding-top: 20px">
 
-            <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_adjunto">
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_adjunto">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="col-md-12">
@@ -323,6 +341,17 @@
                     </div>
                 </div>
             </div>
+            <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_historico">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.Action("GridViewPartial_tarea_det_estados", "TareaEstados", new { IdTarea = Model.IdTarea })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -337,9 +366,7 @@
     }
 }
 
-
 <script>
-
     mostrar_parametros();
     mostrar_detalle();
 
@@ -368,6 +395,8 @@
                 }
     };
 
+
+
     function refres_grid_adjunto() {
         GridViewPartial_tarea_det_adjunto.PerformCallback();
     };
@@ -377,16 +406,18 @@
         var IdUsuarioAsignad = $("#IdUsuarioAsignado").val();
         var IdUsuarioSolicitant = IdUsuarioSolicitante.GetValue();
         $("#link_adjunto").click();
-        if (IdUsuarioAsignad == IdUsuarioSolicitant) {
+        if (IdUsuarioAsignad == IdUsuarioSolicitant)
+        {
             $("#link_detalle").show();
             AprobadoEncargado.SetChecked(true);
         }
-        else {
+        else
+        {
             $("#link_detalle").hide();
             AprobadoEncargado.SetChecked(false);
         }
-
     };
+
     function mostrar_parametros() {
         if (TareaConcurrente.GetValue()) {
             $("#link_parametro").show();
