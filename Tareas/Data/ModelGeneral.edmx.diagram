@@ -22,7 +22,6 @@
         <AssociationConnector Association="ModelGeneral.FK_Parametro_Estado" />
         <AssociationConnector Association="ModelGeneral.FK_Parametro_Estado1" />
         <AssociationConnector Association="ModelGeneral.FK_Parametro_Estado2" />
-        <EntityTypeShape EntityType="ModelGeneral.VWGEN_001" Width="1.5" PointX="3.375" PointY="0.75" />
         <EntityTypeShape EntityType="ModelGeneral.Tarea" Width="1.5" PointX="5.625" PointY="16.25" />
         <EntityTypeShape EntityType="ModelGeneral.TareaEstado" Width="1.5" PointX="7.875" PointY="18.75" />
         <AssociationConnector Association="ModelGeneral.FK_Tarea_Estado" />
@@ -34,6 +33,7 @@
         <AssociationConnector Association="ModelGeneral.FK_TareaArchivoAdjunto_Tarea" />
         <AssociationConnector Association="ModelGeneral.FK_TareaEstado_Tarea" />
         <EntityTypeShape EntityType="ModelGeneral.vw_Tarea" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ModelGeneral.VWGEN_001" Width="1.5" PointX="3.375" PointY="0.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

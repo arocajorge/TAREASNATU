@@ -24,8 +24,8 @@ namespace Info.General
         public int EstadoActual { get; set; }
         public System.DateTime FechaInicioTarea { get; set; }
         public System.DateTime FechaFinTarea { get; set; }
-        public string Observacion { get; set; }
         public string Nombre { get; set; }
-        public string eSTADO { get; set; }
+        public string ESTADO { get; set; }
+        public string AsuntoTarea { get; set; }
     }
 }

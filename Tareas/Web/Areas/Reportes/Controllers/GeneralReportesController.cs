@@ -23,6 +23,15 @@ namespace Web.Areas.Reportes.Controllers
                 Nombre = "TODOS"
             });
             ViewBag.lst_usuario = lst_usuario;
+
+            Grupo_Bus bus_grupo = new Grupo_Bus();
+            var lst_grupo = bus_grupo.get_lis();
+            lst_grupo.Add(new Grupo_Info
+            {
+                IdGrupo = 0,
+                Descripcion = "TODOS"
+            });
+            ViewBag.lst_grupo = lst_grupo;
         }
         public ActionResult GEN_001()
         {
@@ -33,6 +42,7 @@ namespace Web.Areas.Reportes.Controllers
             cargar_combos();
             GEN_001_Rpt report = new GEN_001_Rpt();
             report.p_IdUsuario.Value = model.IdUsuario;
+            report.p_IdTarea.Value = model.IdTarea;
             report.p_fechaInicio.Value = model.fecha_ini;
             report.p_fechaFin.Value = model.fecha_fin;
             ViewBag.Report = report;
@@ -43,6 +53,7 @@ namespace Web.Areas.Reportes.Controllers
         {
             GEN_001_Rpt report = new GEN_001_Rpt();
             report.p_IdUsuario.Value = model.IdUsuario;
+            report.p_IdTarea.Value = model.IdTarea;
             report.p_fechaInicio.Value = model.fecha_ini;
             report.p_fechaFin.Value = model.fecha_fin;
             cargar_combos();
@@ -53,11 +64,13 @@ namespace Web.Areas.Reportes.Controllers
         {
             cl_filtros_Info model = new cl_filtros_Info
             {
-                IdUsuario = ""
+                IdUsuario = "",
+                IdGrupo = 0
             };
             cargar_combos();
             GEN_002_Rpt report = new GEN_002_Rpt();
-            report.p_IdUsuario.Value = model.IdUsuario;
+            report.p_IdUsuarioAsignado.Value = model.IdUsuario;
+            report.p_IdGrupo.Value = model.IdGrupo;
             report.p_fechaInicio.Value = model.fecha_ini;
             report.p_fechaFin.Value = model.fecha_fin;
             ViewBag.Report = report;
@@ -67,7 +80,8 @@ namespace Web.Areas.Reportes.Controllers
         public ActionResult GEN_002(cl_filtros_Info model)
         {
             GEN_002_Rpt report = new GEN_002_Rpt();
-            report.p_IdUsuario.Value = model.IdUsuario;
+            report.p_IdUsuarioAsignado.Value = model.IdUsuario;
+            report.p_IdGrupo.Value = model.IdGrupo;
             report.p_fechaInicio.Value = model.fecha_ini;
             report.p_fechaFin.Value = model.fecha_fin;
             cargar_combos();

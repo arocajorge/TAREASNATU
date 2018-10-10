@@ -9,40 +9,75 @@ namespace Data.General
 {
     public class GEN_002_Data
     {
-        public List<GEN_002_Info> get_list(string IdUsuario, DateTime fechaInicio, DateTime fechaFin)
+        public List<GEN_002_Info> get_list(string IdUsuarioAsignado, int IdGrupo,  DateTime fechaInicio, DateTime fechaFin)
         {
             try
             {
                 fechaFin = Convert.ToDateTime(fechaFin.ToShortDateString());
                 fechaInicio = Convert.ToDateTime(fechaInicio.ToShortDateString());
 
+                int IdGrupoIni = IdGrupo;
+                int IdGrupoFin = IdGrupo == 0 ? 9999 : IdGrupo;
                 List<GEN_002_Info> Lista;
                 using (EntityTareas Context = new EntityTareas())
                 {
-                    if (IdUsuario != "")
+                    if (IdUsuarioAsignado != "")
                         Lista = (from q in Context.SPGEN_002(fechaInicio, fechaFin)
-                             where q.IdUsuario == IdUsuario
+                             where q.IdUsuarioAsignado == IdUsuarioAsignado
+                             && q.IdGrupo >= q.IdGrupo && q.IdGrupo <= IdGrupoFin
                              select new GEN_002_Info
                              {
                                  Cumplidas = q.Cumplidas,
-                                 IdUsuario = q.IdUsuario,
                                  Incumplidas = q.Incumplidas,
-                                 Nombre = q.Nombre,
-                                 TotalTarea = q.TotalTarea,
-                                 EnProceso = q.EnProceso
-
+                                 IdUsuarioAsignado = q.IdUsuarioAsignado,
+                                 AprobadoEncargado = q.AprobadoEncargado,
+                                 AprobadoSolicitado = q.AprobadoSolicitado,
+                                 AsuntoTarea = q.AsuntoTarea,
+                                 DescripcionTarea = q.DescripcionTarea,
+                                 DiasIntervaloProximaTarea = q.DiasIntervaloProximaTarea,
+                                 Encargado =q.Encargado,
+                                 EstadoActual = q.EstadoActual,
+                                 FechaCierreEncargado = q.FechaCierreEncargado,
+                                 FechaAprobacion = q.FechaAprobacion,
+                                 FechaCulmina = q.FechaCulmina,
+                                 FechaFinConcurrencia = q.FechaFinConcurrencia,
+                                 FechaInicio = q.FechaInicio,
+                                 Grupo = q.Grupo,
+                                 IdEstadoPrioridad = q.IdEstadoPrioridad,
+                                 IdGrupo = q.IdGrupo,
+                                 IdTarea = q.IdTarea,
+                                 IdUsuarioSolicitante = q.IdUsuarioSolicitante,
+                                 EnProceso = q.EnProceso,
+                                 TareaConcurrente = q.TareaConcurrente
 
                              }).ToList();
                     else
                         Lista = (from q in Context.SPGEN_002(fechaInicio, fechaFin)
+                                 where q.IdGrupo >= q.IdGrupo && q.IdGrupo <= IdGrupoFin
                                  select new GEN_002_Info
                                  {
                                      Cumplidas = q.Cumplidas,
-                                     IdUsuario = q.IdUsuario,
                                      Incumplidas = q.Incumplidas,
-                                     Nombre = q.Nombre,
-                                     TotalTarea = q.TotalTarea,
-                                     EnProceso=q.EnProceso
+                                     IdUsuarioAsignado = q.IdUsuarioAsignado,
+                                     AprobadoEncargado = q.AprobadoEncargado,
+                                     AprobadoSolicitado = q.AprobadoSolicitado,
+                                     AsuntoTarea = q.AsuntoTarea,
+                                     DescripcionTarea = q.DescripcionTarea,
+                                     DiasIntervaloProximaTarea = q.DiasIntervaloProximaTarea,
+                                     Encargado = q.Encargado,
+                                     EstadoActual = q.EstadoActual,
+                                     FechaCierreEncargado = q.FechaCierreEncargado,
+                                     FechaAprobacion = q.FechaAprobacion,
+                                     FechaCulmina = q.FechaCulmina,
+                                     FechaFinConcurrencia = q.FechaFinConcurrencia,
+                                     FechaInicio = q.FechaInicio,
+                                     Grupo = q.Grupo,
+                                     IdEstadoPrioridad = q.IdEstadoPrioridad,
+                                     IdGrupo = q.IdGrupo,
+                                     IdTarea = q.IdTarea,
+                                     IdUsuarioSolicitante = q.IdUsuarioSolicitante,
+                                     EnProceso = q.EnProceso,
+                                     TareaConcurrente = q.TareaConcurrente
 
                                  }).ToList();
                 }

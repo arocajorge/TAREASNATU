@@ -11,11 +11,11 @@ namespace Bus.General
     public class GEN_001_Bus
     {
         GEN_001_Data odata = new GEN_001_Data();
-        public List<GEN_001_Info> get_list(string IdUsuario, DateTime fechaInicio, DateTime fechaFin)
+        public List<GEN_001_Info> get_list(string IdUsuario, decimal IdTarea, DateTime fechaInicio, DateTime fechaFin)
         {
             try
             {
-                return odata.get_list(IdUsuario, fechaInicio, fechaFin);
+                return odata.get_list(IdUsuario, IdTarea,  fechaInicio, fechaFin);
             }
             catch (Exception)
             {
