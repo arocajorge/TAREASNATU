@@ -164,8 +164,8 @@
           <Property Name="FechaModificacion" Type="datetime" />
           <Property Name="FechaAnulacion" Type="datetime" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_Tarea' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_TAREAS.dbo.vw_Tarea' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_Tarea">
           <Key>
             <PropertyRef Name="IdTarea" />
@@ -211,8 +211,8 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_Tarea' no tiene definida ni
           <Property Name="FechaCierreSolicitante" Type="datetime" />
           <Property Name="FechaCierreEncargado" Type="datetime" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="VWGEN_001">
           <Key>
             <PropertyRef Name="IdTarea" />
@@ -229,7 +229,7 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
             <PropertyRef Name="FechaInicioTarea" />
             <PropertyRef Name="FechaFinTarea" />
             <PropertyRef Name="Nombre" />
-            <PropertyRef Name="eSTADO" />
+            <PropertyRef Name="ESTADO" />
           </Key>
           <Property Name="IdTarea" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Secuancial" Type="int" Nullable="false" />
@@ -247,9 +247,9 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
           <Property Name="EstadoActual" Type="int" Nullable="false" />
           <Property Name="FechaInicioTarea" Type="date" Nullable="false" />
           <Property Name="FechaFinTarea" Type="date" Nullable="false" />
-          <Property Name="Observacion" Type="varchar(max)" />
           <Property Name="Nombre" Type="varchar" MaxLength="500" Nullable="false" />
-          <Property Name="eSTADO" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="ESTADO" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="AsuntoTarea" Type="varchar(max)" />
         </EntityType>
         <Association Name="FK_Estado_EstadoTipo">
           <End Role="EstadoTipo" Type="Self.EstadoTipo" Multiplicity="1" />
@@ -527,9 +527,9 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
     [VWGEN_001].[EstadoActual] AS [EstadoActual], 
     [VWGEN_001].[FechaInicioTarea] AS [FechaInicioTarea], 
     [VWGEN_001].[FechaFinTarea] AS [FechaFinTarea], 
-    [VWGEN_001].[Observacion] AS [Observacion], 
     [VWGEN_001].[Nombre] AS [Nombre], 
-    [VWGEN_001].[eSTADO] AS [eSTADO]
+    [VWGEN_001].[ESTADO] AS [ESTADO], 
+    [VWGEN_001].[AsuntoTarea] AS [AsuntoTarea]
     FROM [dbo].[VWGEN_001] AS [VWGEN_001]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_Estado_EstadoTipo" Association="Self.FK_Estado_EstadoTipo">
@@ -654,11 +654,6 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
             <End Role="Estado" EntitySet="Estado" />
             <End Role="Parametro" EntitySet="Parametro" />
           </AssociationSet>
-          <EntitySet Name="VWGEN_001" EntityType="ModelGeneral.VWGEN_001" />
-          <FunctionImport Name="SPGEN_002" ReturnType="Collection(ModelGeneral.SPGEN_002_Result)">
-            <Parameter Name="FechaInicio" Mode="In" Type="DateTime" />
-            <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
-          </FunctionImport>
           <EntitySet Name="Tarea" EntityType="ModelGeneral.Tarea" />
           <EntitySet Name="TareaEstado" EntityType="ModelGeneral.TareaEstado" />
           <AssociationSet Name="FK_Tarea_Estado" Association="ModelGeneral.FK_Tarea_Estado">
@@ -695,11 +690,16 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
           </AssociationSet>
           <EntitySet Name="vw_Tarea" EntityType="ModelGeneral.vw_Tarea" />
           <FunctionImport Name="sp_crear_tarea_concurrente">
-            <Parameter Name="IdTarea" Mode="In" Type="Decimal" />
+          <Parameter Name="IdTarea" Mode="In" Type="Decimal" />
           </FunctionImport>
           <FunctionImport Name="sp_tareas_culminadas_sin_cerrar" ReturnType="Collection(ModelGeneral.sp_tareas_culminadas_sin_cerrar_Result)" />
           <FunctionImport Name="sp_Tareas_X_Usuarios" ReturnType="Collection(ModelGeneral.sp_Tareas_X_Usuarios_Result)">
-            <Parameter Name="IdUsuario" Mode="In" Type="String" />
+          <Parameter Name="IdUsuario" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="VWGEN_001" EntityType="ModelGeneral.VWGEN_001" />
+          <FunctionImport Name="SPGEN_002" ReturnType="Collection(ModelGeneral.SPGEN_002_Result)">
+            <Parameter Name="FechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
           </FunctionImport>
           </EntityContainer>
         <EntityType Name="EstadoTipo">
@@ -958,52 +958,6 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="VWGEN_001">
-          <Key>
-            <PropertyRef Name="IdTarea" />
-            <PropertyRef Name="Secuancial" />
-            <PropertyRef Name="IdGrupo" />
-            <PropertyRef Name="IdUsuarioSolicitante" />
-            <PropertyRef Name="IdUsuarioAsignado" />
-            <PropertyRef Name="IdUsuario" />
-            <PropertyRef Name="FechaInicioSubtarea" />
-            <PropertyRef Name="FechaFinSubtarea" />
-            <PropertyRef Name="NumHoras" />
-            <PropertyRef Name="NombreGrupo" />
-            <PropertyRef Name="EstadoActual" />
-            <PropertyRef Name="FechaInicioTarea" />
-            <PropertyRef Name="FechaFinTarea" />
-            <PropertyRef Name="Nombre" />
-            <PropertyRef Name="eSTADO" />
-          </Key>
-          <Property Name="IdTarea" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="Secuancial" Type="Int32" Nullable="false" />
-          <Property Name="IdGrupo" Type="Int32" Nullable="false" />
-          <Property Name="IdUsuarioSolicitante" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdUsuarioAsignado" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="FechaInicioSubtarea" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="FechaFinSubtarea" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="NumHoras" Type="Double" Nullable="false" />
-          <Property Name="NumHorasReales" Type="Double" />
-          <Property Name="FechaTerminoTarea" Type="DateTime" Precision="3" />
-          <Property Name="NombreGrupo" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="EstadoActual" Type="Int32" Nullable="false" />
-          <Property Name="FechaInicioTarea" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="FechaFinTarea" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="eSTADO" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <ComplexType Name="SPGEN_002_Result">
-          <Property Type="String" Name="IdUsuario" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="500" />
-          <Property Type="Int32" Name="TotalTarea" Nullable="true" />
-          <Property Type="Int32" Name="Cumplidas" Nullable="true" />
-          <Property Type="Int32" Name="Incumplidas" Nullable="true" />
-          <Property Type="Int32" Name="EnProceso" Nullable="true" />
-        </ComplexType>
         <EntityType Name="Tarea">
           <Key>
             <PropertyRef Name="IdTarea" />
@@ -1235,6 +1189,68 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
           <Property Type="Boolean" Name="Estado" Nullable="false" />
           <Property Type="String" Name="IdUsuario" Nullable="false" MaxLength="50" />
         </ComplexType>
+        <EntityType Name="VWGEN_001">
+          <Key>
+            <PropertyRef Name="IdTarea" />
+            <PropertyRef Name="Secuancial" />
+            <PropertyRef Name="IdGrupo" />
+            <PropertyRef Name="IdUsuarioSolicitante" />
+            <PropertyRef Name="IdUsuarioAsignado" />
+            <PropertyRef Name="IdUsuario" />
+            <PropertyRef Name="FechaInicioSubtarea" />
+            <PropertyRef Name="FechaFinSubtarea" />
+            <PropertyRef Name="NumHoras" />
+            <PropertyRef Name="NombreGrupo" />
+            <PropertyRef Name="EstadoActual" />
+            <PropertyRef Name="FechaInicioTarea" />
+            <PropertyRef Name="FechaFinTarea" />
+            <PropertyRef Name="Nombre" />
+            <PropertyRef Name="ESTADO" />
+          </Key>
+          <Property Name="IdTarea" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Secuancial" Type="Int32" Nullable="false" />
+          <Property Name="IdGrupo" Type="Int32" Nullable="false" />
+          <Property Name="IdUsuarioSolicitante" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuarioAsignado" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FechaInicioSubtarea" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FechaFinSubtarea" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="NumHoras" Type="Double" Nullable="false" />
+          <Property Name="NumHorasReales" Type="Double" />
+          <Property Name="FechaTerminoTarea" Type="DateTime" Precision="3" />
+          <Property Name="NombreGrupo" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="EstadoActual" Type="Int32" Nullable="false" />
+          <Property Name="FechaInicioTarea" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FechaFinTarea" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ESTADO" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="AsuntoTarea" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <ComplexType Name="SPGEN_002_Result">
+          <Property Type="Decimal" Name="IdTarea" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="String" Name="IdUsuarioSolicitante" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="IdGrupo" Nullable="false" />
+          <Property Type="String" Name="IdUsuarioAsignado" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="EstadoActual" Nullable="false" />
+          <Property Type="DateTime" Name="FechaInicio" Nullable="false" />
+          <Property Type="DateTime" Name="FechaCulmina" Nullable="false" />
+          <Property Type="String" Name="AsuntoTarea" Nullable="true" />
+          <Property Type="String" Name="DescripcionTarea" Nullable="true" />
+          <Property Type="Int32" Name="IdEstadoPrioridad" Nullable="false" />
+          <Property Type="Boolean" Name="TareaConcurrente" Nullable="false" />
+          <Property Type="Boolean" Name="AprobadoSolicitado" Nullable="false" />
+          <Property Type="Boolean" Name="AprobadoEncargado" Nullable="false" />
+          <Property Type="DateTime" Name="FechaAprobacion" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="FechaFinConcurrencia" Nullable="true" />
+          <Property Type="Int32" Name="DiasIntervaloProximaTarea" Nullable="true" />
+          <Property Type="DateTime" Name="FechaCierreEncargado" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Encargado" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Grupo" Nullable="false" MaxLength="1000" />
+          <Property Type="Int32" Name="Cumplidas" Nullable="true" />
+          <Property Type="Int32" Name="Incumplidas" Nullable="true" />
+          <Property Type="Int32" Name="EnProceso" Nullable="true" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1373,43 +1389,6 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="VWGEN_001">
-            <EntityTypeMapping TypeName="ModelGeneral.VWGEN_001">
-              <MappingFragment StoreEntitySet="VWGEN_001">
-                <ScalarProperty Name="eSTADO" ColumnName="eSTADO" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
-                <ScalarProperty Name="FechaFinTarea" ColumnName="FechaFinTarea" />
-                <ScalarProperty Name="FechaInicioTarea" ColumnName="FechaInicioTarea" />
-                <ScalarProperty Name="EstadoActual" ColumnName="EstadoActual" />
-                <ScalarProperty Name="NombreGrupo" ColumnName="NombreGrupo" />
-                <ScalarProperty Name="FechaTerminoTarea" ColumnName="FechaTerminoTarea" />
-                <ScalarProperty Name="NumHorasReales" ColumnName="NumHorasReales" />
-                <ScalarProperty Name="NumHoras" ColumnName="NumHoras" />
-                <ScalarProperty Name="FechaFinSubtarea" ColumnName="FechaFinSubtarea" />
-                <ScalarProperty Name="FechaInicioSubtarea" ColumnName="FechaInicioSubtarea" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="IdUsuarioAsignado" ColumnName="IdUsuarioAsignado" />
-                <ScalarProperty Name="IdUsuarioSolicitante" ColumnName="IdUsuarioSolicitante" />
-                <ScalarProperty Name="IdGrupo" ColumnName="IdGrupo" />
-                <ScalarProperty Name="Secuancial" ColumnName="Secuancial" />
-                <ScalarProperty Name="IdTarea" ColumnName="IdTarea" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="SPGEN_002" FunctionName="ModelGeneral.Store.SPGEN_002">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ModelGeneral.SPGEN_002_Result">
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="TotalTarea" ColumnName="TotalTarea" />
-                <ScalarProperty Name="Cumplidas" ColumnName="Cumplidas" />
-                <ScalarProperty Name="Incumplidas" ColumnName="Incumplidas" />
-                <ScalarProperty Name="EnProceso" ColumnName="EnProceso" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <EntitySetMapping Name="Tarea">
             <EntityTypeMapping TypeName="ModelGeneral.Tarea">
               <MappingFragment StoreEntitySet="Tarea">
@@ -1528,6 +1507,59 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
                 <ScalarProperty Name="AprobadoEncargado" ColumnName="AprobadoEncargado" />
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="VWGEN_001">
+            <EntityTypeMapping TypeName="ModelGeneral.VWGEN_001">
+              <MappingFragment StoreEntitySet="VWGEN_001">
+                <ScalarProperty Name="AsuntoTarea" ColumnName="AsuntoTarea" />
+                <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="FechaFinTarea" ColumnName="FechaFinTarea" />
+                <ScalarProperty Name="FechaInicioTarea" ColumnName="FechaInicioTarea" />
+                <ScalarProperty Name="EstadoActual" ColumnName="EstadoActual" />
+                <ScalarProperty Name="NombreGrupo" ColumnName="NombreGrupo" />
+                <ScalarProperty Name="FechaTerminoTarea" ColumnName="FechaTerminoTarea" />
+                <ScalarProperty Name="NumHorasReales" ColumnName="NumHorasReales" />
+                <ScalarProperty Name="NumHoras" ColumnName="NumHoras" />
+                <ScalarProperty Name="FechaFinSubtarea" ColumnName="FechaFinSubtarea" />
+                <ScalarProperty Name="FechaInicioSubtarea" ColumnName="FechaInicioSubtarea" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdUsuarioAsignado" ColumnName="IdUsuarioAsignado" />
+                <ScalarProperty Name="IdUsuarioSolicitante" ColumnName="IdUsuarioSolicitante" />
+                <ScalarProperty Name="IdGrupo" ColumnName="IdGrupo" />
+                <ScalarProperty Name="Secuancial" ColumnName="Secuancial" />
+                <ScalarProperty Name="IdTarea" ColumnName="IdTarea" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SPGEN_002" FunctionName="ModelGeneral.Store.SPGEN_002">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModelGeneral.SPGEN_002_Result">
+                <ScalarProperty Name="IdTarea" ColumnName="IdTarea" />
+                <ScalarProperty Name="IdUsuarioSolicitante" ColumnName="IdUsuarioSolicitante" />
+                <ScalarProperty Name="IdGrupo" ColumnName="IdGrupo" />
+                <ScalarProperty Name="IdUsuarioAsignado" ColumnName="IdUsuarioAsignado" />
+                <ScalarProperty Name="EstadoActual" ColumnName="EstadoActual" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="FechaCulmina" ColumnName="FechaCulmina" />
+                <ScalarProperty Name="AsuntoTarea" ColumnName="AsuntoTarea" />
+                <ScalarProperty Name="DescripcionTarea" ColumnName="DescripcionTarea" />
+                <ScalarProperty Name="IdEstadoPrioridad" ColumnName="IdEstadoPrioridad" />
+                <ScalarProperty Name="TareaConcurrente" ColumnName="TareaConcurrente" />
+                <ScalarProperty Name="AprobadoSolicitado" ColumnName="AprobadoSolicitado" />
+                <ScalarProperty Name="AprobadoEncargado" ColumnName="AprobadoEncargado" />
+                <ScalarProperty Name="FechaAprobacion" ColumnName="FechaAprobacion" />
+                <ScalarProperty Name="FechaFinConcurrencia" ColumnName="FechaFinConcurrencia" />
+                <ScalarProperty Name="DiasIntervaloProximaTarea" ColumnName="DiasIntervaloProximaTarea" />
+                <ScalarProperty Name="FechaCierreEncargado" ColumnName="FechaCierreEncargado" />
+                <ScalarProperty Name="Encargado" ColumnName="Encargado" />
+                <ScalarProperty Name="Grupo" ColumnName="Grupo" />
+                <ScalarProperty Name="Cumplidas" ColumnName="Cumplidas" />
+                <ScalarProperty Name="Incumplidas" ColumnName="Incumplidas" />
+                <ScalarProperty Name="EnProceso" ColumnName="EnProceso" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

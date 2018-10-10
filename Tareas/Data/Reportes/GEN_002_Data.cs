@@ -9,7 +9,7 @@ namespace Data.General
 {
     public class GEN_002_Data
     {
-        public List<GEN_002_Info> get_list(string IdUsuario, DateTime fechaInicio, DateTime fechaFin)
+        public List<GEN_002_Info> get_list(string IdUsuario, int IdGrupo,  DateTime fechaInicio, DateTime fechaFin)
         {
             try
             {
@@ -21,28 +21,61 @@ namespace Data.General
                 {
                     if (IdUsuario != "")
                         Lista = (from q in Context.SPGEN_002(fechaInicio, fechaFin)
-                             where q.IdUsuario == IdUsuario
+                             where q.IdUsuarioAsignado == IdUsuario
+                             && q.IdGrupo == IdGrupo
                              select new GEN_002_Info
                              {
                                  Cumplidas = q.Cumplidas,
-                                 IdUsuario = q.IdUsuario,
                                  Incumplidas = q.Incumplidas,
-                                 Nombre = q.Nombre,
-                                 TotalTarea = q.TotalTarea,
-                                 EnProceso = q.EnProceso
-
+                                 IdUsuarioAsignado = q.IdUsuarioAsignado,
+                                 AprobadoEncargado = q.AprobadoEncargado,
+                                 AprobadoSolicitado = q.AprobadoSolicitado,
+                                 AsuntoTarea = q.AsuntoTarea,
+                                 DescripcionTarea = q.DescripcionTarea,
+                                 DiasIntervaloProximaTarea = q.DiasIntervaloProximaTarea,
+                                 Encargado =q.Encargado,
+                                 EstadoActual = q.EstadoActual,
+                                 FechaCierreEncargado = q.FechaCierreEncargado,
+                                 FechaAprobacion = q.FechaAprobacion,
+                                 FechaCulmina = q.FechaCulmina,
+                                 FechaFinConcurrencia = q.FechaFinConcurrencia,
+                                 FechaInicio = q.FechaInicio,
+                                 Grupo = q.Grupo,
+                                 IdEstadoPrioridad = q.IdEstadoPrioridad,
+                                 IdGrupo = q.IdGrupo,
+                                 IdTarea = q.IdTarea,
+                                 IdUsuarioSolicitante = q.IdUsuarioSolicitante,
+                                 EnProceso = q.EnProceso,
+                                 TareaConcurrente = q.TareaConcurrente
 
                              }).ToList();
                     else
                         Lista = (from q in Context.SPGEN_002(fechaInicio, fechaFin)
+                                 where q.IdGrupo == IdGrupo
                                  select new GEN_002_Info
                                  {
                                      Cumplidas = q.Cumplidas,
-                                     IdUsuario = q.IdUsuario,
                                      Incumplidas = q.Incumplidas,
-                                     Nombre = q.Nombre,
-                                     TotalTarea = q.TotalTarea,
-                                     EnProceso=q.EnProceso
+                                     IdUsuarioAsignado = q.IdUsuarioAsignado,
+                                     AprobadoEncargado = q.AprobadoEncargado,
+                                     AprobadoSolicitado = q.AprobadoSolicitado,
+                                     AsuntoTarea = q.AsuntoTarea,
+                                     DescripcionTarea = q.DescripcionTarea,
+                                     DiasIntervaloProximaTarea = q.DiasIntervaloProximaTarea,
+                                     Encargado = q.Encargado,
+                                     EstadoActual = q.EstadoActual,
+                                     FechaCierreEncargado = q.FechaCierreEncargado,
+                                     FechaAprobacion = q.FechaAprobacion,
+                                     FechaCulmina = q.FechaCulmina,
+                                     FechaFinConcurrencia = q.FechaFinConcurrencia,
+                                     FechaInicio = q.FechaInicio,
+                                     Grupo = q.Grupo,
+                                     IdEstadoPrioridad = q.IdEstadoPrioridad,
+                                     IdGrupo = q.IdGrupo,
+                                     IdTarea = q.IdTarea,
+                                     IdUsuarioSolicitante = q.IdUsuarioSolicitante,
+                                     EnProceso = q.EnProceso,
+                                     TareaConcurrente = q.TareaConcurrente
 
                                  }).ToList();
                 }

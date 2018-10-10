@@ -9,7 +9,7 @@ namespace Data.General
 {
   public class GEN_001_Data
     {
-        public List<GEN_001_Info> get_list(string IdUsuario, DateTime fechaInicio, DateTime fechaFin)
+        public List<GEN_001_Info> get_list(string IdUsuario, decimal IdTarea,  DateTime fechaInicio, DateTime fechaFin)
         {
             try
             {
@@ -22,12 +22,13 @@ namespace Data.General
                     if(IdUsuario!="")
                     Lista = (from q in Context.VWGEN_001
                              where q.IdUsuario == IdUsuario
+                             && q.IdTarea == IdTarea
                              && q.FechaInicioSubtarea >= fechaInicio
                              && q.FechaFinSubtarea <= fechaFin
                              select new GEN_001_Info
                              {
                                  Descripcion = q.Descripcion,
-                                 eSTADO = q.eSTADO,
+                                 ESTADO = q.ESTADO,
                                  EstadoActual = q.EstadoActual,
                                  FechaFinSubtarea = q.FechaFinSubtarea,
                                  FechaFinTarea = q.FechaFinTarea,
@@ -43,19 +44,19 @@ namespace Data.General
                                  NombreGrupo = q.NombreGrupo,
                                  NumHoras = q.NumHoras,
                                  NumHorasReales = q.NumHorasReales,
-                                 Observacion = q.Observacion,
-                                 Secuancial = q.Secuancial
+                                 Secuancial = q.Secuancial,
+                                 AsuntoTarea = q.AsuntoTarea
 
                              }).ToList();
                     else
                         Lista = (from q in Context.VWGEN_001
-                                 where 
-                                  q.FechaInicioSubtarea >= fechaInicio
+                                 where q.IdTarea == IdTarea
+                                 && q.FechaInicioSubtarea >= fechaInicio
                                  && q.FechaFinSubtarea <= fechaFin
                                  select new GEN_001_Info
                                  {
                                      Descripcion = q.Descripcion,
-                                     eSTADO = q.eSTADO,
+                                     ESTADO = q.ESTADO,
                                      EstadoActual = q.EstadoActual,
                                      FechaFinSubtarea = q.FechaFinSubtarea,
                                      FechaFinTarea = q.FechaFinTarea,
@@ -71,8 +72,8 @@ namespace Data.General
                                      NombreGrupo = q.NombreGrupo,
                                      NumHoras = q.NumHoras,
                                      NumHorasReales = q.NumHorasReales,
-                                     Observacion = q.Observacion,
-                                     Secuancial = q.Secuancial
+                                     Secuancial = q.Secuancial,
+                                     AsuntoTarea =q.AsuntoTarea
 
                                  }).ToList();
                 }

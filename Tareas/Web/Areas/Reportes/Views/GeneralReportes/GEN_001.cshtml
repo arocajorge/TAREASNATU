@@ -35,6 +35,13 @@
                             @Html.ValidationMessageFor(q => q.IdUsuario, "", new { @class = "text-danger" })
                         </div>
                     </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="IdTarea">Tarea</label>
+                            @Html.TextBoxFor(q => q.IdTarea, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(q => q.IdTarea, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
                     <div class="col-md-2">
                         <div class="form-group">
                             <label for="">Fecha inicio*</label>
