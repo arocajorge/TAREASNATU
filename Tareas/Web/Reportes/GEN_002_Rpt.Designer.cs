@@ -48,7 +48,7 @@
             this.TopMargin = new DevExpress.XtraReports.UI.TopMarginBand();
             this.BottomMargin = new DevExpress.XtraReports.UI.BottomMarginBand();
             this.objectDataSource1 = new DevExpress.DataAccess.ObjectBinding.ObjectDataSource(this.components);
-            this.p_IdUsuario = new DevExpress.XtraReports.Parameters.Parameter();
+            this.p_IdUsuarioAsignado = new DevExpress.XtraReports.Parameters.Parameter();
             this.p_fechaInicio = new DevExpress.XtraReports.Parameters.Parameter();
             this.p_fechaFin = new DevExpress.XtraReports.Parameters.Parameter();
             this.ReportHeader = new DevExpress.XtraReports.UI.ReportHeaderBand();
@@ -93,6 +93,10 @@
             this.xrTableCell22 = new DevExpress.XtraReports.UI.XRTableCell();
             this.formattingRule1 = new DevExpress.XtraReports.UI.FormattingRule();
             this.p_IdGrupo = new DevExpress.XtraReports.Parameters.Parameter();
+            this.Porcentaje_enproceso = new DevExpress.XtraReports.UI.CalculatedField();
+            this.porcentaje_cumplida = new DevExpress.XtraReports.UI.CalculatedField();
+            this.porcentaje_incumplida = new DevExpress.XtraReports.UI.CalculatedField();
+            this.TotalTarea = new DevExpress.XtraReports.UI.CalculatedField();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).BeginInit();
@@ -160,36 +164,45 @@
             this.xrTableCell15.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[EnProceso]")});
             this.xrTableCell15.Name = "xrTableCell15";
-            this.xrTableCell15.Weight = 0.539992945890747D;
+            this.xrTableCell15.Weight = 0.51157226441792858D;
             // 
             // xrTableCell31
             // 
+            this.xrTableCell31.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Porcentaje_enproceso]")});
             this.xrTableCell31.Name = "xrTableCell31";
-            this.xrTableCell31.Weight = 0.25578612871451445D;
+            this.xrTableCell31.TextFormatString = "{0:0.00%}";
+            this.xrTableCell31.Weight = 0.28420681018733285D;
             // 
             // xrTableCell16
             // 
             this.xrTableCell16.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Cumplidas]")});
             this.xrTableCell16.Name = "xrTableCell16";
-            this.xrTableCell16.Weight = 0.53999294344269833D;
+            this.xrTableCell16.Weight = 0.51157226196987993D;
             // 
             // xrTableCell32
             // 
+            this.xrTableCell32.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[porcentaje_cumplida]")});
             this.xrTableCell32.Name = "xrTableCell32";
-            this.xrTableCell32.Weight = 0.25578615089828616D;
+            this.xrTableCell32.TextFormatString = "{0:0.00%}";
+            this.xrTableCell32.Weight = 0.28420683237110456D;
             // 
             // xrTableCell25
             // 
             this.xrTableCell25.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Incumplidas]")});
             this.xrTableCell25.Name = "xrTableCell25";
-            this.xrTableCell25.Weight = 0.53999296562647026D;
+            this.xrTableCell25.Weight = 0.51157228415365186D;
             // 
             // xrTableCell33
             // 
+            this.xrTableCell33.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[porcentaje_incumplida]")});
             this.xrTableCell33.Name = "xrTableCell33";
-            this.xrTableCell33.Weight = 0.25578612921502708D;
+            this.xrTableCell33.TextFormatString = "{0:0.00%}";
+            this.xrTableCell33.Weight = 0.28420681068784548D;
             // 
             // xrTableCell17
             // 
@@ -217,10 +230,10 @@
             this.objectDataSource1.DataSource = typeof(Info.General.GEN_002_Info);
             this.objectDataSource1.Name = "objectDataSource1";
             // 
-            // p_IdUsuario
+            // p_IdUsuarioAsignado
             // 
-            this.p_IdUsuario.Name = "p_IdUsuario";
-            this.p_IdUsuario.Visible = false;
+            this.p_IdUsuarioAsignado.Name = "p_IdUsuarioAsignado";
+            this.p_IdUsuarioAsignado.Visible = false;
             // 
             // p_fechaInicio
             // 
@@ -378,7 +391,7 @@
             // xrTableCell30
             // 
             this.xrTableCell30.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "Iif([Parameters].[p_IdUsuario]=\'\',\'TODOS\' ,[Encargado] )")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "Iif([Parameters].[p_IdUsuarioAsignado]=\'\',\'TODOS\' ,[Encargado] )")});
             this.xrTableCell30.Name = "xrTableCell30";
             this.xrTableCell30.Weight = 3.46737683089214D;
             // 
@@ -436,37 +449,37 @@
             // 
             this.xrTableCell11.Name = "xrTableCell11";
             this.xrTableCell11.Text = "En proceso";
-            this.xrTableCell11.Weight = 0.539992945890747D;
+            this.xrTableCell11.Weight = 0.51157226441792858D;
             // 
             // xrTableCell27
             // 
             this.xrTableCell27.Name = "xrTableCell27";
             this.xrTableCell27.Text = "%";
-            this.xrTableCell27.Weight = 0.2557861339852664D;
+            this.xrTableCell27.Weight = 0.28420681545808479D;
             // 
             // xrTableCell12
             // 
             this.xrTableCell12.Name = "xrTableCell12";
             this.xrTableCell12.Text = "Cumplidas";
-            this.xrTableCell12.Weight = 0.53999294871345027D;
+            this.xrTableCell12.Weight = 0.51157226724063187D;
             // 
             // xrTableCell28
             // 
             this.xrTableCell28.Name = "xrTableCell28";
             this.xrTableCell28.Text = "%";
-            this.xrTableCell28.Weight = 0.255786137421281D;
+            this.xrTableCell28.Weight = 0.28420681889409938D;
             // 
             // xrTableCell24
             // 
             this.xrTableCell24.Name = "xrTableCell24";
             this.xrTableCell24.Text = "Incumplidas";
-            this.xrTableCell24.Weight = 0.539992952149465D;
+            this.xrTableCell24.Weight = 0.51157227067664657D;
             // 
             // xrTableCell29
             // 
             this.xrTableCell29.Name = "xrTableCell29";
             this.xrTableCell29.Text = "%";
-            this.xrTableCell29.Weight = 0.255786137421281D;
+            this.xrTableCell29.Weight = 0.28420681889409938D;
             // 
             // xrTableCell13
             // 
@@ -532,12 +545,12 @@
             this.xrTableCell20.StylePriority.UseBorders = false;
             xrSummary1.Running = DevExpress.XtraReports.UI.SummaryRunning.Report;
             this.xrTableCell20.Summary = xrSummary1;
-            this.xrTableCell20.Weight = 0.53999308161792525D;
+            this.xrTableCell20.Weight = 0.511572565706377D;
             // 
             // xrTableCell34
             // 
             this.xrTableCell34.Name = "xrTableCell34";
-            this.xrTableCell34.Weight = 0.25578621195236834D;
+            this.xrTableCell34.Weight = 0.28420672786391654D;
             // 
             // xrTableCell21
             // 
@@ -548,12 +561,12 @@
             this.xrTableCell21.StylePriority.UseBorders = false;
             xrSummary2.Running = DevExpress.XtraReports.UI.SummaryRunning.Report;
             this.xrTableCell21.Summary = xrSummary2;
-            this.xrTableCell21.Weight = 0.53999310572906734D;
+            this.xrTableCell21.Weight = 0.51157241635139739D;
             // 
             // xrTableCell35
             // 
             this.xrTableCell35.Name = "xrTableCell35";
-            this.xrTableCell35.Weight = 0.25578619428403571D;
+            this.xrTableCell35.Weight = 0.2842068836617056D;
             // 
             // xrTableCell26
             // 
@@ -564,12 +577,12 @@
             this.xrTableCell26.StylePriority.UseBorders = false;
             xrSummary3.Running = DevExpress.XtraReports.UI.SummaryRunning.Report;
             this.xrTableCell26.Summary = xrSummary3;
-            this.xrTableCell26.Weight = 0.53999308806073465D;
+            this.xrTableCell26.Weight = 0.5115723986830647D;
             // 
             // xrTableCell36
             // 
             this.xrTableCell36.Name = "xrTableCell36";
-            this.xrTableCell36.Weight = 0.25578619368356037D;
+            this.xrTableCell36.Weight = 0.28420688306123026D;
             // 
             // xrTableCell22
             // 
@@ -589,6 +602,26 @@
             this.p_IdGrupo.Name = "p_IdGrupo";
             this.p_IdGrupo.Visible = false;
             // 
+            // Porcentaje_enproceso
+            // 
+            this.Porcentaje_enproceso.Expression = "[EnProceso]/([TotalTarea])";
+            this.Porcentaje_enproceso.Name = "Porcentaje_enproceso";
+            // 
+            // porcentaje_cumplida
+            // 
+            this.porcentaje_cumplida.Expression = "[Cumplidas]/([TotalTarea])";
+            this.porcentaje_cumplida.Name = "porcentaje_cumplida";
+            // 
+            // porcentaje_incumplida
+            // 
+            this.porcentaje_incumplida.Expression = "[Incumplidas]/([TotalTarea])";
+            this.porcentaje_incumplida.Name = "porcentaje_incumplida";
+            // 
+            // TotalTarea
+            // 
+            this.TotalTarea.Expression = "[Cumplidas]+[Incumplidas]+[EnProceso]";
+            this.TotalTarea.Name = "TotalTarea";
+            // 
             // GEN_002_Rpt
             // 
             this.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
@@ -598,6 +631,11 @@
             this.ReportHeader,
             this.PageHeader,
             this.ReportFooter});
+            this.CalculatedFields.AddRange(new DevExpress.XtraReports.UI.CalculatedField[] {
+            this.Porcentaje_enproceso,
+            this.porcentaje_cumplida,
+            this.porcentaje_incumplida,
+            this.TotalTarea});
             this.ComponentStorage.AddRange(new System.ComponentModel.IComponent[] {
             this.objectDataSource1});
             this.DataSource = this.objectDataSource1;
@@ -607,7 +645,7 @@
             this.PageWidth = 827;
             this.PaperKind = System.Drawing.Printing.PaperKind.A4;
             this.Parameters.AddRange(new DevExpress.XtraReports.Parameters.Parameter[] {
-            this.p_IdUsuario,
+            this.p_IdUsuarioAsignado,
             this.p_fechaInicio,
             this.p_fechaFin,
             this.p_IdGrupo});
@@ -629,7 +667,7 @@
         private DevExpress.XtraReports.UI.TopMarginBand TopMargin;
         private DevExpress.XtraReports.UI.BottomMarginBand BottomMargin;
         private DevExpress.DataAccess.ObjectBinding.ObjectDataSource objectDataSource1;
-        public DevExpress.XtraReports.Parameters.Parameter p_IdUsuario;
+        public DevExpress.XtraReports.Parameters.Parameter p_IdUsuarioAsignado;
         public DevExpress.XtraReports.Parameters.Parameter p_fechaInicio;
         public DevExpress.XtraReports.Parameters.Parameter p_fechaFin;
         private DevExpress.XtraReports.UI.ReportHeaderBand ReportHeader;
@@ -685,5 +723,9 @@
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell36;
         private DevExpress.XtraReports.UI.FormattingRule formattingRule1;
         public DevExpress.XtraReports.Parameters.Parameter p_IdGrupo;
+        private DevExpress.XtraReports.UI.CalculatedField Porcentaje_enproceso;
+        private DevExpress.XtraReports.UI.CalculatedField porcentaje_cumplida;
+        private DevExpress.XtraReports.UI.CalculatedField porcentaje_incumplida;
+        private DevExpress.XtraReports.UI.CalculatedField TotalTarea;
     }
 }

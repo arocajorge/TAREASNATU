@@ -15,6 +15,8 @@ namespace Data.General
             {
                 fechaFin = Convert.ToDateTime(fechaFin.ToShortDateString());
                 fechaInicio = Convert.ToDateTime(fechaInicio.ToShortDateString());
+                decimal IdTareaIni = IdTarea;
+                decimal IdTareaFin = IdTarea == 0 ? 9999 : IdTarea;
 
                 List<GEN_001_Info> Lista;
                 using (EntityTareas Context = new EntityTareas())
@@ -22,7 +24,7 @@ namespace Data.General
                     if(IdUsuario!="")
                     Lista = (from q in Context.VWGEN_001
                              where q.IdUsuario == IdUsuario
-                             && q.IdTarea == IdTarea
+                             && q.IdTarea >= IdTareaIni && q.IdTarea <= IdTareaFin
                              && q.FechaInicioSubtarea >= fechaInicio
                              && q.FechaFinSubtarea <= fechaFin
                              select new GEN_001_Info
@@ -50,7 +52,7 @@ namespace Data.General
                              }).ToList();
                     else
                         Lista = (from q in Context.VWGEN_001
-                                 where q.IdTarea == IdTarea
+                                 where  q.IdTarea >= IdTareaIni && q.IdTarea <= IdTareaFin
                                  && q.FechaInicioSubtarea >= fechaInicio
                                  && q.FechaFinSubtarea <= fechaFin
                                  select new GEN_001_Info
