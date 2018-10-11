@@ -177,6 +177,35 @@ namespace Data
         }
 
 
+        public Grupo_Info get_info_grup_usuario(string IdUsuario)
+        {
+            try
+            {
+                Grupo_Info info = new Grupo_Info();
+                using (EntityTareas Context = new EntityTareas())
+                {
+                    info = (from grupo in Context.Grupo
+                            join usuario in Context.Usuario
+                            on grupo.IdUsuario equals usuario.IdUsuario
+                            where grupo.IdUsuario == IdUsuario
+                            select new Grupo_Info
+                            {
+                                IdUsuario = grupo.IdUsuario,
+                                IdGrupo = grupo.IdGrupo,
+                                Descripcion = grupo.Descripcion,
+                                Estado = grupo.Estado,
+                                nomb_jef_grupo = usuario.Nombre
+
+                            }).FirstOrDefault();
+                }
+                return info;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         public Grupo_Info get_info_grup_usuario(int IdGrupo)
         {
             try

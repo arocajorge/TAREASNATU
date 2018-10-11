@@ -271,7 +271,7 @@ namespace Data
                         IdUsuarioSolicitante = info.IdUsuarioSolicitante,
                         IdGrupo = info.IdGrupo,
                         IdUsuarioAsignado = info.IdUsuarioAsignado,
-                        EstadoActual = info.EstadoActual = 1,// ESTADO INICIADA,
+                        EstadoActual = info.EstadoActual,// ESTADO INICIADA,
                         FechaInicio = info.FechaInicio,
                         FechaCulmina = info.FechaCulmina,
                         AsuntoTarea = info.AsuntoTarea,
@@ -349,7 +349,8 @@ namespace Data
                
                 try
                 {
-                    EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.NUEVA.ToString()+" "+cl_enumeradores.eAsuntoCorreo.TAREA.ToString());
+                    info.Saludo = "Le encomiendo la siguiente tarea";
+                    EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.NUEVA.ToString()+" "+cl_enumeradores.eAsuntoCorreo.TAREA.ToString(), cl_enumeradores.eCorreo.ENCARGADO);
                 }
                 catch (Exception)
                 {
@@ -448,7 +449,9 @@ namespace Data
                     Context.SaveChanges();
                     try
                     {
-                        EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.TAREA.ToString() + " " + cl_enumeradores.eAsuntoCorreo.MODIFICADA.ToString());
+                        info.Saludo = "La tarea fue modificada";
+
+                        EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.TAREA.ToString() + " " + cl_enumeradores.eAsuntoCorreo.MODIFICADA.ToString(), cl_enumeradores.eCorreo.ENCARGADO);
                     }
                     catch (Exception)
                     {
@@ -522,7 +525,9 @@ namespace Data
                     Context.SaveChanges();
                     try
                     {
-                        EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.TAREA.ToString() + " " + cl_enumeradores.eAsuntoCorreo.ACEPTADA.ToString());
+                        info.Saludo = "Su tarea ha sido aprobada";
+
+                        EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.TAREA.ToString() + " " + cl_enumeradores.eAsuntoCorreo.ACEPTADA.ToString(), cl_enumeradores.eCorreo.SOLICITANTE);
                     }
                     catch (Exception)
                     {
@@ -571,7 +576,8 @@ namespace Data
                     Context.SaveChanges();
                     try
                     {
-                        EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.TAREA.ToString() + " " + cl_enumeradores.eAsuntoCorreo.DEVUELTA.ToString());
+                        info.Saludo = "Le estoy rechazando la tarea, por la cual se detalla en las observaciones ";
+                        EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.TAREA.ToString() + " " + cl_enumeradores.eAsuntoCorreo.DEVUELTA.ToString(), cl_enumeradores.eCorreo.SOLICITANTE);
                     }
                     catch (Exception)
                     {
@@ -620,7 +626,62 @@ namespace Data
                     Context.SaveChanges();
                     try
                     {
-                        EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.TAREA.ToString() + " " + cl_enumeradores.eAsuntoCorreo.CERRADA.ToString());
+                        info.Saludo = "Su tarea fue cerrada, favor ayudarme con la revisión";
+                        EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.TAREA.ToString() + " " + cl_enumeradores.eAsuntoCorreo.CERRADA.ToString(), cl_enumeradores.eCorreo.SOLICITANTE);
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+                   
+                   
+                }
+
+                return true;
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+        }
+
+        public bool CerrarPorSolicitante(Tarea_Info info)
+        {
+            try
+            {
+                info_parametro = data_parametro.get_info();
+                using (EntityTareas Context = new EntityTareas())
+                {
+                    var Entity = Context.Tarea.Where(v => v.IdTarea == info.IdTarea).FirstOrDefault();
+                    if (Entity == null)
+                        return false;
+                    Entity.FechaCierreSolicitante = DateTime.Now;
+                    Entity.FechaCierreEncargado = DateTime.Now;
+                    Entity.EstadoActual = info_parametro.IdEstadoCierreTarea;
+                    #region Estado tarea
+
+                    TareaEstado New_estado = new TareaEstado
+                    {
+                        IdTarea = info.IdTarea,
+                        Secuancial = odta_estado.get_id(info.IdTarea),
+                        IdUsuario = info.IdUsuario,
+                        Observacion = info.ObsevacionModificacion,
+                        IdEstado = info.EstadoActual = 3,
+                        FechaModificacion = DateTime.Now,
+
+
+                    };
+                    Context.TareaEstado.Add(New_estado);
+
+                    #endregion
+
+                    Context.SaveChanges();
+                    try
+                    {
+                        info.Saludo = "La tarea que le encomende ha sido cerrada";
+
+                        EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.TAREA.ToString() + " " + cl_enumeradores.eAsuntoCorreo.CERRADA.ToString(), cl_enumeradores.eCorreo.ENCARGADO);
                     }
                     catch (Exception)
                     {
@@ -633,7 +694,7 @@ namespace Data
                             Context.sp_crear_tarea_concurrente(info.IdTarea);
                             try
                             {
-                                EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.NUEVA.ToString() + " " + cl_enumeradores.eAsuntoCorreo.TAREA.ToString());
+                                EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.NUEVA.ToString() + " " + cl_enumeradores.eAsuntoCorreo.TAREA.ToString(), cl_enumeradores.eCorreo.ENCARGADO);
                             }
                             catch (Exception)
                             {
@@ -641,7 +702,7 @@ namespace Data
                             }
                         }
                     }
-                   
+
                 }
 
                 return true;
@@ -717,7 +778,8 @@ namespace Data
 
                     try
                     {
-                        EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.TAREA.ToString() + " " + cl_enumeradores.eAsuntoCorreo.DISTRIBUIDA.ToString());
+                        info.Saludo = "Su tarea ha sido distribuida";
+                        EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.TAREA.ToString() + " " + cl_enumeradores.eAsuntoCorreo.DISTRIBUIDA.ToString(), cl_enumeradores.eCorreo.SOLICITANTE);
                     }
                     catch (Exception)
                     {
@@ -792,12 +854,14 @@ namespace Data
                 throw;
             }
         }
-        public bool EnviarCorreo(Tarea_Info info, string AsuntoCorreo)
+        public bool EnviarCorreo(Tarea_Info info, string AsuntoCorreo, cl_enumeradores.eCorreo EnviarA)
         {
             try
             {
+                
+
                 #region variables locales
-                var inf_usu_dirigido = data_usuario.get_info(info.IdUsuarioAsignado);
+                var inf_usu_dirigido = data_usuario.get_info(EnviarA== cl_enumeradores.eCorreo.ENCARGADO?info.IdUsuarioAsignado:info.IdUsuarioSolicitante);
                 var lisr_usuarios_miembro_grup = data_usuarios_grup.get_lis_usuario_x_grupo(info.IdGrupo);
                 int sec = 0;
                 Parametro_Info infoParametros = new Parametro_Info();
@@ -829,19 +893,42 @@ namespace Data
 
                         
                     }
-                    string Body = "Estimado colaborador <br/><br/>";
-                    Body += "Degeremcia le encomienda la tarea: "+info.AsuntoTarea;
+                    string Body = "Estimado compañero, <br/><br/>";
+                    Body += info.Saludo + ":";
                     Body += "<br/>";
                     Body += "<br/>";
-                    Body += "Descripción tarea: " + info.DescripcionTarea;
+                    Body += "<td><strong>Asunto de la tarea:</strong></td>";
+                    Body += "<br/>";
+                    Body += info.AsuntoTarea;
                     Body += "<br/>";
                     Body += "<br/>";
-                    foreach (var item in info.list_detalle)
+                    //Body += "Descripción tarea: ";
+                    Body += "<td><strong>Descripción de la tarea</strong></td>";
+                    Body += "<br/>";
+                    Body += info.DescripcionTarea;
+                    Body += "<br/>";
+                    Body += "<br/>";
+                    if (info.list_detalle.Count > 0)
                     {
-                        
-                        Body += item.Descripcion+" Fecha inicio "+ info.FechaInicio.ToShortDateString()+" Fecha fin "+ info.FechaCulmina.ToShortDateString();
+                       // Body += "Detalle de distribución de la tarea:";
+                        Body += "<td><strong>Detalle de la distribución de la tarea:</strong></td>";
+
+                        Body += "<br/>";
+
+                        foreach (var item in info.list_detalle)
+                        {
+
+                            Body += item.Descripcion + " Fecha inicio " + info.FechaInicio.ToShortDateString() + " Fecha fin " + info.FechaCulmina.ToShortDateString();
+                            Body += "<br/>";
+                        }
+                        Body += "<br/>";
                         Body += "<br/>";
                     }
+                   // Body += "Observaciones: ";
+                    Body += "<td><strong>Observaciones:</strong></td>";
+
+                    Body += "<br/>";
+                    Body += info.ObsevacionModificacion;
                     Body += "<table>";
                     Body += "<tr>";
                     Body += "<td><strong>Fecha inicio:</strong></td>";
@@ -855,7 +942,7 @@ namespace Data
                     Body += "<br/>";
                     Body += "<br/>";
                     Body += "Para para acceder a la tarea acceder al link:<br/><br/>";
-                    Body += "<a href='http://localhost:27043/General/AprobarTarea/Nuevo?IdTarea=" + info.IdTarea+"'>Tareas</a>";
+                    Body += "<a href='http://localhost:27043/General/"+info.Controller+"/"+info.Accion+"?IdTarea=" + info.IdTarea+"'>Tareas</a>";
 
                     Body += "<br/>";
                     Body += "<br/>";

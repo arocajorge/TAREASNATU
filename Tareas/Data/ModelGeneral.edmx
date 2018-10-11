@@ -164,8 +164,8 @@
           <Property Name="FechaModificacion" Type="datetime" />
           <Property Name="FechaAnulacion" Type="datetime" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DB_TAREAS.dbo.vw_Tarea' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_Tarea' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vw_Tarea">
           <Key>
             <PropertyRef Name="IdTarea" />
@@ -211,8 +211,8 @@ warning 6002: The table/view 'DB_TAREAS.dbo.vw_Tarea' does not have a primary ke
           <Property Name="FechaCierreSolicitante" Type="datetime" />
           <Property Name="FechaCierreEncargado" Type="datetime" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="VWGEN_001">
           <Key>
             <PropertyRef Name="IdTarea" />
@@ -229,7 +229,7 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
             <PropertyRef Name="FechaInicioTarea" />
             <PropertyRef Name="FechaFinTarea" />
             <PropertyRef Name="Nombre" />
-            <PropertyRef Name="ESTADO" />
+            <PropertyRef Name="eSTADO" />
           </Key>
           <Property Name="IdTarea" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Secuancial" Type="int" Nullable="false" />
@@ -247,9 +247,9 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
           <Property Name="EstadoActual" Type="int" Nullable="false" />
           <Property Name="FechaInicioTarea" Type="date" Nullable="false" />
           <Property Name="FechaFinTarea" Type="date" Nullable="false" />
-          <Property Name="Nombre" Type="varchar" MaxLength="500" Nullable="false" />
-          <Property Name="ESTADO" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="AsuntoTarea" Type="varchar(max)" />
+          <Property Name="Nombre" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="eSTADO" Type="varchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <Association Name="FK_Estado_EstadoTipo">
           <End Role="EstadoTipo" Type="Self.EstadoTipo" Multiplicity="1" />
@@ -527,9 +527,9 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
     [VWGEN_001].[EstadoActual] AS [EstadoActual], 
     [VWGEN_001].[FechaInicioTarea] AS [FechaInicioTarea], 
     [VWGEN_001].[FechaFinTarea] AS [FechaFinTarea], 
+    [VWGEN_001].[AsuntoTarea] AS [AsuntoTarea], 
     [VWGEN_001].[Nombre] AS [Nombre], 
-    [VWGEN_001].[ESTADO] AS [ESTADO], 
-    [VWGEN_001].[AsuntoTarea] AS [AsuntoTarea]
+    [VWGEN_001].[eSTADO] AS [eSTADO]
     FROM [dbo].[VWGEN_001] AS [VWGEN_001]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_Estado_EstadoTipo" Association="Self.FK_Estado_EstadoTipo">
@@ -1205,7 +1205,7 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
             <PropertyRef Name="FechaInicioTarea" />
             <PropertyRef Name="FechaFinTarea" />
             <PropertyRef Name="Nombre" />
-            <PropertyRef Name="ESTADO" />
+            <PropertyRef Name="eSTADO" />
           </Key>
           <Property Name="IdTarea" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="Secuancial" Type="Int32" Nullable="false" />
@@ -1223,33 +1223,19 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
           <Property Name="EstadoActual" Type="Int32" Nullable="false" />
           <Property Name="FechaInicioTarea" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="FechaFinTarea" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="ESTADO" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="AsuntoTarea" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="eSTADO" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <ComplexType Name="SPGEN_002_Result">
-          <Property Type="Decimal" Name="IdTarea" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="String" Name="IdUsuarioSolicitante" Nullable="false" MaxLength="50" />
-          <Property Type="Int32" Name="IdGrupo" Nullable="false" />
+          <Property Type="Int64" Name="Secuencia" Nullable="true" />
           <Property Type="String" Name="IdUsuarioAsignado" Nullable="false" MaxLength="50" />
-          <Property Type="Int32" Name="EstadoActual" Nullable="false" />
-          <Property Type="DateTime" Name="FechaInicio" Nullable="false" />
-          <Property Type="DateTime" Name="FechaCulmina" Nullable="false" />
-          <Property Type="String" Name="AsuntoTarea" Nullable="true" />
-          <Property Type="String" Name="DescripcionTarea" Nullable="true" />
-          <Property Type="Int32" Name="IdEstadoPrioridad" Nullable="false" />
-          <Property Type="Boolean" Name="TareaConcurrente" Nullable="false" />
-          <Property Type="Boolean" Name="AprobadoSolicitado" Nullable="false" />
-          <Property Type="Boolean" Name="AprobadoEncargado" Nullable="false" />
-          <Property Type="DateTime" Name="FechaAprobacion" Nullable="true" Precision="23" />
-          <Property Type="DateTime" Name="FechaFinConcurrencia" Nullable="true" />
-          <Property Type="Int32" Name="DiasIntervaloProximaTarea" Nullable="true" />
-          <Property Type="DateTime" Name="FechaCierreEncargado" Nullable="true" Precision="23" />
-          <Property Type="String" Name="Encargado" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="Grupo" Nullable="false" MaxLength="1000" />
+          <Property Type="Int32" Name="IdGrupo" Nullable="false" />
           <Property Type="Int32" Name="Cumplidas" Nullable="true" />
           <Property Type="Int32" Name="Incumplidas" Nullable="true" />
           <Property Type="Int32" Name="EnProceso" Nullable="true" />
+          <Property Type="String" Name="Encargado" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Grupo" Nullable="false" MaxLength="1000" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1513,9 +1499,9 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
           <EntitySetMapping Name="VWGEN_001">
             <EntityTypeMapping TypeName="ModelGeneral.VWGEN_001">
               <MappingFragment StoreEntitySet="VWGEN_001">
-                <ScalarProperty Name="AsuntoTarea" ColumnName="AsuntoTarea" />
-                <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
+                <ScalarProperty Name="eSTADO" ColumnName="eSTADO" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="AsuntoTarea" ColumnName="AsuntoTarea" />
                 <ScalarProperty Name="FechaFinTarea" ColumnName="FechaFinTarea" />
                 <ScalarProperty Name="FechaInicioTarea" ColumnName="FechaInicioTarea" />
                 <ScalarProperty Name="EstadoActual" ColumnName="EstadoActual" />
@@ -1538,28 +1524,14 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
           <FunctionImportMapping FunctionImportName="SPGEN_002" FunctionName="ModelGeneral.Store.SPGEN_002">
             <ResultMapping>
               <ComplexTypeMapping TypeName="ModelGeneral.SPGEN_002_Result">
-                <ScalarProperty Name="IdTarea" ColumnName="IdTarea" />
-                <ScalarProperty Name="IdUsuarioSolicitante" ColumnName="IdUsuarioSolicitante" />
-                <ScalarProperty Name="IdGrupo" ColumnName="IdGrupo" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
                 <ScalarProperty Name="IdUsuarioAsignado" ColumnName="IdUsuarioAsignado" />
-                <ScalarProperty Name="EstadoActual" ColumnName="EstadoActual" />
-                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
-                <ScalarProperty Name="FechaCulmina" ColumnName="FechaCulmina" />
-                <ScalarProperty Name="AsuntoTarea" ColumnName="AsuntoTarea" />
-                <ScalarProperty Name="DescripcionTarea" ColumnName="DescripcionTarea" />
-                <ScalarProperty Name="IdEstadoPrioridad" ColumnName="IdEstadoPrioridad" />
-                <ScalarProperty Name="TareaConcurrente" ColumnName="TareaConcurrente" />
-                <ScalarProperty Name="AprobadoSolicitado" ColumnName="AprobadoSolicitado" />
-                <ScalarProperty Name="AprobadoEncargado" ColumnName="AprobadoEncargado" />
-                <ScalarProperty Name="FechaAprobacion" ColumnName="FechaAprobacion" />
-                <ScalarProperty Name="FechaFinConcurrencia" ColumnName="FechaFinConcurrencia" />
-                <ScalarProperty Name="DiasIntervaloProximaTarea" ColumnName="DiasIntervaloProximaTarea" />
-                <ScalarProperty Name="FechaCierreEncargado" ColumnName="FechaCierreEncargado" />
-                <ScalarProperty Name="Encargado" ColumnName="Encargado" />
-                <ScalarProperty Name="Grupo" ColumnName="Grupo" />
+                <ScalarProperty Name="IdGrupo" ColumnName="IdGrupo" />
                 <ScalarProperty Name="Cumplidas" ColumnName="Cumplidas" />
                 <ScalarProperty Name="Incumplidas" ColumnName="Incumplidas" />
                 <ScalarProperty Name="EnProceso" ColumnName="EnProceso" />
+                <ScalarProperty Name="Encargado" ColumnName="Encargado" />
+                <ScalarProperty Name="Grupo" ColumnName="Grupo" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

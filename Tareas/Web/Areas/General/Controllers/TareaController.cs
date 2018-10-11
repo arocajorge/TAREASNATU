@@ -10,7 +10,7 @@ using Web.Helps;
 using Info.Helps;
 namespace Web.Areas.General.Controllers
 {
-    
+    [SessionTimeout]
     public class TareaController : Controller
     {
         #region Variables
@@ -21,7 +21,7 @@ namespace Web.Areas.General.Controllers
         Usuario_Bus bus_usuario = new Usuario_Bus();
         Estado_Bus bus_estado = new Estado_Bus();
         TareaArchivoAdjunto_Bus bus_adjunto = new TareaArchivoAdjunto_Bus();
-     
+        Parametro_Bus bus_parametro = new Parametro_Bus();
         #endregion
 
         #region Vistas tareas
@@ -84,16 +84,21 @@ namespace Web.Areas.General.Controllers
             SessionTareas.IdTransaccionSession = (Convert.ToDecimal(SessionTareas.IdTransaccionSession) + 1).ToString();
             SessionTareas.IdTransaccionSessionActual = SessionTareas.IdTransaccionSession;
             #endregion
-
+            var grupo = bus_grupo.get_info_grup_usuario(SessionTareas.IdUsuario.ToString());
+            if (grupo == null)
+                grupo = new Grupo_Info();
             Tarea_Info model = new Tarea_Info()
             {
                 FechaInicio = DateTime.Now,
                 FechaCulmina = DateTime.Now,
                 IdUsuarioSolicitante = SessionTareas.IdUsuario.ToString(),
-                IdEstadoPrioridad=2,
-                EstadoActual=1,
-                AprobadoSolicitado=true,
+                IdEstadoPrioridad = 2,
+                EstadoActual = 1,
+                AprobadoSolicitado = true,
                 IdTransaccionSession = Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual),
+                IdGrupo = grupo.IdGrupo,
+                nomb_jef_grupo = grupo.nomb_jef_grupo,
+                IdUsuarioAsignado = SessionTareas.IdUsuario.ToString()
 
             };
             Lis_Tarea_det_Info_lis.set_list(new List<Tarea_det_Info>(),model.IdTransaccionSession);
@@ -103,6 +108,20 @@ namespace Web.Areas.General.Controllers
         [HttpPost]
         public ActionResult Nuevo(Tarea_Info model)
         {
+            model.Controller = cl_enumeradores.eController.AprobarTarea;
+            model.Accion = cl_enumeradores.eAcciones.Nuevo;
+
+            var param = bus_parametro.get_info();
+            if (param == null)
+                param = new Parametro_Info();
+                if (model.AprobadoEncargado == true & model.AprobadoSolicitado == true)
+               
+                model.EstadoActual = param.IdEstadoAprobarTarea;
+            else
+                {
+                    model.EstadoActual = 1;
+                }
+
             bus_grupo = new Grupo_Bus();
             var grupo = bus_grupo.get_info_grup_usuario(model.IdGrupo);
             if (grupo != null)
@@ -118,7 +137,7 @@ namespace Web.Areas.General.Controllers
             if (model.list_detalle == null &&(model.IdUsuarioSolicitante==model.IdUsuarioAsignado))
             {
                 cargar_combo();
-                ViewBag.mensaje = "La distribución de la tarea debe tener almenos un detalle";
+                ViewBag.mensaje = "La distribución de la tarea debe tener al menos un detalle";
                 return View(model);
             }
             else
@@ -126,7 +145,7 @@ namespace Web.Areas.General.Controllers
                 if (model.list_detalle.Count() == 0 && (model.IdUsuarioSolicitante == model.IdUsuarioAsignado))
                 {
                     cargar_combo();
-                    ViewBag.mensaje = "La distribución de la tarea debe tener almenos un detalle";
+                    ViewBag.mensaje = "La distribución de la tarea debe tener al menos un detalle";
                     return View(model);
                 }
             }
@@ -171,6 +190,9 @@ namespace Web.Areas.General.Controllers
         [HttpPost]
         public ActionResult Modificar(Tarea_Info model)
         {
+            model.Controller = cl_enumeradores.eController.AprobarTarea;
+            model.Accion = cl_enumeradores.eAcciones.Nuevo;
+
             string mensaje = "";
             var grupo = bus_grupo.get_info_grup_usuario(model.IdGrupo);
             if (grupo != null)
@@ -188,7 +210,7 @@ namespace Web.Areas.General.Controllers
 
             model.list_detalle = Lis_Tarea_det_Info_lis.get_list(model.IdTransaccionSession);
             model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(model.IdTransaccionSession);
-            model.IdUsuarioModifica = SessionTareas.IdUsuario.ToString();
+            model.IdUsuarioModifica = SessionTareas.IdUsuario;
             if (model.list_detalle == null && (model.IdUsuarioSolicitante == model.IdUsuarioAsignado))
             {
                 cargar_combo();
@@ -318,6 +340,8 @@ namespace Web.Areas.General.Controllers
         [HttpPost]
         public ActionResult Cerrar(Tarea_Info model)
         {
+            model.Controller = cl_enumeradores.eController.Tarea;
+            model.Accion = cl_enumeradores.eAcciones.Consultar;
             var grupo = bus_grupo.get_info_grup_usuario(model.IdGrupo);
             if (grupo != null)
             {
@@ -373,6 +397,86 @@ namespace Web.Areas.General.Controllers
             return RedirectToAction("Buzon_entrada","Buzon");
         }
 
+        public ActionResult CerrarPorSolicitante(int IdTarea = 0)
+
+        {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionTareas.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionTareas.IdTransaccionSession = (Convert.ToDecimal(SessionTareas.IdTransaccionSession) + 1).ToString();
+            SessionTareas.IdTransaccionSessionActual = SessionTareas.IdTransaccionSession;
+            #endregion
+
+            Tarea_Info model = bus_tarea.get_info(IdTarea);
+            model.IdTransaccionSession = Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual);
+            model.list_detalle = bus_tarea_det.get_lis(IdTarea);
+            Lis_Tarea_det_Info_lis.set_list(model.list_detalle, model.IdTransaccionSession);
+            model.list_adjuntos = bus_adjunto.get_lis(IdTarea);
+            TareaArchivoAdjunto_Info_lis.set_list(model.list_adjuntos, model.IdTransaccionSession);
+            cargar_combo();
+            if (model == null)
+                return RedirectToAction("Buzon_salida");
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult CerrarPorSolicitante(Tarea_Info model)
+        {
+            model.Controller = cl_enumeradores.eController.Tarea;
+            model.Accion = cl_enumeradores.eAcciones.Consultar;
+            var grupo = bus_grupo.get_info_grup_usuario(model.IdGrupo);
+            if (grupo != null)
+            {
+                model.IdUsuarioAsignado = grupo.IdUsuario;
+                model.nomb_jef_grupo = grupo.nomb_jef_grupo;
+            }
+
+            string mensaje = "";
+            model.list_detalle = Lis_Tarea_det_Info_lis.get_list(model.IdTransaccionSession);
+            model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(model.IdTransaccionSession);
+            model.IdUsuarioModifica = SessionTareas.IdUsuario.ToString();
+            if (model.ObsevacionModificacion == null | model.ObsevacionModificacion == "")
+            {
+                mensaje = "Ingrese una observación";
+                ViewBag.mensaje = mensaje;
+                cargar_combo();
+                return View(model);
+            }
+            if (model.list_detalle == null)
+            {
+                cargar_combo();
+                ViewBag.mensaje = "La Tarea debe tener almenos un detalle en la distribución";
+                return View(model);
+            }
+            else
+            {
+                if (model.list_detalle.Count() == 0)
+                {
+                    cargar_combo();
+                    ViewBag.mensaje = "La Tarea debe tener almenos un detalle en la distribución";
+                    return View(model);
+                }
+                if (model.list_detalle.Where(v => v.IdEstado == 8).Count() > 0)
+                {
+                    cargar_combo();
+                    ViewBag.mensaje = "Existen subtareas pendientes no se puede cerrar!!!";
+                    return View(model);
+                }
+            }
+            mensaje = Validaciones(model);
+            if (mensaje != "")
+            {
+                cargar_combo();
+                ViewBag.mensaje = mensaje;
+                return View(model);
+            }
+            model.IdUsuario = SessionTareas.IdUsuario.ToString();
+            if (!bus_tarea.CerrarPorSolicitante(model))
+            {
+                cargar_combo();
+                return View(model);
+            }
+            return RedirectToAction("Buzon_salida", "Buzon");
+        }
 
 
         public FileResult DolowarFille(decimal IdTarea, int Secuencial)
@@ -493,15 +597,23 @@ namespace Web.Areas.General.Controllers
                 }
                 foreach (var item in info.list_detalle)
                 {
+                    if(item.FechaInicio.Date==DateTime.Now.Date)
+                    {
+                        item.FechaInicio = info.FechaInicio;
+                    }
+                    if (item.FechaFin.Date == DateTime.Now.Date)
+                    {
+                        item.FechaFin = info.FechaCulmina;
+                    }
                     if (item.FechaFin.Date < item.FechaInicio.Date)
                     {
                         mensaje = "Las fecha de: "+item.Descripcion+", no son correctas";
                     }
-                    if( (item.FechaInicio.Date <info.FechaInicio.Date) | (item.FechaInicio.Date > info.FechaCulmina.Date))
+                    if( (item.FechaInicio.Date <info.FechaInicio.Date) || (item.FechaInicio.Date > info.FechaCulmina.Date))
                     {
                         mensaje = "Las fecha de: " + item.Descripcion + ", no son correctas";
                     }
-                    if ((item.FechaFin.Date < info.FechaInicio.Date) | (item.FechaFin.Date > info.FechaCulmina.Date))
+                    if ((item.FechaFin.Date < info.FechaInicio.Date) || (item.FechaFin.Date > info.FechaCulmina.Date))
                     {
                         mensaje = "Las fecha de: " + item.Descripcion + ", no son correctas";
                     }

@@ -5,8 +5,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Bus;
+using Web.Helps;
+
 namespace Web.Areas.General.Controllers
 {
+    [SessionTimeout]
     public class ArchivoController : Controller
     {
         // GET: General/Archivo

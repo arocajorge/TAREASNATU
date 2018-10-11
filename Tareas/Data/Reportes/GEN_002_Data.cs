@@ -30,25 +30,10 @@ namespace Data.General
                                  Cumplidas = q.Cumplidas,
                                  Incumplidas = q.Incumplidas,
                                  IdUsuarioAsignado = q.IdUsuarioAsignado,
-                                 AprobadoEncargado = q.AprobadoEncargado,
-                                 AprobadoSolicitado = q.AprobadoSolicitado,
-                                 AsuntoTarea = q.AsuntoTarea,
-                                 DescripcionTarea = q.DescripcionTarea,
-                                 DiasIntervaloProximaTarea = q.DiasIntervaloProximaTarea,
                                  Encargado =q.Encargado,
-                                 EstadoActual = q.EstadoActual,
-                                 FechaCierreEncargado = q.FechaCierreEncargado,
-                                 FechaAprobacion = q.FechaAprobacion,
-                                 FechaCulmina = q.FechaCulmina,
-                                 FechaFinConcurrencia = q.FechaFinConcurrencia,
-                                 FechaInicio = q.FechaInicio,
                                  Grupo = q.Grupo,
-                                 IdEstadoPrioridad = q.IdEstadoPrioridad,
                                  IdGrupo = q.IdGrupo,
-                                 IdTarea = q.IdTarea,
-                                 IdUsuarioSolicitante = q.IdUsuarioSolicitante,
                                  EnProceso = q.EnProceso,
-                                 TareaConcurrente = q.TareaConcurrente
 
                              }).ToList();
                     else
@@ -59,25 +44,10 @@ namespace Data.General
                                      Cumplidas = q.Cumplidas,
                                      Incumplidas = q.Incumplidas,
                                      IdUsuarioAsignado = q.IdUsuarioAsignado,
-                                     AprobadoEncargado = q.AprobadoEncargado,
-                                     AprobadoSolicitado = q.AprobadoSolicitado,
-                                     AsuntoTarea = q.AsuntoTarea,
-                                     DescripcionTarea = q.DescripcionTarea,
-                                     DiasIntervaloProximaTarea = q.DiasIntervaloProximaTarea,
                                      Encargado = q.Encargado,
-                                     EstadoActual = q.EstadoActual,
-                                     FechaCierreEncargado = q.FechaCierreEncargado,
-                                     FechaAprobacion = q.FechaAprobacion,
-                                     FechaCulmina = q.FechaCulmina,
-                                     FechaFinConcurrencia = q.FechaFinConcurrencia,
-                                     FechaInicio = q.FechaInicio,
                                      Grupo = q.Grupo,
-                                     IdEstadoPrioridad = q.IdEstadoPrioridad,
                                      IdGrupo = q.IdGrupo,
-                                     IdTarea = q.IdTarea,
-                                     IdUsuarioSolicitante = q.IdUsuarioSolicitante,
                                      EnProceso = q.EnProceso,
-                                     TareaConcurrente = q.TareaConcurrente
 
                                  }).ToList();
                 }

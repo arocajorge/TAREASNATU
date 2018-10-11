@@ -7,8 +7,11 @@ using Info.General;
 using Bus.General;
 using Bus;
 using Info;
+using Web.Helps;
+
 namespace Web.Areas.General.Controllers
 {
+    [SessionTimeout]
     public class TareaEstadosController : Controller
     {
         Usuario_Bus bus_usuario = new Usuario_Bus();

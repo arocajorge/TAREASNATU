@@ -235,7 +235,7 @@
 
     <div id="Tabs" role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
-            <li class="active">
+            <li class="">
                 <a href="#tab_detalle" aria-controls="detalle" role="tab" data-toggle="tab" id="link_detalle">Distribución de Subtareas</a>
             </li>
             <li>
@@ -244,7 +244,7 @@
             <li>
                 <a href="#tab_parametros" aria-controls="parametros" role="tab" data-toggle="tab" id="link_parametro">Parámetros</a>
             </li>
-            <li>
+            <li class="active">
                 <a href="#tab_historico" aria-controls="parametros" role="tab" data-toggle="tab" id="link_historico">Histórico</a>
             </li>
         </ul>
@@ -345,7 +345,7 @@
     </div>
 
     <div class="box-footer">
-        <a class="btn btn-default" href="@Url.Action("Index","Tarea",new { Area = "General" },null)">Volver</a>
+        <a class="btn btn-default" href="@Url.Action("Buzon_entrada","Buzon",new { Area = "General" },null)">Volver</a>
     </div>
 
 

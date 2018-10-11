@@ -11,24 +11,34 @@ begin
 --@FechaInicio date,
 --@FechaFin date
 
---set @FechaInicio ='2018-10-04'
 --set @FechaFin ='2018-12-30'
+--set @FechaInicio ='2018-10-01'
 
-select TareasResumen.IdUsuario, TareasResumen.Nombre, SUM(TareasResumen.TotalTarea) TotalTarea, sum(TareasResumen.Cumplidas) Cumplidas, sum(TareasResumen.Incumplidas) Incumplidas, SUM(EnProceso)EnProceso
+declare @MaxIdPregunta int
+set @MaxIdPregunta=0
 
-from(
-SELECT        dbo.Usuario.IdUsuario, dbo.Usuario.Nombre, COUNT(dbo.Tarea_det.IdUsuario)TotalTarea, 
-case when cast( Tarea_det.FechaTerminoTarea as date)<=CAST( Tarea_det.FechaFin as date) then COUNT(dbo.Tarea_det.IdUsuario) else  0 end Cumplidas,
-case when  cast(Tarea_det.FechaTerminoTarea as date)>cast( Tarea_det.FechaFin as date) then COUNT(dbo.Tarea_det.IdUsuario) else  0 end Incumplidas,
-case when  Tarea_det.FechaTerminoTarea is null then COUNT(dbo.Tarea_det.IdUsuario) else  0 end EnProceso
-FROM            dbo.Tarea_det INNER JOIN
-                         dbo.Usuario ON dbo.Tarea_det.IdUsuario = dbo.Usuario.IdUsuario INNER JOIN
-                         dbo.Tarea ON dbo.Tarea_det.IdTarea = dbo.Tarea.IdTarea
-						 where Tarea_det.FechaFin between @FechaInicio and @FechaFin
-						 and Tarea_det.FechaFin between @FechaInicio and @FechaFin
-GROUP BY dbo.Usuario.IdUsuario, dbo.Usuario.Nombre, Tarea_det.FechaInicio, Tarea_det.FechaFin, Tarea_det.FechaTerminoTarea
-)TareasResumen
+SELECT @MaxIdPregunta+(Row_number() over(order by @MaxIdPregunta))  Secuencia,TareasResumen.IdUsuarioAsignado,TareasResumen.IdGrupo, sum(TareasResumen.Cumplidas)Cumplidas, sum( TareasResumen.Incumplidas)Incumplidas,sum(TareasResumen.EnProceso)EnProceso,TareasResumen.Encargado,TareasResumen.Grupo
+  FROM(
 
-group by TareasResumen.IdUsuario, TareasResumen.Nombre
+SELECT         dbo.Tarea.IdUsuarioSolicitante, dbo.Tarea.IdGrupo, dbo.Tarea.IdUsuarioAsignado, dbo.Tarea.EstadoActual, dbo.Tarea.FechaInicio, dbo.Tarea.FechaCulmina, dbo.Tarea.AsuntoTarea, 
+                         dbo.Tarea.DescripcionTarea, dbo.Tarea.IdEstadoPrioridad, dbo.Tarea.TareaConcurrente, dbo.Tarea.AprobadoSolicitado, dbo.Tarea.AprobadoEncargado, dbo.Tarea.FechaAprobacion, dbo.Tarea.FechaFinConcurrencia, 
+                         dbo.Tarea.DiasIntervaloProximaTarea, dbo.Tarea.FechaCierreEncargado, dbo.Usuario.Nombre AS Encargado, dbo.Grupo.Descripcion AS Grupo,
+						 case when cast( Tarea.FechaCierreEncargado as date)<=CAST( Tarea.FechaCulmina as date) then COUNT(dbo.Tarea.IdUsuarioAsignado) else  0 end Cumplidas,
+						 case when  cast(Tarea.FechaCierreEncargado as date)>cast( Tarea.FechaCulmina as date) then COUNT(dbo.Tarea.IdUsuarioAsignado) else  0 end Incumplidas,
+						 case when  Tarea.FechaCierreEncargado is null and Tarea.FechaCulmina <= GETDATE() then COUNT(dbo.Tarea.IdUsuarioAsignado) else 0 end  EnProceso
+FROM            dbo.Grupo INNER JOIN
+                         dbo.Tarea ON dbo.Grupo.IdGrupo = dbo.Tarea.IdGrupo INNER JOIN
+                         dbo.Usuario ON dbo.Tarea.IdUsuarioAsignado = dbo.Usuario.IdUsuario
 
+						  where Tarea.FechaInicio between @FechaInicio and @FechaFin
+						 --and Tarea.FechaCulmina between @FechaInicio and @FechaFin
+group by
+						  dbo.Tarea.IdTarea, dbo.Tarea.IdUsuarioSolicitante, dbo.Tarea.IdGrupo, dbo.Tarea.IdUsuarioAsignado, dbo.Tarea.EstadoActual, dbo.Tarea.FechaInicio, dbo.Tarea.FechaCulmina, dbo.Tarea.AsuntoTarea, 
+                         dbo.Tarea.DescripcionTarea, dbo.Tarea.IdEstadoPrioridad, dbo.Tarea.TareaConcurrente, dbo.Tarea.AprobadoSolicitado, dbo.Tarea.AprobadoEncargado, dbo.Tarea.FechaAprobacion, dbo.Tarea.FechaFinConcurrencia, 
+                         dbo.Tarea.DiasIntervaloProximaTarea, dbo.Tarea.FechaCierreEncargado, dbo.Usuario.Nombre , dbo.Grupo.Descripcion
+		
+
+		) TareasResumen
+
+		group by TareasResumen.Encargado,TareasResumen.Grupo,TareasResumen.IdUsuarioAsignado,TareasResumen.IdGrupo
 end

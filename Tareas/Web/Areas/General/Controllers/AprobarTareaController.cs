@@ -11,6 +11,7 @@ using Info.Helps;
 
 namespace Web.Areas.General.Controllers
 {
+    [SessionTimeout]
     public class AprobarTareaController : Controller
     {
         #region Variables
@@ -54,9 +55,13 @@ namespace Web.Areas.General.Controllers
         #region json
         public JsonResult AprobarTarea(int IdTarea = 0, decimal IdTransaccionSession = 0, string Observacion = "")
         {
+           
             var model = bus_tarea.get_info(IdTarea);
             if (model != null)
             {
+                model.Controller = cl_enumeradores.eController.Tarea;
+                model.Accion = cl_enumeradores.eAcciones.Consultar;
+
                 model.IdUsuario = SessionTareas.IdUsuario;
                 if (Observacion != "")
                     model.ObsevacionModificacion = Observacion;
@@ -77,6 +82,10 @@ namespace Web.Areas.General.Controllers
             var model = bus_tarea.get_info(IdTarea);
             if (model != null)
             {
+
+                model.Controller = cl_enumeradores.eController.Tarea;
+                model.Accion = cl_enumeradores.eAcciones.Consultar;
+
                 model.IdUsuario = SessionTareas.IdUsuario;
                 model.ObsevacionModificacion = Observacion;
                 model.list_detalle = Lis_Tarea_det_Info_lis.get_list(IdTransaccionSession);

@@ -23,5 +23,26 @@ namespace Info.Helps
             MODIFICADA,
             DISTRIBUIDA
         }
+        public enum eCorreo
+        {
+            SOLICITANTE,
+            ENCARGADO
+        }
+        public enum eController
+        {
+            AprobarTarea,
+            AsignarTarea,
+            Buzon,
+            MisTareas,
+            Tarea
+        }
+        public enum eAcciones
+        {
+            Nuevo,
+            Modificar,
+            Cerrar,
+            CerrarPorSolicitante,
+            Consultar
+        }
     }
 }

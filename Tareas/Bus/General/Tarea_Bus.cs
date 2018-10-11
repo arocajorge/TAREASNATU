@@ -140,6 +140,18 @@ namespace Bus
                 throw;
             }
         }
+        public bool CerrarPorSolicitante(Tarea_Info info)
+        {
+            try
+            {
+                return odata.CerrarPorSolicitante(info);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         public bool Asignacion(Tarea_Info info)
         {
             try

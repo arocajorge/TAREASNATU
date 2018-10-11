@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Info.Helps;
 namespace Info
 {
    public class Tarea_Info
@@ -46,8 +46,9 @@ namespace Info
         public string ObsevacionModificacion { get; set; }
 
 
-
-
+        public cl_enumeradores.eController Controller { get; set; }
+        public cl_enumeradores.eAcciones Accion { get; set; }
+        public string Saludo { get; set; }
 
         public List<Tarea_det_Info> list_detalle { get; set; }
         public List<TareaArchivoAdjunto_Info> list_adjuntos { get; set; }
@@ -72,6 +73,7 @@ namespace Info
         public Nullable<int> NumTareaVencidas { get; set; }
         public Nullable<int> TotalTareaResueltas { get; set; }
         public Nullable<int> TotalTareaPendiente { get; set; }
+
 
         #endregion
     }

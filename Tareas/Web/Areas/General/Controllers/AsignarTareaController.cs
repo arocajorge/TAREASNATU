@@ -11,6 +11,7 @@ using Info.Helps;
 
 namespace Web.Areas.General.Controllers
 {
+    [SessionTimeout]
     public class AsignarTareaController : Controller
     {
         #region Variables
@@ -40,12 +41,12 @@ namespace Web.Areas.General.Controllers
         [ValidateInput(false)]
         public ActionResult GridViewPartial_asignar_subtareas(DateTime? fecha_ini, DateTime? fecha_fin)
         {
+            bus_tarea = new Tarea_Bus();
             List<Tarea_Info> model = new List<Tarea_Info>();
             ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : fecha_ini;
             ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date : fecha_fin;
             model = bus_tarea.get_lis(SessionTareas.IdUsuario, cl_enumeradores.eTipoTarea.ASIGNADA, ViewBag.fecha_ini, ViewBag.fecha_fin);
 
-            model = bus_tarea.get_lis(SessionTareas.IdUsuario.ToString(), cl_enumeradores.eTipoTarea.GENERADAS, ViewBag.fecha_ini, ViewBag.fecha_fin);
             return PartialView("_GridViewPartial_asignar_subtareas", model);
         }
 
@@ -77,6 +78,9 @@ namespace Web.Areas.General.Controllers
             var grupo = bus_grupo.get_info_grup_usuario(model.IdGrupo);
             if (grupo != null)
             {
+                model.Controller = cl_enumeradores.eController.Tarea;
+                model.Accion = cl_enumeradores.eAcciones.Consultar;
+
                 model.IdUsuarioAsignado = grupo.IdUsuario;
                 model.nomb_jef_grupo = grupo.nomb_jef_grupo;
             }

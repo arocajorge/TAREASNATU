@@ -3,7 +3,7 @@
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "GridViewPartial_tarea_det_estados";
-        settings.CallbackRouteValues = new { Controller = "Tarea", Action = "GridViewPartial_tarea_det_estados", IdTarea = ViewBag.IdTarea };
+        settings.CallbackRouteValues = new { Controller = "TareaEstados", Action = "GridViewPartial_tarea_det_estados", IdTarea = ViewBag.IdTarea };
         settings.KeyFieldName = "Secuancial";
         settings.Width = Unit.Percentage(100);
         settings.CommandColumn.Visible = true;
@@ -20,7 +20,7 @@
             column.FieldName = "Secuancial";
             column.Caption = "Secuancia";
             column.Width = Unit.Percentage(10);
-           
+
         });
 
         settings.Columns.Add(column =>
@@ -45,10 +45,19 @@
 
             column.FieldName = "Observacion";
             column.Caption = "Observación";
-            column.Width = Unit.Percentage(70);
-           
-        });
+            column.Width = Unit.Percentage(60);
 
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "FechaModificacion";
+            column.Caption = "Fecha";
+            column.Width = Unit.Percentage(15);
+            column.EditorProperties().DateEdit(sp =>
+            {
+                sp.Width = Unit.Percentage(100);
+            });
+        });
     });
 
 }

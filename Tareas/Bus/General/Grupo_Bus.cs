@@ -74,6 +74,20 @@ namespace Bus
                 throw;
             }
         }
+        public Grupo_Info get_info_grup_usuario(string IdUsuario)
+        {
+            try
+            {
+                return odata.get_info_grup_usuario(IdUsuario);
+
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         public Grupo_Info get_info_grup_usuario(int IdGrupo)
         {
             try
@@ -88,5 +102,6 @@ namespace Bus
                 throw;
             }
         }
+    
     }
 }

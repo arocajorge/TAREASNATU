@@ -9,6 +9,7 @@ using Web.Helps;
 
 namespace Web.Areas.General.Controllers
 {
+    [SessionTimeout]
     public class  EstadoTipoController : Controller
     {
         #region Index

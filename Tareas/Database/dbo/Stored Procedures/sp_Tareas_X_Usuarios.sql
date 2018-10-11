@@ -5,7 +5,7 @@ AS
 BEGIN
 	
 
-	SELECT        dbo.Tarea.IdTarea, dbo.Tarea.IdUsuarioSolicitante, dbo.Tarea.IdGrupo, dbo.Tarea.IdUsuarioAsignado, dbo.Tarea.EstadoActual, dbo.Tarea.FechaInicio, dbo.Tarea.FechaCulmina, dbo.Tarea.Observacion, 
+	SELECT        dbo.Tarea.IdTarea, dbo.Tarea.IdUsuarioSolicitante, dbo.Tarea.IdGrupo, dbo.Tarea.IdUsuarioAsignado, dbo.Tarea.EstadoActual, dbo.Tarea.FechaInicio, dbo.Tarea.FechaCulmina, dbo.Tarea.AsuntoTarea, dbo.Tarea.DescripcionTarea, 
                          dbo.Tarea.IdEstadoPrioridad, dbo.Tarea.TareaConcurrente, dbo.Tarea.AprobadoSolicitado, dbo.Tarea.AprobadoEncargado, dbo.Tarea.Estado, dbo.Tarea_det.IdUsuario
 FROM            dbo.Tarea INNER JOIN
                          dbo.Tarea_det ON dbo.Tarea.IdTarea = dbo.Tarea_det.IdTarea
@@ -16,6 +16,6 @@ FROM            dbo.Tarea INNER JOIN
 						 AND Tarea_det.IdEstado=8
 
 						 group by 
-						  dbo.Tarea.IdTarea, dbo.Tarea.IdUsuarioSolicitante, dbo.Tarea.IdGrupo, dbo.Tarea.IdUsuarioAsignado, dbo.Tarea.EstadoActual, dbo.Tarea.FechaInicio, dbo.Tarea.FechaCulmina, dbo.Tarea.Observacion, 
+						  dbo.Tarea.IdTarea, dbo.Tarea.IdUsuarioSolicitante, dbo.Tarea.IdGrupo, dbo.Tarea.IdUsuarioAsignado, dbo.Tarea.EstadoActual, dbo.Tarea.FechaInicio, dbo.Tarea.FechaCulmina,  dbo.Tarea.AsuntoTarea, dbo.Tarea.DescripcionTarea, 
                          dbo.Tarea.IdEstadoPrioridad, dbo.Tarea.TareaConcurrente, dbo.Tarea.AprobadoSolicitado, dbo.Tarea.AprobadoEncargado, dbo.Tarea.Estado, dbo.Tarea_det.IdUsuario
 END

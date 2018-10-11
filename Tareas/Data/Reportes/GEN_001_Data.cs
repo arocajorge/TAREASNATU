@@ -30,7 +30,7 @@ namespace Data.General
                              select new GEN_001_Info
                              {
                                  Descripcion = q.Descripcion,
-                                 ESTADO = q.ESTADO,
+                                 ESTADO = q.eSTADO,
                                  EstadoActual = q.EstadoActual,
                                  FechaFinSubtarea = q.FechaFinSubtarea,
                                  FechaFinTarea = q.FechaFinTarea,
@@ -58,7 +58,7 @@ namespace Data.General
                                  select new GEN_001_Info
                                  {
                                      Descripcion = q.Descripcion,
-                                     ESTADO = q.ESTADO,
+                                     ESTADO = q.eSTADO,
                                      EstadoActual = q.EstadoActual,
                                      FechaFinSubtarea = q.FechaFinSubtarea,
                                      FechaFinTarea = q.FechaFinTarea,

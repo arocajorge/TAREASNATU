@@ -5,10 +5,11 @@
     [IdUsuario]         VARCHAR (50)  NOT NULL,
     [FechaModificacion] DATETIME      NOT NULL,
     [Observacion]       VARCHAR (MAX) NOT NULL,
-    [IdUsuarioModifica] VARCHAR (50)  NULL,
     CONSTRAINT [PK_TareaEstado] PRIMARY KEY CLUSTERED ([IdTarea] ASC, [Secuancial] ASC),
     CONSTRAINT [FK_TareaEstado_Tarea] FOREIGN KEY ([IdTarea]) REFERENCES [dbo].[Tarea] ([IdTarea])
 );
+
+
 
 
 

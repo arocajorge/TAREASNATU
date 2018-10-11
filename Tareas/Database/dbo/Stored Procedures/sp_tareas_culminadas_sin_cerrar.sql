@@ -5,9 +5,9 @@ CREATE PROCEDURE [dbo].[sp_tareas_culminadas_sin_cerrar]
 AS
 BEGIN
 	
-SELECT        dbo.Tarea.IdTarea, dbo.Tarea.IdUsuarioSolicitante, dbo.Tarea.IdGrupo, dbo.Tarea.IdUsuarioAsignado, dbo.Tarea.EstadoActual, dbo.Tarea.FechaInicio, dbo.Tarea.FechaCulmina, dbo.Tarea.Observacion, 
+SELECT        dbo.Tarea.IdTarea, dbo.Tarea.IdUsuarioSolicitante, dbo.Tarea.IdGrupo, dbo.Tarea.IdUsuarioAsignado, dbo.Tarea.EstadoActual, dbo.Tarea.FechaInicio, dbo.Tarea.FechaCulmina, dbo.Tarea.AsuntoTarea,dbo.Tarea.DescripcionTarea, 
                          dbo.Tarea.IdEstadoPrioridad, dbo.Tarea.TareaConcurrente, dbo.Tarea.AprobadoSolicitado, dbo.Tarea.AprobadoEncargado, dbo.Tarea.FechaFinConcurrencia, dbo.Tarea.FechaAprobacion, dbo.Tarea.DiasIntervaloProximaTarea, 
-                         dbo.Tarea.FechaCierre, dbo.Usuario.Correo, dbo.Usuario.Nombre
+                         dbo.Tarea.FechaCierreEncargado,dbo.Tarea.FechaCierreSolicitante, dbo.Usuario.Correo, dbo.Usuario.Nombre
 FROM            dbo.Usuario INNER JOIN
                          dbo.Tarea ON dbo.Usuario.IdUsuario = dbo.Tarea.IdUsuarioAsignado CROSS JOIN
                          dbo.Parametro

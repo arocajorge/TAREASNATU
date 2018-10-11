@@ -23,7 +23,6 @@ namespace Web.Controllers
         [AllowAnonymous]
         public ActionResult Login()
         {
-            Session.Contents.RemoveAll();
             Usuario_Info model = new Usuario_Info();
             return View(model);
         }
@@ -31,6 +30,8 @@ namespace Web.Controllers
         [AllowAnonymous]
         public ActionResult Login(Usuario_Info model)
         {
+            var infousuario = bus_usuario.get_info(model.IdUsuario);
+            SessionTareas.TipoUsuario = infousuario.TipoUsuario.ToString();
 
             bool usuario_clave_exist = bus_usuario.validar_login(model.IdUsuario, model.Clave);
             if (usuario_clave_exist)
@@ -51,7 +52,6 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-            Session.Contents.RemoveAll();
             return RedirectToAction("Login");
         }
 

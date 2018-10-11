@@ -32,6 +32,7 @@
 
         };
         //Funcion para inicializar fila al presionar nuevo
+
         settings.InitNewRow = (s, e) =>
         {
             e.NewValues["NumHoras"] = 0;
@@ -40,6 +41,21 @@
             e.NewValues["IdEstado"] = 8;
         };
 
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdUsuario";
+            column.Caption = "Usuario";
+            column.Width = Unit.Percentage(20);
+            column.EditorProperties().ComboBox(p =>
+            {
+                p.Columns.Add("IdUsuario", "Usuario").Width = Unit.Percentage(30);
+                p.Columns.Add("Nombre", "Nombres").Width = Unit.Percentage(70);
+                p.ValueField = "IdUsuario";
+                p.ValueType = typeof(string);
+                p.DataSource = ViewBag.list_usuarios;
+                p.Width = Unit.Percentage(100);
+            });
+        });
 
         settings.Columns.Add(column =>
         {
@@ -90,21 +106,6 @@
             });
         });
 
-        settings.Columns.Add(column =>
-        {
-            column.FieldName = "IdUsuario";
-            column.Caption = "Usuario";
-            column.Width = Unit.Percentage(20);
-            column.EditorProperties().ComboBox(p =>
-            {
-                p.Columns.Add("IdUsuario", "Usuario").Width = Unit.Percentage(30);
-                p.Columns.Add("Nombre", "Nombres").Width = Unit.Percentage(70);
-                p.ValueField = "IdUsuario";
-                p.ValueType = typeof(string);
-                p.DataSource = ViewBag.list_usuarios;
-                p.Width = Unit.Percentage(100);
-            });
-        });
 
         settings.Columns.Add(column =>
         {

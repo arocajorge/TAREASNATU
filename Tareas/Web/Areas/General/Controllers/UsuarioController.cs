@@ -10,6 +10,7 @@ using Web.Helps;
 
 namespace Web.Areas.General.Controllers
 {
+    [SessionTimeout]
     public class UsuarioController : Controller
     {
         #region Index

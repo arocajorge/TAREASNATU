@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Web.Helps;
 namespace Web.Areas.General.Controllers
 {
+    [SessionTimeout]
     public class EstadoController : Controller
     {
         EstadoTipo_Bus bus_estado_tipo = new EstadoTipo_Bus();

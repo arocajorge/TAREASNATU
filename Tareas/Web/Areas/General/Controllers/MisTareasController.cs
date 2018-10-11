@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using Web.Helps;
 namespace Web.Areas.General.Controllers
 {
+    [SessionTimeout]
     public class MisTareasController : Controller
     {
         Tarea_Bus bus_tarea = new Tarea_Bus();
