@@ -72,7 +72,7 @@
                     ViewContext.Writer.Write(
                 Html.ActionLink("Modificar", "Modificar","Tarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }, null) + "&nbsp;" +
                         Html.ActionLink("Anular","Anular","Tarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") },
-                            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
+                            null)
                     );
                 }
                 else

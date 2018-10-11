@@ -349,7 +349,7 @@ namespace Data
                
                 try
                 {
-                    info.Saludo = "Le encomiendo la siguiente tarea";
+                    info.Saludo = "Se encomiendo la siguiente tarea";
                     EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.NUEVA.ToString()+" "+cl_enumeradores.eAsuntoCorreo.TAREA.ToString(), cl_enumeradores.eCorreo.ENCARGADO);
                 }
                 catch (Exception)
@@ -942,7 +942,7 @@ namespace Data
                     Body += "<br/>";
                     Body += "<br/>";
                     Body += "Para para acceder a la tarea acceder al link:<br/><br/>";
-                    Body += "<a href='http://localhost:27043/General/"+info.Controller+"/"+info.Accion+"?IdTarea=" + info.IdTarea+"'>Tareas</a>";
+                    Body += "<a href='http://tareas.degeremcia.com/General/"+info.Controller+"/"+info.Accion+"?IdTarea=" + info.IdTarea+"'>Tareas</a>";
 
                     Body += "<br/>";
                     Body += "<br/>";
@@ -959,7 +959,7 @@ namespace Data
                     smtp.Host = infoParametros.Host;
                     smtp.EnableSsl =  infoParametros.PermitirSSL;
                     smtp.Port = infoParametros.Puerto;
-                    smtp.Credentials = new NetworkCredential(infoParametros.CorreoCuenta, "dianaycarlos1985");
+                    smtp.Credentials = new NetworkCredential(infoParametros.CorreoCuenta, infoParametros.CorreoClave);
                     smtp.Send(mail);
 
                    
