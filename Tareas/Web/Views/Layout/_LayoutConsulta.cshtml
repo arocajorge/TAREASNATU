@@ -101,20 +101,20 @@
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="header">NAVEGACION</li>
 
-                    <li class="treeview active">
+                    <li class="treeview dx-tabs-expanded">
                         <a href="#">
                             <i class="fa fa-files-o"></i>
                             <span>MENU</span>
                         </a>
-                        <ul class="treeview-menu">
-                            <li class="treeview">
+                        <ul class="treeview-menu active">
+                            <li class="treeview active">
                                 <a href="#">
                                     <i class="fa fa-circle-o"></i> Mantenimientos
                                     <span class="pull-right-container">
                                         <i class="fa fa-angle-left pull-right"></i>
                                     </span>
                                 </a>
-                                <ul class="treeview-menu">
+                                <ul class="treeview-menu active">
                                     @if (Web.Helps.SessionTareas.TipoUsuario == "1")
                                     {
                                     <li><a href="/General/Parametro/Index"><i class="fa fa-circle-o"></i>Parámetros</a></li>
@@ -125,14 +125,14 @@
                                     <li><a href="/General/Archivo/Index"><i class="fa fa-circle-o"></i>Formatos ISO</a></li>
                                 </ul>
                             </li>
-                            <li class="treeview">
+                            <li class="treeview active">
                                 <a href="#">
                                     <i class="fa fa-circle-o"></i> Transacciones
                                     <span class="pull-right-container">
                                         <i class="fa fa-angle-left pull-right"></i>
                                     </span>
                                 </a>
-                                <ul class="treeview-menu">
+                                <ul class="treeview-menu active">
                                     <li><a href="/General/Tarea/Nuevo"><i class="fa fa-circle-o"></i>Nueva tarea</a></li>
                                     <li><a href="/General/MisTareas/Index"><i class="fa fa-circle-o"></i>Mis tareas</a></li>
                                     <li><a href="/General/AsignarTarea/Index"><i class="fa fa-circle-o"></i>Asignar tareas</a></li>
@@ -141,7 +141,7 @@
                                     
                                 </ul>
                             </li>
-                            <li class="treeview">
+                            <li class="treeview active">
                                 <a href="#">
                                     <i class="fa fa-circle-o"></i> Reportes
                                     <span class="pull-right-container">

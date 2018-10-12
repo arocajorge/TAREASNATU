@@ -198,7 +198,7 @@
            
             <div class="col-md-2">
                 <div class="form-group">
-                    <label for="IdEstadoCierreTarea">Cerrar tarea cada:*</label>
+                    <label for="IdEstadoCierreTarea">Cerrar tarea cada [min]:*</label>
                     @Html.TextBoxFor(v => v.IntervaloEjecucionMin, new { @class = "form-control" })
                     @Html.ValidationMessageFor(m => m.IntervaloEjecucionMin, "", new { @class = "text-danger" })
                 </div>
