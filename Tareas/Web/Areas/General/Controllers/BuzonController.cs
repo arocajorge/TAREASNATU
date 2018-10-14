@@ -80,7 +80,7 @@ namespace Web.Areas.General.Controllers
             return View(model);
         }
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_eliminada(DateTime? fecha_ini, DateTime? fecha_fin)
+        public ActionResult GridViewPartial_buzon_eliminada(DateTime? fecha_ini, DateTime? fecha_fin)
         {
             List<Tarea_Info> model = new List<Tarea_Info>();
             ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : fecha_ini;
@@ -88,7 +88,7 @@ namespace Web.Areas.General.Controllers
             model = bus_tarea.get_lis(ViewBag.fecha_ini, ViewBag.fecha_fin);
 
             model = bus_tarea.get_lis_anulados(SessionTareas.IdUsuario.ToString(), ViewBag.fecha_ini, ViewBag.fecha_fin);
-            return PartialView("_GridViewPartial_eliminada", model);
+            return PartialView("_GridViewPartial_buzon_eliminada", model);
         }
 
 
