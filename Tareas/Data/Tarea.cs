@@ -18,8 +18,8 @@ namespace Data
         public Tarea()
         {
             this.Tarea_det = new HashSet<Tarea_det>();
-            this.TareaArchivoAdjunto = new HashSet<TareaArchivoAdjunto>();
             this.TareaEstado = new HashSet<TareaEstado>();
+            this.TareaArchivoAdjunto = new HashSet<TareaArchivoAdjunto>();
         }
     
         public decimal IdTarea { get; set; }
@@ -56,8 +56,8 @@ namespace Data
         public virtual Usuario Usuario { get; set; }
         public virtual Usuario Usuario1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TareaArchivoAdjunto> TareaArchivoAdjunto { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TareaEstado> TareaEstado { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TareaArchivoAdjunto> TareaArchivoAdjunto { get; set; }
     }
 }

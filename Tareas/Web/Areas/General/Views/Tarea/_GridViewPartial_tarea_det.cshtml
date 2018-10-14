@@ -30,8 +30,12 @@
 
         settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
         settings.EditFormLayoutProperties.SettingsAdaptivity.AdaptivityMode = FormLayoutAdaptivityMode.SingleColumnWindowLimit;
-        settings.EditFormLayoutProperties.SettingsAdaptivity.SwitchToSingleColumnAtWindowInnerWidth = 1000;
+        settings.EditFormLayoutProperties.SettingsAdaptivity.SwitchToSingleColumnAtWindowInnerWidth = 500;
         settings.Settings.VerticalScrollableHeight = 500;
+        settings.CommandColumn.Width = Unit.Pixel(100);
+
+
+        settings.CommandColumn.AdaptivePriority = 1;
 
 
         settings.SettingsContextMenu.Enabled = true;
@@ -123,7 +127,12 @@
                 p.Width = Unit.Percentage(100);
             });
         });
+        settings.Styles.Cell.Wrap = DefaultBoolean.False;
 
+        settings.CellEditorInitialize = (s, e) =>
+        {
+            ((ASPxEdit)e.Editor).ValidationSettings.Display = Display.Dynamic;
+        };
     });
 
 }

@@ -24,7 +24,8 @@ namespace Data
                                  IdTarea = q.IdTarea,
                                  Secuencial = q.Secuencial,
                                  NombreArchivo = q.NombreArchivo,
-                                 Archivo=q.Archivo
+                                 Archivo=q.Archivo,
+                                 TipoArchivo=q.TipoArchivo
                              }).ToList();
                 }
 
@@ -54,7 +55,8 @@ namespace Data
                         IdTarea = Entity.IdTarea,
                         Secuencial = Entity.Secuencial,
                         NombreArchivo = Entity.NombreArchivo,
-                        Archivo=Entity.Archivo
+                        Archivo=Entity.Archivo,
+                        TipoArchivo=Entity.TipoArchivo
 
                     };
                 }

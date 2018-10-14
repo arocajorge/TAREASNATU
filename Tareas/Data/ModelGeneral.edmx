@@ -132,8 +132,9 @@
           </Key>
           <Property Name="IdTarea" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Secuencial" Type="int" Nullable="false" />
-          <Property Name="NombreArchivo" Type="varchar" MaxLength="1000" />
-          <Property Name="Archivo" Type="image" />
+          <Property Name="NombreArchivo" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="Archivo" Type="image" Nullable="false" />
+          <Property Name="TipoArchivo" Type="varchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="TareaEstado">
           <Key>
@@ -610,7 +611,6 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
           <EntitySet Name="Grupo" EntityType="ModelGeneral.Grupo" />
           <EntitySet Name="Grupo_Usuario" EntityType="ModelGeneral.Grupo_Usuario" />
           <EntitySet Name="Tarea_det" EntityType="ModelGeneral.Tarea_det" />
-          <EntitySet Name="TareaArchivoAdjunto" EntityType="ModelGeneral.TareaArchivoAdjunto" />
           <AssociationSet Name="FK_Grupo_Usuario_Grupo" Association="ModelGeneral.FK_Grupo_Usuario_Grupo">
             <End Role="Grupo" EntitySet="Grupo" />
             <End Role="Grupo_Usuario" EntitySet="Grupo_Usuario" />
@@ -680,10 +680,6 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Tarea" EntitySet="Tarea" />
           </AssociationSet>
-          <AssociationSet Name="FK_TareaArchivoAdjunto_Tarea" Association="ModelGeneral.FK_TareaArchivoAdjunto_Tarea">
-            <End Role="Tarea" EntitySet="Tarea" />
-            <End Role="TareaArchivoAdjunto" EntitySet="TareaArchivoAdjunto" />
-          </AssociationSet>
           <AssociationSet Name="FK_TareaEstado_Tarea" Association="ModelGeneral.FK_TareaEstado_Tarea">
             <End Role="Tarea" EntitySet="Tarea" />
             <End Role="TareaEstado" EntitySet="TareaEstado" />
@@ -701,6 +697,11 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
             <Parameter Name="FechaInicio" Mode="In" Type="DateTime" />
             <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
           </FunctionImport>
+          <EntitySet Name="TareaArchivoAdjunto" EntityType="ModelGeneral.TareaArchivoAdjunto" />
+          <AssociationSet Name="FK_TareaArchivoAdjunto_Tarea" Association="ModelGeneral.FK_TareaArchivoAdjunto_Tarea">
+            <End Role="Tarea" EntitySet="Tarea" />
+            <End Role="TareaArchivoAdjunto" EntitySet="TareaArchivoAdjunto" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="EstadoTipo">
           <Key>
@@ -766,17 +767,6 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
           <NavigationProperty Name="Usuario" Relationship="ModelGeneral.FK_Tarea_det_Usuario" FromRole="Tarea_det" ToRole="Usuario" />
           <NavigationProperty Name="Estado" Relationship="ModelGeneral.FK_Tarea_det_Estado" FromRole="Tarea_det" ToRole="Estado" />
           <NavigationProperty Name="Tarea" Relationship="ModelGeneral.FK_Tarea_det_Tarea" FromRole="Tarea_det" ToRole="Tarea" />
-        </EntityType>
-        <EntityType Name="TareaArchivoAdjunto">
-          <Key>
-            <PropertyRef Name="IdTarea" />
-            <PropertyRef Name="Secuencial" />
-          </Key>
-          <Property Name="IdTarea" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="Secuencial" Type="Int32" Nullable="false" />
-          <Property Name="NombreArchivo" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="Archivo" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <NavigationProperty Name="Tarea" Relationship="ModelGeneral.FK_TareaArchivoAdjunto_Tarea" FromRole="TareaArchivoAdjunto" ToRole="Tarea" />
         </EntityType>
         <Association Name="FK_Grupo_Usuario_Grupo">
           <End Type="ModelGeneral.Grupo" Role="Grupo" Multiplicity="1" />
@@ -993,8 +983,8 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
           <NavigationProperty Name="Tarea_det" Relationship="ModelGeneral.FK_Tarea_det_Tarea" FromRole="Tarea" ToRole="Tarea_det" />
           <NavigationProperty Name="Usuario" Relationship="ModelGeneral.FK_Tarea_Usuario" FromRole="Tarea" ToRole="Usuario" />
           <NavigationProperty Name="Usuario1" Relationship="ModelGeneral.FK_Tarea_Usuario1" FromRole="Tarea" ToRole="Usuario" />
-          <NavigationProperty Name="TareaArchivoAdjunto" Relationship="ModelGeneral.FK_TareaArchivoAdjunto_Tarea" FromRole="Tarea" ToRole="TareaArchivoAdjunto" />
           <NavigationProperty Name="TareaEstado" Relationship="ModelGeneral.FK_TareaEstado_Tarea" FromRole="Tarea" ToRole="TareaEstado" />
+          <NavigationProperty Name="TareaArchivoAdjunto" Relationship="ModelGeneral.FK_TareaArchivoAdjunto_Tarea" FromRole="Tarea" ToRole="TareaArchivoAdjunto" />
         </EntityType>
         <EntityType Name="TareaEstado">
           <Key>
@@ -1078,18 +1068,6 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
             </Principal>
             <Dependent Role="Tarea">
               <PropertyRef Name="IdUsuarioAsignado" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TareaArchivoAdjunto_Tarea">
-          <End Type="ModelGeneral.Tarea" Role="Tarea" Multiplicity="1" />
-          <End Type="ModelGeneral.TareaArchivoAdjunto" Role="TareaArchivoAdjunto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tarea">
-              <PropertyRef Name="IdTarea" />
-            </Principal>
-            <Dependent Role="TareaArchivoAdjunto">
-              <PropertyRef Name="IdTarea" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1237,6 +1215,30 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
           <Property Type="String" Name="Encargado" Nullable="false" MaxLength="500" />
           <Property Type="String" Name="Grupo" Nullable="false" MaxLength="1000" />
         </ComplexType>
+        <EntityType Name="TareaArchivoAdjunto">
+          <Key>
+            <PropertyRef Name="IdTarea" />
+            <PropertyRef Name="Secuencial" />
+          </Key>
+          <Property Name="IdTarea" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Secuencial" Type="Int32" Nullable="false" />
+          <Property Name="NombreArchivo" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Archivo" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="TipoArchivo" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Tarea" Relationship="ModelGeneral.FK_TareaArchivoAdjunto_Tarea" FromRole="TareaArchivoAdjunto" ToRole="Tarea" />
+        </EntityType>
+        <Association Name="FK_TareaArchivoAdjunto_Tarea">
+          <End Type="ModelGeneral.Tarea" Role="Tarea" Multiplicity="1" />
+          <End Type="ModelGeneral.TareaArchivoAdjunto" Role="TareaArchivoAdjunto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tarea">
+              <PropertyRef Name="IdTarea" />
+            </Principal>
+            <Dependent Role="TareaArchivoAdjunto">
+              <PropertyRef Name="IdTarea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1297,16 +1299,6 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
                 <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="Secuancial" ColumnName="Secuancial" />
-                <ScalarProperty Name="IdTarea" ColumnName="IdTarea" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TareaArchivoAdjunto">
-            <EntityTypeMapping TypeName="ModelGeneral.TareaArchivoAdjunto">
-              <MappingFragment StoreEntitySet="TareaArchivoAdjunto">
-                <ScalarProperty Name="Archivo" ColumnName="Archivo" />
-                <ScalarProperty Name="NombreArchivo" ColumnName="NombreArchivo" />
-                <ScalarProperty Name="Secuencial" ColumnName="Secuencial" />
                 <ScalarProperty Name="IdTarea" ColumnName="IdTarea" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1535,6 +1527,17 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="TareaArchivoAdjunto">
+            <EntityTypeMapping TypeName="ModelGeneral.TareaArchivoAdjunto">
+              <MappingFragment StoreEntitySet="TareaArchivoAdjunto">
+                <ScalarProperty Name="TipoArchivo" ColumnName="TipoArchivo" />
+                <ScalarProperty Name="Archivo" ColumnName="Archivo" />
+                <ScalarProperty Name="NombreArchivo" ColumnName="NombreArchivo" />
+                <ScalarProperty Name="Secuencial" ColumnName="Secuencial" />
+                <ScalarProperty Name="IdTarea" ColumnName="IdTarea" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

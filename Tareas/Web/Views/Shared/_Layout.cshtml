@@ -102,20 +102,20 @@
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="header">NAVEGACION</li>
 
-                    <li class="treeview dx-tabs-expanded">
+                    <li class="treeview active">
                         <a href="#">
                             <i class="fa fa-files-o"></i>
                             <span>MENÚ</span>
                         </a>
-                        <ul class="treeview-menu active">
-                            <li class="treeview active">
+                        <ul class="treeview-menu">
+                            <li class="treeview">
                                 <a href="#">
                                     <i class="fa fa-circle-o"></i> Mantenimientos
                                     <span class="pull-right-container">
                                         <i class="fa fa-angle-left pull-right"></i>
                                     </span>
                                 </a>
-                                <ul class="treeview-menu active">
+                                <ul class="treeview-menu">
                                    @if (Web.Helps.SessionTareas.TipoUsuario == "1")
                                    {
                                     <li><a href="/General/Parametro/Index"><i class="fa fa-circle-o"></i>Parámetros</a></li>
@@ -138,12 +138,22 @@
                                     <li><a href="/General/MisTareas/Index"><i class="fa fa-circle-o"></i>Mis tareas</a></li>
                                     <li><a href="/General/AsignarTarea/Index"><i class="fa fa-circle-o"></i>Asignar tareas</a></li>
                                     <li><a href="/General/MisTareas/CargaLaboral"><i class="fa fa-circle-o"></i>Carga laboral</a></li>
-
-
-
                                 </ul>
                             </li>
                             <li class="treeview active">
+                                <a href="#">
+                                    <i class="fa fa-circle-o"></i> Buzon
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a href="/General/Buzon/Buzon_entrada"><i class="fa fa-circle-o text-red"></i> <span>Tareas Asignadas</span></a></li>
+                                    <li><a href="/General/Buzon/Buzon_salida"><i class="fa fa-circle-o text-yellow"></i> <span>Tareas Enviadas</span></a></li>
+                                    <li><a href="/General/Buzon/Buzon_eliminado"><i class="fa fa-circle-o text-aqua"></i> <span>Tareas Anuladas</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="treeview">
                                 <a href="#">
                                     <i class="fa fa-circle-o"></i> Reportes
                                     <span class="pull-right-container">
@@ -153,18 +163,12 @@
                                 <ul class="treeview-menu active">
                                     <li><a href="/Reportes/GeneralReportes/GEN_001" target="_blank"><i class="fa fa-circle-o"></i>Detallado</a></li>
                                     <li><a href="/Reportes/GeneralReportes/GEN_002" target="_blank"><i class="fa fa-circle-o"></i>Resumido</a></li>
-
-
-
-
                                 </ul>
                             </li>
+
+                           
                         </ul>
                     </li>
-                    <li class="header">BANDEJAS</li>
-                    <li><a href="/General/Buzon/Buzon_entrada"><i class="fa fa-circle-o text-red"></i> <span>Tareas Asignadas</span></a></li>
-                    <li><a href="/General/Buzon/Buzon_salida"><i class="fa fa-circle-o text-yellow"></i> <span>Tareas Enviadas</span></a></li>
-                    <li><a href="/General/Buzon/Buzon_eliminado"><i class="fa fa-circle-o text-aqua"></i> <span>Tareas Anuladas</span></a></li>
                 </ul>
             </section>
             <!-- /.sidebar -->

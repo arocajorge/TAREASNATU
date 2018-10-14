@@ -9,7 +9,6 @@
         <EntityTypeShape EntityType="ModelGeneral.Grupo" Width="1.5" PointX="3" PointY="16.875" />
         <EntityTypeShape EntityType="ModelGeneral.Grupo_Usuario" Width="1.5" PointX="8.25" PointY="15.875" />
         <EntityTypeShape EntityType="ModelGeneral.Tarea_det" Width="1.5" PointX="10.5" PointY="14.75" />
-        <EntityTypeShape EntityType="ModelGeneral.TareaArchivoAdjunto" Width="1.5" PointX="7.5" PointY="22.25" />
         <AssociationConnector Association="ModelGeneral.FK_Grupo_Usuario_Grupo" />
         <EntityTypeShape EntityType="ModelGeneral.Usuario" Width="1.5" PointX="0.75" PointY="14.875" />
         <AssociationConnector Association="ModelGeneral.FK_Grupo_Usuario" />
@@ -30,10 +29,11 @@
         <AssociationConnector Association="ModelGeneral.FK_Tarea_det_Tarea" />
         <AssociationConnector Association="ModelGeneral.FK_Tarea_Usuario" />
         <AssociationConnector Association="ModelGeneral.FK_Tarea_Usuario1" />
-        <AssociationConnector Association="ModelGeneral.FK_TareaArchivoAdjunto_Tarea" />
         <AssociationConnector Association="ModelGeneral.FK_TareaEstado_Tarea" />
         <EntityTypeShape EntityType="ModelGeneral.vw_Tarea" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="ModelGeneral.VWGEN_001" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="ModelGeneral.TareaArchivoAdjunto" Width="1.5" PointX="7.875" PointY="22.875" />
+        <AssociationConnector Association="ModelGeneral.FK_TareaArchivoAdjunto_Tarea" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

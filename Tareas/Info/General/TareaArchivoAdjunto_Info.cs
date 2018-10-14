@@ -12,6 +12,8 @@ namespace Info
         public int Secuencial { get; set; }
         public string NombreArchivo { get; set; }
         public byte[] Archivo { get; set; }
+        public string TipoArchivo { get; set; }
+
 
     }
 }

@@ -485,10 +485,10 @@ namespace Web.Areas.General.Controllers
             if (info == null)
             {
                var archivo= TareaArchivoAdjunto_Info_lis.get_list(Convert.ToDecimal( SessionTareas.IdTransaccionSession)).Where(m => m.Secuencial == Secuencial).FirstOrDefault();
-                return File(archivo.Archivo, "application/pdf", archivo.NombreArchivo);
+                return File(archivo.Archivo, archivo.TipoArchivo, archivo.NombreArchivo);
             }
             else
-                return File(info.Archivo, "application/pdf", info.NombreArchivo);
+                return File(info.Archivo, info.TipoArchivo, info.NombreArchivo);
 
         }
 
@@ -659,7 +659,7 @@ namespace Web.Areas.General.Controllers
         public static DevExpress.Web.UploadControlValidationSettings UploadValidationSettings = new DevExpress.Web.UploadControlValidationSettings()
         {
             AllowedFileExtensions = new string[] { ".xlsx", ".xls", ".doc",  ".pdf", ".docx",".jpg",".png" },
-            MaxFileSize = 400000000
+            MaxFileSize = 9000000000
         };
         public static void FileUploadComplete(object sender, DevExpress.Web.FileUploadCompleteEventArgs e)
         {
@@ -668,6 +668,7 @@ namespace Web.Areas.General.Controllers
                 TareaArchivoAdjunto_Info info_documento = new TareaArchivoAdjunto_Info();
                 info_documento.Archivo = e.UploadedFile.FileBytes;
                 info_documento.NombreArchivo = e.UploadedFile.FileName;
+                info_documento.TipoArchivo = e.UploadedFile.ContentType;
                 TareaArchivoAdjunto_Info_lis.AddRow(info_documento);
             }
         }

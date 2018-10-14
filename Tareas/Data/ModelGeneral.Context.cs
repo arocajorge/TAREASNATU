@@ -31,7 +31,6 @@ namespace Data
         public virtual DbSet<Grupo> Grupo { get; set; }
         public virtual DbSet<Grupo_Usuario> Grupo_Usuario { get; set; }
         public virtual DbSet<Tarea_det> Tarea_det { get; set; }
-        public virtual DbSet<TareaArchivoAdjunto> TareaArchivoAdjunto { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
         public virtual DbSet<Estado> Estado { get; set; }
         public virtual DbSet<Parametro> Parametro { get; set; }
@@ -39,6 +38,7 @@ namespace Data
         public virtual DbSet<TareaEstado> TareaEstado { get; set; }
         public virtual DbSet<vw_Tarea> vw_Tarea { get; set; }
         public virtual DbSet<VWGEN_001> VWGEN_001 { get; set; }
+        public virtual DbSet<TareaArchivoAdjunto> TareaArchivoAdjunto { get; set; }
     
         public virtual ObjectResult<sp_carga_laboral_Result> sp_carga_laboral(string idUsuario, Nullable<System.DateTime> fecha)
         {

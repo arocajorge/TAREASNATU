@@ -318,7 +318,8 @@ namespace Data
                             IdTarea = info.IdTarea,
                             Secuencial = secuencia,
                             NombreArchivo = item.NombreArchivo,
-                            Archivo=item.Archivo
+                            Archivo=item.Archivo,
+                            TipoArchivo=item.TipoArchivo
 
                         };
                         secuencia++;
@@ -421,7 +422,8 @@ namespace Data
                             IdTarea = info.IdTarea,
                             Secuencial = secuencia,
                             NombreArchivo = item.NombreArchivo,
-                            Archivo = item.Archivo
+                            Archivo = item.Archivo,
+                            TipoArchivo = item.TipoArchivo
 
 
                         };
