@@ -16,12 +16,20 @@
         settings.SettingsBehavior.EnableCustomizationWindow = true;
 
 
+
         //CConfiguracion responsive
+        settings.EnableRowsCache = false;
+
         settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
         settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
         settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
         settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
-        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 800;
+
+        settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+        settings.EditFormLayoutProperties.SettingsAdaptivity.AdaptivityMode = FormLayoutAdaptivityMode.SingleColumnWindowLimit;
+        settings.EditFormLayoutProperties.SettingsAdaptivity.SwitchToSingleColumnAtWindowInnerWidth = 1000;
+        settings.Settings.VerticalScrollableHeight = 500;
 
         settings.SettingsPager.Visible = true;
         settings.Settings.ShowGroupPanel = false;
@@ -37,7 +45,7 @@
         {
             column.FieldName = "NombreArchivo";
             column.Caption = "Nombre archivo";
-            column.Width = Unit.Percentage(100);
+            column.Width = Unit.Percentage(90);
             column.EditorProperties().TextBox(sp =>
             {
                 sp.Width = Unit.Percentage(100);
@@ -56,7 +64,7 @@
                     ViewContext.Writer.Write("<span class=\"glyphicon glyphicon-download-alt\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("DolowarFille", "Tarea", new { Area = "General", IdTarea = DataBinder.Eval(c.DataItem, "IdTarea"),  Secuencial = DataBinder.Eval(c.DataItem, "Secuencial") }, Request.Url.Scheme) + "');\"></span>");
                 }
             });
-            column.Width = Unit.Percentage(5);
+            column.Width = Unit.Percentage(10);
         });
 
     });

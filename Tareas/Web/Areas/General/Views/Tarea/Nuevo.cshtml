@@ -1,4 +1,5 @@
-﻿@model Info.Tarea_Info
+﻿@using System.Web.UI.WebControls;
+@model Info.Tarea_Info
 
 @{
 
@@ -20,6 +21,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
 
 @using (Html.BeginForm("Nuevo", "Tarea", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
@@ -254,14 +256,15 @@
 
 
                                 @Html.DevExpress().UploadControl(settings =>
-                               {
+                           {
                                settings.Name = "UploadControl_adjunto";
                                settings.CallbackRouteValues = new { Controller = "Tarea", Action = "UploadControl_adjuntoUpload" };
 
                                settings.AdvancedModeSettings.EnableMultiSelect = true;
                                settings.AdvancedModeSettings.EnableFileList = true;
                                settings.AdvancedModeSettings.EnableDragAndDrop = true;
-
+                               settings.Width =Unit.Percentage(100);
+                               settings.Height = Unit.Pixel(50);
                                settings.ShowUploadButton = true;
                                settings.ShowProgressPanel = true;
                                settings.ClientSideEvents.FileUploadComplete= "function(s,e){refres_grid_adjunto();}";
@@ -324,6 +327,12 @@
                         </div>
                     </div>
                 </div>
+
+                
+
+
+
+
             </div>
         </div>
     </div>

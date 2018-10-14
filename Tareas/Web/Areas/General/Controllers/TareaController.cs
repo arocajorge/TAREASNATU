@@ -483,8 +483,13 @@ namespace Web.Areas.General.Controllers
         {
             var info= bus_adjunto.get_info(IdTarea, Secuencial);
             if (info == null)
-                info = new TareaArchivoAdjunto_Info();
-            return File(info.Archivo, "application/pdf", info.NombreArchivo);
+            {
+               var archivo= TareaArchivoAdjunto_Info_lis.get_list(Convert.ToDecimal( SessionTareas.IdTransaccionSession)).Where(m => m.Secuencial == Secuencial).FirstOrDefault();
+                return File(archivo.Archivo, "application/pdf", archivo.NombreArchivo);
+            }
+            else
+                return File(info.Archivo, "application/pdf", info.NombreArchivo);
+
         }
 
         #endregion
@@ -642,15 +647,18 @@ namespace Web.Areas.General.Controllers
         public ActionResult UploadControl_adjuntoUpload()
         {
             UploadControlExtension.GetUploadedFiles("UploadControl_adjunto", TareaControllerUploadControl_adjuntoSettings.UploadValidationSettings, TareaControllerUploadControl_adjuntoSettings.FileUploadComplete);
-            return PartialView("_GridViewPartial_tarea_det_adjunto", TareaArchivoAdjunto_Info_lis.get_list(Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual)));
-
+            // return PartialView("_GridViewPartial_tarea_det_adjunto", TareaArchivoAdjunto_Info_lis.get_list(Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual)));
+            return null;
         }
+
+      
     }
+   
     public class TareaControllerUploadControl_adjuntoSettings
     {
         public static DevExpress.Web.UploadControlValidationSettings UploadValidationSettings = new DevExpress.Web.UploadControlValidationSettings()
         {
-            AllowedFileExtensions = new string[] { ".xlsx", ".xls", ".doc",  ".pdf", ".docx" },
+            AllowedFileExtensions = new string[] { ".xlsx", ".xls", ".doc",  ".pdf", ".docx",".jpg",".png" },
             MaxFileSize = 400000000
         };
         public static void FileUploadComplete(object sender, DevExpress.Web.FileUploadCompleteEventArgs e)
