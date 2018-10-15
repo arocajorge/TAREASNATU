@@ -31,5 +31,7 @@ namespace Info.General
         public Nullable<int> Incumplidas { get; set; }
         public Nullable<int> EnProceso { get; set; }
 
+        public int Total { get; set; }
+
     }
 }

@@ -628,17 +628,20 @@
             // 
             // Porcentaje_enproceso
             // 
-            this.Porcentaje_enproceso.Expression = "[EnProceso]/([TotalTarea])";
+            this.Porcentaje_enproceso.Expression = "[EnProceso]/[Total]";
+            this.Porcentaje_enproceso.FieldType = DevExpress.XtraReports.UI.FieldType.Double;
             this.Porcentaje_enproceso.Name = "Porcentaje_enproceso";
             // 
             // porcentaje_cumplida
             // 
-            this.porcentaje_cumplida.Expression = "[Cumplidas]/([TotalTarea])";
+            this.porcentaje_cumplida.Expression = "[Cumplidas]/[Total]";
+            this.porcentaje_cumplida.FieldType = DevExpress.XtraReports.UI.FieldType.Double;
             this.porcentaje_cumplida.Name = "porcentaje_cumplida";
             // 
             // porcentaje_incumplida
             // 
-            this.porcentaje_incumplida.Expression = "[Incumplidas]/([TotalTarea])";
+            this.porcentaje_incumplida.Expression = "[Incumplidas]/[Total]";
+            this.porcentaje_incumplida.FieldType = DevExpress.XtraReports.UI.FieldType.Double;
             this.porcentaje_incumplida.Name = "porcentaje_incumplida";
             // 
             // TotalTarea

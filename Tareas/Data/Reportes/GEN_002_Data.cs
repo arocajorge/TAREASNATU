@@ -51,6 +51,16 @@ namespace Data.General
 
                                  }).ToList();
                 }
+
+                foreach (var item in Lista)
+                {
+                    if (item.EnProceso != null)
+                        item.Total =item.Total+ Convert.ToInt32(item.EnProceso);
+                    if (item.Cumplidas != null)
+                        item.Total = item.Total + Convert.ToInt32(item.Cumplidas);
+                    if (item.Incumplidas != null)
+                        item.Total = item.Total + Convert.ToInt32(item.Incumplidas);
+                }  
                 return Lista;
             }
             catch (Exception)
