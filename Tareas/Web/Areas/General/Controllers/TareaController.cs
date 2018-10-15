@@ -185,6 +185,7 @@ namespace Web.Areas.General.Controllers
             if (model == null)
                 return RedirectToAction("Index");
             model.AprobadoSolicitado = true;
+            
             return View(model);
         }
         [HttpPost]
@@ -335,6 +336,8 @@ namespace Web.Areas.General.Controllers
             cargar_combo();
             if (model == null)
                 return RedirectToAction("Buzon_entrada");
+            if (SessionTareas.IdUsuario != model.IdUsuarioAsignado)
+                SessionTareas.IdUsuario = null;
             return View(model);
         }
         [HttpPost]
@@ -416,6 +419,8 @@ namespace Web.Areas.General.Controllers
             cargar_combo();
             if (model == null)
                 return RedirectToAction("Buzon_salida");
+            if (SessionTareas.IdUsuario != model.IdUsuarioAsignado)
+                SessionTareas.IdUsuario = null;
             return View(model);
         }
         [HttpPost]

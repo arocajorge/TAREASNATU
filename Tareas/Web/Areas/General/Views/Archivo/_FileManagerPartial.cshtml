@@ -10,10 +10,10 @@
 
     settings.SettingsFileList.View = FileListView.Details;
 
-    settings.SettingsFileList.DetailsViewSettings.AllowColumnDragDrop =true;
+    settings.SettingsFileList.DetailsViewSettings.AllowColumnDragDrop = true;
     settings.SettingsFileList.DetailsViewSettings.AllowColumnResize = true;
     settings.SettingsFileList.DetailsViewSettings.AllowColumnSort = true;
-    settings.SettingsFileList.DetailsViewSettings.ShowHeaderFilterButton =true;
+    settings.SettingsFileList.DetailsViewSettings.ShowHeaderFilterButton = true;
     settings.SettingsAdaptivity.Enabled = true;
 
 
@@ -27,6 +27,6 @@
 
     settings.Settings.ThumbnailFolder = Url.Content("~/FormatoISO/FileManager/Thumbnails");
 
-    settings.Settings.InitialFolder= "FormatoISO";
+    settings.Settings.InitialFolder = "FormatoISO";
 
 }).BindToFolder(Model).GetHtml()

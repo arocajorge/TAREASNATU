@@ -11,7 +11,14 @@
 
 @using (Html.BeginForm())
 {
-    @Html.Action("FileManagerPartial")
 
-
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    @Html.Action("FileManagerPartial")
+                </div>
+            </div>
+        </div>
+    </div>
 }

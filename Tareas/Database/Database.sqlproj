@@ -80,5 +80,6 @@
     <Build Include="dbo\Stored Procedures\sp_tareas_culminadas_sin_cerrar.sql" />
     <Build Include="dbo\Stored Procedures\sp_crear_tarea_concurrente.sql" />
     <Build Include="dbo\Stored Procedures\sp_carga_laboral.sql" />
+    <Build Include="dbo\Stored Procedures\CierreTareaAutomatico.sql" />
   </ItemGroup>
 </Project>
