@@ -7472,11 +7472,11 @@
     <Content Include="Areas\Reportes\Views\GeneralReportes\GEN_001.cshtml" />
     <Content Include="Areas\Reportes\Views\_Layout_filtros.cshtml" />
     <Content Include="App_Data\Index.cshtml" />
-    <Content Include="FormatoISO\Index.cshtml" />
     <Content Include="Areas\General\Views\TareaEstados\_GridViewPartial_tarea_det_estados.cshtml" />
     <Content Include="Areas\General\Views\Buzon\_GridViewPartial_buzon_eliminada.cshtml" />
     <Content Include="Areas\General\Views\Buzon\Buzon_eliminado.cshtml" />
     <Content Include="Areas\General\Views\Tarea\CerrarPorSolicitante.cshtml" />
+    <Content Include="FormatoISO\Index.cshtml" />
     <None Include="Properties\PublishProfiles\Erp_web.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\web.pubxml" />
