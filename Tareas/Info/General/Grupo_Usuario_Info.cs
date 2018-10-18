@@ -13,7 +13,6 @@ namespace Info
         [Required(ErrorMessage = "El campo usuario es obligatorio")]
         public string IdUsuario { get; set; }
         public string Observacion { get; set; }
-
         public string Correo { get; set; }
 
     }

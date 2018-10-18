@@ -91,9 +91,17 @@
         settings.Columns.Add("IdUsuario", "Usuario").Width = Unit.Percentage(20);
         settings.Columns.Add("Nombre", "Nombre").Width = Unit.Percentage(35);
         settings.Columns.Add("Correo", "Correo").Width = Unit.Percentage(35);
-        settings.Columns.Add("Estado", "Estado").Width = Unit.Percentage(10);
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Estado";
+            column.Caption = "Estado";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(5);
+            column.EditorProperties().CheckBox(sp =>
+            {
 
-     
+            });
+        });
+
 
     });
 }
