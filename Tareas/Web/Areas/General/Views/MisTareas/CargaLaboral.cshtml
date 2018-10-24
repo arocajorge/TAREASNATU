@@ -40,25 +40,53 @@
             <div class="row">
                 <div class="col-md-12">
 
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="IdGrupoFiltro">Grupo*</label>
+                            @Html.DevExpress().ComboBoxFor(q => q.IdGrupoFiltro, settings =>
+                       {
+                           settings.Name = "IdGrupoFiltro";
+                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                           settings.Properties.DisplayFormatString = "[{0}],[{1}]";
+                           settings.Properties.Columns.Add("IdGrupo", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                           settings.Properties.Columns.Add("Descripcion", "Grupo").Width = System.Web.UI.WebControls.Unit.Percentage(90);
+                           //Campo ID
+                           settings.Properties.ValueField = "IdGrupo";
+                           settings.Properties.ValueType = typeof(string);
+                           settings.Properties.TextField = "Descripcion";
+                           //Boton para seleccionar ningun registro
+                           settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                           settings.Properties.NullText = "== Seleccione ==";
+                           settings.Properties.DropDownStyle = DropDownStyle.DropDownList;
+
+                       }).BindList(ViewBag.list_grupo).GetHtml()
+                            @Html.ValidationMessageFor(q => q.IdGrupoFiltro, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="IdUsuario">Usuario*</label>
                             @Html.DevExpress().ComboBoxFor(q => q.IdUsuario, settings =>
-                           {
-                               settings.Name = "IdUsuario";
-                               settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                               settings.Properties.DisplayFormatString = "{0}";
-                               settings.Properties.Columns.Add("Nombre", "Usuario").Width = System.Web.UI.WebControls.Unit.Percentage(10);
-                               //Campo ID
-                               settings.Properties.ValueField = "IdUsuario";
-                               settings.Properties.ValueType = typeof(string);
-                               settings.Properties.TextField = "Nombre";
-                               //Boton para seleccionar ningun registro
-                               settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
-                               settings.Properties.NullText = "== Seleccione ==";
-                               settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                       {
+                           settings.Name = "IdUsuario";
+                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                           settings.Properties.DisplayFormatString = "[{0}],[{1}]";
+                           settings.Properties.Columns.Add("IdUsuario", "Usuario").Width = System.Web.UI.WebControls.Unit.Percentage(15);
+                           settings.Properties.Columns.Add("Nombre", "Nombre").Width = System.Web.UI.WebControls.Unit.Percentage(85);
+                           //Campo ID
+                           settings.Properties.ValueField = "IdUsuario";
+                           settings.Properties.ValueType = typeof(string);
+                           settings.Properties.TextField = "Nombre";
+                           //Boton para seleccionar ningun registro
+                           settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
+                           settings.Properties.NullText = "== Seleccione ==";
+                           settings.Properties.DropDownStyle = DropDownStyle.DropDown;
 
-                           }).BindList(ViewBag.list_usuario).GetHtml()
+                       }).BindList(ViewBag.list_usuario).GetHtml()
                             @Html.ValidationMessageFor(q => q.IdUsuario, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -112,18 +140,18 @@
                         <div class="inner">
                             <h3>@Model.NumTareaDia</h3>
 
-                            <p>Por vencer</p>
+                            <p>Pendiente de aprobar</p>
                         </div>
                         <div class="icon">
                             <i class="ion-ios-clock"></i>
                         </div>
                         @if (Model.IdUsuario == Web.Helps.SessionTareas.IdUsuario)
                         {
-                            <a href="@Url.Action("Index")" class="small-box-footer"> Resolver tareas <i class="fa fa-arrow-circle-right"></i></a>
+                            <a href="@Url.Action("Buzon_entrada","Buzon")" class="small-box-footer"> Aprobar tareas <i class="fa fa-arrow-circle-right"></i></a>
                         }
                         else
                         {
-                            <a href="#" class="small-box-footer"> Resolver tareas <i class="fa fa-arrow-circle-right"></i></a>
+                            <a href="#" class="small-box-footer"> Aprobar tareas <i class="fa fa-arrow-circle-right"></i></a>
                         }    
                           </div>
                 </div>

@@ -1,0 +1,131 @@
+@using System.Web.UI.WebControls;
+
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridViewPartial_buzon_entrada";
+        settings.CallbackRouteValues = new { Controller = "Buzon", Action = "GridViewPartial_buzon_entrada", fecha_ini = ViewBag.fecha_ini, fecha_fin = ViewBag.fecha_fin };
+        settings.Width = Unit.Percentage(100);
+        settings.KeyFieldName = "IdTarea";
+        //Configuración para que la grilla no muestre texto completo
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
+        //CConfiguracion responsive
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 800;
+
+        settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+        settings.EditFormLayoutProperties.SettingsAdaptivity.AdaptivityMode = FormLayoutAdaptivityMode.SingleColumnWindowLimit;
+        settings.EditFormLayoutProperties.SettingsAdaptivity.SwitchToSingleColumnAtWindowInnerWidth = 500;
+        settings.Settings.VerticalScrollableHeight = 500;
+        settings.CommandColumn.Width = Unit.Pixel(100);
+        settings.CommandColumn.AdaptivePriority = 1;
+        //Configuración scrolling y pager
+        settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Hidden;
+        settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+        settings.Settings.VerticalScrollableHeight = 400;
+        settings.SettingsPager.Visible = true;
+        settings.SettingsPager.PageSize = 10;
+        settings.SettingsPager.Mode = GridViewPagerMode.ShowPager;
+        settings.SettingsPager.AlwaysShowPager = true;
+        //Configuración filtro por columna
+        settings.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowHeaderFilterButton = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        settings.SettingsExport.RenderBrick = (sender, e) =>
+        {
+            if (e.RowType == GridViewRowType.Data && e.VisibleIndex % 2 == 0)
+                e.BrickStyle.BackColor = System.Drawing.Color.FromArgb(0xEE, 0xEE, 0xEE);
+        };
+        //Evento para pintar de rojo las filas anuladas
+        settings.HtmlRowPrepared = (s, e) =>
+        {
+            if (Convert.ToInt32(e.GetValue("EstadoActual")) == 9)//  si esta aprobada
+            {
+                e.Row.ForeColor = System.Drawing.Color.Black;
+            }
+            if (Convert.ToInt32(e.GetValue("EstadoActual")) == 5) // si esta devuelta
+            {
+                e.Row.ForeColor = System.Drawing.Color.Red;
+            }
+
+            if (Convert.ToDateTime(e.GetValue("FechaCierreEncargado")).Year != 1 && Convert.ToDateTime(e.GetValue("FechaCierreSolicitante")).Year == 1)// cerro encargado no cerro solicitante
+            {
+                e.Row.ForeColor = System.Drawing.Color.Orange;
+            }
+
+            if (Convert.ToDateTime(e.GetValue("FechaCierreEncargado")).Year != 1 && Convert.ToDateTime(e.GetValue("FechaCierreSolicitante")).Year != 1)// cerro encargado y solicitante
+            {
+                e.Row.ForeColor = System.Drawing.Color.Blue;
+            }
+
+
+        };
+        settings.Columns.Add("AsuntoTarea", "Asunto").Width = Unit.Percentage(30);
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "FechaInicio";
+            column.Caption = "Fecha inicio";
+            column.Width = Unit.Percentage(10);
+            column.PropertiesEdit.DisplayFormatString = "d";
+            column.EditorProperties().DateEdit(sp =>
+            {
+                column.PropertiesEdit.DisplayFormatString = "d";
+                sp.Width = Unit.Percentage(100);
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "FechaCulmina";
+            column.Caption = "Fecha fin";
+            column.Width = Unit.Percentage(10);
+            column.PropertiesEdit.DisplayFormatString = "d";
+            column.EditorProperties().DateEdit(sp =>
+            {
+                column.PropertiesEdit.DisplayFormatString = "d";
+                sp.Width = Unit.Percentage(100);
+            });
+        });
+        settings.Columns.Add("solicitante", "Solicitante").Width = Unit.Percentage(10);
+        settings.Columns.Add("Prioridad", "Prioridad").Width = Unit.Percentage(10);
+        settings.Columns.Add("EstadoTarea", "Estado").Width = Unit.Percentage(10);
+        settings.Columns.Add("NombreGrupo", "Grupo").Width = Unit.Percentage(10);
+
+        settings.Columns.Add(c =>
+        {
+            c.Caption = "Acciones";
+            c.SetDataItemTemplateContent(tc =>
+            {
+                if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "Estado")) == true && Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "AprobadoEncargado")) == false)
+                {
+                    ViewContext.Writer.Write(
+                Html.ActionLink("Aprobar-Reprobar","Nuevo", "AprobarTarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") },null)
+                    );
+                }
+                else
+                {
+                    if (Convert.ToDateTime(DataBinder.Eval(tc.DataItem, "FechaCierreEncargado")).Date.Year == 1)
+                        ViewContext.Writer.Write(
+                       Html.ActionLink("Cerrar", "Cerrar", "Tarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }, null)
+                        );
+                    else
+                    {
+                        ViewContext.Writer.Write(
+                          Html.ActionLink("Consultar", "Consultar", "Tarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }, null));
+                    }
+                }
+            });
+
+        });
+
+
+
+    });
+}
+@grid.Bind(Model).GetHtml()

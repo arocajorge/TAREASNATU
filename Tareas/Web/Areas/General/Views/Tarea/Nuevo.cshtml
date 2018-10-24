@@ -32,25 +32,25 @@
         <div class="col-md-12">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="IdGrupo">Grupo*</label>
-                    @Html.DevExpress().ComboBoxFor(q => q.IdGrupo, settings =>
+                    <label for="IdUsuarioSolicitante">Usuario Asignado*</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.IdUsuarioAsignado, settings =>
                {
-                   settings.Name = "IdGrupo";
+                   settings.Name = "IdUsuarioAsignado";
                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                    settings.Properties.DisplayFormatString = "{0}";
-                   settings.Properties.Columns.Add("Descripcion", "Grupo").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   settings.Properties.Columns.Add("Nombre", "Usuario").Width = System.Web.UI.WebControls.Unit.Percentage(10);
                    //Campo ID
-                   settings.Properties.ValueField = "IdGrupo";
-                   settings.Properties.ValueType = typeof(int);
-                   settings.Properties.TextField = "Descripcion";
+                   settings.Properties.ValueField = "IdUsuario";
+                   settings.Properties.ValueType = typeof(string);
+                   settings.Properties.TextField = "Nombre";
                    //Boton para seleccionar ningun registro
                    settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
                    settings.Properties.NullText = "== Seleccione ==";
                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                   settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){get_grupo();mostrar_detalle();}";
+                   settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){mostrar_detalle();}";
 
-               }).BindList(ViewBag.list_grupo).GetHtml()
-                    @Html.ValidationMessageFor(q => q.IdGrupo, "", new { @class = "text-danger" })
+               }).BindList(ViewBag.list_usuarios).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdUsuarioAsignado, "", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -75,64 +75,6 @@
 
                }).BindList(ViewBag.list_usuarios).GetHtml()
                     @Html.ValidationMessageFor(q => q.IdUsuarioSolicitante, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label for="IdUsuarioAsignado">Usuario Jefe grupo</label>
-                    @Html.TextBoxFor(v => v.IdUsuarioAsignado, new { @class = "form-control", @id = "IdUsuarioAsignado" , @disabled="disabled"})
-                    @Html.ValidationMessageFor(m => m.IdUsuarioAsignado, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="nomb_jef_grupo">Nombre jefe grupo</label>
-                    @Html.TextBoxFor(v => v.nomb_jef_grupo, new { @class = "form-control", @id = "nomb_jef_grupo", @disabled = "disabled" })
-                    @Html.ValidationMessageFor(m => m.nomb_jef_grupo, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label for="AprobadoSolicitado"></label>
-                    @Html.DevExpress().CheckBoxFor(q => q.AprobadoSolicitado, settings =>
-               {
-                   settings.Name = "AprobadoSolicitado";
-                   settings.Text = "Aprobado solicitante";
-                   settings.ReadOnly = true;
-               }).GetHtml()
-                    @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label for="AprobadoSolicitado"></label>
-                    @Html.DevExpress().CheckBoxFor(q => q.AprobadoEncargado, settings =>
-               {
-                   settings.Name = "AprobadoEncargado";
-                   settings.Text = "Aprobado encargado";
-                   settings.ReadOnly = true;
-
-               }).GetHtml()
-                    @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label for="TareaConcurrente"></label>
-                    @Html.DevExpress().CheckBoxFor(q => q.TareaConcurrente, settings =>
-               {
-                   settings.Name = "TareaConcurrente";
-                   settings.Text = "Tarea recurrente";
-                   settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){mostrar_parametros()}";
-
-               }).GetHtml()
-                    @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -204,7 +146,44 @@
                     @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
                 </div>
             </div>
-           
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="AprobadoSolicitado"></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.AprobadoSolicitado, settings =>
+               {
+                   settings.Name = "AprobadoSolicitado";
+                   settings.Text = "Aprobado solicitante";
+                   settings.ReadOnly = true;
+               }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="AprobadoSolicitado"></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.AprobadoEncargado, settings =>
+               {
+                   settings.Name = "AprobadoEncargado";
+                   settings.Text = "Aprobado encargado";
+                   settings.ReadOnly = true;
+
+               }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="TareaConcurrente"></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.TareaConcurrente, settings =>
+               {
+                   settings.Name = "TareaConcurrente";
+                   settings.Text = "Tarea recurrente";
+                   settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){mostrar_parametros()}";
+
+               }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
         </div>
     </div>
@@ -351,31 +330,6 @@
     mostrar_parametros();
     mostrar_detalle();
 
-    function get_grupo() {
-        if (IdGrupo.GetValue() > 0 ) {
-            var datos = {
-                IdGrupo: IdGrupo.GetValue()
-            }
-            $.ajax({
-                type: 'POST',
-                data: JSON.stringify(datos),
-                url: '@Url.Action("get_grupo", "Grupo", new { Area = "General" })',
-                async: false,
-                bDeferRender: true,
-                bProcessing: true,
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                success: function (data) {
-
-                    $("#IdUsuarioAsignado").val(data.IdUsuario);
-                    $("#nomb_jef_grupo").val(data.nomb_jef_grupo);
-                },
-                error: function (error) {
-                }
-                });
-                }
-    };
-
 
 
     function refres_grid_adjunto() {
@@ -384,7 +338,7 @@
 
     function mostrar_detalle()
     {
-        var IdUsuarioAsignad = $("#IdUsuarioAsignado").val();
+        var IdUsuarioAsignad =  IdUsuarioAsignado.GetValue();
         var IdUsuarioSolicitant = IdUsuarioSolicitante.GetValue();
         $("#link_adjunto").click();
         if (IdUsuarioAsignad == IdUsuarioSolicitant)

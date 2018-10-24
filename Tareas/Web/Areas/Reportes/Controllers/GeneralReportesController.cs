@@ -25,7 +25,7 @@ namespace Web.Areas.Reportes.Controllers
             ViewBag.lst_usuario = lst_usuario;
 
             Grupo_Bus bus_grupo = new Grupo_Bus();
-            var lst_grupo = bus_grupo.get_lis();
+            var lst_grupo = bus_grupo.get_lis(false);
             lst_grupo.Add(new Grupo_Info
             {
                 IdGrupo = 0,

@@ -179,11 +179,11 @@ namespace Bus
             }
         }
 
-        public Tarea_Info get_carga_laboral(string IdUsuario, DateTime Fecha)
+        public Tarea_Info get_carga_laboral(int IdGrupo, string IdUsuario, DateTime FechaInicio, DateTime FechaFin)
         {
             try
             {
-                return odata.get_carga_laboral(IdUsuario, Fecha);
+                return odata.get_carga_laboral(IdGrupo, IdUsuario, FechaInicio, FechaFin);
 
 
             }

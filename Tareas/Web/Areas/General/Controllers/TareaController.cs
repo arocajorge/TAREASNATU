@@ -123,11 +123,10 @@ namespace Web.Areas.General.Controllers
                 }
 
             bus_grupo = new Grupo_Bus();
-            var grupo = bus_grupo.get_info_grup_usuario(model.IdGrupo);
+            var grupo = bus_grupo.get_info_grup_usuario(model.IdUsuarioSolicitante);
             if (grupo != null)
             {
-                model.IdUsuarioAsignado = grupo.IdUsuario;
-                model.nomb_jef_grupo = grupo.nomb_jef_grupo;
+                model.IdGrupo = grupo.IdGrupo;
             }
 
             string mensaje = "";
@@ -195,11 +194,10 @@ namespace Web.Areas.General.Controllers
             model.Accion = cl_enumeradores.eAcciones.Nuevo;
 
             string mensaje = "";
-            var grupo = bus_grupo.get_info_grup_usuario(model.IdGrupo);
+            var grupo = bus_grupo.get_info_grup_usuario(model.IdUsuarioSolicitante);
             if (grupo != null)
             {
-                model.IdUsuarioAsignado = grupo.IdUsuario;
-                model.nomb_jef_grupo = grupo.nomb_jef_grupo;
+                model.IdGrupo = grupo.IdGrupo;
             }
             if (model.ObsevacionModificacion == null | model.ObsevacionModificacion == "")
             {
@@ -428,12 +426,7 @@ namespace Web.Areas.General.Controllers
         {
             model.Controller = cl_enumeradores.eController.Tarea;
             model.Accion = cl_enumeradores.eAcciones.Consultar;
-            var grupo = bus_grupo.get_info_grup_usuario(model.IdGrupo);
-            if (grupo != null)
-            {
-                model.IdUsuarioAsignado = grupo.IdUsuario;
-                model.nomb_jef_grupo = grupo.nomb_jef_grupo;
-            }
+           
 
             string mensaje = "";
             model.list_detalle = Lis_Tarea_det_Info_lis.get_list(model.IdTransaccionSession);
@@ -467,13 +460,7 @@ namespace Web.Areas.General.Controllers
                     return View(model);
                 }
             }
-            mensaje = Validaciones(model);
-            if (mensaje != "")
-            {
-                cargar_combo();
-                ViewBag.mensaje = mensaje;
-                return View(model);
-            }
+          
             model.IdUsuario = SessionTareas.IdUsuario.ToString();
             if (!bus_tarea.CerrarPorSolicitante(model))
             {
@@ -515,8 +502,7 @@ namespace Web.Areas.General.Controllers
                 var list_prioridad = bus_estado.get_lis(2);
                 ViewBag.list_prioridad = list_prioridad;
 
-                var list_grupo = bus_grupo.get_lis();
-                ViewBag.list_grupo = list_grupo;
+              
 
             }
             catch (Exception)
@@ -603,7 +589,7 @@ namespace Web.Areas.General.Controllers
                 }
                 if (info.IdGrupo ==0)
                 {
-                    mensaje = "El grupo es obligatorio";
+                    mensaje = "El usuario asignado no pertenece a un grupo";
                 }
                 foreach (var item in info.list_detalle)
                 {

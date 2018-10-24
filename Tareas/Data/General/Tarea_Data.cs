@@ -975,14 +975,14 @@ namespace Data
                 return false;
             }
         }
-        public Tarea_Info get_carga_laboral(string IdUsuario, DateTime fecha)
+        public Tarea_Info get_carga_laboral(int IdGrupo, string IdUsuario, DateTime fechaInicio, DateTime FechaFin)
         {
             try
             {
                 Tarea_Info info = new Tarea_Info();
                 using (EntityTareas Context = new EntityTareas())
                 {
-                    var Entity = Context.sp_carga_laboral(IdUsuario,fecha).FirstOrDefault();
+                    var Entity = Context.sp_carga_laboral(IdUsuario, fechaInicio).FirstOrDefault();
                     if (Entity == null)
                         return new Tarea_Info();
                     else
@@ -992,8 +992,9 @@ namespace Data
                         info.TotalTareaPendiente = Entity.TotalTareaPendiente+Entity.NumTareaDia;
                         info.TotalTareaResueltas = Entity.TotalTareaResueltas;
 
-                        info.FechaInicio = fecha;
+                        info.FechaInicio = fechaInicio;
                         info.IdUsuario = IdUsuario;
+                        info.IdGrupoFiltro = IdGrupo;
                     }
                   }
                 return info;

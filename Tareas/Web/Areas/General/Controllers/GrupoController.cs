@@ -30,7 +30,7 @@ namespace Web.Areas.General.Controllers
         public ActionResult GridViewPartial_Grupo()
         {
             List<Grupo_Info> model = new List<Grupo_Info>();
-            model = bus_Grupo.get_lis();
+            model = bus_Grupo.get_lis(true);
             return PartialView("_GridViewPartial_Grupo", model);
         }
         [ValidateInput(false)]

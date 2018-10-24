@@ -73,7 +73,7 @@ namespace Info
         public Nullable<int> NumTareaVencidas { get; set; }
         public Nullable<int> TotalTareaResueltas { get; set; }
         public Nullable<int> TotalTareaPendiente { get; set; }
-
+        public Nullable<int> IdGrupoFiltro { get; set; }
 
         #endregion
     }

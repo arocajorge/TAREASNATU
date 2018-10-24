@@ -9,7 +9,7 @@ namespace Data
 {
    public class Grupo_Data
     {
-        public List<Grupo_Info> get_lis()
+        public List<Grupo_Info> get_lis(bool mostrar_anulados)
         {
             try
             {
@@ -17,6 +17,7 @@ namespace Data
 
                 using (EntityTareas Context = new EntityTareas())
                 {
+                    if(mostrar_anulados)
                     Lista = (from q in Context.Grupo
                              select new Grupo_Info
                              {
@@ -24,7 +25,19 @@ namespace Data
                                  Descripcion = q.Descripcion,
                                  IdUsuario = q.IdUsuario,
                                  Estado=q.Estado
+                                 
                              }).ToList();
+                    else
+                        Lista = (from q in Context.Grupo
+                                 where q.Estado==true
+                                 select new Grupo_Info
+                                 {
+                                     IdGrupo = q.IdGrupo,
+                                     Descripcion = q.Descripcion,
+                                     IdUsuario = q.IdUsuario,
+                                     Estado = q.Estado
+                                 }).ToList();
+
                 }
 
                 return Lista;

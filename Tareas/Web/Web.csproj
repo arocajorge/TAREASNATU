@@ -7477,6 +7477,8 @@
     <Content Include="Areas\General\Views\Buzon\Buzon_eliminado.cshtml" />
     <Content Include="Areas\General\Views\Tarea\CerrarPorSolicitante.cshtml" />
     <Content Include="FormatoISO\Index.cshtml" />
+    <Content Include="Areas\General\Views\MisTareas\Por_aprobar.cshtml" />
+    <Content Include="Areas\General\Views\MisTareas\_GridViewPartial_por_aprobar.cshtml" />
     <None Include="Properties\PublishProfiles\Erp_web.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\web.pubxml" />

@@ -11,11 +11,11 @@ namespace Bus
    public class Grupo_Bus
     {
        Grupo_Data odata = new Grupo_Data();
-        public List<Grupo_Info> get_lis()
+        public List<Grupo_Info> get_lis(bool mostrar_anulados)
         {
             try
             {
-                return odata.get_lis();
+                return odata.get_lis(mostrar_anulados);
             }
             catch (Exception)
             {

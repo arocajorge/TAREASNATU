@@ -30,12 +30,13 @@ namespace Web.Controllers
         [AllowAnonymous]
         public ActionResult Login(Usuario_Info model)
         {
-            var infousuario = bus_usuario.get_info(model.IdUsuario);
-            SessionTareas.TipoUsuario = infousuario.TipoUsuario.ToString();
+           
 
             bool usuario_clave_exist = bus_usuario.validar_login(model.IdUsuario, model.Clave);
             if (usuario_clave_exist)
             {
+                var infousuario = bus_usuario.get_info(model.IdUsuario);
+                SessionTareas.TipoUsuario = infousuario.TipoUsuario.ToString();
                 SessionTareas.IdUsuario = model.IdUsuario;
 
                 SessionTareas.IdTransaccionSession = 1 + "000000000";
