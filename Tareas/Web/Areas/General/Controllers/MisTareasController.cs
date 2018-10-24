@@ -90,6 +90,28 @@ namespace Web.Areas.General.Controllers
                 return RedirectToAction("Login");
             }
         }
+        public ActionResult Buzon_entrada()
+        {
+            cl_filtros_Info model = new cl_filtros_Info();
+
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult Por_aprobar(cl_filtros_Info model)
+        {
+            return View(model);
+        }
+        [ValidateInput(false)]
+        public ActionResult GridViewPartial_por_aprobar(DateTime? fecha_ini, DateTime? fecha_fin)
+        {
+            List<Tarea_Info> model = new List<Tarea_Info>();
+            ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : fecha_ini;
+            ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date : fecha_fin;
+            model = bus_tarea.get_lis(ViewBag.fecha_ini, ViewBag.fecha_fin);
+            model = bus_tarea.get_lis_x_aprobar(SessionTareas.IdUsuario.ToString(),  ViewBag.fecha_ini, ViewBag.fecha_fin);
+            return PartialView("_GridViewPartial_por_aprobar", model);
+        }
+
 
         public ActionResult EditingUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] Tarea_det_Info info_det)
         {

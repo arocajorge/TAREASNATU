@@ -218,6 +218,60 @@ namespace Data
                 throw;
             }
         }
+        public List<Tarea_Info> get_lis_x_aprobar(string IdUsuario, DateTime FechaInicio, DateTime FechaFin)
+        {
+            try
+            {
+                FechaInicio = Convert.ToDateTime(FechaInicio.ToShortDateString());
+                FechaFin = Convert.ToDateTime(FechaFin.ToShortDateString());
+                List<Tarea_Info> Lista = new List<Tarea_Info>();
+
+                using (EntityTareas Context = new EntityTareas())
+                {
+                        Lista = (from q in Context.vw_Tarea
+                                 where q.IdUsuarioAsignado == IdUsuario
+                                 && q.IdUsuarioSolicitante!=IdUsuario
+                                  && q.FechaInicio >= FechaInicio
+                                   && q.FechaInicio <= FechaFin
+                                   && q.Estado == true
+                                   && q.FechaAprobacion==null
+                                 select new Tarea_Info
+                                 {
+                                     IdTarea = q.IdTarea,
+                                     IdUsuarioSolicitante = q.IdUsuarioSolicitante,
+                                     IdGrupo = q.IdGrupo,
+                                     IdUsuarioAsignado = q.IdUsuarioAsignado,
+                                     EstadoActual = q.EstadoActual,
+                                     FechaInicio = q.FechaInicio,
+                                     FechaCulmina = q.FechaCulmina,
+                                     AsuntoTarea = q.AsuntoTarea,
+                                     DescripcionTarea = q.DescripcionTarea,
+                                     IdEstadoPrioridad = q.IdEstadoPrioridad,
+                                     TareaConcurrente = q.TareaConcurrente,
+                                     Estado = q.Estado,
+                                     AprobadoEncargado = q.AprobadoEncargado,
+                                     AprobadoSolicitado = q.AprobadoSolicitado,
+
+                                     solicitante = q.solicitante,
+                                     Asignado = q.Asignado,
+                                     Prioridad = q.Prioridad,
+                                     EstadoTarea = q.EstadoTarea,
+                                     NombreGrupo = q.NombreGrupo,
+                                     FechaCierreSolicitante = q.FechaCierreSolicitante,
+                                     FechaCierreEncargado = q.FechaCierreEncargado
+
+
+                                 }).ToList();
+                }
+
+                return Lista;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
 
         public List<Tarea_Info> get_lis(string IdUsuario)
         {
