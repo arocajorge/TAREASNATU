@@ -34,6 +34,7 @@
         <EntityTypeShape EntityType="ModelGeneral.VWGEN_001" Width="1.5" PointX="3.375" PointY="0.75" />
         <EntityTypeShape EntityType="ModelGeneral.TareaArchivoAdjunto" Width="1.5" PointX="7.875" PointY="22.875" />
         <AssociationConnector Association="ModelGeneral.FK_TareaArchivoAdjunto_Tarea" />
+        <EntityTypeShape EntityType="ModelGeneral.vw_Grupo_Usuario" Width="1.5" PointX="5.375" PointY="0.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

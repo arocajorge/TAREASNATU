@@ -39,19 +39,7 @@ namespace Data
         public virtual DbSet<vw_Tarea> vw_Tarea { get; set; }
         public virtual DbSet<VWGEN_001> VWGEN_001 { get; set; }
         public virtual DbSet<TareaArchivoAdjunto> TareaArchivoAdjunto { get; set; }
-    
-        public virtual ObjectResult<sp_carga_laboral_Result> sp_carga_laboral(string idUsuario, Nullable<System.DateTime> fecha)
-        {
-            var idUsuarioParameter = idUsuario != null ?
-                new ObjectParameter("IdUsuario", idUsuario) :
-                new ObjectParameter("IdUsuario", typeof(string));
-    
-            var fechaParameter = fecha.HasValue ?
-                new ObjectParameter("Fecha", fecha) :
-                new ObjectParameter("Fecha", typeof(System.DateTime));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_carga_laboral_Result>("sp_carga_laboral", idUsuarioParameter, fechaParameter);
-        }
+        public virtual DbSet<vw_Grupo_Usuario> vw_Grupo_Usuario { get; set; }
     
         public virtual int sp_crear_tarea_concurrente(Nullable<decimal> idTarea)
         {
@@ -87,6 +75,23 @@ namespace Data
                 new ObjectParameter("FechaFin", typeof(System.DateTime));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPGEN_002_Result>("SPGEN_002", fechaInicioParameter, fechaFinParameter);
+        }
+    
+        public virtual ObjectResult<sp_carga_laboral_Result> sp_carga_laboral(string idUsuario, Nullable<System.DateTime> fecha, Nullable<int> idGrupo)
+        {
+            var idUsuarioParameter = idUsuario != null ?
+                new ObjectParameter("IdUsuario", idUsuario) :
+                new ObjectParameter("IdUsuario", typeof(string));
+    
+            var fechaParameter = fecha.HasValue ?
+                new ObjectParameter("Fecha", fecha) :
+                new ObjectParameter("Fecha", typeof(System.DateTime));
+    
+            var idGrupoParameter = idGrupo.HasValue ?
+                new ObjectParameter("IdGrupo", idGrupo) :
+                new ObjectParameter("IdGrupo", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_carga_laboral_Result>("sp_carga_laboral", idUsuarioParameter, fechaParameter, idGrupoParameter);
         }
     }
 }

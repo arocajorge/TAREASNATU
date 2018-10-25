@@ -166,6 +166,19 @@
           <Property Name="FechaAnulacion" Type="datetime" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_Grupo_Usuario' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vw_Grupo_Usuario">
+          <Key>
+            <PropertyRef Name="IdGrupo" />
+            <PropertyRef Name="IdUsuario" />
+            <PropertyRef Name="Descripcion" />
+          </Key>
+          <Property Name="IdGrupo" Type="int" Nullable="false" />
+          <Property Name="IdUsuario" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Observacion" Type="varchar" MaxLength="100" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="1000" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_Tarea' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vw_Tarea">
           <Key>
@@ -459,6 +472,7 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
         <Function Name="sp_carga_laboral" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdUsuario" Type="varchar" Mode="In" />
           <Parameter Name="Fecha" Type="date" Mode="In" />
+          <Parameter Name="IdGrupo" Type="int" Mode="In" />
         </Function>
         <Function Name="sp_crear_tarea_concurrente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdTarea" Type="numeric" Mode="In" />
@@ -482,6 +496,14 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
           <EntitySet Name="TareaArchivoAdjunto" EntityType="Self.TareaArchivoAdjunto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TareaEstado" EntityType="Self.TareaEstado" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vw_Grupo_Usuario" EntityType="Self.vw_Grupo_Usuario" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_Grupo_Usuario].[IdGrupo] AS [IdGrupo], 
+    [vw_Grupo_Usuario].[IdUsuario] AS [IdUsuario], 
+    [vw_Grupo_Usuario].[Observacion] AS [Observacion], 
+    [vw_Grupo_Usuario].[Descripcion] AS [Descripcion]
+    FROM [dbo].[vw_Grupo_Usuario] AS [vw_Grupo_Usuario]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vw_Tarea" EntityType="Self.vw_Tarea" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vw_Tarea].[IdTarea] AS [IdTarea], 
@@ -637,10 +659,6 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
             <End Role="Estado" EntitySet="Estado" />
             <End Role="Tarea_det" EntitySet="Tarea_det" />
           </AssociationSet>
-          <FunctionImport Name="sp_carga_laboral" ReturnType="Collection(ModelGeneral.sp_carga_laboral_Result)">
-            <Parameter Name="IdUsuario" Mode="In" Type="String" />
-            <Parameter Name="Fecha" Mode="In" Type="DateTime" />
-          </FunctionImport>
           <EntitySet Name="Parametro" EntityType="ModelGeneral.Parametro" />
           <AssociationSet Name="FK_Parametro_Estado" Association="ModelGeneral.FK_Parametro_Estado">
             <End Role="Estado" EntitySet="Estado" />
@@ -702,6 +720,12 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
             <End Role="Tarea" EntitySet="Tarea" />
             <End Role="TareaArchivoAdjunto" EntitySet="TareaArchivoAdjunto" />
           </AssociationSet>
+          <FunctionImport Name="sp_carga_laboral" ReturnType="Collection(ModelGeneral.sp_carga_laboral_Result)">
+            <Parameter Name="IdUsuario" Mode="In" Type="String" />
+            <Parameter Name="Fecha" Mode="In" Type="DateTime" />
+            <Parameter Name="IdGrupo" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="vw_Grupo_Usuario" EntityType="ModelGeneral.vw_Grupo_Usuario" />
           </EntityContainer>
         <EntityType Name="EstadoTipo">
           <Key>
@@ -884,12 +908,6 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <ComplexType Name="sp_carga_laboral_Result">
-          <Property Type="Int32" Name="NumTareaDia" Nullable="true" />
-          <Property Type="Int32" Name="NumTareaVencidas" Nullable="true" />
-          <Property Type="Int32" Name="TotalTareaResueltas" Nullable="true" />
-          <Property Type="Int32" Name="TotalTareaPendiente" Nullable="true" />
-        </ComplexType>
         <EntityType Name="Parametro">
           <Key>
             <PropertyRef Name="IdParametro" />
@@ -1239,6 +1257,23 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="sp_carga_laboral_Result">
+          <Property Type="Int32" Name="NumTareaDia" Nullable="true" />
+          <Property Type="Int32" Name="NumTareaVencidas" Nullable="true" />
+          <Property Type="Int32" Name="TotalTareaResueltas" Nullable="true" />
+          <Property Type="Int32" Name="TotalTareaPendiente" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="vw_Grupo_Usuario">
+          <Key>
+            <PropertyRef Name="IdGrupo" />
+            <PropertyRef Name="IdUsuario" />
+            <PropertyRef Name="Descripcion" />
+          </Key>
+          <Property Name="IdGrupo" Type="Int32" Nullable="false" />
+          <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Observacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1337,16 +1372,6 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="sp_carga_laboral" FunctionName="ModelGeneral.Store.sp_carga_laboral">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ModelGeneral.sp_carga_laboral_Result">
-                <ScalarProperty Name="NumTareaDia" ColumnName="NumTareaDia" />
-                <ScalarProperty Name="NumTareaVencidas" ColumnName="NumTareaVencidas" />
-                <ScalarProperty Name="TotalTareaResueltas" ColumnName="TotalTareaResueltas" />
-                <ScalarProperty Name="TotalTareaPendiente" ColumnName="TotalTareaPendiente" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <EntitySetMapping Name="Parametro">
             <EntityTypeMapping TypeName="ModelGeneral.Parametro">
               <MappingFragment StoreEntitySet="Parametro">
@@ -1535,6 +1560,26 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
                 <ScalarProperty Name="NombreArchivo" ColumnName="NombreArchivo" />
                 <ScalarProperty Name="Secuencial" ColumnName="Secuencial" />
                 <ScalarProperty Name="IdTarea" ColumnName="IdTarea" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_carga_laboral" FunctionName="ModelGeneral.Store.sp_carga_laboral">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModelGeneral.sp_carga_laboral_Result">
+                <ScalarProperty Name="NumTareaDia" ColumnName="NumTareaDia" />
+                <ScalarProperty Name="NumTareaVencidas" ColumnName="NumTareaVencidas" />
+                <ScalarProperty Name="TotalTareaResueltas" ColumnName="TotalTareaResueltas" />
+                <ScalarProperty Name="TotalTareaPendiente" ColumnName="TotalTareaPendiente" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="vw_Grupo_Usuario">
+            <EntityTypeMapping TypeName="ModelGeneral.vw_Grupo_Usuario">
+              <MappingFragment StoreEntitySet="vw_Grupo_Usuario">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdGrupo" ColumnName="IdGrupo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

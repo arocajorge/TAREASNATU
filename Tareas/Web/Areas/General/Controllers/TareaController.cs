@@ -40,7 +40,7 @@ namespace Web.Areas.General.Controllers
         public ActionResult GridViewPartial_Tarea(DateTime? fecha_ini, DateTime? fecha_fin)
         {
             List<Tarea_Info> model = new List<Tarea_Info>();
-            ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : fecha_ini;
+            ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date : fecha_ini;
             ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date : fecha_fin;
             model = bus_tarea.get_lis(ViewBag.fecha_ini, ViewBag.fecha_fin);
             return PartialView("_GridViewPartial_tarea", model);
@@ -78,6 +78,7 @@ namespace Web.Areas.General.Controllers
 
         public ActionResult Nuevo()
         {
+            bus_grupo = new Grupo_Bus();
             #region Validar Session
             if (string.IsNullOrEmpty(SessionTareas.IdTransaccionSession))
                 return RedirectToAction("Login", new { Area = "", Controller = "Account" });
@@ -102,6 +103,7 @@ namespace Web.Areas.General.Controllers
 
             };
             Lis_Tarea_det_Info_lis.set_list(new List<Tarea_det_Info>(),model.IdTransaccionSession);
+            TareaArchivoAdjunto_Info_lis.set_list(new List<TareaArchivoAdjunto_Info>(), Convert.ToDecimal(model.IdTransaccionSession));
             cargar_combo();
             return View(model);
         }
@@ -123,7 +125,7 @@ namespace Web.Areas.General.Controllers
                 }
 
             bus_grupo = new Grupo_Bus();
-            var grupo = bus_grupo.get_info_grup_usuario(model.IdUsuarioSolicitante);
+            var grupo = bus_grupo.get_info_grup_usuario(model.IdUsuarioAsignado);
             if (grupo != null)
             {
                 model.IdGrupo = grupo.IdGrupo;
@@ -194,7 +196,7 @@ namespace Web.Areas.General.Controllers
             model.Accion = cl_enumeradores.eAcciones.Nuevo;
 
             string mensaje = "";
-            var grupo = bus_grupo.get_info_grup_usuario(model.IdUsuarioSolicitante);
+            var grupo = bus_grupo.get_info_grup_usuario(model.IdUsuarioAsignado);
             if (grupo != null)
             {
                 model.IdGrupo = grupo.IdGrupo;
@@ -343,13 +345,7 @@ namespace Web.Areas.General.Controllers
         {
             model.Controller = cl_enumeradores.eController.Tarea;
             model.Accion = cl_enumeradores.eAcciones.Consultar;
-            var grupo = bus_grupo.get_info_grup_usuario(model.IdGrupo);
-            if (grupo != null)
-            {
-                model.IdUsuarioAsignado = grupo.IdUsuario;
-                model.nomb_jef_grupo = grupo.nomb_jef_grupo;
-            }
-
+            bus_tarea = new Tarea_Bus();
             string mensaje = "";
             model.list_detalle = Lis_Tarea_det_Info_lis.get_list(model.IdTransaccionSession);
             model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(model.IdTransaccionSession);
@@ -361,26 +357,11 @@ namespace Web.Areas.General.Controllers
                 cargar_combo();
                 return View(model);
             }
-            if (model.list_detalle == null)
+            if (model.list_detalle.Where(v => v.IdEstado == 8).Count() > 0)
             {
                 cargar_combo();
-                ViewBag.mensaje = "La Tarea debe tener almenos un detalle en la distribución";
+                ViewBag.mensaje = "Existen subtareas pendientes no se puede cerrar!!!";
                 return View(model);
-            }
-            else
-            {
-                if (model.list_detalle.Count() == 0)
-                {
-                    cargar_combo();
-                    ViewBag.mensaje = "La Tarea debe tener almenos un detalle en la distribución";
-                    return View(model);
-                }
-                if(model.list_detalle.Where(v=>v.IdEstado==8).Count()>0)
-                {
-                    cargar_combo();
-                    ViewBag.mensaje = "Existen subtareas pendientes no se puede cerrar!!!";
-                    return View(model);
-                }
             }
             mensaje = Validaciones(model);
             if (mensaje != "")
@@ -417,8 +398,7 @@ namespace Web.Areas.General.Controllers
             cargar_combo();
             if (model == null)
                 return RedirectToAction("Buzon_salida");
-            if (SessionTareas.IdUsuario != model.IdUsuarioAsignado)
-                SessionTareas.IdUsuario = null;
+          
             return View(model);
         }
         [HttpPost]
@@ -439,28 +419,13 @@ namespace Web.Areas.General.Controllers
                 cargar_combo();
                 return View(model);
             }
-            if (model.list_detalle == null)
+            if (model.list_detalle.Where(v => v.IdEstado == 8).Count() > 0)
             {
                 cargar_combo();
-                ViewBag.mensaje = "La Tarea debe tener almenos un detalle en la distribución";
+                ViewBag.mensaje = "Existen subtareas pendientes no se puede cerrar!!!";
                 return View(model);
             }
-            else
-            {
-                if (model.list_detalle.Count() == 0)
-                {
-                    cargar_combo();
-                    ViewBag.mensaje = "La Tarea debe tener almenos un detalle en la distribución";
-                    return View(model);
-                }
-                if (model.list_detalle.Where(v => v.IdEstado == 8).Count() > 0)
-                {
-                    cargar_combo();
-                    ViewBag.mensaje = "Existen subtareas pendientes no se puede cerrar!!!";
-                    return View(model);
-                }
-            }
-          
+
             model.IdUsuario = SessionTareas.IdUsuario.ToString();
             if (!bus_tarea.CerrarPorSolicitante(model))
             {

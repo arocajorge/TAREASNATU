@@ -41,7 +41,7 @@
                 <div class="col-md-12">
 
 
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <div class="form-group">
                             <label for="IdGrupoFiltro">Grupo*</label>
                             @Html.DevExpress().ComboBoxFor(q => q.IdGrupoFiltro, settings =>
@@ -52,8 +52,8 @@
                            settings.Properties.Columns.Add("IdGrupo", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
                            settings.Properties.Columns.Add("Descripcion", "Grupo").Width = System.Web.UI.WebControls.Unit.Percentage(90);
                            //Campo ID
-                           settings.Properties.ValueField = "IdGrupo";
-                           settings.Properties.ValueType = typeof(string);
+                           settings.Properties.ValueField = "IdGrupoFiltro";
+                           settings.Properties.ValueType = typeof(int);
                            settings.Properties.TextField = "Descripcion";
                            //Boton para seleccionar ningun registro
                            settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
@@ -67,7 +67,7 @@
 
 
 
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <div class="form-group">
                             <label for="IdUsuario">Usuario*</label>
                             @Html.DevExpress().ComboBoxFor(q => q.IdUsuario, settings =>
@@ -147,7 +147,7 @@
                         </div>
                         @if (Model.IdUsuario == Web.Helps.SessionTareas.IdUsuario)
                         {
-                            <a href="@Url.Action("Por_aprobar","MisTareas")" class="small-box-footer"> Aprobar tareas <i class="fa fa-arrow-circle-right"></i></a>
+                            <a href="@Url.Action("Por_aprobar")" class="small-box-footer"> Aprobar tareas <i class="fa fa-arrow-circle-right"></i></a>
                         }
                         else
                         {

@@ -22,7 +22,7 @@ namespace Info.Helps
         public decimal IdTarea { get; set; }
         public cl_filtros_Info()
         {
-            fecha_ini = DateTime.Now.Date.AddMonths(-1);
+            fecha_ini = DateTime.Now.Date;
             fecha_fin = DateTime.Now.Date;
         }
 

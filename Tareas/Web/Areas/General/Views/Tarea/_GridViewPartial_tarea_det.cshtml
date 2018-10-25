@@ -60,7 +60,7 @@
         {
             column.FieldName = "IdUsuario";
             column.Caption = "Usuario";
-            column.Width = Unit.Percentage(20);
+            column.Width = Unit.Percentage(15);
             column.EditorProperties().ComboBox(p =>
             {
                 p.Columns.Add("IdUsuario", "Usuario").Width = Unit.Percentage(30);
@@ -76,7 +76,7 @@
         {
             column.FieldName = "Descripcion";
             column.Caption = "Descripción";
-            column.Width = Unit.Percentage(30);
+            column.Width = Unit.Percentage(20);
             column.EditorProperties().TextBox(sp =>
             {
                 sp.Width = Unit.Percentage(100);
@@ -87,7 +87,7 @@
         {
             column.FieldName = "FechaInicio";
             column.Caption = "Fecha inicio";
-            column.Width = Unit.Percentage(12);
+            column.Width = Unit.Percentage(10);
             column.PropertiesEdit.DisplayFormatString = "d";
             column.EditorProperties().DateEdit(sp =>
             {
@@ -99,7 +99,7 @@
         {
             column.FieldName = "FechaFin";
             column.Caption = "Fecha fin";
-            column.Width = Unit.Percentage(12);
+            column.Width = Unit.Percentage(10);
             column.PropertiesEdit.DisplayFormatString = "d";
             column.EditorProperties().DateEdit(sp =>
             {

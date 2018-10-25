@@ -24,7 +24,8 @@ namespace Data
                                  IdGrupo = q.IdGrupo,
                                  Descripcion = q.Descripcion,
                                  IdUsuario = q.IdUsuario,
-                                 Estado=q.Estado
+                                 Estado=q.Estado,
+                                 IdGrupoFiltro=q.IdGrupo
                                  
                              }).ToList();
                     else
@@ -35,7 +36,9 @@ namespace Data
                                      IdGrupo = q.IdGrupo,
                                      Descripcion = q.Descripcion,
                                      IdUsuario = q.IdUsuario,
-                                     Estado = q.Estado
+                                     Estado = q.Estado,
+                                     IdGrupoFiltro = q.IdGrupo
+
                                  }).ToList();
 
                 }
@@ -197,17 +200,14 @@ namespace Data
                 Grupo_Info info = new Grupo_Info();
                 using (EntityTareas Context = new EntityTareas())
                 {
-                    info = (from grupo in Context.Grupo
-                            join usuario in Context.Usuario
-                            on grupo.IdUsuario equals usuario.IdUsuario
+                    info = (from grupo in Context.vw_Grupo_Usuario
+                           
                             where grupo.IdUsuario == IdUsuario
                             select new Grupo_Info
                             {
                                 IdUsuario = grupo.IdUsuario,
                                 IdGrupo = grupo.IdGrupo,
                                 Descripcion = grupo.Descripcion,
-                                Estado = grupo.Estado,
-                                nomb_jef_grupo = usuario.Nombre
 
                             }).FirstOrDefault();
                 }

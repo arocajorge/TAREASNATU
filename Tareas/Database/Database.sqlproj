@@ -81,5 +81,6 @@
     <Build Include="dbo\Stored Procedures\sp_crear_tarea_concurrente.sql" />
     <Build Include="dbo\Stored Procedures\sp_carga_laboral.sql" />
     <Build Include="dbo\Stored Procedures\CierreTareaAutomatico.sql" />
+    <Build Include="dbo\Views\vw_Grupo_Usuario.sql" />
   </ItemGroup>
 </Project>

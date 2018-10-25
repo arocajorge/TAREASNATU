@@ -560,6 +560,8 @@ namespace Data
                     Entity.AprobadoEncargado = true;
                     Entity.FechaAprobacion = DateTime.Now;
                     Entity.EstadoActual = info_parametro.IdEstadoAprobarTarea;
+                    Entity.FechaInicio = info.FechaInicio;
+                    Entity.FechaCulmina = info.FechaCulmina;
                     #region Estado tarea
 
                     TareaEstado New_estado = new TareaEstado
@@ -568,7 +570,7 @@ namespace Data
                         Secuancial = odta_estado.get_id(info.IdTarea),
                         IdUsuario = info.IdUsuario,
                         Observacion = info.ObsevacionModificacion =info.ObsevacionModificacion,
-                        IdEstado = info.EstadoActual,
+                        IdEstado = Entity.EstadoActual,
                         FechaModificacion = DateTime.Now,
 
 
@@ -1036,14 +1038,14 @@ namespace Data
                 Tarea_Info info = new Tarea_Info();
                 using (EntityTareas Context = new EntityTareas())
                 {
-                    var Entity = Context.sp_carga_laboral(IdUsuario, fechaInicio).FirstOrDefault();
+                    var Entity = Context.sp_carga_laboral(IdUsuario, fechaInicio, IdGrupo).FirstOrDefault();
                     if (Entity == null)
                         return new Tarea_Info();
                     else
                     {
                         info.NumTareaDia = Entity.NumTareaDia;
                         info.NumTareaVencidas = Entity.NumTareaVencidas;
-                        info.TotalTareaPendiente = Entity.TotalTareaPendiente+Entity.NumTareaDia;
+                        info.TotalTareaPendiente = Entity.TotalTareaPendiente;
                         info.TotalTareaResueltas = Entity.TotalTareaResueltas;
 
                         info.FechaInicio = fechaInicio;

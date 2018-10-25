@@ -40,6 +40,7 @@ namespace Web.Areas.General.Controllers
                 model = new Tarea_Info();
                 return View(model);
             }
+            model.AprobadoEncargado = true;
             model.IdTransaccionSession = Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual);
             model.list_detalle = bus_tarea_det.get_lis(IdTarea);
             Lis_Tarea_det_Info_lis.set_list(model.list_detalle, model.IdTransaccionSession);
@@ -50,57 +51,35 @@ namespace Web.Areas.General.Controllers
                 return RedirectToAction("Buzon_entrada");
             return View(model);
         }
-
-
-        #region json
-        public JsonResult AprobarTarea(int IdTarea = 0, decimal IdTransaccionSession = 0, string Observacion = "")
+        [HttpPost]
+        public ActionResult Nuevo(Tarea_Info model)
         {
-           
-            var model = bus_tarea.get_info(IdTarea);
+
             if (model != null)
             {
                 model.Controller = cl_enumeradores.eController.Tarea;
                 model.Accion = cl_enumeradores.eAcciones.Consultar;
 
                 model.IdUsuario = SessionTareas.IdUsuario;
-                if (Observacion != "")
-                    model.ObsevacionModificacion = Observacion;
-                model.list_detalle = Lis_Tarea_det_Info_lis.get_list(IdTransaccionSession);
-                model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(IdTransaccionSession);
-                model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(IdTransaccionSession);
-                model.ObsevacionModificacion = Observacion;
+                model.list_detalle = Lis_Tarea_det_Info_lis.get_list(model. IdTransaccionSession);
+                model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(model.IdTransaccionSession);
 
             }
 
-            var resultado = bus_tarea.Aprobar(model);
-
-            return Json(resultado, JsonRequestBehavior.AllowGet);
-        }
-        public JsonResult DesaprobarTarea(int IdTarea = 0, decimal IdTransaccionSession = 0, string Observacion = "")
-        {
-
-            var model = bus_tarea.get_info(IdTarea);
-            if (model != null)
+            if( !bus_tarea.Aprobar(model))
             {
-
-                model.Controller = cl_enumeradores.eController.Tarea;
-                model.Accion = cl_enumeradores.eAcciones.Consultar;
-
-                model.IdUsuario = SessionTareas.IdUsuario;
-                model.ObsevacionModificacion = Observacion;
-                model.list_detalle = Lis_Tarea_det_Info_lis.get_list(IdTransaccionSession);
-                model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(IdTransaccionSession);
-                model.IdUsuario = SessionTareas.IdUsuario;
-                model.ObsevacionModificacion = Observacion;
+                cargar_combo();
+                return View(model);
             }
-
-            var resultado = bus_tarea.Desaprobar(model);
-
-            return Json(resultado, JsonRequestBehavior.AllowGet);
+            else
+            {
+                return RedirectToAction("Por_aprobar", "MisTareas");
+            }
         }
-        #endregion
 
 
+       
+        
         #region cargar combo
         public void cargar_combo()
         {

@@ -32,8 +32,10 @@ namespace Web.Areas.General.Controllers
             if (model == null)
                 model = new Tarea_Info
                 {
-                    IdUsuario =SessionTareas.IdUsuario
+                    IdUsuario =SessionTareas.IdUsuario,
+                    IdGrupoFiltro=grupo.IdGrupo
                 };
+            model.IdGrupoFiltro = grupo.IdGrupo;
             return View(model);
         }
         [HttpPost]
@@ -51,6 +53,8 @@ namespace Web.Areas.General.Controllers
                     IdUsuario = IdUsuario
                 };
             }
+            if (model.IdGrupoFiltro == 0)
+                model.IdGrupoFiltro = null;
             return View(model);
         }
 
@@ -90,7 +94,7 @@ namespace Web.Areas.General.Controllers
                 return RedirectToAction("Login");
             }
         }
-        public ActionResult Buzon_entrada()
+        public ActionResult Por_aprobar()
         {
             cl_filtros_Info model = new cl_filtros_Info();
 
@@ -104,10 +108,10 @@ namespace Web.Areas.General.Controllers
         [ValidateInput(false)]
         public ActionResult GridViewPartial_por_aprobar(DateTime? fecha_ini, DateTime? fecha_fin)
         {
+            bus_tarea = new Tarea_Bus();
             List<Tarea_Info> model = new List<Tarea_Info>();
-            ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : fecha_ini;
+            ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date : fecha_ini;
             ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date : fecha_fin;
-            model = bus_tarea.get_lis(ViewBag.fecha_ini, ViewBag.fecha_fin);
             model = bus_tarea.get_lis_x_aprobar(SessionTareas.IdUsuario.ToString(),  ViewBag.fecha_ini, ViewBag.fecha_fin);
             return PartialView("_GridViewPartial_por_aprobar", model);
         }

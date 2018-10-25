@@ -27,5 +27,8 @@ namespace Info
 
         public string nomb_jef_grupo { get; set; }
         public List<Grupo_Usuario_Info> list_grupo_usuario { get; set; }
+
+        public Nullable<int> IdGrupoFiltro { get; set; }
+
     }
 }
