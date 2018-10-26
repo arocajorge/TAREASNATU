@@ -518,17 +518,15 @@ namespace Web.Areas.General.Controllers
             try
             {
                 string mensaje = "";
-                if(info.FechaCulmina.Date<info.FechaInicio.Date)
-                {
-                    mensaje = "Fecha inicio no puede ser mayor que fecha fin";
-                }
+               
                 if (info.IdGrupo ==0)
                 {
                     mensaje = "El usuario asignado no pertenece a un grupo";
                 }
                 foreach (var item in info.list_detalle)
                 {
-                    if(item.FechaInicio.Date==DateTime.Now.Date)
+                    item.FechaFin = item.FechaInicio;
+                    if (item.FechaInicio.Date==DateTime.Now.Date)
                     {
                         item.FechaInicio = info.FechaInicio;
                     }

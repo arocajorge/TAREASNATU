@@ -150,7 +150,7 @@
         settings.Columns.Add(column =>
         {
             column.FieldName = "FechaInicio";
-            column.Caption = "Fecha inicio";
+            column.Caption = "Fecha entrega";
             column.Width = Unit.Percentage(10);
             column.PropertiesEdit.DisplayFormatString = "d";
             column.EditorProperties().DateEdit(sp =>
@@ -159,18 +159,7 @@
                 sp.Width = Unit.Percentage(100);
             });
         });
-        settings.Columns.Add(column =>
-        {
-            column.FieldName = "FechaCulmina";
-            column.Caption = "Fecha fin";
-            column.Width = Unit.Percentage(10);
-            column.PropertiesEdit.DisplayFormatString = "d";
-            column.EditorProperties().DateEdit(sp =>
-            {
-                column.PropertiesEdit.DisplayFormatString = "d";
-                sp.Width = Unit.Percentage(100);
-            });
-        });
+
         settings.Columns.Add("Asignado", "Asignado").Width = Unit.Percentage(10);
         settings.Columns.Add("EstadoTarea", "Estado").Width = Unit.Percentage(10);
         settings.Columns.Add("NombreGrupo", "Grupo").Width = Unit.Percentage(10);

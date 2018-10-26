@@ -72,7 +72,7 @@
     {
         column.EditFormSettings.Visible = DefaultBoolean.False;
         column.FieldName = "FechaInicio";
-        column.Caption = "Fecha inicio";
+        column.Caption = "Fecha entrega";
         column.Width = Unit.Percentage(10);
         column.PropertiesEdit.DisplayFormatString = "d";
         column.EditorProperties().DateEdit(sp =>
@@ -81,19 +81,7 @@
             sp.Width = Unit.Percentage(100);
         });
     });
-    settings.Columns.Add(column =>
-    {
-        column.EditFormSettings.Visible = DefaultBoolean.False;
-        column.FieldName = "FechaFin";
-        column.Caption = "Fecha fin";
-        column.Width = Unit.Percentage(10);
-        column.PropertiesEdit.DisplayFormatString = "d";
-        column.EditorProperties().DateEdit(sp =>
-        {
-            column.PropertiesEdit.DisplayFormatString = "d";
-            sp.Width = Unit.Percentage(100);
-        });
-    });
+   
     settings.Columns.Add(column =>
     {
         column.EditFormSettings.Visible = DefaultBoolean.True;

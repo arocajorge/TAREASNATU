@@ -169,13 +169,11 @@ namespace Web.Areas.General.Controllers
             try
             {
                 string mensaje = "";
-                if (info.FechaCulmina.Date < info.FechaInicio.Date)
-                {
-                    mensaje = "Fecha inicio no puede ser mayor que fecha fin";
-                }
+              
 
                 foreach (var item in info.list_detalle)
                 {
+                    item.FechaFin = item.FechaInicio;
                     if (item.FechaFin.Date < item.FechaInicio.Date)
                     {
                         mensaje = "Las fecha de: " + item.Descripcion + ", no son correctas";
