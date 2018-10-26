@@ -23,41 +23,19 @@
 {
     @Html.HiddenFor(v => v.IdTransaccionSession);
     @Html.HiddenFor(v => v.IdTarea);
+    @Html.HiddenFor(v => v.IdUsuarioSolicitante, new { id = "IdUsuarioSolicitante" });
+    @Html.HiddenFor(v => v.IdGrupo);
 
 
 
     <div class="row">
         <div class="col-md-12">
-
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="IdGrupo">Grupo*</label>
-                    @Html.DevExpress().ComboBoxFor(q => q.IdGrupo, settings =>
+                    <label for="IdUsuarioSolicitante">Tarea asignada a:*</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.IdUsuarioAsignado, settings =>
                {
-                   settings.Name = "IdGrupo";
-                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                   settings.Properties.DisplayFormatString = "{0}";
-                   settings.Properties.Columns.Add("Descripcion", "Grupo").Width = System.Web.UI.WebControls.Unit.Percentage(10);
-                   //Campo ID
-                   settings.Properties.ValueField = "IdGrupo";
-                   settings.Properties.ValueType = typeof(int);
-                   settings.Properties.TextField = "Descripcion";
-                   //Boton para seleccionar ningun registro
-                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
-                   settings.Properties.NullText = "== Seleccione ==";
-                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                   settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){get_grupo();mostrar_detalle();}";
-                   settings.ReadOnly = true;
-               }).BindList(ViewBag.list_grupo).GetHtml()
-                    @Html.ValidationMessageFor(q => q.IdGrupo, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="IdUsuarioSolicitante">Usuario solicita*</label>
-                    @Html.DevExpress().ComboBoxFor(q => q.IdUsuarioSolicitante, settings =>
-               {
-                   settings.Name = "IdUsuarioSolicitante";
+                   settings.Name = "IdUsuarioAsignado";
                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                    settings.Properties.DisplayFormatString = "{0}";
                    settings.Properties.Columns.Add("Nombre", "Usuario").Width = System.Web.UI.WebControls.Unit.Percentage(10);
@@ -72,66 +50,10 @@
                    settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){mostrar_detalle();}";
                    settings.ReadOnly = true;
                }).BindList(ViewBag.list_usuarios).GetHtml()
-                    @Html.ValidationMessageFor(q => q.IdUsuarioSolicitante, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(q => q.IdUsuarioAsignado, "", new { @class = "text-danger" })
                 </div>
             </div>
-        </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label for="IdUsuarioAsignado">Usuario Jefe grupo</label>
-                    @Html.TextBoxFor(v => v.IdUsuarioAsignado, new { @class = "form-control", @id = "IdUsuarioAsignado", @disabled = "disabled" })
-                    @Html.ValidationMessageFor(m => m.IdUsuarioAsignado, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="nomb_jef_grupo">Nombre jefe grupo</label>
-                    @Html.TextBoxFor(v => v.nomb_jef_grupo, new { @class = "form-control", @id = "nomb_jef_grupo", @disabled = "disabled" })
-                    @Html.ValidationMessageFor(m => m.nomb_jef_grupo, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label for="AprobadoSolicitado"></label>
-                    @Html.DevExpress().CheckBoxFor(q => q.AprobadoSolicitado, settings =>
-               {
-                   settings.Name = "AprobadoSolicitado";
-                   settings.Text = "Aprobado solicitante";
-                   settings.ReadOnly = true;
-               }).GetHtml()
-                    @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label for="AprobadoSolicitado"></label>
-                    @Html.DevExpress().CheckBoxFor(q => q.AprobadoEncargado, settings =>
-               {
-                   settings.Name = "AprobadoEncargado";
-                   settings.Text = "Aprobado encargado";
-                   settings.ReadOnly = true;
-               }).GetHtml()
-                    @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label for="TareaConcurrente"></label>
-                    @Html.DevExpress().CheckBoxFor(q => q.TareaConcurrente, settings =>
-               {
-                   settings.Name = "TareaConcurrente";
-                   settings.Text = "Tarea recurrente";
-                   settings.ReadOnly = true;
-                   settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){mostrar_parametros()}";
-
-               }).GetHtml()
-                    @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
-                </div>
-            </div>
 
         </div>
     </div>
@@ -140,7 +62,7 @@
         <div class="col-md-12">
             <div class="col-md-2">
                 <div class="form-group">
-                    <label for="FechaInicio">Fecha*</label>
+                    <label for="FechaInicio">Fecha de entrega*</label>
                     <div class="input-group date">
                         <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
@@ -154,34 +76,14 @@
                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                        settings.ReadOnly = true;
+
                    }).GetHtml()
                         @Html.ValidationMessageFor(q => q.FechaInicio, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label for="FechaCulmina">Fecha fin*</label>
-                    <div class="input-group date">
-                        <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
-                        </div>
-                        @Html.DevExpress().DateEditFor(q => q.FechaCulmina, settings =>
-                   {
-                       settings.Name = "FechaCulmina";
-                       settings.Properties.UseMaskBehavior = true;
-                       settings.Properties.EditFormat = EditFormat.Date;
-                       settings.Properties.EditFormatString = "dd/MM/yyyy";
-                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
-                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                       settings.ReadOnly = true;
-
-                   }).GetHtml()
-                        @Html.ValidationMessageFor(q => q.FechaCulmina, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
            
+
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="IdCtaCblePadre">Prioridad de la tarea*</label>
@@ -205,7 +107,45 @@
                     @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
                 </div>
             </div>
-          
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="AprobadoSolicitado"></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.AprobadoSolicitado, settings =>
+               {
+                   settings.Name = "AprobadoSolicitado";
+                   settings.Text = "Aprobado solicitante";
+                   settings.ReadOnly = true;
+               }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="AprobadoSolicitado"></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.AprobadoEncargado, settings =>
+               {
+                   settings.Name = "AprobadoEncargado";
+                   settings.Text = "Aprobado encargado";
+                   settings.ReadOnly = true;
+
+               }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="TareaConcurrente"></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.TareaConcurrente, settings =>
+               {
+                   settings.Name = "TareaConcurrente";
+                   settings.Text = "Tarea recurrente";
+                   settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){mostrar_parametros()}";
+                   settings.ReadOnly = true;
+
+               }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
         </div>
     </div>
@@ -215,7 +155,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="AsuntoTarea">Asunto*</label>
-                    @Html.TextAreaFor(v => v.AsuntoTarea, new { @class = "form-control", @rows = 2, @readonly = "readonly" })
+                    @Html.TextAreaFor(v => v.AsuntoTarea, new { @class = "form-control", @rows = 2, @disabled = "disabled" })
                     @Html.ValidationMessageFor(m => m.AsuntoTarea, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -226,8 +166,20 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="DescripcionTarea">Detalle*</label>
-                    @Html.TextAreaFor(v => v.DescripcionTarea, new { @class = "form-control", @rows = 4, @readonly = "readonly" })
+                    @Html.TextAreaFor(v => v.DescripcionTarea, new { @class = "form-control", @rows = 4, @disabled = "disabled" })
                     @Html.ValidationMessageFor(m => m.DescripcionTarea, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="DescripcionTarea">Observación</label>
+                    @Html.TextAreaFor(v => v.ObsevacionModificacion, new { @class = "form-control", @rows = 2 })
+                    @Html.ValidationMessageFor(m => m.ObsevacionModificacion, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>

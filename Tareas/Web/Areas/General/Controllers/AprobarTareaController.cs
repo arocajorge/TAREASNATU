@@ -59,14 +59,14 @@ namespace Web.Areas.General.Controllers
             {
                 model.Controller = cl_enumeradores.eController.Tarea;
                 model.Accion = cl_enumeradores.eAcciones.Consultar;
-
                 model.IdUsuario = SessionTareas.IdUsuario;
                 model.list_detalle = Lis_Tarea_det_Info_lis.get_list(model. IdTransaccionSession);
                 model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(model.IdTransaccionSession);
+                model.FechaCulmina = model.FechaInicio;
 
             }
 
-            if( !bus_tarea.Aprobar(model))
+            if ( !bus_tarea.Aprobar(model))
             {
                 cargar_combo();
                 return View(model);

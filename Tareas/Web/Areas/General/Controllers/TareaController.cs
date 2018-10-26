@@ -99,7 +99,6 @@ namespace Web.Areas.General.Controllers
                 IdTransaccionSession = Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual),
                 IdGrupo = grupo.IdGrupo,
                 nomb_jef_grupo = grupo.nomb_jef_grupo,
-                IdUsuarioAsignado = SessionTareas.IdUsuario.ToString()
 
             };
             Lis_Tarea_det_Info_lis.set_list(new List<Tarea_det_Info>(),model.IdTransaccionSession);
@@ -110,9 +109,9 @@ namespace Web.Areas.General.Controllers
         [HttpPost]
         public ActionResult Nuevo(Tarea_Info model)
         {
+            string mensaje = "";
             model.Controller = cl_enumeradores.eController.AprobarTarea;
             model.Accion = cl_enumeradores.eAcciones.Nuevo;
-
             var param = bus_parametro.get_info();
             if (param == null)
                 param = new Parametro_Info();
@@ -131,25 +130,10 @@ namespace Web.Areas.General.Controllers
                 model.IdGrupo = grupo.IdGrupo;
             }
 
-            string mensaje = "";
             model.list_detalle = Lis_Tarea_det_Info_lis.get_list(model.IdTransaccionSession);
             model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(model.IdTransaccionSession);
             model.IdUsuario = SessionTareas.IdUsuario.ToString();
-            if (model.list_detalle == null &&(model.IdUsuarioSolicitante==model.IdUsuarioAsignado))
-            {
-                cargar_combo();
-                ViewBag.mensaje = "La distribución de la tarea debe tener al menos un detalle";
-                return View(model);
-            }
-            else
-            {
-                if (model.list_detalle.Count() == 0 && (model.IdUsuarioSolicitante == model.IdUsuarioAsignado))
-                {
-                    cargar_combo();
-                    ViewBag.mensaje = "La distribución de la tarea debe tener al menos un detalle";
-                    return View(model);
-                }
-            }
+            model.FechaCulmina = model.FechaInicio;            
             mensaje = Validaciones(model);
             if(mensaje!="")
             {
@@ -212,21 +196,8 @@ namespace Web.Areas.General.Controllers
             model.list_detalle = Lis_Tarea_det_Info_lis.get_list(model.IdTransaccionSession);
             model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(model.IdTransaccionSession);
             model.IdUsuarioModifica = SessionTareas.IdUsuario;
-            if (model.list_detalle == null && (model.IdUsuarioSolicitante == model.IdUsuarioAsignado))
-            {
-                cargar_combo();
-                ViewBag.mensaje = "El Tarea debe tener almenos un usuario miembro del Tarea";
-                return View(model);
-            }
-            else
-            {
-                if (model.list_detalle.Count() == 0 && (model.IdUsuarioSolicitante == model.IdUsuarioAsignado))
-                {
-                    cargar_combo();
-                    ViewBag.mensaje = "El Tarea debe tener almenos un usuario miembro del Tarea";
-                    return View(model);
-                }
-            }
+            model.FechaCulmina = model.FechaInicio;
+
             mensaje = Validaciones(model);
             if (mensaje != "")
             {
@@ -269,12 +240,7 @@ namespace Web.Areas.General.Controllers
         public ActionResult Anular(Tarea_Info model)
         {
             string mensaje = "";
-            var grupo = bus_grupo.get_info_grup_usuario(model.IdGrupo);
-            if (grupo != null)
-            {
-                model.IdUsuarioAsignado = grupo.IdUsuario;
-                model.nomb_jef_grupo = grupo.nomb_jef_grupo;
-            }
+            model.FechaCulmina = model.FechaInicio;
             if (model.ObsevacionModificacion == null | model.ObsevacionModificacion == "")
             {
                 mensaje = "Ingrese una observación";
@@ -350,7 +316,9 @@ namespace Web.Areas.General.Controllers
             model.list_detalle = Lis_Tarea_det_Info_lis.get_list(model.IdTransaccionSession);
             model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(model.IdTransaccionSession);
             model.IdUsuarioModifica = SessionTareas.IdUsuario.ToString();
-            if(model.ObsevacionModificacion==null|model.ObsevacionModificacion=="")
+            model.FechaCulmina = model.FechaInicio;
+
+            if (model.ObsevacionModificacion==null|model.ObsevacionModificacion=="")
             {
                 mensaje = "Ingrese una observación";
                 ViewBag.mensaje = mensaje;
@@ -412,6 +380,8 @@ namespace Web.Areas.General.Controllers
             model.list_detalle = Lis_Tarea_det_Info_lis.get_list(model.IdTransaccionSession);
             model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(model.IdTransaccionSession);
             model.IdUsuarioModifica = SessionTareas.IdUsuario.ToString();
+            model.FechaCulmina = model.FechaInicio;
+
             if (model.ObsevacionModificacion == null | model.ObsevacionModificacion == "")
             {
                 mensaje = "Ingrese una observación";

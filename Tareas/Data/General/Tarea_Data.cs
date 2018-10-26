@@ -218,12 +218,10 @@ namespace Data
                 throw;
             }
         }
-        public List<Tarea_Info> get_lis_x_aprobar(string IdUsuario, DateTime FechaInicio, DateTime FechaFin)
+        public List<Tarea_Info> get_lis_x_aprobar(string IdUsuario)
         {
             try
             {
-                FechaInicio = Convert.ToDateTime(FechaInicio.ToShortDateString());
-                FechaFin = Convert.ToDateTime(FechaFin.ToShortDateString());
                 List<Tarea_Info> Lista = new List<Tarea_Info>();
 
                 using (EntityTareas Context = new EntityTareas())
@@ -231,8 +229,8 @@ namespace Data
                         Lista = (from q in Context.vw_Tarea
                                  where q.IdUsuarioAsignado == IdUsuario
                                  && q.IdUsuarioSolicitante!=IdUsuario
-                                  && q.FechaInicio >= FechaInicio
-                                   && q.FechaInicio <= FechaFin
+                                  //&& q.FechaInicio >= FechaInicio
+                                  // && q.FechaInicio <= FechaFin
                                    && q.Estado == true
                                    && q.FechaAprobacion==null
                                  select new Tarea_Info
@@ -429,7 +427,6 @@ namespace Data
                     var Entity = Context. Tarea.Where(v => v.IdTarea == info.IdTarea).FirstOrDefault();
                     if (Entity == null)
                         return false;
-                    Entity.IdUsuarioSolicitante = info.IdUsuarioSolicitante;
                     Entity.IdGrupo = info.IdGrupo;
                     Entity.IdUsuarioAsignado = info.IdUsuarioAsignado;
                     Entity.EstadoActual = info.EstadoActual=1;

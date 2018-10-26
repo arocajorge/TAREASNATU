@@ -48,11 +48,11 @@ namespace Bus
                 throw;
             }
         }
-        public List<Tarea_Info> get_lis_x_aprobar(string IdUsuario,  DateTime FechaInicio, DateTime FechaFin)
+        public List<Tarea_Info> get_lis_x_aprobar(string IdUsuario)
         {
             try
             {
-                return odata.get_lis_x_aprobar(IdUsuario,  FechaInicio, FechaFin);
+                return odata.get_lis_x_aprobar(IdUsuario);
             }
             catch (Exception)
             {

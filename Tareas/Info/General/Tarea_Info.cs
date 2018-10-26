@@ -15,6 +15,7 @@ namespace Info
         public string IdUsuarioSolicitante { get; set; }
         [Required(ErrorMessage = "El campo grupo que solicita es obligatorio")]
         public int IdGrupo { get; set; }
+        [Required(ErrorMessage = "El campo usuario asignado es obligatorio")]
         public string IdUsuarioAsignado { get; set; }
         [Required(ErrorMessage = "El campo estado es obligatorio")]
         public int EstadoActual { get; set; }
@@ -42,7 +43,7 @@ namespace Info
         public Nullable<System.DateTime> FechaTransaccion { get; set; }
         public Nullable<System.DateTime> FechaModificacion { get; set; }
         public Nullable<System.DateTime> FechaAnulacion { get; set; }
-
+        [Required(ErrorMessage = "Ingrese una observación")]
         public string ObsevacionModificacion { get; set; }
 
 

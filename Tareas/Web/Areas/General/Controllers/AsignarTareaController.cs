@@ -74,17 +74,8 @@ namespace Web.Areas.General.Controllers
         [HttpPost]
         public ActionResult Nuevo(Tarea_Info model)
         {
-           
-            var grupo = bus_grupo.get_info_grup_usuario(model.IdGrupo);
-            if (grupo != null)
-            {
-                model.Controller = cl_enumeradores.eController.Tarea;
-                model.Accion = cl_enumeradores.eAcciones.Consultar;
-
-                model.IdUsuarioAsignado = grupo.IdUsuario;
-                model.nomb_jef_grupo = grupo.nomb_jef_grupo;
-            }
             string mensaje = "";
+            model.FechaCulmina = model.FechaInicio;
             model.list_detalle = Lis_Tarea_det_Info_lis.get_list(model.IdTransaccionSession);
             model.IdUsuarioModifica = SessionTareas.IdUsuario.ToString();
             if (model.ObsevacionModificacion == null | model.ObsevacionModificacion == "")

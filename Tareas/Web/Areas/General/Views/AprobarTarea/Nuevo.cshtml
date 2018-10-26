@@ -26,13 +26,15 @@
 
     @Html.HiddenFor(v => v.IdTransaccionSession, new {@id= "IdTransaccionSession" });
     @Html.HiddenFor(v => v.IdTarea, new  { @id= "IdTarea" });
+    @Html.HiddenFor(v => v.IdUsuarioSolicitante, new { id = "IdUsuarioSolicitante" });
+    @Html.HiddenFor(v => v.IdGrupo);
 
 
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="IdUsuarioSolicitante">Usuario Asignado*</label>
+                    <label for="IdUsuarioSolicitante">tarea asignada a:*</label>
                     @Html.DevExpress().ComboBoxFor(q => q.IdUsuarioAsignado, settings =>
                {
                    settings.Name = "IdUsuarioAsignado";
@@ -54,30 +56,6 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="IdUsuarioSolicitante">Usuario solicita*</label>
-                    @Html.DevExpress().ComboBoxFor(q => q.IdUsuarioSolicitante, settings =>
-               {
-                   settings.Name = "IdUsuarioSolicitante";
-                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                   settings.Properties.DisplayFormatString = "{0}";
-                   settings.Properties.Columns.Add("Nombre", "Usuario").Width = System.Web.UI.WebControls.Unit.Percentage(10);
-                   //Campo ID
-                   settings.Properties.ValueField = "IdUsuario";
-                   settings.Properties.ValueType = typeof(string);
-                   settings.Properties.TextField = "Nombre";
-                   //Boton para seleccionar ningun registro
-                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
-                   settings.Properties.NullText = "== Seleccione ==";
-                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                   settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){mostrar_detalle();}";
-                   settings.ReadOnly = true;
-
-               }).BindList(ViewBag.list_usuarios).GetHtml()
-                    @Html.ValidationMessageFor(q => q.IdUsuarioSolicitante, "", new { @class = "text-danger" })
-                </div>
-            </div>
 
         </div>
     </div>
@@ -86,7 +64,7 @@
         <div class="col-md-12">
             <div class="col-md-2">
                 <div class="form-group">
-                    <label for="FechaInicio">Fecha*</label>
+                    <label for="FechaInicio">Fecha de entrega*</label>
                     <div class="input-group date">
                         <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
@@ -104,27 +82,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label for="FechaCulmina">Fecha fin*</label>
-                    <div class="input-group date">
-                        <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
-                        </div>
-                        @Html.DevExpress().DateEditFor(q => q.FechaCulmina, settings =>
-                   {
-                       settings.Name = "FechaCulmina";
-                       settings.Properties.UseMaskBehavior = true;
-                       settings.Properties.EditFormat = EditFormat.Date;
-                       settings.Properties.EditFormatString = "dd/MM/yyyy";
-                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
-                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-
-                   }).GetHtml()
-                        @Html.ValidationMessageFor(q => q.FechaCulmina, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
+           
 
             <div class="col-md-2">
                 <div class="form-group">
@@ -225,6 +183,7 @@
             </div>
         </div>
     </div>
+
     <div id="Tabs" role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
             <li class="active">
