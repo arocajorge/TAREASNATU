@@ -19,6 +19,7 @@ namespace Data
         TareaEstado_Data odta_estado = new TareaEstado_Data();
         Parametro_Info info_parametro = new Parametro_Info();
         Parametro_Data data_parametro = new Parametro_Data();
+        Usuario_Data usuario_data = new Usuario_Data();
         #endregion
         public List< Tarea_Info> get_lis(DateTime FechaInicio, DateTime FechaFin)
         {
@@ -940,7 +941,6 @@ namespace Data
                         foreach (var item in info.list_adjuntos)
                         {
                             mail.Attachments.Add(new Attachment(new MemoryStream(item.Archivo), item.NombreArchivo));
-
                         }
                     }
                     catch (Exception)
@@ -975,6 +975,12 @@ namespace Data
 
                             Body += item.Descripcion + " Fecha inicio " + info.FechaInicio.ToShortDateString() + " Fecha fin " + info.FechaCulmina.ToShortDateString();
                             Body += "<br/>";
+                            var usuario = data_usuario.get_info(item.IdUsuario);
+                            if (usuario != null)
+                            {
+                                if(usuario.Correo!=null)
+                                mail.CC.Add(usuario.Correo);
+                            }
                         }
                         Body += "<br/>";
                         Body += "<br/>";
