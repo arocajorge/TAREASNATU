@@ -7438,7 +7438,6 @@
     <Content Include="Areas\General\Views\Archivo\Index.cshtml" />
     <Content Include="Areas\General\Views\Archivo\_FileManagerPartial.cshtml" />
     <Content Include="Areas\General\Views\Tarea\_GridViewPartial_tarea.cshtml" />
-    <Content Include="Areas\General\Views\Tarea\_GridViewPartial_tarea_det.cshtml" />
     <Content Include="Areas\General\Views\Tarea\Anular.cshtml" />
     <Content Include="Areas\General\Views\Tarea\Index.cshtml" />
     <Content Include="Areas\General\Views\Tarea\Modificar.cshtml" />
@@ -7461,7 +7460,6 @@
     <Content Include="Areas\General\Views\AsignarTarea\Index.cshtml" />
     <Content Include="Areas\General\Views\AsignarTarea\_GridViewPartial_asignar_subtareas.cshtml" />
     <Content Include="Areas\General\Views\AsignarTarea\Nuevo.cshtml" />
-    <Content Include="Areas\General\Views\Tarea\_GridViewPartial_tarea_det_readonly.cshtml" />
     <Content Include="Areas\Reportes\Views\web.config" />
     <Content Include="Areas\Reportes\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Reportes\Views\_ViewStart.cshtml" />
