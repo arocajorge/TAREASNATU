@@ -24,6 +24,19 @@ namespace Bus
                 throw;
             }
         }
+        public List<Tarea_Info> get_lis_cargar_combo()
+        {
+            try
+            {
+                return odata.get_lis_cargar_combo();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        
         public List<Tarea_Info> get_lis_anulados(string IdUsuarioSolicitante, DateTime FechaiInicio, DateTime FehcaFin)
         {
             try

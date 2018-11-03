@@ -15,8 +15,6 @@ namespace Web.Areas.General.Controllers
     public class AsignarTareaController : Controller
     {
         #region Variables
-        Tarea_det_Bus bus_tarea_det = new Tarea_det_Bus();
-        Tarea_det_Info_lis Lis_Tarea_det_Info_lis = new Tarea_det_Info_lis();
         Tarea_Bus bus_tarea = new Tarea_Bus();
         Grupo_Bus bus_grupo = new Grupo_Bus();
         Usuario_Bus bus_usuario = new Usuario_Bus();
@@ -62,11 +60,13 @@ namespace Web.Areas.General.Controllers
 
             Tarea_Info model = bus_tarea.get_info(IdTarea);
             model.IdTransaccionSession = Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual);
-            model.list_detalle = bus_tarea_det.get_lis(IdTarea);
-            Lis_Tarea_det_Info_lis.set_list(model.list_detalle, model.IdTransaccionSession);
             model.list_adjuntos = bus_adjunto.get_lis(IdTarea);
             TareaArchivoAdjunto_Info_lis.set_list(model.list_adjuntos, model.IdTransaccionSession);
             cargar_combo();
+            ViewBag.IdTareaPadre = model.IdTareaPadre= IdTarea;
+            model.TareaConcurrente = false;
+            model.IdUsuarioSolicitante = SessionTareas.IdUsuario;
+            model.IdUsuarioAsignado = null;
             if (model == null)
                 return RedirectToAction("Asignar_subtareas");
             return View(model);
@@ -75,8 +75,7 @@ namespace Web.Areas.General.Controllers
         public ActionResult Nuevo(Tarea_Info model)
         {
             string mensaje = "";
-            model.FechaCulmina = model.FechaInicio;
-            model.list_detalle = Lis_Tarea_det_Info_lis.get_list(model.IdTransaccionSession);
+            model.FechaEntrega = model.FechaEntrega;
             model.IdUsuarioModifica = SessionTareas.IdUsuario.ToString();
             if (model.ObsevacionModificacion == null | model.ObsevacionModificacion == "")
             {
@@ -84,22 +83,9 @@ namespace Web.Areas.General.Controllers
                 cargar_combo();
                 return View(model);
             }
-            if (model.list_detalle == null)
-            {
-                cargar_combo();
-                ViewBag.mensaje = "La Tarea debe tener almenos un detalle en la distribución";
-                return View(model);
-            }
-            else
-            {
-                if (model.list_detalle.Count() == 0)
-                {
-                    cargar_combo();
-                    ViewBag.mensaje = "La Tarea debe tener almenos un detalle en la distribución";
-                    return View(model);
-                }
-                
-            }
+
+            model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(model.IdTransaccionSession);
+
             mensaje = Validaciones(model);
             if (mensaje != "")
             {
@@ -108,7 +94,8 @@ namespace Web.Areas.General.Controllers
                 return View(model);
             }
             model.IdUsuario = SessionTareas.IdUsuario.ToString();
-            if (!bus_tarea.Asignacion(model))
+            model.EstadoActual = 1;
+            if (!bus_tarea.guardarDB(model))
             {
                 cargar_combo();
                 return View(model);
@@ -132,8 +119,9 @@ namespace Web.Areas.General.Controllers
                 var list_prioridad = bus_estado.get_lis(2);
                 ViewBag.list_prioridad = list_prioridad;
 
-              
 
+                var list_tarea = bus_tarea.get_lis_cargar_combo();
+                ViewBag.list_tarea = list_tarea; 
             }
             catch (Exception)
             {
@@ -171,22 +159,7 @@ namespace Web.Areas.General.Controllers
                 string mensaje = "";
               
 
-                foreach (var item in info.list_detalle)
-                {
-                    item.FechaFin = item.FechaInicio;
-                    if (item.FechaFin.Date < item.FechaInicio.Date)
-                    {
-                        mensaje = "Las fecha de: " + item.Descripcion + ", no son correctas";
-                    }
-                    if ((item.FechaInicio.Date < info.FechaInicio.Date) | (item.FechaInicio.Date > info.FechaCulmina.Date))
-                    {
-                        mensaje = "Las fecha de: " + item.Descripcion + ", no son correctas";
-                    }
-                    if ((item.FechaFin.Date < info.FechaInicio.Date) | (item.FechaFin.Date > info.FechaCulmina.Date))
-                    {
-                        mensaje = "Las fecha de: " + item.Descripcion + ", no son correctas";
-                    }
-                }
+               
                 
                 return mensaje;
             }

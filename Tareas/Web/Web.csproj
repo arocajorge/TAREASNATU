@@ -7450,9 +7450,6 @@
     <Content Include="Areas\General\Views\EstadoTipo\Nuevo.cshtml" />
     <Content Include="Areas\General\Views\Parametro\Index.cshtml" />
     <Content Include="Areas\General\Views\Buzon\_GridViewPartial_buzon_entrada.cshtml" />
-    <Content Include="Areas\General\Views\MisTareas\Index.cshtml" />
-    <Content Include="Areas\General\Views\MisTareas\_GridViewPartial_mis_tareas.cshtml" />
-    <Content Include="Areas\General\Views\MisTareas\_GridViewPartial_mis_tareas_det.cshtml" />
     <Content Include="Areas\General\Views\Buzon\Buzon_entrada.cshtml" />
     <Content Include="Areas\General\Views\Tarea\_GridViewPartial_tarea_det_adjunto.cshtml" />
     <Content Include="Areas\General\Views\Buzon\Buzon_salida.cshtml" />

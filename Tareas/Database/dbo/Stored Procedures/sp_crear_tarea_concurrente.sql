@@ -17,7 +17,7 @@ group by IdTarea, DiasIntervaloProximaTarea
 
 insert into Tarea (
 IdTarea,				IdUsuarioSolicitante,										IdGrupo,								IdUsuarioAsignado,									EstadoActual,
-FechaInicio,																		FechaCulmina,																				AsuntoTarea,	DescripcionTarea,						
+FechaEntrega,																																						AsuntoTarea,	DescripcionTarea,						
 IdEstadoPrioridad,		TareaConcurrente,											AprobadoSolicitado,						AprobadoEncargado,									Estado,	
 IdUsuario,				IdUsuarioModifica,											IdUsuarioAnula,							FechaTransaccion,									FechaModificacion,						
 FechaAnulacion,			FechaAprobacion,											FechaFinConcurrencia,					DiasIntervaloProximaTarea
@@ -25,27 +25,12 @@ FechaAnulacion,			FechaAprobacion,											FechaFinConcurrencia,					DiasInter
 
  select 
 @IdTareaNew,			IdUsuarioSolicitante,										IdGrupo,								IdUsuarioAsignado,									1,
- case when @DiasIntervaloProximaTarea=30 then DATEADD (MONTH,ISNULL( 1,0),FechaInicio) else DATEADD (DAY,ISNULL( @DiasIntervaloProximaTarea,0),FechaInicio) end,						case when @DiasIntervaloProximaTarea=30 then DATEADD (MONTH,ISNULL( 1,0),FechaInicio) else DATEADD (DAY,ISNULL( @DiasIntervaloProximaTarea,0),FechaCulmina) end,							AsuntoTarea,	DescripcionTarea,							
+ case when @DiasIntervaloProximaTarea=30 then DATEADD (MONTH,ISNULL( 1,0),FechaEntrega) else DATEADD (DAY,ISNULL( @DiasIntervaloProximaTarea,0),FechaEntrega) end,						case when @DiasIntervaloProximaTarea=30 then DATEADD (MONTH,ISNULL( 1,0),FechaEntrega) else DATEADD (DAY,ISNULL( @DiasIntervaloProximaTarea,0),FechaEntrega) end,							AsuntoTarea,	DescripcionTarea,							
 IdEstadoPrioridad,		TareaConcurrente,											AprobadoSolicitado,						AprobadoEncargado,									Estado,									
 IdUsuario,				IdUsuarioModifica,											IdUsuarioAnula,							GETDATE(),									       FechaModificacion,	
 FechaAnulacion,			FechaAprobacion,											FechaFinConcurrencia,					DiasIntervaloProximaTarea
 
  from Tarea where IdTarea=@IdTarea
-
- insert into Tarea_det (
-IdTarea,															Secuancial,																	Descripcion,
-FechaInicio,														fechaFin,																	NumHoras,
-IdUsuario,															IdEstado,																	FechaUltimaModif,
-Observacion,														NumHorasReales,																FechaTerminoTarea
-)
-
-select
-
-@IdTareaNew,														Secuancial,																	Descripcion,
-case when @DiasIntervaloProximaTarea=30 then DATEADD (MONTH,ISNULL( 1,0),FechaInicio) else DATEADD (DAY,ISNULL( @DiasIntervaloProximaTarea,0),FechaInicio) end,				case when @DiasIntervaloProximaTarea=30 then DATEADD (MONTH,ISNULL( 1,0),FechaFin) else DATEADD (DAY,ISNULL( @DiasIntervaloProximaTarea,0),FechaFin) end,		NumHoras,
-IdUsuario,															8,																			FechaUltimaModif,
-Observacion,														NumHorasReales,																null
-from Tarea_det where IdTarea=@IdTarea
 
 
  insert into TareaArchivoAdjunto(

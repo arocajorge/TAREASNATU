@@ -67,10 +67,11 @@
 
 
         };
+        settings.Columns.Add("IdTarea", "ID").Width = Unit.Percentage(5);
         settings.Columns.Add("AsuntoTarea", "Asunto").Width = Unit.Percentage(30);
         settings.Columns.Add(column =>
         {
-            column.FieldName = "FechaInicio";
+            column.FieldName = "FechaEntrega";
             column.Caption = "Fecha entrega";
             column.Width = Unit.Percentage(10);
             column.PropertiesEdit.DisplayFormatString = "d";
@@ -85,10 +86,13 @@
         settings.Columns.Add("Prioridad", "Prioridad").Width = Unit.Percentage(10);
         settings.Columns.Add("EstadoTarea", "Estado").Width = Unit.Percentage(10);
         settings.Columns.Add("NombreGrupo", "Grupo").Width = Unit.Percentage(10);
+        settings.Columns.Add("NumSubtarea", "Subtareas").Width = Unit.Percentage(10);
+        settings.Columns.Add("NumSubtareasAbiertas", "Subtareas pendientes").Width = Unit.Percentage(10);
 
         settings.Columns.Add(c =>
         {
             c.Caption = "Acciones";
+            c.Width = Unit.Percentage(10);
             c.SetDataItemTemplateContent(tc =>
             {
                 if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "Estado")) == true && Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "AprobadoEncargado")) == false)

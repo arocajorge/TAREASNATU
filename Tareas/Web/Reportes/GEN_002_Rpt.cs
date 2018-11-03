@@ -25,7 +25,7 @@ namespace Web.Reportes
 
 
             GEN_002_Bus bus_rpt = new GEN_002_Bus();
-            List<GEN_002_Info> lst_rpt = bus_rpt.get_list(IdUsuarioAsignado, IdGrupo, fechaInicio, fechaFin);
+            List<GEN_002_Info> lst_rpt = bus_rpt.get_list( IdGrupo, fechaInicio, fechaFin);
             this.DataSource = lst_rpt;
         }
     }

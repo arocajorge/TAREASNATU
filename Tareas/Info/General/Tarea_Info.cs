@@ -20,9 +20,8 @@ namespace Info
         [Required(ErrorMessage = "El campo estado es obligatorio")]
         public int EstadoActual { get; set; }
         [Required(ErrorMessage = "El campo fecha inicio es obligatorio")]
-        public System.DateTime FechaInicio { get; set; }
-        [Required(ErrorMessage = "El campo fecha fin es obligatorio")]
-        public System.DateTime FechaCulmina { get; set; }
+        public System.DateTime FechaEntrega { get; set; }
+       
         [Required(ErrorMessage = "El campo asunto de la tarea es obligatorio")]
         public string AsuntoTarea { get; set; }
         [Required(ErrorMessage = "El campo detalle de la tarea es obligatorio")]
@@ -51,14 +50,15 @@ namespace Info
         public cl_enumeradores.eAcciones Accion { get; set; }
         public string Saludo { get; set; }
 
-        public List<Tarea_det_Info> list_detalle { get; set; }
         public List<TareaArchivoAdjunto_Info> list_adjuntos { get; set; }
         public TareaEstado_Info InfoEstado { get; set; }
         public string nomb_jef_grupo { get; set; }
+        public Nullable<decimal> IdTareaPadre { get; set; }
+        public Nullable<int> NumSubtarea { get; set; }
+        public Nullable<int> NumSubtareasAbiertas { get; set; }
 
         public Tarea_Info()
         {
-            list_detalle = new List<Tarea_det_Info>();
             list_adjuntos = new List<TareaArchivoAdjunto_Info>();
         }
 
@@ -70,11 +70,13 @@ namespace Info
         public string EstadoTarea { get; set; }
         public string NombreGrupo { get; set; }
 
-        public Nullable<int> NumTareaDia { get; set; }
+        public Nullable<int> NumTareaPorAprobar { get; set; }
         public Nullable<int> NumTareaVencidas { get; set; }
         public Nullable<int> TotalTareaResueltas { get; set; }
         public Nullable<int> TotalTareaPendiente { get; set; }
         public Nullable<int> IdGrupoFiltro { get; set; }
+        public DateTime FechaInicio { get; set; }
+        public DateTime FechaFin { get; set; }
 
         #endregion
     }

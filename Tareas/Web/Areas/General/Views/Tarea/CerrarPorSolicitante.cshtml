@@ -14,7 +14,7 @@
 
     }
     ViewBag.Title = "Cerrar tarea";
-    if (Session["IdUsuario"] == null )
+    if (Session["IdUsuario"] == null)
     {
         Response.Redirect("~/Account/Login");
     }
@@ -32,8 +32,39 @@
     @Html.HiddenFor(v => v.AsuntoTarea);
     @Html.HiddenFor(v => v.DescripcionTarea);
     @Html.HiddenFor(v => v.IdGrupo);
+    @Html.HiddenFor(v => v.NumSubtareasAbiertas);
+
+    if (Model.IdTareaPadre != null)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="IdUsuarioSolicitante">Tarea Padre*</label>
+                        @Html.DevExpress().ComboBoxFor(q => q.IdTareaPadre, settings =>
+                   {
+                       settings.Name = "IdTareaPadre";
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.Properties.DisplayFormatString = "{0}";
+                       settings.Properties.Columns.Add("Nombre", "Usuario").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                       //Campo ID
+                       settings.Properties.ValueField = "IdUsuario";
+                       settings.Properties.ValueType = typeof(string);
+                       settings.Properties.TextField = "Nombre";
+                       //Boton para seleccionar ningun registro
+                       settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
+                       settings.Properties.NullText = "== Seleccione ==";
+                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                       settings.ReadOnly = true;
+                   }).BindList(ViewBag.list_tarea).GetHtml()
+                        @Html.ValidationMessageFor(q => q.IdTareaPadre, "", new { @class = "text-danger" })
+                    </div>
+                </div>
 
 
+            </div>
+        </div>
+    }
 
     <div class="row">
         <div class="col-md-12">
@@ -61,7 +92,7 @@
                 </div>
             </div>
 
-         
+
         </div>
     </div>
 
@@ -69,14 +100,14 @@
         <div class="col-md-12">
             <div class="col-md-2">
                 <div class="form-group">
-                    <label for="FechaInicio">Fecha de entrega*</label>
+                    <label for="FechaEntrega">Fecha de entrega*</label>
                     <div class="input-group date">
                         <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                         </div>
-                        @Html.DevExpress().DateEditFor(q => q.FechaInicio, settings =>
+                        @Html.DevExpress().DateEditFor(q => q.FechaEntrega, settings =>
                    {
-                       settings.Name = "FechaInicio";
+                       settings.Name = "FechaEntrega";
                        settings.Properties.UseMaskBehavior = true;
                        settings.Properties.EditFormat = EditFormat.Date;
                        settings.Properties.EditFormatString = "dd/MM/yyyy";
@@ -85,11 +116,11 @@
                        settings.ReadOnly = true;
 
                    }).GetHtml()
-                        @Html.ValidationMessageFor(q => q.FechaInicio, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(q => q.FechaEntrega, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
-           
+
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="IdCtaCblePadre">Prioridad de la tarea*</label>
@@ -184,7 +215,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="DescripcionTarea">Observación*</label>
-                    @Html.TextAreaFor(v => v.ObsevacionModificacion, new { @class = "form-control", @rows = 2})
+                    @Html.TextAreaFor(v => v.ObsevacionModificacion, new { @class = "form-control", @rows = 2 })
                     @Html.ValidationMessageFor(m => m.ObsevacionModificacion, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -193,9 +224,7 @@
 
     <div id="Tabs" role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
-            <li class="active">
-                <a href="#tab_detalle" aria-controls="detalle" role="tab" data-toggle="tab" id="link_detalle">Distribución de Subtareas</a>
-            </li>
+
             <li>
                 <a href="#tab_adjuntos" aria-controls="adjunto" role="tab" data-toggle="tab">Archivos adjuntos</a>
             </li>
@@ -207,18 +236,8 @@
             </li>
         </ul>
         <div class="tab-content" style="padding-top: 20px">
-            <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_detalle">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                @Html.Action("GridViewPartial_Tarea_det_readonly")
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_adjuntos">
+
+            <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_adjunto">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="col-md-12">
@@ -233,11 +252,12 @@
                                settings.AdvancedModeSettings.EnableMultiSelect = true;
                                settings.AdvancedModeSettings.EnableFileList = true;
                                settings.AdvancedModeSettings.EnableDragAndDrop = true;
-
+                               settings.Width =Unit.Percentage(100);
+                               settings.Height = Unit.Pixel(50);
                                settings.ShowUploadButton = true;
                                settings.ShowProgressPanel = true;
-                               settings.ClientSideEvents.FileUploadComplete = "function(s,e){refres_grid_adjunto();}";
-                               settings.ValidationSettings.Assign(Web.Areas.General.Controllers.TareaControllerUploadControl_adjuntoSettings.UploadValidationSettings);
+                               settings.ClientSideEvents.FileUploadComplete= "function(s,e){refres_grid_adjunto();}";
+                              // settings.ValidationSettings.Assign(Web.Areas.General.Controllers.TareaControllerUploadControl_adjuntoSettings.UploadValidationSettings);
                            }).GetHtml()
                             </div>
                         </div>
@@ -254,12 +274,13 @@
                 </div>
             </div>
 
+
             <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_parametros">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="col-md-2">
                             <div class="form-group">
-                                <label for="FechaInicio">Expira</label>
+                                <label for="FechaEntrega">Expira</label>
                                 <div class="input-group date">
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
@@ -294,7 +315,7 @@
                             <div class="form-group">
 
                                 @Html.Action("GridViewPartial_tarea_det_estados", "TareaEstados", new { IdTarea = Model.IdTarea })
-                           </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -314,3 +335,38 @@
     }
 }
 
+
+<script>
+    mostrar_parametros();
+    mostrar_detalle();
+
+
+
+    function refres_grid_adjunto() {
+        GridViewPartial_tarea_det_adjunto.PerformCallback();
+    };
+
+    function mostrar_detalle() {
+        var IdUsuarioAsignad = IdUsuarioAsignado.GetValue();
+        var IdUsuarioSolicitant = $("#IdUsuarioSolicitante").val();
+        $("#link_adjunto").click();
+        if (IdUsuarioAsignad == IdUsuarioSolicitant) {
+            $("#link_detalle").show();
+            AprobadoEncargado.SetChecked(true);
+        }
+        else {
+            $("#link_detalle").hide();
+            AprobadoEncargado.SetChecked(false);
+        }
+    };
+
+    function mostrar_parametros() {
+        if (TareaConcurrente.GetValue()) {
+            $("#link_parametro").show();
+        }
+        else {
+            $("#link_parametro").hide();
+        }
+
+    };
+</script>

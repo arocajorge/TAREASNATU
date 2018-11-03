@@ -9,7 +9,7 @@ namespace Data.General
 {
     public class GEN_002_Data
     {
-        public List<GEN_002_Info> get_list(string IdUsuarioAsignado, int IdGrupo,  DateTime fechaInicio, DateTime fechaFin)
+        public List<GEN_002_Info> get_list( int IdGrupo,  DateTime fechaInicio, DateTime fechaFin)
         {
             try
             {
@@ -21,35 +21,21 @@ namespace Data.General
                 List<GEN_002_Info> Lista;
                 using (EntityTareas Context = new EntityTareas())
                 {
-                    if (IdUsuarioAsignado != "")
                         Lista = (from q in Context.SPGEN_002(fechaInicio, fechaFin)
-                             where q.IdUsuarioAsignado == IdUsuarioAsignado
-                             && q.IdGrupo >= q.IdGrupo && q.IdGrupo <= IdGrupoFin
+                             where 
+                              q.IdGrupo >= q.IdGrupo && q.IdGrupo <= IdGrupoFin
                              select new GEN_002_Info
                              {
-                                 Cumplidas = q.Cumplidas,
-                                 Incumplidas = q.Incumplidas,
-                                 IdUsuarioAsignado = q.IdUsuarioAsignado,
-                                 Encargado =q.Encargado,
-                                 Grupo = q.Grupo,
-                                 IdGrupo = q.IdGrupo,
+                                 Secuencia=q.Secuencia,
+                                 IdGrupo=q.IdGrupo,
+                                 Cumplidas=q.Cumplidas,
+                                 Incumplidas=q.Incumplidas,
                                  EnProceso = q.EnProceso,
+                                 Encargado=q.Encargado,
+                                 Grupo=q.Grupo
 
                              }).ToList();
-                    else
-                        Lista = (from q in Context.SPGEN_002(fechaInicio, fechaFin)
-                                 where q.IdGrupo >= q.IdGrupo && q.IdGrupo <= IdGrupoFin
-                                 select new GEN_002_Info
-                                 {
-                                     Cumplidas = q.Cumplidas,
-                                     Incumplidas = q.Incumplidas,
-                                     IdUsuarioAsignado = q.IdUsuarioAsignado,
-                                     Encargado = q.Encargado,
-                                     Grupo = q.Grupo,
-                                     IdGrupo = q.IdGrupo,
-                                     EnProceso = q.EnProceso,
-
-                                 }).ToList();
+                   
                 }
 
                 foreach (var item in Lista)

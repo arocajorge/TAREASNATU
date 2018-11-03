@@ -15,8 +15,6 @@ namespace Web.Areas.General.Controllers
     public class AprobarTareaController : Controller
     {
         #region Variables
-        Tarea_det_Bus bus_tarea_det = new Tarea_det_Bus();
-        Tarea_det_Info_lis Lis_Tarea_det_Info_lis = new Tarea_det_Info_lis();
         Tarea_Bus bus_tarea = new Tarea_Bus();
         Grupo_Bus bus_grupo = new Grupo_Bus();
         Usuario_Bus bus_usuario = new Usuario_Bus();
@@ -42,11 +40,11 @@ namespace Web.Areas.General.Controllers
             }
             model.AprobadoEncargado = true;
             model.IdTransaccionSession = Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual);
-            model.list_detalle = bus_tarea_det.get_lis(IdTarea);
-            Lis_Tarea_det_Info_lis.set_list(model.list_detalle, model.IdTransaccionSession);
             model.list_adjuntos = bus_adjunto.get_lis(IdTarea);
             TareaArchivoAdjunto_Info_lis.set_list(model.list_adjuntos, model.IdTransaccionSession);
             cargar_combo();
+            ViewBag.IdTareaPadre = model.IdTareaPadre;
+
             if (model == null)
                 return RedirectToAction("Buzon_entrada");
             return View(model);
@@ -60,9 +58,8 @@ namespace Web.Areas.General.Controllers
                 model.Controller = cl_enumeradores.eController.Tarea;
                 model.Accion = cl_enumeradores.eAcciones.Consultar;
                 model.IdUsuario = SessionTareas.IdUsuario;
-                model.list_detalle = Lis_Tarea_det_Info_lis.get_list(model. IdTransaccionSession);
                 model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(model.IdTransaccionSession);
-                model.FechaCulmina = model.FechaInicio;
+                model.FechaEntrega = model.FechaEntrega;
 
             }
 
@@ -99,6 +96,8 @@ namespace Web.Areas.General.Controllers
                 var list_grupo = bus_grupo.get_lis(true);
                 ViewBag.list_grupo = list_grupo;
 
+                var list_tarea = bus_tarea.get_lis_cargar_combo();
+                ViewBag.list_tarea = list_tarea;
             }
             catch (Exception)
             {
@@ -135,23 +134,7 @@ namespace Web.Areas.General.Controllers
             {
                 string mensaje = "";
                
-                foreach (var item in info.list_detalle)
-                {
-                    item.FechaFin = item.FechaInicio;
-
-                    if (item.FechaFin.Date < item.FechaInicio.Date)
-                    {
-                        mensaje = "Las fecha de: " + item.Descripcion + ", no son correctas";
-                    }
-                    if ((item.FechaInicio.Date < info.FechaInicio.Date) | (item.FechaInicio.Date > info.FechaCulmina.Date))
-                    {
-                        mensaje = "Las fecha de: " + item.Descripcion + ", no son correctas";
-                    }
-                    if ((item.FechaFin.Date < info.FechaInicio.Date) | (item.FechaFin.Date > info.FechaCulmina.Date))
-                    {
-                        mensaje = "Las fecha de: " + item.Descripcion + ", no son correctas";
-                    }
-                }
+               
                 if (info.TareaConcurrente)
                 {
                     if (info.DiasIntervaloProximaTarea == null | info.DiasIntervaloProximaTarea == 0)

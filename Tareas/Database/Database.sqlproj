@@ -66,7 +66,6 @@
     <Build Include="dbo\Tables\Usuario.sql" />
     <Build Include="dbo\Tables\TareaEstado.sql" />
     <Build Include="dbo\Tables\TareaArchivoAdjunto.sql" />
-    <Build Include="dbo\Tables\Tarea_det.sql" />
     <Build Include="dbo\Tables\Tarea.sql" />
     <Build Include="dbo\Tables\Parametro.sql" />
     <Build Include="dbo\Tables\Grupo_Usuario.sql" />
@@ -77,7 +76,6 @@
     <Build Include="dbo\Stored Procedures\sp_Tareas_X_Usuarios.sql" />
     <Build Include="dbo\Views\VWGEN_001.sql" />
     <Build Include="dbo\Stored Procedures\SPGEN_002.sql" />
-    <Build Include="dbo\Stored Procedures\sp_tareas_culminadas_sin_cerrar.sql" />
     <Build Include="dbo\Stored Procedures\sp_crear_tarea_concurrente.sql" />
     <Build Include="dbo\Stored Procedures\sp_carga_laboral.sql" />
     <Build Include="dbo\Stored Procedures\CierreTareaAutomatico.sql" />

@@ -1,4 +1,5 @@
-﻿@model Info.Tarea_Info
+﻿@using System.Web.UI.WebControls;
+@model Info.Tarea_Info
 
 @{
 
@@ -21,16 +22,48 @@
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 
-@using (Html.BeginForm("Nuevo", "AprobarTarea", FormMethod.Post, new { @class = "form", @role = "form",@id="formAprobar" }))
+@using (Html.BeginForm("Nuevo", "AprobarTarea", FormMethod.Post, new { @class = "form", @role = "form", @id = "formAprobar" }))
 {
 
-    @Html.HiddenFor(v => v.IdTransaccionSession, new {@id= "IdTransaccionSession" });
-    @Html.HiddenFor(v => v.IdTarea, new  { @id= "IdTarea" });
+    @Html.HiddenFor(v => v.IdTransaccionSession, new { @id = "IdTransaccionSession" });
+    @Html.HiddenFor(v => v.IdTarea, new { @id = "IdTarea" });
     @Html.HiddenFor(v => v.IdUsuarioSolicitante, new { id = "IdUsuarioSolicitante" });
     @Html.HiddenFor(v => v.IdGrupo);
     @Html.HiddenFor(v => v.AsuntoTarea);
     @Html.HiddenFor(v => v.DescripcionTarea);
 
+
+    if (ViewBag.IdTareaPadre != null)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="IdUsuarioSolicitante">Tarea Padre*</label>
+                        @Html.DevExpress().ComboBoxFor(q => q.IdTareaPadre, settings =>
+                   {
+                       settings.Name = "IdTareaPadre";
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.Properties.DisplayFormatString = "{0}";
+                       settings.Properties.Columns.Add("AsuntoTarea", "Asunto tarea").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                       //Campo ID
+                       settings.Properties.ValueField = "IdTarea";
+                       settings.Properties.ValueType = typeof(decimal);
+                       settings.Properties.TextField = "AsuntoTarea";
+                       //Boton para seleccionar ningun registro
+                       settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
+                       settings.Properties.NullText = "== Seleccione ==";
+                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                       settings.ReadOnly = true;
+                   }).BindList(ViewBag.list_tarea).GetHtml()
+                        @Html.ValidationMessageFor(q => q.IdTareaPadre, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    }
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-6">
@@ -65,25 +98,25 @@
         <div class="col-md-12">
             <div class="col-md-2">
                 <div class="form-group">
-                    <label for="FechaInicio">Fecha de entrega*</label>
+                    <label for="FechaEntrega">Fecha de entrega*</label>
                     <div class="input-group date">
                         <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                         </div>
-                        @Html.DevExpress().DateEditFor(q => q.FechaInicio, settings =>
+                        @Html.DevExpress().DateEditFor(q => q.FechaEntrega, settings =>
                    {
-                       settings.Name = "FechaInicio";
+                       settings.Name = "FechaEntrega";
                        settings.Properties.UseMaskBehavior = true;
                        settings.Properties.EditFormat = EditFormat.Date;
                        settings.Properties.EditFormatString = "dd/MM/yyyy";
                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                    }).GetHtml()
-                        @Html.ValidationMessageFor(q => q.FechaInicio, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(q => q.FechaEntrega, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
-           
+
 
             <div class="col-md-2">
                 <div class="form-group">
@@ -187,29 +220,16 @@
 
     <div id="Tabs" role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
-            <li class="active">
-                <a href="#tab_detalle" aria-controls="informacion_items" role="tab" data-toggle="tab">Detalle tarea</a>
-            </li>
+
             <li>
                 <a href="#tab_adjuntos" aria-controls="otros" role="tab" data-toggle="tab">Archivos adjuntos</a>
             </li>
-            <li>
+            <li class="active">
                 <a href="#tab_historico" aria-controls="parametros" role="tab" data-toggle="tab" id="link_historico">Histórico</a>
             </li>
 
         </ul>
         <div class="tab-content" style="padding-top: 20px">
-            <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_detalle">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                @Html.Action("GridViewPartial_Tarea_det_readonly", "Tarea")
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_adjuntos">
                 <div class="row">
                     <div class="col-md-12">
@@ -228,8 +248,7 @@
                                settings.ShowUploadButton = true;
                                settings.ShowProgressPanel = true;
 
-                               settings.ClientSideEvents.FileUploadComplete = "function(s,e){refres_grid();}";
-                               settings.ValidationSettings.Assign(Web.Areas.General.Controllers.TareaControllerUploadControl_adjuntoSettings.UploadValidationSettings);
+                               settings.ClientSideEvents.FileUploadComplete = "function(s,e){refres_grid_adjunto();}";
                            }).GetHtml()
 
                             </div>
@@ -246,6 +265,7 @@
                     </div>
                 </div>
             </div>
+
 
             <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_historico">
                 <div class="row">
@@ -266,7 +286,7 @@
 
 
     <div class="box-footer">
-        <button type="submit" class="btn btn-primary"  id="btnAprobar">Aprobar</button>
+        <button type="submit" class="btn btn-primary" id="btnAprobar">Aprobar</button>
         <a class="btn btn-default" href="@Url.Action("Buszon_entrada","Tarea",new { Area = "General" },null)">Cancelar</a>
     </div>
 
@@ -276,3 +296,38 @@
     }
 }
 
+
+<script>
+    mostrar_parametros();
+    mostrar_detalle();
+
+
+
+    function refres_grid_adjunto() {
+        GridViewPartial_tarea_det_adjunto.PerformCallback();
+    };
+
+    function mostrar_detalle() {
+        var IdUsuarioAsignad = IdUsuarioAsignado.GetValue();
+        var IdUsuarioSolicitant = $("#IdUsuarioSolicitante").val();
+        $("#link_adjunto").click();
+        if (IdUsuarioAsignad == IdUsuarioSolicitant) {
+            $("#link_detalle").show();
+            AprobadoEncargado.SetChecked(true);
+        }
+        else {
+            $("#link_detalle").hide();
+            AprobadoEncargado.SetChecked(true);
+        }
+    };
+
+    function mostrar_parametros() {
+        if (TareaConcurrente.GetValue()) {
+            $("#link_parametro").show();
+        }
+        else {
+            $("#link_parametro").hide();
+        }
+
+    };
+</script>

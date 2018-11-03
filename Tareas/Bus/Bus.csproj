@@ -52,7 +52,6 @@
     <Compile Include="General\TareaArchivoAdjunto_Bus.cs" />
     <Compile Include="General\TareaEstado_Bus.cs" />
     <Compile Include="General\Tarea_Bus.cs" />
-    <Compile Include="General\Tarea_det_Bus.cs" />
     <Compile Include="General\Usuario_Bus.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -90,7 +90,7 @@
         settings.Columns.Add("AsuntoTarea", "Asunto").Width = Unit.Percentage(30);
         settings.Columns.Add(column =>
         {
-            column.FieldName = "FechaInicio";
+            column.FieldName = "FechaEntrega";
             column.Caption = "Fecha entrega";
             column.Width = Unit.Percentage(10);
             column.PropertiesEdit.DisplayFormatString = "d";
@@ -100,13 +100,14 @@
                 sp.Width = Unit.Percentage(100);
             });
         });
-       
+
         settings.Columns.Add("solicitante", "Solicitante").Width = Unit.Percentage(10);
         settings.Columns.Add("Asignado", "Asignado").Width = Unit.Percentage(10);
         settings.Columns.Add("Prioridad", "Prioridad").Width = Unit.Percentage(10);
         settings.Columns.Add("EstadoTarea", "Estado").Width = Unit.Percentage(10);
         settings.Columns.Add("NombreGrupo", "Grupo").Width = Unit.Percentage(10);
-
+        settings.Columns.Add("NumSubtarea", "Subtareas").Width = Unit.Percentage(10);
+        settings.Columns.Add("NumSubtareasAbiertas", "Subtareas pendientes").Width = Unit.Percentage(10);
 
 
 

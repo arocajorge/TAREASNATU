@@ -41,7 +41,7 @@
                 <div class="col-md-12">
 
 
-                    <div class="col-md-5">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="IdUsuario">Usuario*</label>
                             @Html.DevExpress().ComboBoxFor(q => q.IdUsuario, settings =>
@@ -65,7 +65,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-5">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="IdGrupoFiltro">Grupo*</label>
                             @Html.DevExpress().ComboBoxFor(q => q.IdGrupoFiltro, settings =>
@@ -88,6 +88,49 @@
                             @Html.ValidationMessageFor(q => q.IdGrupoFiltro, "", new { @class = "text-danger" })
                         </div>
                     </div>
+
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="FechaEntrega">Fecha desde*</label>
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                @Html.DevExpress().DateEditFor(q => q.FechaInicio, settings =>
+                           {
+                               settings.Name = "FechaInicio";
+                               settings.Properties.UseMaskBehavior = true;
+                               settings.Properties.EditFormat = EditFormat.Date;
+                               settings.Properties.EditFormatString = "dd/MM/yyyy";
+                               settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                               settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                           }).GetHtml()
+                                @Html.ValidationMessageFor(q => q.FechaInicio, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="FechaEntrega">Fecha hasta*</label>
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                @Html.DevExpress().DateEditFor(q => q.FechaFin, settings =>
+                           {
+                               settings.Name = "FechaFin";
+                               settings.Properties.UseMaskBehavior = true;
+                               settings.Properties.EditFormat = EditFormat.Date;
+                               settings.Properties.EditFormatString = "dd/MM/yyyy";
+                               settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                               settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                           }).GetHtml()
+                                @Html.ValidationMessageFor(q => q.FechaFin, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -122,7 +165,7 @@
                         </div>
                         @if (Model.IdUsuario == Web.Helps.SessionTareas.IdUsuario)
                         {
-                        <a href="@Url.Action("Index")" class="small-box-footer"> Resolver tareas <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="@Url.Action("Buzon_entrada","Buzon")" class="small-box-footer"> Resolver tareas <i class="fa fa-arrow-circle-right"></i></a>
                         }
                         else
                         {
@@ -135,7 +178,7 @@
                     <!-- small box -->
                     <div class="small-box bg-yellow">
                         <div class="inner">
-                            <h3>@Model.NumTareaDia</h3>
+                            <h3>@Model.NumTareaPorAprobar</h3>
 
                             <p>Pendiente de aprobar</p>
                         </div>
@@ -166,13 +209,13 @@
                         </div>
                         @if (Model.IdUsuario == Web.Helps.SessionTareas.IdUsuario)
                         {
-                            <a href="@Url.Action("Index")" class="small-box-footer"> Resolver tareas <i class="fa fa-arrow-circle-right"></i></a>
+                            <a href="@Url.Action("Buzon_entrada","Buzon")" class="small-box-footer"> Resolver tareas <i class="fa fa-arrow-circle-right"></i></a>
                         }
                         else
                         {
                             <a href="#" class="small-box-footer"> Resolver tareas <i class="fa fa-arrow-circle-right"></i></a>
-                        }    
-                       </div>
+                        }
+                    </div>
                 </div>
 
                 <div class="col-lg-3 col-xs-6">
@@ -188,13 +231,13 @@
                         </div>
                         @if (Model.IdUsuario == Web.Helps.SessionTareas.IdUsuario)
                         {
-                            <a href="@Url.Action("Index")" class="small-box-footer"> Resolver tareas <i class="fa fa-arrow-circle-right"></i></a>
+                            <a href="@Url.Action("Buzon_entrada","Buzon")" class="small-box-footer"> Resolver tareas <i class="fa fa-arrow-circle-right"></i></a>
                         }
                         else
                         {
                             <a href="#" class="small-box-footer"> Resolver tareas <i class="fa fa-arrow-circle-right"></i></a>
                         }
-                          </div>
+                    </div>
                 </div>
             </div>
 

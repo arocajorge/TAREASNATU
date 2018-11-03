@@ -1,4 +1,5 @@
-﻿@model Info.Tarea_Info
+﻿@using System.Web.UI.WebControls;
+@model Info.Tarea_Info
 
 @{
 
@@ -26,27 +27,57 @@
 
     @Html.HiddenFor(v => v.IdTransaccionSession, new { @id = "IdTransaccionSession" });
     @Html.HiddenFor(v => v.IdTarea, new { @id = "IdTarea" });
-    @Html.HiddenFor(v => v.FechaInicio);
-    @Html.HiddenFor(v => v.FechaCulmina);
+    @Html.HiddenFor(v => v.FechaEntrega);
     @Html.HiddenFor(v => v.AprobadoEncargado);
     @Html.HiddenFor(v => v.AprobadoSolicitado);
     @Html.HiddenFor(v => v.TareaConcurrente);
     @Html.HiddenFor(v => v.IdUsuarioSolicitante, new { id = "IdUsuarioSolicitante" });
     @Html.HiddenFor(v => v.IdGrupo);
-    @Html.HiddenFor(v => v.AsuntoTarea);
-    @Html.HiddenFor(v => v.DescripcionTarea);
+    if (ViewBag.IdTareaPadre != null)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="IdUsuarioSolicitante">Tarea Padre*</label>
+                        @Html.DevExpress().ComboBoxFor(q => q.IdTareaPadre, settings =>
+                   {
+                       settings.Name = "IdTareaPadre";
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.Properties.DisplayFormatString = "{0}";
+                       settings.Properties.Columns.Add("AsuntoTarea", "Asunto tarea").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                       //Campo ID
+                       settings.Properties.ValueField = "IdTarea";
+                       settings.Properties.ValueType = typeof(decimal);
+                       settings.Properties.TextField = "AsuntoTarea";
+                       //Boton para seleccionar ningun registro
+                       settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
+                       settings.Properties.NullText = "== Seleccione ==";
+                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                       settings.ReadOnly = true;
+                   }).BindList(ViewBag.list_tarea).GetHtml()
+                        @Html.ValidationMessageFor(q => q.IdTareaPadre, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    }
+
 
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="form-group">
-                    <label for="IdUsuarioSolicitante">tarea asignada a:*</label>
+                    <label for="IdUsuarioSolicitante">Asignada tarea a:*</label>
                     @Html.DevExpress().ComboBoxFor(q => q.IdUsuarioAsignado, settings =>
                {
                    settings.Name = "IdUsuarioAsignado";
                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                   settings.Properties.DisplayFormatString = "{0}";
-                   settings.Properties.Columns.Add("Nombre", "Usuario").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   settings.Properties.DisplayFormatString = "[{0}]{1}";
+                   settings.Properties.Columns.Add("IdUsuario", "Usuario").Width = System.Web.UI.WebControls.Unit.Percentage(15);
+                   settings.Properties.Columns.Add("Nombre", "Usuario").Width = System.Web.UI.WebControls.Unit.Percentage(85);
                    //Campo ID
                    settings.Properties.ValueField = "IdUsuario";
                    settings.Properties.ValueType = typeof(string);
@@ -56,7 +87,6 @@
                    settings.Properties.NullText = "== Seleccione ==";
                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
                    settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){mostrar_detalle();}";
-                   settings.ReadOnly = true;
                }).BindList(ViewBag.list_usuarios).GetHtml()
                     @Html.ValidationMessageFor(q => q.IdUsuarioAsignado, "", new { @class = "text-danger" })
                 </div>
@@ -70,25 +100,26 @@
         <div class="col-md-12">
             <div class="col-md-2">
                 <div class="form-group">
-                    <label for="FechaInicio">Fecha de entrega*</label>
+                    <label for="FechaEntrega">Fecha de entrega*</label>
                     <div class="input-group date">
                         <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                         </div>
-                        @Html.DevExpress().DateEditFor(q => q.FechaInicio, settings =>
+                        @Html.DevExpress().DateEditFor(q => q.FechaEntrega, settings =>
                    {
-                       settings.Name = "FechaInicio";
+                       settings.Name = "FechaEntrega";
                        settings.Properties.UseMaskBehavior = true;
                        settings.Properties.EditFormat = EditFormat.Date;
                        settings.Properties.EditFormatString = "dd/MM/yyyy";
                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.ReadOnly = true;
                    }).GetHtml()
-                        @Html.ValidationMessageFor(q => q.FechaInicio, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(q => q.FechaEntrega, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="IdCtaCblePadre">Prioridad de la tarea*</label>
@@ -160,7 +191,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="AsuntoTarea">Asunto*</label>
-                    @Html.TextAreaFor(v => v.AsuntoTarea, new { @class = "form-control", @rows = 2, @disabled = "disabled" })
+                    @Html.TextAreaFor(v => v.AsuntoTarea, new { @class = "form-control", @rows = 2 })
                     @Html.ValidationMessageFor(m => m.AsuntoTarea, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -171,7 +202,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="DescripcionTarea">Detalle*</label>
-                    @Html.TextAreaFor(v => v.DescripcionTarea, new { @class = "form-control", @rows = 4, @disabled = "disabled" })
+                    @Html.TextAreaFor(v => v.DescripcionTarea, new { @class = "form-control", @rows = 4 })
                     @Html.ValidationMessageFor(m => m.DescripcionTarea, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -191,8 +222,9 @@
 
     <div id="Tabs" role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
+
             <li class="active">
-                <a href="#tab_detalle" aria-controls="informacion_items" role="tab" data-toggle="tab">Detalle tarea</a>
+                <a href="#tab_adjunto" aria-controls="adjunto" role="tab" data-toggle="tab" id="link_adjunto">Archivos adjuntos</a>
             </li>
             <li>
                 <a href="#tab_historico" aria-controls="parametros" role="tab" data-toggle="tab" id="link_historico">Histórico</a>
@@ -201,17 +233,44 @@
 
         </ul>
         <div class="tab-content" style="padding-top: 20px">
-            <div role="tabpanel" class="" style="margin-left: 1em;" id="tab_detalle">
+            <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_adjunto">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="col-md-12">
                             <div class="form-group">
-                                @Html.Action("GridViewPartial_tarea_det", "Tarea")
+
+
+                                @Html.DevExpress().UploadControl(settings =>
+                           {
+                               settings.Name = "UploadControl_adjunto";
+                               settings.CallbackRouteValues = new { Controller = "Tarea", Action = "UploadControl_adjuntoUpload" };
+
+                               settings.AdvancedModeSettings.EnableMultiSelect = true;
+                               settings.AdvancedModeSettings.EnableFileList = true;
+                               settings.AdvancedModeSettings.EnableDragAndDrop = true;
+                               settings.Width =Unit.Percentage(100);
+                               settings.Height = Unit.Pixel(50);
+                               settings.ShowUploadButton = true;
+                               settings.ShowProgressPanel = true;
+                               settings.ClientSideEvents.FileUploadComplete= "function(s,e){refres_grid_adjunto();}";
+                              // settings.ValidationSettings.Assign(Web.Areas.General.Controllers.TareaControllerUploadControl_adjuntoSettings.UploadValidationSettings);
+                           }).GetHtml()
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.Action("GridViewPartial_tarea_det_adjunto","Tarea")
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+
             <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_historico">
                 <div class="row">
                     <div class="col-md-12">
@@ -224,7 +283,7 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
 
 
@@ -232,7 +291,7 @@
 
 
     <div class="box-footer">
-        <button type="submit" class="btn btn-primary"btbAprobar">Guardar</button>
+        <button type="submit" class="btn btn-primary" btbAprobar">Guardar</button>
         <a class="btn btn-default" href="@Url.Action("Index","AsignarTarea",new { Area = "General" },null)">Cancelar</a>
     </div>
 
@@ -242,3 +301,38 @@
     }
 }
 
+
+<script>
+    mostrar_parametros();
+    mostrar_detalle();
+
+
+
+    function refres_grid_adjunto() {
+        GridViewPartial_tarea_det_adjunto.PerformCallback();
+    };
+
+    function mostrar_detalle() {
+        var IdUsuarioAsignad = IdUsuarioAsignado.GetValue();
+        var IdUsuarioSolicitant = $("#IdUsuarioSolicitante").val();
+        $("#link_adjunto").click();
+        if (IdUsuarioAsignad == IdUsuarioSolicitant) {
+            $("#link_detalle").show();
+            AprobadoEncargado.SetChecked(true);
+        }
+        else {
+            $("#link_detalle").hide();
+            AprobadoEncargado.SetChecked(false);
+        }
+    };
+
+    function mostrar_parametros() {
+        if (TareaConcurrente.GetValue()) {
+            $("#link_parametro").show();
+        }
+        else {
+            $("#link_parametro").hide();
+        }
+
+    };
+</script>

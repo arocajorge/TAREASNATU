@@ -71,16 +71,39 @@
 
 
 
+
+        settings.Columns.Add("IdTarea", "ID").Width = Unit.Percentage(5);
+        settings.Columns.Add("AsuntoTarea", "Asunto").Width = Unit.Percentage(30);
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "FechaEntrega";
+            column.Caption = "Fecha entrega";
+            column.Width = Unit.Percentage(10);
+            column.PropertiesEdit.DisplayFormatString = "d";
+            column.EditorProperties().DateEdit(sp =>
+            {
+                column.PropertiesEdit.DisplayFormatString = "d";
+                sp.Width = Unit.Percentage(100);
+            });
+        });
+
+        settings.Columns.Add("Asignado", "Asignado").Width = Unit.Percentage(10);
+        settings.Columns.Add("EstadoTarea", "Estado").Width = Unit.Percentage(10);
+        settings.Columns.Add("NombreGrupo", "Grupo").Width = Unit.Percentage(10);
+        settings.Columns.Add("NumSubtarea", "Subtareas").Width = Unit.Percentage(10);
+        settings.Columns.Add("NumSubtareasAbiertas", "Subtareas pendientes").Width = Unit.Percentage(10);
+
         settings.Columns.Add(c =>
         {
-            c.Caption = "#";
+            c.Caption = "Acciones";
+            c.Width = Unit.Percentage(10);
             c.SetDataItemTemplateContent(tc =>
             {
                 if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "Estado")) == true && Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "AprobadoEncargado")) == false)
                 {
                     ViewContext.Writer.Write(
-                Html.ActionLink("Modificar", "Modificar","Tarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }, null) + "&nbsp;" +
-                        Html.ActionLink("Anular","Anular","Tarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") },
+                Html.ActionLink("Modificar", "Modificar", "Tarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }, null) + "&nbsp;" +
+                        Html.ActionLink("Anular", "Anular", "Tarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") },
                             null)
                     );
                 }
@@ -88,11 +111,11 @@
                 {
                     if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "Estado")) == true
                     && Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "AprobadoEncargado")) == true
-                    && Convert.ToDateTime(DataBinder.Eval(tc.DataItem, "FechaCierreEncargado")).Year==1
+                    && Convert.ToDateTime(DataBinder.Eval(tc.DataItem, "FechaCierreEncargado")).Year == 1
                     && Convert.ToString(DataBinder.Eval(tc.DataItem, "IdUsuarioAsignado")) == Convert.ToString(DataBinder.Eval(tc.DataItem, "IdUsuarioSolicitante")))
                     {
                         ViewContext.Writer.Write(
-                   Html.ActionLink("Cerrar", "CerrarPorSolicitante","Tarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }, null) + "&nbsp;"
+                   Html.ActionLink("Cerrar", "CerrarPorSolicitante", "Tarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }, null) + "&nbsp;"
 
                        );
                     }
@@ -143,27 +166,6 @@
             c.Settings.AllowSort = DefaultBoolean.False;
             c.Width = Unit.Pixel(130);
         });
-
-
-        settings.Columns.Add("IdTarea", "ID").Width = Unit.Percentage(5);
-        settings.Columns.Add("AsuntoTarea", "Asunto").Width = Unit.Percentage(30);
-        settings.Columns.Add(column =>
-        {
-            column.FieldName = "FechaInicio";
-            column.Caption = "Fecha entrega";
-            column.Width = Unit.Percentage(10);
-            column.PropertiesEdit.DisplayFormatString = "d";
-            column.EditorProperties().DateEdit(sp =>
-            {
-                column.PropertiesEdit.DisplayFormatString = "d";
-                sp.Width = Unit.Percentage(100);
-            });
-        });
-
-        settings.Columns.Add("Asignado", "Asignado").Width = Unit.Percentage(10);
-        settings.Columns.Add("EstadoTarea", "Estado").Width = Unit.Percentage(10);
-        settings.Columns.Add("NombreGrupo", "Grupo").Width = Unit.Percentage(10);
-
 
 
     });

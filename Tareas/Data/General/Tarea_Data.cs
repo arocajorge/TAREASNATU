@@ -21,6 +21,32 @@ namespace Data
         Parametro_Data data_parametro = new Parametro_Data();
         Usuario_Data usuario_data = new Usuario_Data();
         #endregion
+        public List<Tarea_Info> get_lis_cargar_combo()
+        {
+            try
+            {
+                List<Tarea_Info> Lista = new List<Tarea_Info>();
+
+                using (EntityTareas Context = new EntityTareas())
+                {
+                    Lista = (from q in Context.vw_Tarea
+
+                             select new Tarea_Info
+                             {
+                                 IdTarea = q.IdTarea,
+                                 AsuntoTarea=q.AsuntoTarea
+                             }).ToList();
+                }
+
+                return Lista;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public List< Tarea_Info> get_lis(DateTime FechaInicio, DateTime FechaFin)
         {
             try
@@ -33,8 +59,8 @@ namespace Data
                 using (EntityTareas Context = new EntityTareas())
                 {
                     Lista = (from q in Context.vw_Tarea
-                             where q.FechaInicio>=FechaInicio
-                             && q.FechaInicio<=FechaFin
+                             where q.FechaEntrega >= FechaInicio
+
 
                              select new  Tarea_Info
                              {
@@ -43,8 +69,7 @@ namespace Data
                                  IdGrupo=q.IdGrupo,
                                  IdUsuarioAsignado=q.IdUsuarioAsignado,
                                  EstadoActual=q.EstadoActual,
-                                 FechaInicio=q.FechaInicio,
-                                 FechaCulmina=q.FechaCulmina,
+                                 FechaEntrega=q.FechaEntrega,
                                  AsuntoTarea=q.AsuntoTarea,
                                  DescripcionTarea=q.DescripcionTarea,
                                  IdEstadoPrioridad=q.IdEstadoPrioridad,
@@ -88,8 +113,7 @@ namespace Data
                 using (EntityTareas Context = new EntityTareas())
                 {
                     Lista = (from q in Context.vw_Tarea
-                             where q.FechaInicio >= FechaInicio
-                             && q.FechaInicio <= FechaFin
+                             where q.FechaEntrega >= FechaInicio
                              && q.Estado==false
                              && q.IdUsuarioSolicitante== IdUsuarioSolicitante
                              select new Tarea_Info
@@ -99,8 +123,7 @@ namespace Data
                                  IdGrupo = q.IdGrupo,
                                  IdUsuarioAsignado = q.IdUsuarioAsignado,
                                  EstadoActual = q.EstadoActual,
-                                 FechaInicio = q.FechaInicio,
-                                 FechaCulmina = q.FechaCulmina,
+                                 FechaEntrega = q.FechaEntrega,
                                  AsuntoTarea = q.AsuntoTarea,
                                  DescripcionTarea = q.DescripcionTarea,
                                  IdEstadoPrioridad = q.IdEstadoPrioridad,
@@ -145,8 +168,8 @@ namespace Data
                         Lista = (from q in Context.vw_Tarea
                                  where q.IdUsuarioAsignado == IdUsuario
                                  && q.EstadoActual != 5//Diferente de devuelta
-                                 && q.FechaInicio >= FechaInicio
-                               && q.FechaInicio <= FechaFin
+                                 && q.FechaEntrega >= FechaInicio
+                               && q.FechaEntrega <= FechaFin
                                && q.Estado==true
                                  select new Tarea_Info
                              {
@@ -155,8 +178,7 @@ namespace Data
                                  IdGrupo = q.IdGrupo,
                                  IdUsuarioAsignado = q.IdUsuarioAsignado,
                                  EstadoActual = q.EstadoActual,
-                                 FechaInicio = q.FechaInicio,
-                                 FechaCulmina = q.FechaCulmina,
+                                 FechaEntrega = q.FechaEntrega,
                                  AsuntoTarea = q.AsuntoTarea,
                                  DescripcionTarea = q.DescripcionTarea,
                                  IdEstadoPrioridad = q.IdEstadoPrioridad,
@@ -171,16 +193,18 @@ namespace Data
                                  EstadoTarea = q.EstadoTarea,
                                  NombreGrupo = q.NombreGrupo,
                                  FechaCierreSolicitante = q.FechaCierreSolicitante,
-                                 FechaCierreEncargado=q.FechaCierreEncargado
-
+                                 FechaCierreEncargado=q.FechaCierreEncargado,
+                                 NumSubtarea=q.NumSubtarea,
+                                 NumSubtareasAbiertas=q.NumSubtareasAbiertas
+                                 
 
 
                              }).ToList();
                     else// se muestra en buzon de salida
                         Lista = (from q in Context.vw_Tarea
                                  where q.IdUsuarioSolicitante == IdUsuario
-                                  && q.FechaInicio >= FechaInicio
-                               && q.FechaInicio <= FechaFin
+                               && q.FechaEntrega >= FechaInicio
+                               && q.FechaEntrega <= FechaFin
                                && q.Estado==true
                                  select new Tarea_Info
                                  {
@@ -189,8 +213,7 @@ namespace Data
                                      IdGrupo = q.IdGrupo,
                                      IdUsuarioAsignado = q.IdUsuarioAsignado,
                                      EstadoActual = q.EstadoActual,
-                                     FechaInicio = q.FechaInicio,
-                                     FechaCulmina = q.FechaCulmina,
+                                     FechaEntrega = q.FechaEntrega,
                                      AsuntoTarea = q.AsuntoTarea,
                                      DescripcionTarea = q.DescripcionTarea,
                                      IdEstadoPrioridad = q.IdEstadoPrioridad,
@@ -205,7 +228,11 @@ namespace Data
                                      EstadoTarea = q.EstadoTarea,
                                      NombreGrupo = q.NombreGrupo,
                                      FechaCierreSolicitante = q.FechaCierreSolicitante,
-                                     FechaCierreEncargado = q.FechaCierreEncargado
+                                     FechaCierreEncargado = q.FechaCierreEncargado,
+                                     NumSubtarea = q.NumSubtarea,
+                                     NumSubtareasAbiertas = q.NumSubtareasAbiertas
+
+
 
 
                                  }).ToList();
@@ -229,11 +256,11 @@ namespace Data
                 {
                         Lista = (from q in Context.vw_Tarea
                                  where q.IdUsuarioAsignado == IdUsuario
-                                 && q.IdUsuarioSolicitante!=IdUsuario
+                                 //&& q.IdUsuarioSolicitante!=IdUsuario
                                   //&& q.FechaInicio >= FechaInicio
                                   // && q.FechaInicio <= FechaFin
                                    && q.Estado == true
-                                   && q.FechaAprobacion==null
+                                   && q.AprobadoEncargado==false
                                  select new Tarea_Info
                                  {
                                      IdTarea = q.IdTarea,
@@ -241,8 +268,7 @@ namespace Data
                                      IdGrupo = q.IdGrupo,
                                      IdUsuarioAsignado = q.IdUsuarioAsignado,
                                      EstadoActual = q.EstadoActual,
-                                     FechaInicio = q.FechaInicio,
-                                     FechaCulmina = q.FechaCulmina,
+                                     FechaEntrega = q.FechaEntrega,
                                      AsuntoTarea = q.AsuntoTarea,
                                      DescripcionTarea = q.DescripcionTarea,
                                      IdEstadoPrioridad = q.IdEstadoPrioridad,
@@ -257,7 +283,9 @@ namespace Data
                                      EstadoTarea = q.EstadoTarea,
                                      NombreGrupo = q.NombreGrupo,
                                      FechaCierreSolicitante = q.FechaCierreSolicitante,
-                                     FechaCierreEncargado = q.FechaCierreEncargado
+                                     FechaCierreEncargado = q.FechaCierreEncargado,
+                                     NumSubtarea = q.NumSubtarea
+
 
 
                                  }).ToList();
@@ -291,8 +319,7 @@ namespace Data
                                  IdGrupo = q.IdGrupo,
                                  IdUsuarioAsignado = q.IdUsuarioAsignado,
                                  EstadoActual = q.EstadoActual,
-                                 FechaInicio = q.FechaInicio,
-                                 FechaCulmina = q.FechaCulmina,
+                                 FechaEntrega = q.FechaEntrega,
                                  AsuntoTarea = q.AsuntoTarea,
                                  DescripcionTarea=q.DescripcionTarea,
                                  IdEstadoPrioridad = q.IdEstadoPrioridad,
@@ -325,8 +352,7 @@ namespace Data
                         IdGrupo = info.IdGrupo,
                         IdUsuarioAsignado = info.IdUsuarioAsignado,
                         EstadoActual = info.EstadoActual,// ESTADO INICIADA,
-                        FechaInicio = info.FechaInicio,
-                        FechaCulmina = info.FechaCulmina,
+                        FechaEntrega = info.FechaEntrega,
                         AsuntoTarea = info.AsuntoTarea,
                         DescripcionTarea=info.DescripcionTarea,
                         IdEstadoPrioridad = info.IdEstadoPrioridad,
@@ -337,32 +363,13 @@ namespace Data
                         FechaFinConcurrencia=info.FechaFinConcurrencia,
                         FechaTransaccion = DateTime.Now,
                         IdUsuario = info.IdUsuario,
-                        Estado = true
+                        Estado = true,
+                        IdTareaPadre=info.IdTareaPadre
                     };
                     Context.Tarea.Add(Entity);
                     #endregion
 
-                    #region detalle
-                    foreach (var item in info.list_detalle)
-                    {
-                        Tarea_det det = new Tarea_det
-                        {
-                            IdTarea = info.IdTarea,
-                            Secuancial = item.Secuancial,
-                            Descripcion = item.Descripcion,
-                            NumHoras = item.NumHoras,
-                            FechaInicio = item.FechaInicio,
-                            FechaFin = item.FechaInicio,
-                            IdUsuario=item.IdUsuario,
-                            FechaUltimaModif=DateTime.Now,
-                            IdEstado = 8,
-                           
-
-                        };
-                        Context.Tarea_det.Add(det);
-                    }
-                    #endregion
-
+                  
                     #region adjuntos
                     foreach (var item in info.list_adjuntos)
                     {
@@ -431,10 +438,9 @@ namespace Data
                     Entity.IdGrupo = info.IdGrupo;
                     Entity.IdUsuarioAsignado = info.IdUsuarioAsignado;
                     Entity.EstadoActual = info.EstadoActual=1;
-                    Entity.FechaInicio = info.FechaInicio;
-                    Entity.FechaCulmina = info.FechaCulmina;
+                    Entity.FechaEntrega = info.FechaEntrega;
                     Entity.AsuntoTarea = info.AsuntoTarea;
-                    Entity.DescripcionTarea = info.AsuntoTarea;
+                    Entity.DescripcionTarea = info.DescripcionTarea;
                     Entity.IdEstadoPrioridad = info.IdEstadoPrioridad;
                     Entity.TareaConcurrente = info.TareaConcurrente;
                     Entity.AprobadoSolicitado = info.AprobadoSolicitado;
@@ -444,25 +450,7 @@ namespace Data
                     Entity.FechaFinConcurrencia = info.FechaFinConcurrencia;
                     Entity.DiasIntervaloProximaTarea = info.DiasIntervaloProximaTarea;
 
-                    var resul = Context.Tarea_det.Where(v => v.IdTarea==info.IdTarea);
-                    Context.Tarea_det.RemoveRange(resul);
-                    foreach (var item in info.list_detalle)
-                    {
-                        Tarea_det det = new Tarea_det
-                        {
-                            IdTarea = info.IdTarea,
-                            Secuancial = item.Secuancial,
-                            Descripcion = item.Descripcion,
-                            NumHoras = item.NumHoras,
-                            FechaInicio = item.FechaInicio,
-                            FechaFin = item.FechaInicio,
-                            IdUsuario = item.IdUsuario,
-                            FechaUltimaModif = DateTime.Now,
-                            IdEstado = 8,
-
-                        };
-                        Context.Tarea_det.Add(det);
-                    }
+                   
 
                     #region adjuntos
                     var resul_adjunto = Context.TareaArchivoAdjunto.Where(v => v.IdTarea == info.IdTarea);
@@ -558,8 +546,7 @@ namespace Data
                     Entity.AprobadoEncargado = true;
                     Entity.FechaAprobacion = DateTime.Now;
                     Entity.EstadoActual = info_parametro.IdEstadoAprobarTarea;
-                    Entity.FechaInicio = info.FechaInicio;
-                    Entity.FechaCulmina = info.FechaCulmina;
+                    Entity.FechaEntrega = info.FechaEntrega;
                     #region Estado tarea
 
                     TareaEstado New_estado = new TareaEstado
@@ -747,9 +734,9 @@ namespace Data
                     {
                         if (info.FechaFinConcurrencia >= DateTime.Now.Date)
                         {
-                            Context.sp_crear_tarea_concurrente(info.IdTarea);
                             try
                             {
+                                Context.sp_crear_tarea_concurrente(info.IdTarea);
                                 EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.NUEVA.ToString() + " " + cl_enumeradores.eAsuntoCorreo.TAREA.ToString(), cl_enumeradores.eCorreo.ENCARGADO);
                             }
                             catch (Exception)
@@ -781,58 +768,7 @@ namespace Data
                     if (Entity == null)
                         return false;
 
-                    #region Estado tarea
-                    if (info.list_detalle != null)
-                    {
-                        foreach (var item in info.list_detalle)
-                        {
-                            var Entity_det = Context.Tarea_det.Where(v => v.IdTarea == info.IdTarea && v.Secuancial==item.Secuancial).FirstOrDefault();
-                            if(Entity_det!=null)
-                            {
-                                Entity_det.IdUsuario = item.IdUsuario;
-                                Entity_det.FechaInicio = item.FechaInicio.Date;
-                                Entity_det.FechaFin = item.FechaFin;
-                                Entity_det.NumHoras = item.NumHoras;
-                            }
-                            else
-                            {
-                                Tarea_det det = new Tarea_det
-                                {
-                                    IdTarea = info.IdTarea,
-                                    Secuancial = item.Secuancial,
-                                    Descripcion = item.Descripcion,
-                                    NumHoras = item.NumHoras,
-                                    FechaInicio = item.FechaInicio,
-                                    FechaFin = item.FechaFin,
-                                    IdUsuario = item.IdUsuario,
-                                    FechaUltimaModif = DateTime.Now,
-                                    IdEstado = 8,
-
-
-                                };
-                                Context.Tarea_det.Add(det);
-                            }
-
-                        }
-                    }
-
-                    TareaEstado New_estado = new TareaEstado
-                    {
-                        IdTarea = info.IdTarea,
-                        Secuancial = odta_estado.get_id(info.IdTarea),
-                        IdUsuario = info.IdUsuario,
-                        Observacion = info.ObsevacionModificacion = info.ObsevacionModificacion,
-                        IdEstado = info_parametro.IdEstadoCierreTarea,
-                        FechaModificacion = DateTime.Now,
-
-
-                    };
-                    Context.TareaEstado.Add(New_estado);
-                    Context.SaveChanges();
-
-                    #endregion
-
-                    try
+                      try
                     {
                         info.Saludo = "Su tarea ha sido distribuida";
                         EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.TAREA.ToString() + " " + cl_enumeradores.eAsuntoCorreo.DISTRIBUIDA.ToString(), cl_enumeradores.eCorreo.SOLICITANTE);
@@ -888,8 +824,7 @@ namespace Data
                         IdGrupo = Entity.IdGrupo,
                         IdUsuarioAsignado = Entity.IdUsuarioAsignado,
                         EstadoActual = Entity.EstadoActual,
-                        FechaInicio = Entity.FechaInicio,
-                        FechaCulmina = Entity.FechaCulmina,
+                        FechaEntrega = Entity.FechaEntrega,
                         AsuntoTarea = Entity.AsuntoTarea,
                         DescripcionTarea=Entity.DescripcionTarea,
                         IdEstadoPrioridad = Entity.IdEstadoPrioridad,
@@ -898,7 +833,9 @@ namespace Data
                         AprobadoSolicitado = Entity.AprobadoSolicitado,
                         nomb_jef_grupo=Entity.Asignado,
                         DiasIntervaloProximaTarea=Entity.DiasIntervaloProximaTarea,
-                        FechaFinConcurrencia=Entity.FechaFinConcurrencia
+                        FechaFinConcurrencia=Entity.FechaFinConcurrencia,
+                        IdTareaPadre=Entity.IdTareaPadre,
+                        NumSubtareasAbiertas=Entity.NumSubtareasAbiertas
 
                     };
                 }
@@ -963,28 +900,7 @@ namespace Data
                     Body += info.DescripcionTarea;
                     Body += "<br/>";
                     Body += "<br/>";
-                    if (info.list_detalle.Count > 0)
-                    {
-                       // Body += "Detalle de distribución de la tarea:";
-                        Body += "<td><strong>Detalle de la distribución de la tarea:</strong></td>";
-
-                        Body += "<br/>";
-
-                        foreach (var item in info.list_detalle)
-                        {
-
-                            Body += item.Descripcion + " Fecha inicio " + info.FechaInicio.ToShortDateString() + " Fecha fin " + info.FechaCulmina.ToShortDateString();
-                            Body += "<br/>";
-                            var usuario = data_usuario.get_info(item.IdUsuario);
-                            if (usuario != null)
-                            {
-                                if(usuario.Correo!=null)
-                                mail.CC.Add(usuario.Correo);
-                            }
-                        }
-                        Body += "<br/>";
-                        Body += "<br/>";
-                    }
+                   
                    // Body += "Observaciones: ";
                     Body += "<td><strong>Observaciones:</strong></td>";
 
@@ -992,12 +908,11 @@ namespace Data
                     Body += info.ObsevacionModificacion;
                     Body += "<table>";
                     Body += "<tr>";
-                    Body += "<td><strong>Fecha inicio:</strong></td>";
-                    Body += "<td><strong>" + info.FechaInicio.ToShortDateString() + "</strong></td>";
+                    Body += "<td><strong>Fecha entrega:</strong></td>";
+                    Body += "<td><strong>" + info.FechaEntrega.ToShortDateString() + "</strong></td>";
                     Body += "</tr>";
                     Body += "<tr>";
-                    Body += "<td><strong>Fecha fin:</strong></td>";
-                    Body += "<td><strong>" + info.FechaCulmina.ToShortDateString() + "</strong></td>";
+                  
                     Body += "</tr>";
                     Body += "</table>";
                     Body += "<br/>";
@@ -1041,16 +956,17 @@ namespace Data
                 Tarea_Info info = new Tarea_Info();
                 using (EntityTareas Context = new EntityTareas())
                 {
-                    var Entity = Context.sp_carga_laboral(IdUsuario, fechaInicio, IdGrupo).FirstOrDefault();
+                    var Entity = Context.sp_carga_laboral(IdUsuario, fechaInicio, FechaFin, IdGrupo).FirstOrDefault();
                     if (Entity == null)
                         return new Tarea_Info();
                     else
                     {
-                        info.NumTareaDia = Entity.NumTareaDia;
+                        info.NumTareaPorAprobar = Entity.NumTareaPorAprobar;
                         info.NumTareaVencidas = Entity.NumTareaVencidas;
                         info.TotalTareaPendiente = Entity.TotalTareaPendiente;
                         info.TotalTareaResueltas = Entity.TotalTareaResueltas;
 
+                        info.FechaFin = FechaFin;
                         info.FechaInicio = fechaInicio;
                         info.IdUsuario = IdUsuario;
                         info.IdGrupoFiltro = IdGrupo;

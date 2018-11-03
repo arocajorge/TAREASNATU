@@ -14,12 +14,7 @@ namespace Web.Areas.General.Controllers
     public class MisTareasController : Controller
     {
         Tarea_Bus bus_tarea ;
-        Tarea_det_Bus bus_detalle ;
-        public ActionResult Index()
-        {
-            cl_filtros_Info model = new cl_filtros_Info();
-            return View(model);
-        }
+      
 
         public ActionResult CargaLaboral()
         {
@@ -34,6 +29,8 @@ namespace Web.Areas.General.Controllers
                     IdUsuario =SessionTareas.IdUsuario,
                 };
             model.IdGrupoFiltro = null;
+            model.FechaInicio = DateTime.Now.Date;
+            model.FechaFin = DateTime.Now.Date;
             return View(model);
         }
         [HttpPost]
@@ -42,12 +39,12 @@ namespace Web.Areas.General.Controllers
             bus_tarea = new Tarea_Bus();
             string IdUsuario = model.IdUsuario;
             cargar_combo();
-             model = bus_tarea.get_carga_laboral(model.IdGrupoFiltro==null?0:Convert.ToInt32(model.IdGrupoFiltro), model.IdUsuario, DateTime.Now.Date, DateTime.Now.Date);
+             model = bus_tarea.get_carga_laboral(model.IdGrupoFiltro==null?0:Convert.ToInt32(model.IdGrupoFiltro), model.IdUsuario, model.FechaInicio, model.FechaFin);
             if(model==null)
             {
                 model = new Tarea_Info
                 {
-                    FechaCulmina = DateTime.Now,
+                    FechaEntrega = DateTime.Now,
                     IdUsuario = IdUsuario
                 };
             }
@@ -56,42 +53,7 @@ namespace Web.Areas.General.Controllers
             return View(model);
         }
 
-        [ValidateInput(false)]
-        public ActionResult GridViewPartial_mis_tareas()
-        {
-            bus_tarea = new Tarea_Bus();
-            List<Tarea_Info> model = new List<Tarea_Info>();
-            string IdUsuario = "";
-            if (SessionTareas.IdUsuario != null)
-            {
-                IdUsuario = SessionTareas.IdUsuario.ToString();
-                model = bus_tarea.get_lis(IdUsuario);
-                return PartialView("_GridViewPartial_mis_tareas", model);
-            }
-            else
-            {
-                return RedirectToAction("Login");
-            }
-        }
-        [ValidateInput(false)]
-        public ActionResult GridViewPartial_mis_tareas_det(decimal IdTarea=0)
-        {
-            cargar_combo_detalle();
-            bus_detalle = new Tarea_det_Bus();
-            ViewBag.IdTarea = IdTarea;
-            string IdUsuario = "";
-            if (SessionTareas.IdUsuario != null)
-            {
-                IdUsuario = SessionTareas.IdUsuario.ToString();
-                Tarea_Info model = new Tarea_Info();
-                model.list_detalle = bus_detalle.get_lis(IdTarea, IdUsuario);
-                return PartialView("_GridViewPartial_mis_tareas_det", model.list_detalle);
-            }
-            else
-            {
-                return RedirectToAction("Login");
-            }
-        }
+       
         public ActionResult Por_aprobar()
         {
             cl_filtros_Info model = new cl_filtros_Info();
@@ -113,26 +75,7 @@ namespace Web.Areas.General.Controllers
         }
 
 
-        public ActionResult EditingUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] Tarea_det_Info info_det)
-        {
-            bus_detalle = new Tarea_det_Bus();
-            string IdUsuario = "";
-            cargar_combo_detalle();
-            if (SessionTareas.IdUsuario != null)
-                {
-                    IdUsuario = SessionTareas.IdUsuario.ToString();
-                    Tarea_Info model = new Tarea_Info();
-                    bus_detalle.cambiar_estado(info_det);
-                    model.list_detalle = bus_detalle.get_lis(info_det.IdTarea, IdUsuario);
-                return RedirectToAction("Index");
-            }
-            else
-                {
-                    return RedirectToAction("Login");
-                }
-        }
-
-
+      
         public void cargar_combo_detalle()
         {
             try

@@ -13,96 +13,88 @@ BEGIN
 	if(@IdGrupo=0)-- si solo se quiere saber la tareadel usuario
 	select(
 SELECT   COUNT(Tarea.IdTarea) As NumTareaDia   
-FROM            dbo.Tarea  LEFT OUTER JOIN
-                         dbo.Tarea_det ON dbo.Tarea.IdTarea = dbo.Tarea_det.IdTarea
+FROM            dbo.Tarea 
 						 where 
 						
 						  Tarea.Estado=1
 						 and Tarea.FechaAprobacion is null
 						 and Tarea.IdUsuarioAsignado=@IdUsuario
-						 and ISNULL( Tarea_det.IdEstado,8)=8
+						 and Tarea.EstadoActual=8
 						 )NumTareaDia,
 						( 	SELECT   COUNT(Tarea.IdTarea) As NumTareaVencidas   
-FROM            dbo.Tarea  LEFT OUTER JOIN
-                         dbo.Tarea_det ON dbo.Tarea.IdTarea = dbo.Tarea_det.IdTarea
+FROM            dbo.Tarea  
 						 where 
 						
 						  Tarea.Estado=1
-						 and CAST( ISNULL( Tarea_det.FechaFin,Tarea.FechaCulmina) as date) <@Fecha
+						 and CAST( Tarea.FechaEntrega as date) <@Fecha
 					    
 						 and Tarea.IdUsuarioAsignado=@IdUsuario
-						 and ISNULL( Tarea_det.IdEstado,8)=8
+						 and Tarea.EstadoActual=8
 						 and Tarea.FechaCierreEncargado is null
 						 )NumTareaVencidas,
 
 (SELECT   COUNT(Tarea.IdTarea) As TotalTareaResueltas
-FROM            dbo.Tarea  LEFT OUTER JOIN
-                         dbo.Tarea_det ON dbo.Tarea.IdTarea = dbo.Tarea_det.IdTarea
+FROM            dbo.Tarea  
 						 where 
 						
 						  Tarea.Estado=1
 						 and CAST( Tarea.FechaCierreEncargado as date) =@Fecha						
 						 and Tarea.IdUsuarioAsignado=@IdUsuario
-						 and ISNULL( Tarea_det.IdEstado,7)=7)
+						 and Tarea.EstadoActual=1)
 						 TotalTareaResueltas,
 
 (SELECT   COUNT(Tarea.IdTarea)  TotalTareaPendiente   
-FROM            dbo.Tarea  LEFT OUTER JOIN
-                         dbo.Tarea_det ON dbo.Tarea.IdTarea = dbo.Tarea_det.IdTarea
+FROM            dbo.Tarea  
 						 where 
 						 
 						  Tarea.Estado=1
-						 and ISNULL( Tarea_det.FechaInicio,Tarea.FechaInicio)<=@Fecha					
+						 and Tarea.FechaEntrega<=@Fecha					
 						 and Tarea.IdUsuarioAsignado=@IdUsuario
 						 and Tarea.FechaCierreEncargado is null
-						 and ISNULL( Tarea_det.IdEstado,8)=8
+						 and  Tarea.EstadoActual=8
 						 )TotalTareaPendiente
 
 	
 	else -- todas las tareas del grupo
 		select (
 	SELECT   COUNT(Tarea.IdTarea) As NumTareaDia   
-FROM            dbo.Tarea  LEFT OUTER JOIN
-                         dbo.Tarea_det ON dbo.Tarea.IdTarea = dbo.Tarea_det.IdTarea
+FROM            dbo.Tarea 
 						 where 
 						
 						  Tarea.Estado=1
 						 and Tarea.FechaAprobacion is null
 						 and Tarea.IdGrupo=@IdGrupo
-						 and ISNULL( Tarea_det.IdEstado,8)=8
+						 and Tarea.EstadoActual=8
 						 )NumTareaDia,
 						( 	SELECT   COUNT(Tarea.IdTarea) As NumTareaVencidas   
-FROM            dbo.Tarea  LEFT OUTER JOIN
-                         dbo.Tarea_det ON dbo.Tarea.IdTarea = dbo.Tarea_det.IdTarea
+FROM            dbo.Tarea  
 						 where 
 						
 						  Tarea.Estado=1
-						 and CAST( ISNULL( Tarea_det.FechaFin,Tarea.FechaCulmina) as date) <@Fecha
-					     and Tarea.IdGrupo=@IdGrupo
-						 and ISNULL( Tarea_det.IdEstado,8)=8
+						 and CAST(Tarea.FechaEntrega as date) <@Fecha
+					     AND Tarea.IdGrupo=@IdGrupo
+						 and Tarea.EstadoActual=8
 						 and Tarea.FechaCierreEncargado is null
 						 )NumTareaVencidas,
 
 (SELECT   COUNT(Tarea.IdTarea) As TotalTareaResueltas
-FROM            dbo.Tarea  LEFT OUTER JOIN
-                         dbo.Tarea_det ON dbo.Tarea.IdTarea = dbo.Tarea_det.IdTarea
+FROM            dbo.Tarea  
 						 where 
 						
 						  Tarea.Estado=1
 						 and CAST( Tarea.FechaCierreEncargado as date) =@Fecha
 						 and Tarea.IdGrupo=@IdGrupo
-						 and ISNULL( Tarea_det.IdEstado,7)=7)
+						 and Tarea.EstadoActual=1)
 						 TotalTareaResueltas,
 
 (SELECT   COUNT(Tarea.IdTarea)  TotalTareaPendiente   
-FROM            dbo.Tarea  LEFT OUTER JOIN
-                         dbo.Tarea_det ON dbo.Tarea.IdTarea = dbo.Tarea_det.IdTarea
+FROM            dbo.Tarea  
 						 where 
 						 
 						  Tarea.Estado=1
-						 and ISNULL( Tarea_det.FechaInicio,Tarea.FechaInicio)<=@Fecha
+						 and CAST( Tarea.FechaEntrega as date)<=@Fecha
 						 and Tarea.IdGrupo=@IdGrupo
 						 and Tarea.FechaCierreEncargado is null
-						 and ISNULL( Tarea_det.IdEstado,8)=8
+						 and EstadoActual=8
 						 )TotalTareaPendiente
  END

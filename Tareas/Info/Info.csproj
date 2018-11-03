@@ -54,7 +54,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="General\TareaArchivoAdjunto_Info.cs" />
     <Compile Include="General\TareaEstado_Info.cs" />
-    <Compile Include="General\Tarea_det_Info.cs" />
     <Compile Include="General\Tarea_Info.cs" />
     <Compile Include="General\Usuario_Info.cs" />
   </ItemGroup>

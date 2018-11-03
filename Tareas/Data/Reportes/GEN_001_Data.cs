@@ -23,59 +23,45 @@ namespace Data.General
                 {
                     if(IdUsuario!="")
                     Lista = (from q in Context.VWGEN_001
-                             where q.IdUsuario == IdUsuario
+                             where q.IdUsuarioAsignado == IdUsuario
                              && q.IdTarea >= IdTareaIni && q.IdTarea <= IdTareaFin
-                             && q.FechaInicioSubtarea >= fechaInicio
-                             && q.FechaFinSubtarea <= fechaFin
+                             && q.FechaEntrega >= fechaInicio
+                             && q.FechaEntrega <= fechaFin
                              select new GEN_001_Info
                              {
-                                 Descripcion = q.Descripcion,
-                                 ESTADO = q.eSTADO,
-                                 EstadoActual = q.EstadoActual,
-                                 FechaFinSubtarea = q.FechaFinSubtarea,
-                                 FechaFinTarea = q.FechaFinTarea,
-                                 FechaInicioSubtarea = q.FechaInicioSubtarea,
-                                 FechaInicioTarea = q.FechaInicioTarea,
-                                 FechaTerminoTarea = q.FechaTerminoTarea,
                                  IdGrupo = q.IdGrupo,
-                                 IdTarea = q.IdTarea, 
-                                 IdUsuario = q.IdUsuario,
+                                 IdTarea = q.IdTarea,
                                  IdUsuarioAsignado = q.IdUsuarioAsignado,
-                                 IdUsuarioSolicitante = q.IdUsuarioSolicitante,
-                                 Nombre = q.Nombre,
-                                 NombreGrupo = q.NombreGrupo,
-                                 NumHoras = q.NumHoras,
-                                 NumHorasReales = q.NumHorasReales,
-                                 Secuancial = q.Secuancial,
-                                 AsuntoTarea = q.AsuntoTarea
-
+                                 FechaEntrega=q.FechaEntrega,
+                                 FechaCierreEncargado=q.FechaCierreEncargado,
+                                 FechaCierreSolicitante=q.FechaCierreSolicitante,
+                                 NombreGrupo=q.NombreGrupo,
+                                 EstadoActual=q.EstadoActual,
+                                 Asunto=q.AsuntoTarea,
+                                 Encargado=q.Encargado,
+                                 Solicitante=q.Solicitante,
+                                 Estado=q.Estado,
+                                 Usuario= IdUsuario
                              }).ToList();
                     else
                         Lista = (from q in Context.VWGEN_001
                                  where  q.IdTarea >= IdTareaIni && q.IdTarea <= IdTareaFin
-                                 && q.FechaInicioSubtarea >= fechaInicio
-                                 && q.FechaFinSubtarea <= fechaFin
+                                 && q.FechaEntrega >= fechaInicio
+                                 && q.FechaEntrega <= fechaFin
                                  select new GEN_001_Info
                                  {
-                                     Descripcion = q.Descripcion,
-                                     ESTADO = q.eSTADO,
-                                     EstadoActual = q.EstadoActual,
-                                     FechaFinSubtarea = q.FechaFinSubtarea,
-                                     FechaFinTarea = q.FechaFinTarea,
-                                     FechaInicioSubtarea = q.FechaInicioSubtarea,
-                                     FechaInicioTarea = q.FechaInicioTarea,
-                                     FechaTerminoTarea = q.FechaTerminoTarea,
                                      IdGrupo = q.IdGrupo,
                                      IdTarea = q.IdTarea,
-                                     IdUsuario = q.IdUsuario,
                                      IdUsuarioAsignado = q.IdUsuarioAsignado,
-                                     IdUsuarioSolicitante = q.IdUsuarioSolicitante,
-                                     Nombre = q.Nombre,
+                                     FechaEntrega = q.FechaEntrega,
+                                     FechaCierreEncargado = q.FechaCierreEncargado,
+                                     FechaCierreSolicitante = q.FechaCierreSolicitante,
                                      NombreGrupo = q.NombreGrupo,
-                                     NumHoras = q.NumHoras,
-                                     NumHorasReales = q.NumHorasReales,
-                                     Secuancial = q.Secuancial,
-                                     AsuntoTarea =q.AsuntoTarea
+                                     EstadoActual = q.EstadoActual,
+                                     Asunto = q.AsuntoTarea,
+                                     Encargado = q.Encargado,
+                                     Solicitante = q.Solicitante,
+                                     Usuario = IdUsuario
 
                                  }).ToList();
                 }

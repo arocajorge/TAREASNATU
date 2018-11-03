@@ -5,36 +5,32 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="d4a43452c29842239b34801f696e004f" Name="Diagram1" ZoomLevel="31">
-        <EntityTypeShape EntityType="ModelGeneral.EstadoTipo" Width="1.5" PointX="0.75" PointY="22.375" />
-        <EntityTypeShape EntityType="ModelGeneral.Grupo" Width="1.5" PointX="3" PointY="16.875" />
-        <EntityTypeShape EntityType="ModelGeneral.Grupo_Usuario" Width="1.5" PointX="8.25" PointY="15.875" />
-        <EntityTypeShape EntityType="ModelGeneral.Tarea_det" Width="1.5" PointX="10.5" PointY="14.75" />
-        <AssociationConnector Association="ModelGeneral.FK_Grupo_Usuario_Grupo" />
-        <EntityTypeShape EntityType="ModelGeneral.Usuario" Width="1.5" PointX="0.75" PointY="14.875" />
-        <AssociationConnector Association="ModelGeneral.FK_Grupo_Usuario" />
-        <AssociationConnector Association="ModelGeneral.FK_Grupo_Usuario_Usuario" />
-        <AssociationConnector Association="ModelGeneral.FK_Tarea_det_Usuario" />
-        <EntityTypeShape EntityType="ModelGeneral.Estado" Width="1.5" PointX="3" PointY="24.75" />
+        <EntityTypeShape EntityType="ModelGeneral.Estado" Width="1.5" PointX="3" PointY="0.75" />
+        <EntityTypeShape EntityType="ModelGeneral.EstadoTipo" Width="1.5" PointX="0.75" PointY="1.5" />
+        <EntityTypeShape EntityType="ModelGeneral.Grupo" Width="1.5" PointX="3" PointY="6" />
+        <EntityTypeShape EntityType="ModelGeneral.Grupo_Usuario" Width="1.5" PointX="8.25" PointY="6.75" />
+        <EntityTypeShape EntityType="ModelGeneral.Parametro" Width="1.5" PointX="5.25" PointY="12.875" />
+        <EntityTypeShape EntityType="ModelGeneral.TareaArchivoAdjunto" Width="1.5" PointX="7.5" PointY="10.25" />
+        <EntityTypeShape EntityType="ModelGeneral.TareaEstado" Width="1.5" PointX="7.5" PointY="3.125" />
+        <EntityTypeShape EntityType="ModelGeneral.Usuario" Width="1.5" PointX="0.75" PointY="5.75" />
+        <EntityTypeShape EntityType="ModelGeneral.vw_Grupo_Usuario" Width="1.5" PointX="9.75" PointY="2.375" />
         <AssociationConnector Association="ModelGeneral.FK_Estado_EstadoTipo" />
-        <AssociationConnector Association="ModelGeneral.FK_Tarea_det_Estado" />
-        <EntityTypeShape EntityType="ModelGeneral.Parametro" Width="1.5" PointX="5.25" PointY="24.75" />
         <AssociationConnector Association="ModelGeneral.FK_Parametro_Estado" />
         <AssociationConnector Association="ModelGeneral.FK_Parametro_Estado1" />
         <AssociationConnector Association="ModelGeneral.FK_Parametro_Estado2" />
-        <EntityTypeShape EntityType="ModelGeneral.Tarea" Width="1.5" PointX="5.625" PointY="16.25" />
-        <EntityTypeShape EntityType="ModelGeneral.TareaEstado" Width="1.5" PointX="7.875" PointY="18.75" />
+        <AssociationConnector Association="ModelGeneral.FK_Grupo_Usuario" />
+        <AssociationConnector Association="ModelGeneral.FK_Grupo_Usuario_Grupo" />
+        <AssociationConnector Association="ModelGeneral.FK_Grupo_Usuario_Usuario" />
+        <EntityTypeShape EntityType="ModelGeneral.Tarea" Width="1.5" PointX="5.25" PointY="1.75" />
         <AssociationConnector Association="ModelGeneral.FK_Tarea_Estado" />
         <AssociationConnector Association="ModelGeneral.FK_Tarea_Estado1" />
         <AssociationConnector Association="ModelGeneral.FK_Tarea_Grupo" />
-        <AssociationConnector Association="ModelGeneral.FK_Tarea_det_Tarea" />
         <AssociationConnector Association="ModelGeneral.FK_Tarea_Usuario" />
         <AssociationConnector Association="ModelGeneral.FK_Tarea_Usuario1" />
-        <AssociationConnector Association="ModelGeneral.FK_TareaEstado_Tarea" />
-        <EntityTypeShape EntityType="ModelGeneral.vw_Tarea" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="ModelGeneral.VWGEN_001" Width="1.5" PointX="3.375" PointY="0.75" />
-        <EntityTypeShape EntityType="ModelGeneral.TareaArchivoAdjunto" Width="1.5" PointX="7.875" PointY="22.875" />
         <AssociationConnector Association="ModelGeneral.FK_TareaArchivoAdjunto_Tarea" />
-        <EntityTypeShape EntityType="ModelGeneral.vw_Grupo_Usuario" Width="1.5" PointX="5.375" PointY="0.75" />
+        <AssociationConnector Association="ModelGeneral.FK_TareaEstado_Tarea" />
+        <EntityTypeShape EntityType="ModelGeneral.vw_Tarea" Width="1.5" PointX="0.75" PointY="10.75" />
+        <EntityTypeShape EntityType="ModelGeneral.VWGEN_001" Width="1.5" PointX="10.375" PointY="5.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

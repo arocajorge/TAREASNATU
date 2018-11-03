@@ -51,24 +51,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="General\Archivo_Data.cs" />
     <Compile Include="Estado.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
     <Compile Include="EstadoTipo.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
+    <Compile Include="General\Archivo_Data.cs" />
     <Compile Include="General\EstadoTipo_Data.cs" />
     <Compile Include="General\Estado_Data.cs" />
-    <Compile Include="Reportes\GEN_001_Data.cs" />
-    <Compile Include="Reportes\GEN_002_Data.cs" />
     <Compile Include="Grupo.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
-    <Compile Include="General\Grupo_Data.cs" />
     <Compile Include="Grupo_Usuario.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
+    <Compile Include="Parametro.cs">
+      <DependentUpon>ModelGeneral.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\GEN_001_Data.cs" />
+    <Compile Include="Reportes\GEN_002_Data.cs" />
+    <Compile Include="General\Grupo_Data.cs" />
     <Compile Include="General\Grupo_Usuario_Data.cs" />
     <Compile Include="ModelGeneral.Context.cs">
       <AutoGen>True</AutoGen>
@@ -85,18 +88,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelGeneral.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Parametro.cs">
-      <DependentUpon>ModelGeneral.tt</DependentUpon>
-    </Compile>
     <Compile Include="General\Parametro_Data.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="General\TareaArchivoAdjunto_Data.cs" />
+    <Compile Include="General\TareaEstado_Data.cs" />
+    <Compile Include="General\Tarea_Data.cs" />
+    <Compile Include="General\Usuario_Data.cs" />
     <Compile Include="SPGEN_002_Result.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
     <Compile Include="sp_carga_laboral_Result.cs">
-      <DependentUpon>ModelGeneral.tt</DependentUpon>
-    </Compile>
-    <Compile Include="sp_tareas_culminadas_sin_cerrar_Result.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
     <Compile Include="sp_Tareas_X_Usuarios_Result.cs">
@@ -108,20 +109,12 @@
     <Compile Include="TareaArchivoAdjunto.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
-    <Compile Include="General\TareaArchivoAdjunto_Data.cs" />
     <Compile Include="TareaEstado.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
-    <Compile Include="General\TareaEstado_Data.cs" />
-    <Compile Include="General\Tarea_Data.cs" />
-    <Compile Include="Tarea_det.cs">
-      <DependentUpon>ModelGeneral.tt</DependentUpon>
-    </Compile>
-    <Compile Include="General\Tarea_det_Data.cs" />
     <Compile Include="Usuario.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
-    <Compile Include="General\Usuario_Data.cs" />
     <Compile Include="VWGEN_001.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>

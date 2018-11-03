@@ -4,8 +4,7 @@
     [IdGrupo]                   INT           NOT NULL,
     [IdUsuarioAsignado]         VARCHAR (50)  NOT NULL,
     [EstadoActual]              INT           NOT NULL,
-    [FechaInicio]               DATE          NOT NULL,
-    [FechaCulmina]              DATE          NOT NULL,
+    [FechaEntrega]              DATE          NOT NULL,
     [AsuntoTarea]               VARCHAR (MAX) NULL,
     [DescripcionTarea]          VARCHAR (MAX) NULL,
     [IdEstadoPrioridad]         INT           NOT NULL,
@@ -31,6 +30,8 @@
     CONSTRAINT [FK_Tarea_Usuario] FOREIGN KEY ([IdUsuarioSolicitante]) REFERENCES [dbo].[Usuario] ([IdUsuario]),
     CONSTRAINT [FK_Tarea_Usuario1] FOREIGN KEY ([IdUsuarioAsignado]) REFERENCES [dbo].[Usuario] ([IdUsuario])
 );
+
+
 
 
 

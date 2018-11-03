@@ -14,7 +14,7 @@
 
     }
     ViewBag.Title = "Modificar tarea";
-    if (Session["IdUsuario"] == null )
+    if (Session["IdUsuario"] == null)
     {
         Response.Redirect("~/Account/Login");
     }
@@ -28,8 +28,38 @@
     @Html.HiddenFor(v => v.IdTarea);
     @Html.HiddenFor(v => v.IdUsuarioSolicitante, new { id = "IdUsuarioSolicitante" });
     @Html.HiddenFor(v => v.IdGrupo);
-    @Html.HiddenFor(v => v.AsuntoTarea);
-    @Html.HiddenFor(v => v.DescripcionTarea);
+
+    if (Model.IdTareaPadre != null)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="IdUsuarioSolicitante">Tarea Padre*</label>
+                        @Html.DevExpress().ComboBoxFor(q => q.IdTareaPadre, settings =>
+                   {
+                       settings.Name = "IdTareaPadre";
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.Properties.DisplayFormatString = "{0}";
+                       settings.Properties.Columns.Add("Nombre", "Usuario").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                       //Campo ID
+                       settings.Properties.ValueField = "IdUsuario";
+                       settings.Properties.ValueType = typeof(string);
+                       settings.Properties.TextField = "Nombre";
+                       //Boton para seleccionar ningun registro
+                       settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
+                       settings.Properties.NullText = "== Seleccione ==";
+                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                       settings.ReadOnly = true;
+                   }).BindList(ViewBag.list_tarea).GetHtml()
+                        @Html.ValidationMessageFor(q => q.IdTareaPadre, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    }
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-6">
@@ -56,7 +86,7 @@
                 </div>
             </div>
 
-           
+
         </div>
     </div>
 
@@ -64,25 +94,25 @@
         <div class="col-md-12">
             <div class="col-md-2">
                 <div class="form-group">
-                    <label for="FechaInicio">Fecha de entrega*</label>
+                    <label for="FechaEntrega">Fecha de entrega*</label>
                     <div class="input-group date">
                         <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                         </div>
-                        @Html.DevExpress().DateEditFor(q => q.FechaInicio, settings =>
+                        @Html.DevExpress().DateEditFor(q => q.FechaEntrega, settings =>
                    {
-                       settings.Name = "FechaInicio";
+                       settings.Name = "FechaEntrega";
                        settings.Properties.UseMaskBehavior = true;
                        settings.Properties.EditFormat = EditFormat.Date;
                        settings.Properties.EditFormatString = "dd/MM/yyyy";
                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                    }).GetHtml()
-                        @Html.ValidationMessageFor(q => q.FechaInicio, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(q => q.FechaEntrega, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
-           
+
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="IdCtaCblePadre">Prioridad de la tarea*</label>
@@ -186,9 +216,7 @@
             <li class="active">
                 <a href="#tab_adjunto" aria-controls="adjunto" role="tab" data-toggle="tab" id="link_adjunto">Archivos adjuntos</a>
             </li>
-            <li hidden>
-                <a href="#tab_detalle" aria-controls="detalle" role="tab" data-toggle="tab" id="link_detalle">Distribución de Subtareas</a>
-            </li>
+
             <li hidden>
                 <a href="#tab_parametro" aria-controls="parametros" role="tab" data-toggle="tab" id="link_parametro">Parámetros</a>
             </li>
@@ -231,23 +259,13 @@
                     </div>
                 </div>
             </div>
-            <div role="tabpanel" class="tab-pane " style="margin-left: 1em;" id="tab_detalle">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                @Html.Action("GridViewPartial_tarea_det")
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
             <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_parametro">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="col-md-2">
                             <div class="form-group">
-                                <label for="FechaInicio">Expira</label>
+                                <label for="FechaEntrega">Expira</label>
                                 <div class="input-group date">
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
@@ -298,18 +316,15 @@
         GridViewPartial_tarea_det_adjunto.PerformCallback();
     };
 
-    function mostrar_detalle()
-    {
+    function mostrar_detalle() {
         var IdUsuarioAsignad = IdUsuarioAsignado.GetValue();
         var IdUsuarioSolicitant = $("#IdUsuarioSolicitante").val();
         $("#link_adjunto").click();
-        if (IdUsuarioAsignad == IdUsuarioSolicitant)
-        {
+        if (IdUsuarioAsignad == IdUsuarioSolicitant) {
             $("#link_detalle").show();
             AprobadoEncargado.SetChecked(true);
         }
-        else
-        {
+        else {
             $("#link_detalle").hide();
             AprobadoEncargado.SetChecked(false);
         }

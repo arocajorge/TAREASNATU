@@ -14,8 +14,6 @@ namespace Web.Areas.General.Controllers
     public class TareaController : Controller
     {
         #region Variables
-        Tarea_det_Bus bus_tarea_det = new Tarea_det_Bus();
-        Tarea_det_Info_lis Lis_Tarea_det_Info_lis = new Tarea_det_Info_lis();
         Tarea_Bus bus_tarea = new Tarea_Bus();
         Grupo_Bus bus_grupo = new Grupo_Bus();
         Usuario_Bus bus_usuario = new Usuario_Bus();
@@ -45,23 +43,7 @@ namespace Web.Areas.General.Controllers
             model = bus_tarea.get_lis(ViewBag.fecha_ini, ViewBag.fecha_fin);
             return PartialView("_GridViewPartial_tarea", model);
         }
-        [ValidateInput(false)]
-        public ActionResult GridViewPartial_Tarea_det()
-        {
-            cargar_combo_detalle();
-            Tarea_Info model = new Tarea_Info();
-            model.list_detalle = Lis_Tarea_det_Info_lis.get_list(Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual));
-            return PartialView("_GridViewPartial_Tarea_det", model);
-        }
-        [ValidateInput(false)]
-        public ActionResult GridViewPartial_Tarea_det_readonly()
-        {
-            cargar_combo_detalle();
-            Tarea_Info model = new Tarea_Info();
-            model.list_detalle = Lis_Tarea_det_Info_lis.get_list(Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual));
-            return PartialView("_GridViewPartial_Tarea_det_readonly", model);
-        }
-        
+      
         public ActionResult GridViewPartial_tarea_det_adjunto()
         {
             cargar_combo();
@@ -90,8 +72,7 @@ namespace Web.Areas.General.Controllers
                 grupo = new Grupo_Info();
             Tarea_Info model = new Tarea_Info()
             {
-                FechaInicio = DateTime.Now,
-                FechaCulmina = DateTime.Now,
+                FechaEntrega = DateTime.Now,
                 IdUsuarioSolicitante = SessionTareas.IdUsuario.ToString(),
                 IdEstadoPrioridad = 2,
                 EstadoActual = 1,
@@ -101,7 +82,6 @@ namespace Web.Areas.General.Controllers
                 nomb_jef_grupo = grupo.nomb_jef_grupo,
 
             };
-            Lis_Tarea_det_Info_lis.set_list(new List<Tarea_det_Info>(),model.IdTransaccionSession);
             TareaArchivoAdjunto_Info_lis.set_list(new List<TareaArchivoAdjunto_Info>(), Convert.ToDecimal(model.IdTransaccionSession));
             cargar_combo();
             return View(model);
@@ -130,10 +110,9 @@ namespace Web.Areas.General.Controllers
                 model.IdGrupo = grupo.IdGrupo;
             }
 
-            model.list_detalle = Lis_Tarea_det_Info_lis.get_list(model.IdTransaccionSession);
             model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(model.IdTransaccionSession);
             model.IdUsuario = SessionTareas.IdUsuario.ToString();
-            model.FechaCulmina = model.FechaInicio;            
+            model.FechaEntrega = model.FechaEntrega;            
             mensaje = Validaciones(model);
             if(mensaje!="")
             {
@@ -162,8 +141,6 @@ namespace Web.Areas.General.Controllers
 
             Tarea_Info model = bus_tarea.get_info(IdTarea);
             model.IdTransaccionSession = Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual);
-            model.list_detalle = bus_tarea_det.get_lis(IdTarea);
-            Lis_Tarea_det_Info_lis.set_list(model.list_detalle, model.IdTransaccionSession);
             model.list_adjuntos = bus_adjunto.get_lis(IdTarea);
             TareaArchivoAdjunto_Info_lis.set_list(model.list_adjuntos, model.IdTransaccionSession);
             cargar_combo();
@@ -193,10 +170,9 @@ namespace Web.Areas.General.Controllers
                 return View(model);
             }
 
-            model.list_detalle = Lis_Tarea_det_Info_lis.get_list(model.IdTransaccionSession);
             model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(model.IdTransaccionSession);
             model.IdUsuarioModifica = SessionTareas.IdUsuario;
-            model.FechaCulmina = model.FechaInicio;
+            model.FechaEntrega = model.FechaEntrega;
 
             mensaje = Validaciones(model);
             if (mensaje != "")
@@ -227,11 +203,10 @@ namespace Web.Areas.General.Controllers
             if (model == null)
                 model = new Tarea_Info();
             model.IdTransaccionSession = Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual);
-            model.list_detalle = bus_tarea_det.get_lis(IdTarea);
-            Lis_Tarea_det_Info_lis.set_list(model.list_detalle, model.IdTransaccionSession);
             model.list_adjuntos = bus_adjunto.get_lis(IdTarea);
             TareaArchivoAdjunto_Info_lis.set_list(model.list_adjuntos, model.IdTransaccionSession);
             cargar_combo();
+            ViewBag.IdTareaPadre = model.IdTareaPadre;
             if (model == null)
                 return RedirectToAction("Index");
             return View(model);
@@ -240,7 +215,7 @@ namespace Web.Areas.General.Controllers
         public ActionResult Anular(Tarea_Info model)
         {
             string mensaje = "";
-            model.FechaCulmina = model.FechaInicio;
+            model.FechaEntrega = model.FechaEntrega;
             if (model.ObsevacionModificacion == null | model.ObsevacionModificacion == "")
             {
                 mensaje = "Ingrese una observación";
@@ -272,11 +247,10 @@ namespace Web.Areas.General.Controllers
             if (model == null)
                 model = new Tarea_Info();
             model.IdTransaccionSession = Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual);
-            model.list_detalle = bus_tarea_det.get_lis(IdTarea);
-            Lis_Tarea_det_Info_lis.set_list(model.list_detalle, model.IdTransaccionSession);
             model.list_adjuntos = bus_adjunto.get_lis(IdTarea);
             TareaArchivoAdjunto_Info_lis.set_list(model.list_adjuntos, model.IdTransaccionSession);
             cargar_combo();
+            ViewBag.IdTareaPadre = model.IdTareaPadre;
             if (model == null)
                 return RedirectToAction("Index");
             return View(model);
@@ -295,15 +269,12 @@ namespace Web.Areas.General.Controllers
 
             Tarea_Info model = bus_tarea.get_info(IdTarea);
             model.IdTransaccionSession = Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual);
-            model.list_detalle = bus_tarea_det.get_lis(IdTarea);
-            Lis_Tarea_det_Info_lis.set_list(model.list_detalle, model.IdTransaccionSession);
             model.list_adjuntos = bus_adjunto.get_lis(IdTarea);
             TareaArchivoAdjunto_Info_lis.set_list(model.list_adjuntos, model.IdTransaccionSession);
             cargar_combo();
             if (model == null)
                 return RedirectToAction("Buzon_entrada");
-            if (SessionTareas.IdUsuario != model.IdUsuarioAsignado)
-                SessionTareas.IdUsuario = null;
+            ViewBag.IdTareaPadre = model.IdTareaPadre;
             return View(model);
         }
         [HttpPost]
@@ -313,24 +284,18 @@ namespace Web.Areas.General.Controllers
             model.Accion = cl_enumeradores.eAcciones.Consultar;
             bus_tarea = new Tarea_Bus();
             string mensaje = "";
-            model.list_detalle = Lis_Tarea_det_Info_lis.get_list(model.IdTransaccionSession);
             model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(model.IdTransaccionSession);
             model.IdUsuarioModifica = SessionTareas.IdUsuario.ToString();
-            model.FechaCulmina = model.FechaInicio;
+            model.FechaEntrega = model.FechaEntrega;
 
-            if (model.ObsevacionModificacion==null|model.ObsevacionModificacion=="")
+            if (Convert.ToInt32(model.NumSubtareasAbiertas)>=1)
             {
-                mensaje = "Ingrese una observación";
+                mensaje = "La tarea tiene "+" "+model.NumSubtareasAbiertas+" subtareas abiertas no se puede cerrar!!!";
                 ViewBag.mensaje = mensaje;
                 cargar_combo();
                 return View(model);
             }
-            if (model.list_detalle.Where(v => v.IdEstado == 8).Count() > 0)
-            {
-                cargar_combo();
-                ViewBag.mensaje = "Existen subtareas pendientes no se puede cerrar!!!";
-                return View(model);
-            }
+           
             mensaje = Validaciones(model);
             if (mensaje != "")
             {
@@ -359,11 +324,11 @@ namespace Web.Areas.General.Controllers
 
             Tarea_Info model = bus_tarea.get_info(IdTarea);
             model.IdTransaccionSession = Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual);
-            model.list_detalle = bus_tarea_det.get_lis(IdTarea);
-            Lis_Tarea_det_Info_lis.set_list(model.list_detalle, model.IdTransaccionSession);
             model.list_adjuntos = bus_adjunto.get_lis(IdTarea);
             TareaArchivoAdjunto_Info_lis.set_list(model.list_adjuntos, model.IdTransaccionSession);
             cargar_combo();
+            ViewBag.IdTareaPadre = model.IdTareaPadre;
+
             if (model == null)
                 return RedirectToAction("Buzon_salida");
           
@@ -377,22 +342,15 @@ namespace Web.Areas.General.Controllers
            
 
             string mensaje = "";
-            model.list_detalle = Lis_Tarea_det_Info_lis.get_list(model.IdTransaccionSession);
             model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(model.IdTransaccionSession);
             model.IdUsuarioModifica = SessionTareas.IdUsuario.ToString();
-            model.FechaCulmina = model.FechaInicio;
+            model.FechaEntrega = model.FechaEntrega;
 
-            if (model.ObsevacionModificacion == null | model.ObsevacionModificacion == "")
+            if (Convert.ToInt32(model.NumSubtareasAbiertas) >= 1)
             {
-                mensaje = "Ingrese una observación";
+                mensaje = "La tarea tiene " + " " + model.NumSubtareasAbiertas + " subtareas abiertas no se puede cerrar!!!";
                 ViewBag.mensaje = mensaje;
                 cargar_combo();
-                return View(model);
-            }
-            if (model.list_detalle.Where(v => v.IdEstado == 8).Count() > 0)
-            {
-                cargar_combo();
-                ViewBag.mensaje = "Existen subtareas pendientes no se puede cerrar!!!";
                 return View(model);
             }
 
@@ -469,39 +427,7 @@ namespace Web.Areas.General.Controllers
 
         #endregion
 
-        #region funciones del detalle
-        [HttpPost, ValidateInput(false)]
-        public ActionResult EditingAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] Tarea_det_Info info_det)
-        {
-            if (ModelState.IsValid)
-                Lis_Tarea_det_Info_lis.AddRow(info_det, Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual));
-            Tarea_Info model = new Tarea_Info();
-            model.list_detalle = Lis_Tarea_det_Info_lis.get_list(Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual));
-            cargar_combo_detalle();
-            return PartialView("_GridViewPartial_tarea_det", model);
-        }
-
-        public ActionResult EditingUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] Tarea_det_Info info_det)
-        {
-            if (ModelState.IsValid)
-                Lis_Tarea_det_Info_lis.UpdateRow(info_det, Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual));
-            Tarea_Info model = new Tarea_Info();
-            model.list_detalle = Lis_Tarea_det_Info_lis.get_list(Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual));
-            cargar_combo_detalle();
-            return PartialView("_GridViewPartial_tarea_det", model);
-        }
-
-        public ActionResult EditingDelete([ModelBinder(typeof(DevExpressEditorsBinder))] Tarea_det_Info info_det)
-        {
-            Lis_Tarea_det_Info_lis.DeleteRow(info_det.Secuancial, Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual));
-            Tarea_Info model = new Tarea_Info();
-            model.list_detalle = Lis_Tarea_det_Info_lis.get_list(Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual));
-            cargar_combo_detalle();
-            return PartialView("_GridViewPartial_tarea_det", model);
-        }
-
-        #endregion
-
+     
         #region funciones de los adjuntos
         public ActionResult EditingDelete_adjunto([ModelBinder(typeof(DevExpressEditorsBinder))] TareaArchivoAdjunto_Info info_det)
         {
@@ -523,31 +449,7 @@ namespace Web.Areas.General.Controllers
                 {
                     mensaje = "El usuario asignado no pertenece a un grupo";
                 }
-                foreach (var item in info.list_detalle)
-                {
-                    item.FechaFin = item.FechaInicio;
-                    if (item.FechaInicio.Date==DateTime.Now.Date)
-                    {
-                        item.FechaInicio = info.FechaInicio;
-                    }
-                    if (item.FechaFin.Date == DateTime.Now.Date)
-                    {
-                        item.FechaFin = info.FechaCulmina;
-                    }
-                    if (item.FechaFin.Date < item.FechaInicio.Date)
-                    {
-                        mensaje = "Las fecha de: "+item.Descripcion+", no son correctas";
-                    }
-                    if( (item.FechaInicio.Date <info.FechaInicio.Date) || (item.FechaInicio.Date > info.FechaCulmina.Date))
-                    {
-                        mensaje = "Las fecha de: " + item.Descripcion + ", no son correctas";
-                    }
-                    if ((item.FechaFin.Date < info.FechaInicio.Date) || (item.FechaFin.Date > info.FechaCulmina.Date))
-                    {
-                        mensaje = "Las fecha de: " + item.Descripcion + ", no son correctas";
-                    }
-                }
-                if(info.TareaConcurrente)
+                 if(info.TareaConcurrente)
                 {
                     if(info.DiasIntervaloProximaTarea==null| info.DiasIntervaloProximaTarea==0)
                         mensaje = "Los dias de intervalo es obligatorio";
@@ -556,7 +458,7 @@ namespace Web.Areas.General.Controllers
                         info.FechaFinConcurrencia = DateTime.Now.AddYears(1000);
                     }
                     else
-                        if (Convert.ToDateTime(info.FechaFinConcurrencia)<info.FechaInicio.Date)
+                        if (Convert.ToDateTime(info.FechaFinConcurrencia)<info.FechaEntrega.Date)
                         mensaje = "La fecha de expiración de concurrencia debe ser mayor a la fehca de inicio de la tarea";
 
                 }
@@ -599,52 +501,6 @@ namespace Web.Areas.General.Controllers
     }
 
 
-    #region Tarea detalle
-
-    public class Tarea_det_Info_lis
-    {
-        string variable = "";
-        public List<Tarea_det_Info> get_list(decimal IdTransaccionSessionActual)
-        {
-            if (HttpContext.Current.Session[variable + IdTransaccionSessionActual.ToString()] == null)
-            {
-                List<Tarea_det_Info> list = new List<Tarea_det_Info>();
-
-                HttpContext.Current.Session[variable + IdTransaccionSessionActual.ToString()] = list;
-            }
-            return (List<Tarea_det_Info>)HttpContext.Current.Session[variable + IdTransaccionSessionActual.ToString()];
-        }
-
-        public void set_list(List<Tarea_det_Info> list, decimal IdTransaccionSessionActual)
-        {
-            HttpContext.Current.Session[variable + IdTransaccionSessionActual.ToString()] = list;
-        }
-
-        public void AddRow(Tarea_det_Info info_det, decimal IdTransaccionSessionActual)
-        {
-            List<Tarea_det_Info> list = get_list(IdTransaccionSessionActual);
-            info_det.Secuancial = list.Count() + 1;
-            info_det.IdEstado = 8;
-            list.Add(info_det);
-        }
-        public void DeleteRow(int Secuancial, decimal IdTransaccionSessionActual)
-        {
-            List<Tarea_det_Info> list = get_list(IdTransaccionSessionActual);
-            list.Remove(list.Where(m => m.Secuancial == Secuancial).First());
-        }
-        public void UpdateRow(Tarea_det_Info info_det, decimal IdTransaccionSessionActual)
-        {
-            Tarea_det_Info edited_info = get_list(IdTransaccionSessionActual).Where(m => m.Secuancial == info_det.Secuancial).First();
-            edited_info.FechaFin = info_det.FechaFin;
-            edited_info.FechaInicio = info_det.FechaInicio;
-            edited_info.Descripcion = info_det.Descripcion;
-            edited_info.NumHoras = info_det.NumHoras;
-            edited_info.IdUsuario = info_det.IdUsuario;
-            
-        }
-    }
-
-    #endregion
 
     #region Tarea Adjunto
 

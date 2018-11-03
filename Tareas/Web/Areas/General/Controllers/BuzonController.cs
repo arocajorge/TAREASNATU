@@ -15,8 +15,6 @@ namespace Web.Areas.General.Controllers
     public class BuzonController : Controller
     {
         #region Variables
-        Tarea_det_Bus bus_tarea_det = new Tarea_det_Bus();
-        Tarea_det_Info_lis Lis_Tarea_det_Info_lis = new Tarea_det_Info_lis();
         Tarea_Bus bus_tarea = new Tarea_Bus();
         Grupo_Bus bus_grupo = new Grupo_Bus();
         Usuario_Bus bus_usuario = new Usuario_Bus();
