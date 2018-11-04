@@ -124,6 +124,12 @@
     <Compile Include="vw_Tarea.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
+    <Compile Include="vw_TareaArchivoAdjunto.cs">
+      <DependentUpon>ModelGeneral.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vw_TareaEstado.cs">
+      <DependentUpon>ModelGeneral.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="ModelGeneral.edmx">

@@ -17,8 +17,9 @@ namespace Data
 
                 using (EntityTareas Context = new EntityTareas())
                 {
-                    Lista = (from q in Context.TareaArchivoAdjunto
+                    Lista = (from q in Context.vw_TareaArchivoAdjunto
                              where q.IdTarea == IdTarea
+                             || q.IdTareaPadre==IdTarea
                              select new TareaArchivoAdjunto_Info
                              {
                                  IdTarea = q.IdTarea,

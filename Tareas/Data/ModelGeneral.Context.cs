@@ -39,6 +39,8 @@ namespace Data
         public virtual DbSet<Tarea> Tarea { get; set; }
         public virtual DbSet<vw_Tarea> vw_Tarea { get; set; }
         public virtual DbSet<VWGEN_001> VWGEN_001 { get; set; }
+        public virtual DbSet<vw_TareaArchivoAdjunto> vw_TareaArchivoAdjunto { get; set; }
+        public virtual DbSet<vw_TareaEstado> vw_TareaEstado { get; set; }
     
         public virtual int sp_crear_tarea_concurrente(Nullable<decimal> idTarea)
         {

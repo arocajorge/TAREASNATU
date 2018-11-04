@@ -209,6 +209,42 @@ warning 6002: The table/view 'DB_TAREAS.dbo.vw_Tarea' does not have a primary ke
           <Property Name="NumSubtareasAbiertas" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_TAREAS.dbo.vw_TareaArchivoAdjunto' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_TareaArchivoAdjunto">
+          <Key>
+            <PropertyRef Name="IdTarea" />
+            <PropertyRef Name="Secuencial" />
+            <PropertyRef Name="NombreArchivo" />
+            <PropertyRef Name="Archivo" />
+            <PropertyRef Name="TipoArchivo" />
+          </Key>
+          <Property Name="IdTarea" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Secuencial" Type="int" Nullable="false" />
+          <Property Name="NombreArchivo" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="Archivo" Type="image" Nullable="false" />
+          <Property Name="TipoArchivo" Type="varchar(max)" Nullable="false" />
+          <Property Name="IdTareaPadre" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_TAREAS.dbo.vw_TareaEstado' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_TareaEstado">
+          <Key>
+            <PropertyRef Name="IdTarea" />
+            <PropertyRef Name="Secuancial" />
+            <PropertyRef Name="IdEstado" />
+            <PropertyRef Name="IdUsuario" />
+            <PropertyRef Name="FechaModificacion" />
+            <PropertyRef Name="Observacion" />
+          </Key>
+          <Property Name="IdTarea" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Secuancial" Type="int" Nullable="false" />
+          <Property Name="IdEstado" Type="int" Nullable="false" />
+          <Property Name="IdUsuario" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FechaModificacion" Type="datetime" Nullable="false" />
+          <Property Name="Observacion" Type="varchar(max)" Nullable="false" />
+          <Property Name="IdTareaPadre" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="VWGEN_001">
           <Key>
@@ -464,6 +500,27 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
     [vw_Tarea].[NumSubtareasAbiertas] AS [NumSubtareasAbiertas]
     FROM [dbo].[vw_Tarea] AS [vw_Tarea]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vw_TareaArchivoAdjunto" EntityType="Self.vw_TareaArchivoAdjunto" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_TareaArchivoAdjunto].[IdTarea] AS [IdTarea], 
+    [vw_TareaArchivoAdjunto].[Secuencial] AS [Secuencial], 
+    [vw_TareaArchivoAdjunto].[NombreArchivo] AS [NombreArchivo], 
+    [vw_TareaArchivoAdjunto].[Archivo] AS [Archivo], 
+    [vw_TareaArchivoAdjunto].[TipoArchivo] AS [TipoArchivo], 
+    [vw_TareaArchivoAdjunto].[IdTareaPadre] AS [IdTareaPadre]
+    FROM [dbo].[vw_TareaArchivoAdjunto] AS [vw_TareaArchivoAdjunto]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_TareaEstado" EntityType="Self.vw_TareaEstado" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_TareaEstado].[IdTarea] AS [IdTarea], 
+    [vw_TareaEstado].[Secuancial] AS [Secuancial], 
+    [vw_TareaEstado].[IdEstado] AS [IdEstado], 
+    [vw_TareaEstado].[IdUsuario] AS [IdUsuario], 
+    [vw_TareaEstado].[FechaModificacion] AS [FechaModificacion], 
+    [vw_TareaEstado].[Observacion] AS [Observacion], 
+    [vw_TareaEstado].[IdTareaPadre] AS [IdTareaPadre]
+    FROM [dbo].[vw_TareaEstado] AS [vw_TareaEstado]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="VWGEN_001" EntityType="Self.VWGEN_001" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [VWGEN_001].[IdTarea] AS [IdTarea], 
@@ -627,6 +684,8 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
             <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
             <Parameter Name="IdGrupo" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="vw_TareaArchivoAdjunto" EntityType="ModelGeneral.vw_TareaArchivoAdjunto" />
+          <EntitySet Name="vw_TareaEstado" EntityType="ModelGeneral.vw_TareaEstado" />
         </EntityContainer>
         <EntityType Name="Estado">
           <Key>
@@ -1079,6 +1138,38 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
           <Property Type="Int32" Name="TotalTareaResueltas" Nullable="true" />
           <Property Type="Int32" Name="TotalTareaPendiente" Nullable="true" />
         </ComplexType>
+        <EntityType Name="vw_TareaArchivoAdjunto">
+          <Key>
+            <PropertyRef Name="IdTarea" />
+            <PropertyRef Name="Secuencial" />
+            <PropertyRef Name="NombreArchivo" />
+            <PropertyRef Name="Archivo" />
+            <PropertyRef Name="TipoArchivo" />
+          </Key>
+          <Property Name="IdTarea" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Secuencial" Type="Int32" Nullable="false" />
+          <Property Name="NombreArchivo" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Archivo" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="TipoArchivo" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IdTareaPadre" Type="Decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="vw_TareaEstado">
+          <Key>
+            <PropertyRef Name="IdTarea" />
+            <PropertyRef Name="Secuancial" />
+            <PropertyRef Name="IdEstado" />
+            <PropertyRef Name="IdUsuario" />
+            <PropertyRef Name="FechaModificacion" />
+            <PropertyRef Name="Observacion" />
+          </Key>
+          <Property Name="IdTarea" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Secuancial" Type="Int32" Nullable="false" />
+          <Property Name="IdEstado" Type="Int32" Nullable="false" />
+          <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaModificacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Observacion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IdTareaPadre" Type="Decimal" Precision="18" Scale="0" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1318,6 +1409,31 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="vw_TareaArchivoAdjunto">
+            <EntityTypeMapping TypeName="ModelGeneral.vw_TareaArchivoAdjunto">
+              <MappingFragment StoreEntitySet="vw_TareaArchivoAdjunto">
+                <ScalarProperty Name="IdTareaPadre" ColumnName="IdTareaPadre" />
+                <ScalarProperty Name="TipoArchivo" ColumnName="TipoArchivo" />
+                <ScalarProperty Name="Archivo" ColumnName="Archivo" />
+                <ScalarProperty Name="NombreArchivo" ColumnName="NombreArchivo" />
+                <ScalarProperty Name="Secuencial" ColumnName="Secuencial" />
+                <ScalarProperty Name="IdTarea" ColumnName="IdTarea" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_TareaEstado">
+            <EntityTypeMapping TypeName="ModelGeneral.vw_TareaEstado">
+              <MappingFragment StoreEntitySet="vw_TareaEstado">
+                <ScalarProperty Name="IdTareaPadre" ColumnName="IdTareaPadre" />
+                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
+                <ScalarProperty Name="Secuancial" ColumnName="Secuancial" />
+                <ScalarProperty Name="IdTarea" ColumnName="IdTarea" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
