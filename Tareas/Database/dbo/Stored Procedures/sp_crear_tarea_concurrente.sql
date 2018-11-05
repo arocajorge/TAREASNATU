@@ -25,7 +25,7 @@ FechaAnulacion,			FechaAprobacion,											FechaFinConcurrencia,					DiasInter
 
  select 
 @IdTareaNew,			IdUsuarioSolicitante,										IdGrupo,								IdUsuarioAsignado,									1,
- case when @DiasIntervaloProximaTarea=30 then DATEADD (MONTH,ISNULL( 1,0),FechaEntrega) else DATEADD (DAY,ISNULL( @DiasIntervaloProximaTarea,0),FechaEntrega) end,						case when @DiasIntervaloProximaTarea=30 then DATEADD (MONTH,ISNULL( 1,0),FechaEntrega) else DATEADD (DAY,ISNULL( @DiasIntervaloProximaTarea,0),FechaEntrega) end,							AsuntoTarea,	DescripcionTarea,							
+ case when @DiasIntervaloProximaTarea=30 then DATEADD (MONTH,ISNULL( 1,0),FechaEntrega) else DATEADD (DAY,ISNULL( @DiasIntervaloProximaTarea,0),FechaEntrega) end,													AsuntoTarea,	DescripcionTarea,							
 IdEstadoPrioridad,		TareaConcurrente,											AprobadoSolicitado,						AprobadoEncargado,									Estado,									
 IdUsuario,				IdUsuarioModifica,											IdUsuarioAnula,							GETDATE(),									       FechaModificacion,	
 FechaAnulacion,			FechaAprobacion,											FechaFinConcurrencia,					DiasIntervaloProximaTarea
@@ -35,12 +35,12 @@ FechaAnulacion,			FechaAprobacion,											FechaFinConcurrencia,					DiasInter
 
  insert into TareaArchivoAdjunto(
 IdTarea,															secuencial,																	NombreArchivo,
-Archivo	
+Archivo,															TipoArchivo	
 )												
 select
 
 @IdTareaNew,														secuencial,																	NombreArchivo,
-Archivo	
+Archivo,															TipoArchivo	
 from TareaArchivoAdjunto where IdTarea=@IdTarea
 
 

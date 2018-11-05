@@ -23,6 +23,7 @@
     [FechaTransaccion]          DATETIME      NULL,
     [FechaModificacion]         DATETIME      NULL,
     [FechaAnulacion]            DATETIME      NULL,
+    [IdTareaPadre]              DECIMAL (18)  NULL,
     CONSTRAINT [PK_Tarea] PRIMARY KEY CLUSTERED ([IdTarea] ASC),
     CONSTRAINT [FK_Tarea_Estado] FOREIGN KEY ([EstadoActual]) REFERENCES [dbo].[Estado] ([IdEstado]),
     CONSTRAINT [FK_Tarea_Estado1] FOREIGN KEY ([IdEstadoPrioridad]) REFERENCES [dbo].[Estado] ([IdEstado]),
@@ -30,6 +31,8 @@
     CONSTRAINT [FK_Tarea_Usuario] FOREIGN KEY ([IdUsuarioSolicitante]) REFERENCES [dbo].[Usuario] ([IdUsuario]),
     CONSTRAINT [FK_Tarea_Usuario1] FOREIGN KEY ([IdUsuarioAsignado]) REFERENCES [dbo].[Usuario] ([IdUsuario])
 );
+
+
 
 
 

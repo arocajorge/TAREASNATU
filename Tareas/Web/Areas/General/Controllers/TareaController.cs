@@ -395,7 +395,9 @@ namespace Web.Areas.General.Controllers
                 var list_prioridad = bus_estado.get_lis(2);
                 ViewBag.list_prioridad = list_prioridad;
 
-              
+                var list_tarea = bus_tarea.get_lis_cargar_combo();
+                ViewBag.list_tarea = list_tarea;
+
 
             }
             catch (Exception)

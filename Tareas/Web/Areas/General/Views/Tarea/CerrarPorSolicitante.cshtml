@@ -38,19 +38,19 @@
     {
         <div class="row">
             <div class="col-md-12">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="form-group">
-                        <label for="IdUsuarioSolicitante">Tarea Padre*</label>
+                        <label for="IdTareaPadre">Tarea Padre*</label>
                         @Html.DevExpress().ComboBoxFor(q => q.IdTareaPadre, settings =>
                    {
                        settings.Name = "IdTareaPadre";
                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                        settings.Properties.DisplayFormatString = "{0}";
-                       settings.Properties.Columns.Add("Nombre", "Usuario").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                       settings.Properties.Columns.Add("AsuntoTarea", "Asunto tarea").Width = System.Web.UI.WebControls.Unit.Percentage(10);
                        //Campo ID
-                       settings.Properties.ValueField = "IdUsuario";
-                       settings.Properties.ValueType = typeof(string);
-                       settings.Properties.TextField = "Nombre";
+                       settings.Properties.ValueField = "IdTarea";
+                       settings.Properties.ValueType = typeof(decimal);
+                       settings.Properties.TextField = "AsuntoTarea";
                        //Boton para seleccionar ningun registro
                        settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
                        settings.Properties.NullText = "== Seleccione ==";
@@ -64,6 +64,7 @@
 
             </div>
         </div>
+
     }
 
     <div class="row">
@@ -356,7 +357,7 @@
         }
         else {
             $("#link_detalle").hide();
-            AprobadoEncargado.SetChecked(false);
+            AprobadoEncargado.SetChecked(true);
         }
     };
 

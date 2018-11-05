@@ -73,12 +73,14 @@
     <Build Include="dbo\Tables\EstadoTipo.sql" />
     <Build Include="dbo\Tables\Estado.sql" />
     <Build Include="dbo\Views\vw_Tarea.sql" />
-    <Build Include="dbo\Stored Procedures\sp_Tareas_X_Usuarios.sql" />
     <Build Include="dbo\Views\VWGEN_001.sql" />
     <Build Include="dbo\Stored Procedures\SPGEN_002.sql" />
     <Build Include="dbo\Stored Procedures\sp_crear_tarea_concurrente.sql" />
     <Build Include="dbo\Stored Procedures\sp_carga_laboral.sql" />
     <Build Include="dbo\Stored Procedures\CierreTareaAutomatico.sql" />
     <Build Include="dbo\Views\vw_Grupo_Usuario.sql" />
+    <Build Include="dbo\Views\vw_TareaEstado.sql" />
+    <Build Include="dbo\Views\vw_TareaArchivoAdjunto.sql" />
+    <Build Include="dbo\Stored Procedures\AprobacionTareaAutomatico.sql" />
   </ItemGroup>
 </Project>

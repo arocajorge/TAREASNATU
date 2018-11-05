@@ -67,6 +67,19 @@
             column.Width = Unit.Percentage(10);
         });
 
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdTarea";
+            column.Caption = "Id Tarea";
+            column.Width = Unit.Percentage(15);
+            column.EditorProperties().TextBox(sp =>
+            {
+                sp.Width = Unit.Percentage(100);
+
+            });
+        });
+
     });
 
 }
