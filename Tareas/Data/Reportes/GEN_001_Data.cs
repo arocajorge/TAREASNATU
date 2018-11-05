@@ -61,6 +61,7 @@ namespace Data.General
                                      Asunto = q.AsuntoTarea,
                                      Encargado = q.Encargado,
                                      Solicitante = q.Solicitante,
+                                     Estado = q.Estado,
                                      Usuario = IdUsuario
 
                                  }).ToList();
