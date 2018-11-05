@@ -21,6 +21,8 @@ namespace Data
                              where q.IdEstadoTipo==IdEstadoTipo
                              select new Estado_Info
                              {
+
+
                                  IdEstado = q.IdEstado,
                                  IdEstadoTipo=q.IdEstadoTipo,
                                  Descripcion = q.Descripcion,
