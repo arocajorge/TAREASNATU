@@ -115,7 +115,7 @@
         <div class="col-md-12">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="IdEstadoCierreTarea">Estado tareas cerradas*</label>
+                    <label for="IdEstadoCierreTarea">Estado tareas cerradas por encargado*</label>
                     @Html.DevExpress().ComboBoxFor(q => q.IdEstadoCierreTarea, settings =>
                {
                    settings.Name = "IdEstadoCierreTarea";
@@ -133,6 +133,34 @@
 
                }).BindList(ViewBag.lis_estado).GetHtml()
                     @Html.ValidationMessageFor(q => q.IdEstadoCierreTarea, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdEstadoCierreTarea">Estado tareas cerradas por solicitante*</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.IdEstadoCierreSolicitante, settings =>
+               {
+                   settings.Name = "IdEstadoCierreSolicitante";
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.DisplayFormatString = "[{0}]";
+                   settings.Properties.Columns.Add("Descripcion", "Estado").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   //Campo ID
+                   settings.Properties.ValueField = "IdEstado";
+                   settings.Properties.ValueType = typeof(int);
+                   settings.Properties.TextField = "Descripcion";
+                   //Boton para seleccionar ningun registro
+                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
+                   settings.Properties.NullText = "== Seleccione ==";
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+
+               }).BindList(ViewBag.lis_estado).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdEstadoCierreSolicitante, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
@@ -195,7 +223,7 @@
 
     <div class="row">
         <div class="col-md-12">
-           
+
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="IdEstadoCierreTarea">Cerrar tarea cada [min]:*</label>

@@ -657,7 +657,7 @@ namespace Data
                         Secuancial = odta_estado.get_id(info.IdTarea),
                         IdUsuario = info.IdUsuario,
                         Observacion = info.ObsevacionModificacion,
-                        IdEstado = info.EstadoActual=3,
+                        IdEstado = info.EstadoActual=info_parametro.IdEstadoCierreTarea,
                         FechaModificacion = DateTime.Now,
 
 
@@ -701,7 +701,7 @@ namespace Data
                         return false;
                     Entity.FechaCierreSolicitante = DateTime.Now;
                     Entity.FechaCierreEncargado = DateTime.Now;
-                    Entity.EstadoActual = info_parametro.IdEstadoCierreTarea;
+                    Entity.EstadoActual = info_parametro.IdEstadoCierreSolicitante;
                     #region Estado tarea
 
                     TareaEstado New_estado = new TareaEstado
@@ -710,7 +710,7 @@ namespace Data
                         Secuancial = odta_estado.get_id(info.IdTarea),
                         IdUsuario = info.IdUsuario,
                         Observacion = info.ObsevacionModificacion,
-                        IdEstado = info.EstadoActual = 3,
+                        IdEstado = info.EstadoActual =info_parametro.IdEstadoCierreSolicitante,
                         FechaModificacion = DateTime.Now,
 
 

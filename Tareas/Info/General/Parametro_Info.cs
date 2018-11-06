@@ -27,7 +27,7 @@ namespace Info
         public string FtpURLArchivo { get; set; }
         [Required(ErrorMessage = "El campo url de la FTP es obligatorio, para archivos adjuntos ISO")]
         public string FtpURLAdjunto { get; set; }
-        [Required(ErrorMessage = "El campo estado para tarea cerrada es obligatorio")]
+        [Required(ErrorMessage = "El campo estado para tarea cerrada por encargado es obligatorio")]
         public int IdEstadoCierreTarea { get; set; }
         [Required(ErrorMessage = "El campo estado para tarea aprobada es obligatorio")]
         public int IdEstadoAprobarTarea { get; set; }
@@ -36,5 +36,8 @@ namespace Info
 
         [Required(ErrorMessage = "El campo intervalo de cerrar tareas automaticamente es obligatorio")]
         public int IntervaloEjecucionMin { get; set; }
+        [Required(ErrorMessage = "El campo estado para tarea cerrada por solicitante es obligatorio")]
+        public int IdEstadoCierreSolicitante { get; set; }
+
     }
 }

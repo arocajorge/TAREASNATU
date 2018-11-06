@@ -9,15 +9,11 @@
         <EntityTypeShape EntityType="ModelGeneral.EstadoTipo" Width="1.5" PointX="0.75" PointY="1.5" />
         <EntityTypeShape EntityType="ModelGeneral.Grupo" Width="1.5" PointX="3" PointY="6" />
         <EntityTypeShape EntityType="ModelGeneral.Grupo_Usuario" Width="1.5" PointX="8.25" PointY="6.75" />
-        <EntityTypeShape EntityType="ModelGeneral.Parametro" Width="1.5" PointX="5.25" PointY="12.875" />
         <EntityTypeShape EntityType="ModelGeneral.TareaArchivoAdjunto" Width="1.5" PointX="7.5" PointY="10.25" />
         <EntityTypeShape EntityType="ModelGeneral.TareaEstado" Width="1.5" PointX="7.5" PointY="3.125" />
         <EntityTypeShape EntityType="ModelGeneral.Usuario" Width="1.5" PointX="0.75" PointY="5.75" />
         <EntityTypeShape EntityType="ModelGeneral.vw_Grupo_Usuario" Width="1.5" PointX="9.75" PointY="2.375" />
         <AssociationConnector Association="ModelGeneral.FK_Estado_EstadoTipo" />
-        <AssociationConnector Association="ModelGeneral.FK_Parametro_Estado" />
-        <AssociationConnector Association="ModelGeneral.FK_Parametro_Estado1" />
-        <AssociationConnector Association="ModelGeneral.FK_Parametro_Estado2" />
         <AssociationConnector Association="ModelGeneral.FK_Grupo_Usuario" />
         <AssociationConnector Association="ModelGeneral.FK_Grupo_Usuario_Grupo" />
         <AssociationConnector Association="ModelGeneral.FK_Grupo_Usuario_Usuario" />
@@ -33,6 +29,10 @@
         <EntityTypeShape EntityType="ModelGeneral.VWGEN_001" Width="1.5" PointX="10.375" PointY="5.75" />
         <EntityTypeShape EntityType="ModelGeneral.vw_TareaArchivoAdjunto" Width="1.5" PointX="10.375" PointY="10.75" />
         <EntityTypeShape EntityType="ModelGeneral.vw_TareaEstado" Width="1.5" PointX="12.375" PointY="0.75" />
+        <EntityTypeShape EntityType="ModelGeneral.Parametro" Width="1.5" PointX="5.25" PointY="10.75" />
+        <AssociationConnector Association="ModelGeneral.FK_Parametro_Estado" />
+        <AssociationConnector Association="ModelGeneral.FK_Parametro_Estado1" />
+        <AssociationConnector Association="ModelGeneral.FK_Parametro_Estado2" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
