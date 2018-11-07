@@ -486,7 +486,7 @@ namespace Web.Areas.General.Controllers
     {
         public static DevExpress.Web.UploadControlValidationSettings UploadValidationSettings = new DevExpress.Web.UploadControlValidationSettings()
         {
-            AllowedFileExtensions = new string[] { ".xlsx", ".xls", ".doc",  ".pdf", ".docx",".jpg",".png" },
+           // AllowedFileExtensions = new string[] { ".xlsx", ".xls", ".doc",  ".pdf", ".docx",".jpg",".png" },
             MaxFileSize = 9000000000
         };
         public static void FileUploadComplete(object sender, DevExpress.Web.FileUploadCompleteEventArgs e)
