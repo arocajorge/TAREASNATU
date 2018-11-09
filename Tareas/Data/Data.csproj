@@ -130,6 +130,9 @@
     <Compile Include="vw_TareaEstado.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
+    <Compile Include="vw_Tarea_asignar_subtarea.cs">
+      <DependentUpon>ModelGeneral.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="ModelGeneral.edmx">

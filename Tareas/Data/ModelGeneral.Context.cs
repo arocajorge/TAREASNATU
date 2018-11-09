@@ -41,6 +41,7 @@ namespace Data
         public virtual DbSet<vw_TareaArchivoAdjunto> vw_TareaArchivoAdjunto { get; set; }
         public virtual DbSet<vw_TareaEstado> vw_TareaEstado { get; set; }
         public virtual DbSet<Parametro> Parametro { get; set; }
+        public virtual DbSet<vw_Tarea_asignar_subtarea> vw_Tarea_asignar_subtarea { get; set; }
     
         public virtual int sp_crear_tarea_concurrente(Nullable<decimal> idTarea)
         {
@@ -73,7 +74,7 @@ namespace Data
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPGEN_002_Result>("SPGEN_002", fechaInicioParameter, fechaFinParameter);
         }
     
-        public virtual ObjectResult<sp_carga_laboral_Result> sp_carga_laboral(string idUsuario, Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin, Nullable<int> idGrupo)
+        public virtual ObjectResult<sp_carga_laboral_Result> sp_carga_laboral(string idUsuario, Nullable<System.DateTime> fechaInicio, Nullable<int> idGrupo)
         {
             var idUsuarioParameter = idUsuario != null ?
                 new ObjectParameter("IdUsuario", idUsuario) :
@@ -83,15 +84,11 @@ namespace Data
                 new ObjectParameter("FechaInicio", fechaInicio) :
                 new ObjectParameter("FechaInicio", typeof(System.DateTime));
     
-            var fechaFinParameter = fechaFin.HasValue ?
-                new ObjectParameter("FechaFin", fechaFin) :
-                new ObjectParameter("FechaFin", typeof(System.DateTime));
-    
             var idGrupoParameter = idGrupo.HasValue ?
                 new ObjectParameter("IdGrupo", idGrupo) :
                 new ObjectParameter("IdGrupo", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_carga_laboral_Result>("sp_carga_laboral", idUsuarioParameter, fechaInicioParameter, fechaFinParameter, idGrupoParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_carga_laboral_Result>("sp_carga_laboral", idUsuarioParameter, fechaInicioParameter, idGrupoParameter);
         }
     }
 }

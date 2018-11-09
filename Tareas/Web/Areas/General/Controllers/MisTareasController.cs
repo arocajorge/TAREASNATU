@@ -22,7 +22,7 @@ namespace Web.Areas.General.Controllers
             cargar_combo();
             Tarea_Info model = new Tarea_Info();
             Grupo_Bus bus_grupo = new Grupo_Bus();
-            model = bus_tarea.get_carga_laboral(0, SessionTareas.IdUsuario, DateTime.Now.Date, DateTime.Now.Date);
+            model = bus_tarea.get_carga_laboral(0, SessionTareas.IdUsuario, DateTime.Now.Date);
             if (model == null)
                 model = new Tarea_Info
                 {
@@ -39,7 +39,7 @@ namespace Web.Areas.General.Controllers
             bus_tarea = new Tarea_Bus();
             string IdUsuario = model.IdUsuario;
             cargar_combo();
-             model = bus_tarea.get_carga_laboral(model.IdGrupoFiltro==null?0:Convert.ToInt32(model.IdGrupoFiltro), model.IdUsuario, model.FechaInicio, model.FechaFin);
+             model = bus_tarea.get_carga_laboral(model.IdGrupoFiltro==null?0:Convert.ToInt32(model.IdGrupoFiltro), model.IdUsuario, model.FechaInicio);
             if(model==null)
             {
                 model = new Tarea_Info

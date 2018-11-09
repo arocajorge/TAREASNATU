@@ -5,7 +5,6 @@
 CREATE PROCEDURE [dbo].[sp_carga_laboral]
 	@IdUsuario varchar(50) ,
 	@FechaInicio date,
-	@FechaFin date,
 	@IdGrupo int
 AS
 BEGIN
@@ -18,13 +17,13 @@ FROM            dbo.Tarea
 						 where 
 						 Tarea.AprobadoEncargado=0
 						 and Tarea.IdUsuarioAsignado=@IdUsuario
-						 and CAST( Tarea.FechaEntrega as date) between @FechaInicio and @FechaFin
+						 and CAST( Tarea.FechaEntrega as date) <= @FechaInicio 
 						 )NumTareaPorAprobar,
 
 						( 	SELECT   COUNT(Tarea.IdTarea) As NumTareaVencidas   
 						    FROM    dbo.Tarea  
 						    where 
-						    CAST( Tarea.FechaEntrega as date) between @FechaInicio and @FechaFin
+						    CAST( Tarea.FechaEntrega as date) <= @FechaInicio 
 						    and Tarea.IdUsuarioAsignado=@IdUsuario
 						    and Tarea.FechaCierreEncargado is null
 							and Tarea.FechaEntrega>CAST(GETDATE() as date)
@@ -32,14 +31,14 @@ FROM            dbo.Tarea
 
 (SELECT   COUNT(Tarea.IdTarea) As TotalTareaResueltas
 FROM            dbo.Tarea  
-						 WHERE CAST( Tarea.FechaCierreEncargado as date) between @FechaInicio and @FechaFin						
+						 WHERE CAST( Tarea.FechaCierreEncargado as date) <= @FechaInicio 						
 						 and Tarea.IdUsuarioAsignado=@IdUsuario)
 						 TotalTareaResueltas,
 
 (SELECT   COUNT(Tarea.IdTarea)  TotalTareaPendiente   
 FROM            dbo.Tarea  
 
-						 where Tarea.FechaEntrega between @FechaInicio and @FechaFin					
+						 where Tarea.FechaEntrega <= @FechaInicio					
 						 and Tarea.IdUsuarioAsignado=@IdUsuario
 						 and Tarea.FechaCierreEncargado is null
 						 )TotalTareaPendiente
@@ -56,7 +55,7 @@ FROM            dbo.Tarea
 						( 	SELECT   COUNT(Tarea.IdTarea) As NumTareaVencidas   
 FROM            dbo.Tarea  
 						 where 
-						 CAST(Tarea.FechaEntrega as date) between @FechaInicio and @FechaFin
+						 CAST(Tarea.FechaEntrega as date) <= @FechaInicio 
 					     AND Tarea.IdGrupo=@IdGrupo						
 						 and Tarea.FechaCierreEncargado is null
 						 )NumTareaVencidas,
@@ -64,14 +63,14 @@ FROM            dbo.Tarea
 (SELECT   COUNT(Tarea.IdTarea) As TotalTareaResueltas
 FROM            dbo.Tarea  
 						 where 
-						 CAST( Tarea.FechaCierreEncargado as date) between @FechaInicio and @FechaFin
+						 CAST( Tarea.FechaCierreEncargado as date) <= @FechaInicio 
 						 and Tarea.IdGrupo=@IdGrupo)
 						 TotalTareaResueltas,
 
 (SELECT   COUNT(Tarea.IdTarea)  TotalTareaPendiente   
 FROM            dbo.Tarea  
 						 where 
-						 CAST( Tarea.FechaEntrega as date)between @FechaInicio and @FechaFin
+						 CAST( Tarea.FechaEntrega as date)<= @FechaInicio 
 						 and Tarea.IdGrupo=@IdGrupo
 						 and Tarea.FechaCierreEncargado is null
 						 )TotalTareaPendiente

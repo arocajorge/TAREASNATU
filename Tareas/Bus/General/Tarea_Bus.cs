@@ -61,6 +61,19 @@ namespace Bus
                 throw;
             }
         }
+        public List<Tarea_Info> get_lis_asignar_subtareas(string IdUsuario, cl_enumeradores.eTipoTarea Tipo, DateTime FechaInicio, DateTime FechaFin)
+        {
+            try
+            {
+                return odata.get_lis_asignar_subtareas(IdUsuario, Tipo, FechaInicio, FechaFin);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        
         public List<Tarea_Info> get_lis_x_aprobar(string IdUsuario)
         {
             try
@@ -204,11 +217,11 @@ namespace Bus
             }
         }
 
-        public Tarea_Info get_carga_laboral(int IdGrupo, string IdUsuario, DateTime FechaInicio, DateTime FechaFin)
+        public Tarea_Info get_carga_laboral(int IdGrupo, string IdUsuario, DateTime FechaInicio)
         {
             try
             {
-                return odata.get_carga_laboral(IdGrupo, IdUsuario, FechaInicio, FechaFin);
+                return odata.get_carga_laboral(IdGrupo, IdUsuario, FechaInicio);
 
 
             }

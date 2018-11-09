@@ -43,7 +43,7 @@ namespace Web.Areas.General.Controllers
             List<Tarea_Info> model = new List<Tarea_Info>();
             ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : fecha_ini;
             ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date.AddMonths(1) : fecha_fin;
-            model = bus_tarea.get_lis(SessionTareas.IdUsuario, cl_enumeradores.eTipoTarea.ASIGNADA, ViewBag.fecha_ini, ViewBag.fecha_fin);
+            model = bus_tarea.get_lis_asignar_subtareas(SessionTareas.IdUsuario, cl_enumeradores.eTipoTarea.ASIGNADA, ViewBag.fecha_ini, ViewBag.fecha_fin);
 
             return PartialView("_GridViewPartial_asignar_subtareas", model);
         }

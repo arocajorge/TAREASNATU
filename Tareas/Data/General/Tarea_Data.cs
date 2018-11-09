@@ -300,6 +300,63 @@ namespace Data
             }
         }
 
+        public List<Tarea_Info> get_lis_asignar_subtareas(string IdUsuario, cl_enumeradores.eTipoTarea Tipo, DateTime FechaInicio, DateTime FechaFin)
+        {
+            try
+            {
+                FechaInicio = Convert.ToDateTime(FechaInicio.ToShortDateString());
+                FechaFin = Convert.ToDateTime(FechaFin.ToShortDateString());
+                List<Tarea_Info> Lista = new List<Tarea_Info>();
+                using (EntityTareas Context = new EntityTareas())
+                {
+                        Lista = (from q in Context.vw_Tarea_asignar_subtarea
+                                 where q.IdUsuarioAsignado == IdUsuario
+                                 && q.FechaEntrega >= FechaInicio
+                                 && q.FechaEntrega <= FechaFin
+                                
+                                 && q.Estado == true
+                                 select new Tarea_Info
+                                 {
+                                     IdTarea = q.IdTarea,
+                                     IdUsuarioSolicitante = q.IdUsuarioSolicitante,
+                                     IdGrupo = q.IdGrupo,
+                                     IdUsuarioAsignado = q.IdUsuarioAsignado,
+                                     EstadoActual = q.EstadoActual,
+                                     FechaEntrega = q.FechaEntrega,
+                                     AsuntoTarea = q.AsuntoTarea,
+                                     DescripcionTarea = q.DescripcionTarea,
+                                     IdEstadoPrioridad = q.IdEstadoPrioridad,
+                                     TareaConcurrente = q.TareaConcurrente,
+                                     Estado = q.Estado,
+                                     AprobadoEncargado = q.AprobadoEncargado,
+                                     AprobadoSolicitado = q.AprobadoSolicitado,
+
+                                     solicitante = q.solicitante,
+                                     Asignado = q.Asignado,
+                                     Prioridad = q.Prioridad,
+                                     EstadoTarea = q.EstadoTarea,
+                                     NombreGrupo = q.NombreGrupo,
+                                     FechaCierreSolicitante = q.FechaCierreSolicitante,
+                                     FechaCierreEncargado = q.FechaCierreEncargado,
+                                     NumSubtarea = q.NumSubtarea,
+                                     NumSubtareasAbiertas = q.NumSubtareasAbiertas
+
+
+
+                                 }).ToList();
+                   
+                }
+
+                return Lista;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+
         public List<Tarea_Info> get_lis(string IdUsuario)
         {
             try
@@ -949,14 +1006,14 @@ namespace Data
                 return false;
             }
         }
-        public Tarea_Info get_carga_laboral(int IdGrupo, string IdUsuario, DateTime fechaInicio, DateTime FechaFin)
+        public Tarea_Info get_carga_laboral(int IdGrupo, string IdUsuario, DateTime fechaInicio)
         {
             try
             {
                 Tarea_Info info = new Tarea_Info();
                 using (EntityTareas Context = new EntityTareas())
                 {
-                    var Entity = Context.sp_carga_laboral(IdUsuario, fechaInicio, FechaFin, IdGrupo).FirstOrDefault();
+                    var Entity = Context.sp_carga_laboral(IdUsuario, fechaInicio, IdGrupo).FirstOrDefault();
                     if (Entity == null)
                         return new Tarea_Info();
                     else
@@ -966,7 +1023,6 @@ namespace Data
                         info.TotalTareaPendiente = Entity.TotalTareaPendiente;
                         info.TotalTareaResueltas = Entity.TotalTareaResueltas;
 
-                        info.FechaFin = FechaFin;
                         info.FechaInicio = fechaInicio;
                         info.IdUsuario = IdUsuario;
                         info.IdGrupoFiltro = IdGrupo;
