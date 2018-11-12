@@ -40,5 +40,6 @@ namespace Data
         public Nullable<decimal> IdTareaPadre { get; set; }
         public Nullable<int> NumSubtarea { get; set; }
         public Nullable<int> NumSubtareasAbiertas { get; set; }
+        public string EstadoCumplimiento { get; set; }
     }
 }

@@ -6874,6 +6874,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Properties\PublishProfiles\FolderProfile.pubxml.user" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -7474,10 +7475,7 @@
     <Content Include="FormatoISO\Index.cshtml" />
     <Content Include="Areas\General\Views\MisTareas\Por_aprobar.cshtml" />
     <Content Include="Areas\General\Views\MisTareas\_GridViewPartial_por_aprobar.cshtml" />
-    <None Include="Properties\PublishProfiles\Erp_web.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
-    <None Include="Properties\PublishProfiles\web.pubxml" />
-    <None Include="Properties\PublishProfiles\WEBRAPI.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

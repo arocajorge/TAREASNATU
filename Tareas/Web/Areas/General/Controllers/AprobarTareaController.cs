@@ -25,14 +25,16 @@ namespace Web.Areas.General.Controllers
 
         public ActionResult Nuevo(int IdTarea = 0)
         {
+
+            Tarea_Info model = bus_tarea.get_info(IdTarea);
+
             #region Validar Session
             if (string.IsNullOrEmpty(SessionTareas.IdTransaccionSession))
-                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+                SessionTareas.IdUsuario = model.IdUsuarioAsignado;
             SessionTareas.IdTransaccionSession = (Convert.ToDecimal(SessionTareas.IdTransaccionSession) + 1).ToString();
             SessionTareas.IdTransaccionSessionActual = SessionTareas.IdTransaccionSession;
             #endregion
 
-            Tarea_Info model = bus_tarea.get_info(IdTarea);
             if (model == null)
             {
                 model = new Tarea_Info();

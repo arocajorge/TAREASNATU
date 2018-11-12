@@ -195,11 +195,13 @@ namespace Data
                                  FechaCierreSolicitante = q.FechaCierreSolicitante,
                                  FechaCierreEncargado=q.FechaCierreEncargado,
                                  NumSubtarea=q.NumSubtarea,
-                                 NumSubtareasAbiertas=q.NumSubtareasAbiertas
-                                 
+                                 NumSubtareasAbiertas=q.NumSubtareasAbiertas,
+                                EstadoCumplimiento = q.EstadoCumplimiento
 
 
-                             }).ToList();
+
+
+                                 }).ToList();
                     else// se muestra en buzon de salida
                         Lista = (from q in Context.vw_Tarea
                                  where q.IdUsuarioSolicitante == IdUsuario
@@ -230,7 +232,8 @@ namespace Data
                                      FechaCierreSolicitante = q.FechaCierreSolicitante,
                                      FechaCierreEncargado = q.FechaCierreEncargado,
                                      NumSubtarea = q.NumSubtarea,
-                                     NumSubtareasAbiertas = q.NumSubtareasAbiertas
+                                     NumSubtareasAbiertas = q.NumSubtareasAbiertas,
+                                     EstadoCumplimiento=q.EstadoCumplimiento
 
 
 
@@ -239,6 +242,8 @@ namespace Data
                 }
 
                 return Lista;
+
+                
             }
             catch (Exception)
             {
@@ -876,7 +881,8 @@ namespace Data
 
                     info = new  Tarea_Info
                     {
-                        IdTarea=Entity.IdTarea,
+                        
+                        IdTarea =Entity.IdTarea,
                         IdUsuarioSolicitante = Entity.IdUsuarioSolicitante,
                         IdGrupo = Entity.IdGrupo,
                         IdUsuarioAsignado = Entity.IdUsuarioAsignado,
