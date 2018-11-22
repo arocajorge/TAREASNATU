@@ -759,7 +759,6 @@ namespace Data
                     if (Entity == null)
                         return false;
                     Entity.FechaCierreSolicitante = DateTime.Now;
-                    Entity.FechaCierreEncargado = DateTime.Now;
                     Entity.EstadoActual = info_parametro.IdEstadoCierreSolicitante;
                     #region Estado tarea
 
@@ -825,9 +824,8 @@ namespace Data
                     var Entity = Context.Tarea.Where(v => v.IdTarea == info.IdTarea).FirstOrDefault();
                     if (Entity == null)
                         return false;
-                    Entity.FechaCierreSolicitante = DateTime.Now;
-                    Entity.FechaCierreEncargado = DateTime.Now;
-                    Entity.EstadoActual = info_parametro.IdEstadoCierreSolicitante;
+                    Entity.FechaCierreSolicitante = null;
+                    Entity.EstadoActual = info_parametro.IdEstadoAprobarTarea;
                     #region Estado tarea
 
                     TareaEstado New_estado = new TareaEstado

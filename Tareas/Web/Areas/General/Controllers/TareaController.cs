@@ -500,7 +500,6 @@ namespace Web.Areas.General.Controllers
                 model.ObsevacionModificacion = ObsevacionModificacion;
                 model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(model.IdTransaccionSession);
                 model.IdUsuarioModifica = SessionTareas.IdUsuario.ToString();
-                model.FechaEntrega = model.FechaEntrega;
                 model.IdUsuario = SessionTareas.IdUsuario.ToString();
 
                 bus_tarea.CerrarPorSolicitante(model);
