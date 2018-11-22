@@ -106,31 +106,7 @@
                     @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label for="AprobadoSolicitado"></label>
-                    @Html.DevExpress().CheckBoxFor(q => q.AprobadoSolicitado, settings =>
-               {
-                   settings.Name = "AprobadoSolicitado";
-                   settings.Text = "Aprobado solicitante";
-                   settings.ReadOnly = true;
-               }).GetHtml()
-                    @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label for="AprobadoSolicitado"></label>
-                    @Html.DevExpress().CheckBoxFor(q => q.AprobadoEncargado, settings =>
-               {
-                   settings.Name = "AprobadoEncargado";
-                   settings.Text = "Aprobado encargado";
-                   settings.ReadOnly = true;
-
-               }).GetHtml()
-                    @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
-                </div>
-            </div>
+           
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="TareaConcurrente"></label>
@@ -286,12 +262,10 @@
         if (IdUsuarioAsignad == IdUsuarioSolicitant)
         {
             $("#link_detalle").show();
-            AprobadoEncargado.SetChecked(true);
         }
         else
         {
             $("#link_detalle").hide();
-            AprobadoEncargado.SetChecked(false);
         }
     };
 

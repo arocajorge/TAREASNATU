@@ -93,16 +93,23 @@ namespace Web.Areas.General.Controllers
             model.Controller = cl_enumeradores.eController.AprobarTarea;
             model.Accion = cl_enumeradores.eAcciones.Nuevo;
             var param = bus_parametro.get_info();
-            if (param == null)
+            if(param==null)
                 param = new Parametro_Info();
-                if (model.AprobadoEncargado == true & model.AprobadoSolicitado == true)
-               
-                model.EstadoActual = param.IdEstadoAprobarTarea;
-            else
+            if (param != null)
+            {
+                if (model.IdUsuarioAsignado == SessionTareas.IdUsuario)
+                {
+                    model.EstadoActual = param.IdEstadoAprobarTarea;
+                    model.AprobadoEncargado = true;
+                    model.FechaAprobacion = DateTime.Now;
+                }
+                else
                 {
                     model.EstadoActual = 1;
-                }
+                    model.AprobadoSolicitado = true;
 
+                }
+            }
             bus_grupo = new Grupo_Bus();
             var grupo = bus_grupo.get_info_grup_usuario(model.IdUsuarioAsignado);
             if (grupo != null)
@@ -155,7 +162,7 @@ namespace Web.Areas.General.Controllers
         {
             model.Controller = cl_enumeradores.eController.AprobarTarea;
             model.Accion = cl_enumeradores.eAcciones.Nuevo;
-
+            var param = bus_parametro.get_info();
             string mensaje = "";
             var grupo = bus_grupo.get_info_grup_usuario(model.IdUsuarioAsignado);
             if (grupo != null)
@@ -172,8 +179,23 @@ namespace Web.Areas.General.Controllers
 
             model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(model.IdTransaccionSession);
             model.IdUsuarioModifica = SessionTareas.IdUsuario;
-            model.FechaEntrega = model.FechaEntrega;
+            if (param == null)
+            {
+                param = new Parametro_Info();
+                if (model.IdUsuarioAsignado == SessionTareas.IdUsuario)
+                {
+                    model.EstadoActual = param.IdEstadoAprobarTarea;
+                    model.AprobadoEncargado = true;
+                    model.AprobadoSolicitado = true;
+                    model.FechaAprobacion = DateTime.Now;
+                    model.IdEstadoPrioridad = param.IdEstadoAprobarTarea;
 
+                }
+                else
+                {
+                    model.EstadoActual = 1;
+                }
+            }
             mensaje = Validaciones(model);
             if (mensaje != "")
             {
@@ -288,13 +310,7 @@ namespace Web.Areas.General.Controllers
             model.IdUsuarioModifica = SessionTareas.IdUsuario.ToString();
             model.FechaEntrega = model.FechaEntrega;
 
-            if (Convert.ToInt32(model.NumSubtareasAbiertas)>=1)
-            {
-                mensaje = "La tarea tiene "+" "+model.NumSubtareasAbiertas+" subtareas abiertas no se puede cerrar!!!";
-                ViewBag.mensaje = mensaje;
-                cargar_combo();
-                return View(model);
-            }
+           
            
             mensaje = Validaciones(model);
             if (mensaje != "")
@@ -341,18 +357,11 @@ namespace Web.Areas.General.Controllers
             model.Accion = cl_enumeradores.eAcciones.Consultar;
            
 
-            string mensaje = "";
             model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(model.IdTransaccionSession);
             model.IdUsuarioModifica = SessionTareas.IdUsuario.ToString();
             model.FechaEntrega = model.FechaEntrega;
 
-            if (Convert.ToInt32(model.NumSubtareasAbiertas) >= 1)
-            {
-                mensaje = "La tarea tiene " + " " + model.NumSubtareasAbiertas + " subtareas abiertas no se puede cerrar!!!";
-                ViewBag.mensaje = mensaje;
-                cargar_combo();
-                return View(model);
-            }
+            
 
             model.IdUsuario = SessionTareas.IdUsuario.ToString();
             if (!bus_tarea.CerrarPorSolicitante(model))
@@ -479,9 +488,58 @@ namespace Web.Areas.General.Controllers
             return null;
         }
 
-      
+
+        public JsonResult Aprobar(int IdTarea= 0, string ObsevacionModificacion="")
+        {
+            try
+            {
+                var model = bus_tarea.get_info(IdTarea);
+                model.Controller = cl_enumeradores.eController.Tarea;
+                model.Accion = cl_enumeradores.eAcciones.Consultar;
+
+                model.ObsevacionModificacion = ObsevacionModificacion;
+                model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(model.IdTransaccionSession);
+                model.IdUsuarioModifica = SessionTareas.IdUsuario.ToString();
+                model.FechaEntrega = model.FechaEntrega;
+                model.IdUsuario = SessionTareas.IdUsuario.ToString();
+
+                bus_tarea.CerrarPorSolicitante(model);
+                return Json("", JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public JsonResult Rechazar(int IdTarea = 0, string ObsevacionModificacion="")
+        {
+            try
+            {
+                var model = bus_tarea.get_info(IdTarea);
+                model.Controller = cl_enumeradores.eController.Tarea;
+                model.Accion = cl_enumeradores.eAcciones.Consultar;
+
+                model.ObsevacionModificacion = ObsevacionModificacion;
+                model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(model.IdTransaccionSession);
+                model.IdUsuarioModifica = SessionTareas.IdUsuario.ToString();
+                model.FechaEntrega = model.FechaEntrega;
+                model.IdUsuario = SessionTareas.IdUsuario.ToString();
+
+                bus_tarea.RechazarTarea(model);
+                return Json("", JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+
     }
-   
+
     public class TareaControllerUploadControl_adjuntoSettings
     {
         public static DevExpress.Web.UploadControlValidationSettings UploadValidationSettings = new DevExpress.Web.UploadControlValidationSettings()

@@ -259,13 +259,9 @@ namespace Data
 
                 using (EntityTareas Context = new EntityTareas())
                 {
-                        Lista = (from q in Context.vw_Tarea
-                                 where q.IdUsuarioAsignado == IdUsuario
-                                 //&& q.IdUsuarioSolicitante!=IdUsuario
-                                  //&& q.FechaInicio >= FechaInicio
-                                  // && q.FechaInicio <= FechaFin
-                                   && q.Estado == true
-                                   && q.AprobadoEncargado==false
+                        Lista = (from q in Context.sp_tareas_por_aprobar(IdUsuario)
+                                 where 
+                                    q.Estado == true
                                  select new Tarea_Info
                                  {
                                      IdTarea = q.IdTarea,
@@ -289,7 +285,8 @@ namespace Data
                                      NombreGrupo = q.NombreGrupo,
                                      FechaCierreSolicitante = q.FechaCierreSolicitante,
                                      FechaCierreEncargado = q.FechaCierreEncargado,
-                                     NumSubtarea = q.NumSubtarea
+                                     NumSubtarea = q.NumSubtarea,
+                                     Buzon=q.Buzon
 
 
 
@@ -785,6 +782,73 @@ namespace Data
                     try
                     {
                         info.Saludo = "La tarea que le encomende ha sido cerrada";
+
+                        EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.TAREA.ToString() + " " + cl_enumeradores.eAsuntoCorreo.CERRADA.ToString(), cl_enumeradores.eCorreo.ENCARGADO);
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+                    if (info.TareaConcurrente)
+                    {
+                        if (info.FechaFinConcurrencia >= DateTime.Now.Date)
+                        {
+                            try
+                            {
+                                Context.sp_crear_tarea_concurrente(info.IdTarea);
+                                EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.NUEVA.ToString() + " " + cl_enumeradores.eAsuntoCorreo.TAREA.ToString(), cl_enumeradores.eCorreo.ENCARGADO);
+                            }
+                            catch (Exception)
+                            {
+
+                            }
+                        }
+                    }
+
+                }
+
+                return true;
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+        }
+        public bool RechazarTarea(Tarea_Info info)
+        {
+            try
+            {
+                info_parametro = data_parametro.get_info();
+                using (EntityTareas Context = new EntityTareas())
+                {
+                    var Entity = Context.Tarea.Where(v => v.IdTarea == info.IdTarea).FirstOrDefault();
+                    if (Entity == null)
+                        return false;
+                    Entity.FechaCierreSolicitante = DateTime.Now;
+                    Entity.FechaCierreEncargado = DateTime.Now;
+                    Entity.EstadoActual = info_parametro.IdEstadoCierreSolicitante;
+                    #region Estado tarea
+
+                    TareaEstado New_estado = new TareaEstado
+                    {
+                        IdTarea = info.IdTarea,
+                        Secuancial = odta_estado.get_id(info.IdTarea),
+                        IdUsuario = info.IdUsuario,
+                        Observacion = info.ObsevacionModificacion,
+                        IdEstado = info.EstadoActual = info_parametro.IdEstadoCierreSolicitante,
+                        FechaModificacion = DateTime.Now,
+
+
+                    };
+                    Context.TareaEstado.Add(New_estado);
+
+                    #endregion
+
+                    Context.SaveChanges();
+                    try
+                    {
+                        info.Saludo = "La tarea que le encomende no ha sido aceptada";
 
                         EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.TAREA.ToString() + " " + cl_enumeradores.eAsuntoCorreo.CERRADA.ToString(), cl_enumeradores.eCorreo.ENCARGADO);
                     }

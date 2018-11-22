@@ -190,6 +190,18 @@ namespace Bus
                 throw;
             }
         }
+        public bool RechazarTarea(Tarea_Info info)
+        {
+            try
+            {
+                return odata.RechazarTarea(info);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         public bool Asignacion(Tarea_Info info)
         {
             try

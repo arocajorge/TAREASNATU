@@ -497,6 +497,9 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
         <Function Name="sp_crear_tarea_concurrente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdTarea" Type="numeric" Mode="In" />
         </Function>
+        <Function Name="sp_tareas_por_aprobar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdUsuario" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SPGEN_002" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="FechaInicio" Type="date" Mode="In" />
           <Parameter Name="FechaFin" Type="date" Mode="In" />
@@ -766,6 +769,9 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
           </FunctionImport>
           <EntitySet Name="vw_Tarea_asignar_subtarea" EntityType="ModelGeneral.vw_Tarea_asignar_subtarea" />
           <EntitySet Name="vw_Tarea" EntityType="ModelGeneral.vw_Tarea" />
+          <FunctionImport Name="sp_tareas_por_aprobar" ReturnType="Collection(ModelGeneral.sp_tareas_por_aprobar_Result)">
+            <Parameter Name="IdUsuario" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="Estado">
           <Key>
@@ -1298,6 +1304,36 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
           <Property Name="NumSubtareasAbiertas" Type="Int32" />
           <Property Name="EstadoCumplimiento" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
+        <ComplexType Name="sp_tareas_por_aprobar_Result">
+          <Property Type="Decimal" Name="IdTarea" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="String" Name="IdUsuarioSolicitante" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="IdGrupo" Nullable="false" />
+          <Property Type="String" Name="IdUsuarioAsignado" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="EstadoActual" Nullable="false" />
+          <Property Type="DateTime" Name="FechaEntrega" Nullable="false" />
+          <Property Type="String" Name="AsuntoTarea" Nullable="true" />
+          <Property Type="String" Name="DescripcionTarea" Nullable="true" />
+          <Property Type="Int32" Name="IdEstadoPrioridad" Nullable="false" />
+          <Property Type="Boolean" Name="TareaConcurrente" Nullable="false" />
+          <Property Type="Boolean" Name="AprobadoSolicitado" Nullable="false" />
+          <Property Type="Boolean" Name="AprobadoEncargado" Nullable="false" />
+          <Property Type="String" Name="solicitante" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Asignado" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Prioridad" Nullable="false" MaxLength="1000" />
+          <Property Type="String" Name="EstadoTarea" Nullable="false" MaxLength="1000" />
+          <Property Type="String" Name="NombreGrupo" Nullable="false" MaxLength="1000" />
+          <Property Type="Boolean" Name="Estado" Nullable="false" />
+          <Property Type="DateTime" Name="FechaAprobacion" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="FechaFinConcurrencia" Nullable="true" />
+          <Property Type="Int32" Name="DiasIntervaloProximaTarea" Nullable="true" />
+          <Property Type="DateTime" Name="FechaCierreSolicitante" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="FechaCierreEncargado" Nullable="true" Precision="23" />
+          <Property Type="Decimal" Name="IdTareaPadre" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Int32" Name="NumSubtarea" Nullable="true" />
+          <Property Type="Int32" Name="NumSubtareasAbiertas" Nullable="true" />
+          <Property Type="String" Name="EstadoCumplimiento" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="Buzon" Nullable="false" MaxLength="7" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1596,6 +1632,40 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_tareas_por_aprobar" FunctionName="ModelGeneral.Store.sp_tareas_por_aprobar">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModelGeneral.sp_tareas_por_aprobar_Result">
+                <ScalarProperty Name="IdTarea" ColumnName="IdTarea" />
+                <ScalarProperty Name="IdUsuarioSolicitante" ColumnName="IdUsuarioSolicitante" />
+                <ScalarProperty Name="IdGrupo" ColumnName="IdGrupo" />
+                <ScalarProperty Name="IdUsuarioAsignado" ColumnName="IdUsuarioAsignado" />
+                <ScalarProperty Name="EstadoActual" ColumnName="EstadoActual" />
+                <ScalarProperty Name="FechaEntrega" ColumnName="FechaEntrega" />
+                <ScalarProperty Name="AsuntoTarea" ColumnName="AsuntoTarea" />
+                <ScalarProperty Name="DescripcionTarea" ColumnName="DescripcionTarea" />
+                <ScalarProperty Name="IdEstadoPrioridad" ColumnName="IdEstadoPrioridad" />
+                <ScalarProperty Name="TareaConcurrente" ColumnName="TareaConcurrente" />
+                <ScalarProperty Name="AprobadoSolicitado" ColumnName="AprobadoSolicitado" />
+                <ScalarProperty Name="AprobadoEncargado" ColumnName="AprobadoEncargado" />
+                <ScalarProperty Name="solicitante" ColumnName="solicitante" />
+                <ScalarProperty Name="Asignado" ColumnName="Asignado" />
+                <ScalarProperty Name="Prioridad" ColumnName="Prioridad" />
+                <ScalarProperty Name="EstadoTarea" ColumnName="EstadoTarea" />
+                <ScalarProperty Name="NombreGrupo" ColumnName="NombreGrupo" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="FechaAprobacion" ColumnName="FechaAprobacion" />
+                <ScalarProperty Name="FechaFinConcurrencia" ColumnName="FechaFinConcurrencia" />
+                <ScalarProperty Name="DiasIntervaloProximaTarea" ColumnName="DiasIntervaloProximaTarea" />
+                <ScalarProperty Name="FechaCierreSolicitante" ColumnName="FechaCierreSolicitante" />
+                <ScalarProperty Name="FechaCierreEncargado" ColumnName="FechaCierreEncargado" />
+                <ScalarProperty Name="IdTareaPadre" ColumnName="IdTareaPadre" />
+                <ScalarProperty Name="NumSubtarea" ColumnName="NumSubtarea" />
+                <ScalarProperty Name="NumSubtareasAbiertas" ColumnName="NumSubtareasAbiertas" />
+                <ScalarProperty Name="EstadoCumplimiento" ColumnName="EstadoCumplimiento" />
+                <ScalarProperty Name="Buzon" ColumnName="Buzon" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

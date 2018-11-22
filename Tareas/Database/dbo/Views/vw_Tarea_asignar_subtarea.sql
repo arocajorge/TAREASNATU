@@ -1,5 +1,5 @@
-﻿CREATE view  [vw_Tarea] as
-
+﻿CREATE VIEW dbo.vw_Tarea_asignar_subtarea
+AS
 SELECT        dbo.Tarea.IdTarea, dbo.Tarea.IdUsuarioSolicitante, dbo.Tarea.IdGrupo, dbo.Tarea.IdUsuarioAsignado, dbo.Tarea.EstadoActual, dbo.Tarea.FechaEntrega, dbo.Tarea.AsuntoTarea, dbo.Tarea.DescripcionTarea, 
                          dbo.Tarea.IdEstadoPrioridad, dbo.Tarea.TareaConcurrente, dbo.Tarea.AprobadoSolicitado, dbo.Tarea.AprobadoEncargado, Usuario_1.Nombre AS solicitante, dbo.Usuario.Nombre AS Asignado, Estado_1.Descripcion AS Prioridad,
                           dbo.Estado.Descripcion AS EstadoTarea, dbo.Grupo.Descripcion AS NombreGrupo, dbo.Tarea.Estado, dbo.Tarea.FechaAprobacion, dbo.Tarea.FechaFinConcurrencia, dbo.Tarea.DiasIntervaloProximaTarea, 
@@ -9,49 +9,20 @@ SELECT        dbo.Tarea.IdTarea, dbo.Tarea.IdUsuarioSolicitante, dbo.Tarea.IdGru
                                WHERE        (IdTareaPadre = dbo.Tarea.IdTarea)) AS NumSubtarea,
                              (SELECT        COUNT(IdTarea) AS CantidadSubtareas
                                FROM            dbo.Tarea AS t
-                               WHERE        (IdTareaPadre = dbo.Tarea.IdTarea) AND (FechaCierreEncargado IS NULL) AND (FechaCierreSolicitante IS NULL) AND (FechaAprobacion IS NULL)) AS NumSubtareasAbiertas, 
-                         CASE WHEN CAST(Tarea.FechaCierreEncargado AS date) <= CAST(Tarea.FechaEntrega AS date) THEN 'CUMPLIDA' WHEN CAST(Tarea.FechaCierreEncargado AS date) >= CAST(Tarea.FechaEntrega AS date) 
-                         THEN 'INCUMPLIDA' WHEN Tarea.FechaCierreEncargado IS NULL THEN 'ENPROCESO' END AS EstadoCumplimiento
+                               WHERE        (IdTareaPadre = dbo.Tarea.IdTarea) AND (FechaCierreEncargado IS NULL) AND (FechaCierreSolicitante IS NULL) AND (FechaAprobacion IS NULL)) AS NumSubtareasAbiertas
 FROM            dbo.Tarea INNER JOIN
                          dbo.Grupo ON dbo.Tarea.IdGrupo = dbo.Grupo.IdGrupo INNER JOIN
                          dbo.Usuario ON dbo.Tarea.IdUsuarioAsignado = dbo.Usuario.IdUsuario INNER JOIN
                          dbo.Usuario AS Usuario_1 ON dbo.Tarea.IdUsuarioSolicitante = Usuario_1.IdUsuario INNER JOIN
                          dbo.Estado ON dbo.Tarea.EstadoActual = dbo.Estado.IdEstado INNER JOIN
                          dbo.Estado AS Estado_1 ON dbo.Tarea.IdEstadoPrioridad = Estado_1.IdEstado
+WHERE        (dbo.Tarea.AprobadoEncargado = 1) AND (dbo.Tarea.AprobadoSolicitado = 1) AND (dbo.Tarea.FechaCierreEncargado IS NULL) AND (dbo.Tarea.FechaCierreSolicitante IS NULL)
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vw_Tarea';
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vw_Tarea_asignar_subtarea';
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'  Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-      End
-   End
-   Begin CriteriaPane = 
-      Begin ColumnWidths = 11
-         Column = 1440
-         Alias = 900
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N' 900
          Table = 1170
          Output = 720
          Append = 1400
@@ -66,13 +37,7 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'  Width = 
       End
    End
 End
-', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vw_Tarea';
-
-
-
-
-
-
+', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vw_Tarea_asignar_subtarea';
 
 
 GO
@@ -81,7 +46,7 @@ Begin DesignProperties =
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[17] 4[5] 2[68] 3) )"
+         Configuration = "(H (1[41] 4[21] 2[20] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -151,43 +116,33 @@ Begin DesignProperties =
             Begin Extent = 
                Top = 6
                Left = 38
-               Bottom = 316
-               Right = 236
+               Bottom = 136
+               Right = 267
             End
             DisplayFlags = 280
             TopColumn = 0
          End
          Begin Table = "Grupo"
             Begin Extent = 
-               Top = 320
-               Left = 309
-               Bottom = 450
-               Right = 499
+               Top = 138
+               Left = 38
+               Bottom = 268
+               Right = 228
             End
             DisplayFlags = 280
             TopColumn = 0
          End
          Begin Table = "Usuario"
             Begin Extent = 
-               Top = 108
-               Left = 516
-               Bottom = 238
-               Right = 706
+               Top = 138
+               Left = 266
+               Bottom = 268
+               Right = 456
             End
             DisplayFlags = 280
             TopColumn = 0
          End
          Begin Table = "Usuario_1"
-            Begin Extent = 
-               Top = 0
-               Left = 520
-               Bottom = 130
-               Right = 710
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "Estado"
             Begin Extent = 
                Top = 270
                Left = 38
@@ -197,12 +152,22 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
+         Begin Table = "Estado"
+            Begin Extent = 
+               Top = 270
+               Left = 266
+               Bottom = 400
+               Right = 456
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
          Begin Table = "Estado_1"
             Begin Extent = 
-               Top = 260
-               Left = 708
-               Bottom = 390
-               Right = 898
+               Top = 402
+               Left = 38
+               Bottom = 532
+               Right = 228
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -214,17 +179,9 @@ Begin DesignProperties =
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 26
-         Width = 284
-         Width = 1500
-         Width = 1500
-       ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vw_Tarea';
-
-
-
-
-
-
-
-
+   End
+   Begin CriteriaPane = 
+      Begin ColumnWidths = 11
+         Column = 1440
+         Alias =', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vw_Tarea_asignar_subtarea';
 

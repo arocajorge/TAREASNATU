@@ -82,5 +82,6 @@
     <Build Include="dbo\Views\vw_TareaEstado.sql" />
     <Build Include="dbo\Views\vw_TareaArchivoAdjunto.sql" />
     <Build Include="dbo\Stored Procedures\AprobacionTareaAutomatico.sql" />
+    <Build Include="dbo\Views\vw_Tarea_asignar_subtarea.sql" />
   </ItemGroup>
 </Project>

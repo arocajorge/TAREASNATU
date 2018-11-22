@@ -26,13 +26,15 @@
 @using (Html.BeginForm("CerrarPorSolicitante", "Tarea", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     @Html.HiddenFor(v => v.IdTransaccionSession);
-    @Html.HiddenFor(v => v.IdTarea);
+    @Html.HiddenFor(v => v.IdTarea, new { @id = "IdTarea" });
     @Html.HiddenFor(v => v.nomb_jef_grupo);
     @Html.HiddenFor(v => v.IdUsuarioAsignado);
     @Html.HiddenFor(v => v.AsuntoTarea);
     @Html.HiddenFor(v => v.DescripcionTarea);
     @Html.HiddenFor(v => v.IdGrupo);
     @Html.HiddenFor(v => v.NumSubtareasAbiertas);
+    @Html.HiddenFor(v => v.ObsevacionModificacion, new { @id = "ObsevacionModificacion" });
+
 
     if (Model.IdTareaPadre != null)
     {
@@ -326,7 +328,8 @@
 
 
     <div class="box-footer">
-        <button type="submit" class="btn btn-primary">Cerrar</button>
+        <button type="submit" class="btn btn-primary" onclick="CerrarTarea();" id="cerrar">Cerrar</button>
+        <button type="submit" class="btn btn-primary" onclick="RechazarTarea();" id="rechazar">Rechazar</button>
         <a class="btn btn-default" href="@Url.Action("Buzon_entrada","Buzon",new { Area = "General" },null)">Cancelar</a>
     </div>
 
@@ -338,8 +341,62 @@
 
 
 <script>
+
+
+
     mostrar_parametros();
     mostrar_detalle();
+
+
+       function CerrarTarea() {
+        var datos = {
+            IdTarea: $("#IdTarea").val(),
+            ObsevacionModificacion: $("#ObsevacionModificacion").val(),
+
+           }
+           $("#aprobar").attr("disabled", false);
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("Aprobar", "Tarea", new { Area = "General" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#myform").submit();
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+
+
+    function RechazarTarea() {
+        var datos = {
+            IdTarea: $("#IdTarea").val(),
+            ObsevacionModificacion: $("#ObsevacionModificacion").val(),
+
+        }
+        $("#cerrar").attr("disabled", false);
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("Rechazar", "Tarea", new { Area = "General" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#myform").submit();
+            },
+            error: function (error) {
+            }
+        });
+    }
 
 
 
@@ -370,4 +427,5 @@
         }
 
     };
+
 </script>

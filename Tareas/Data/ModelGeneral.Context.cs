@@ -90,5 +90,14 @@ namespace Data
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_carga_laboral_Result>("sp_carga_laboral", idUsuarioParameter, fechaInicioParameter, idGrupoParameter);
         }
+    
+        public virtual ObjectResult<sp_tareas_por_aprobar_Result> sp_tareas_por_aprobar(string idUsuario)
+        {
+            var idUsuarioParameter = idUsuario != null ?
+                new ObjectParameter("IdUsuario", idUsuario) :
+                new ObjectParameter("IdUsuario", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_tareas_por_aprobar_Result>("sp_tareas_por_aprobar", idUsuarioParameter);
+        }
     }
 }

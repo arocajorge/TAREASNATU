@@ -80,18 +80,18 @@
                 sp.Width = Unit.Percentage(100);
             });
         });
-       
+
         settings.Columns.Add("solicitante", "Solicitante").Width = Unit.Percentage(10);
         settings.Columns.Add("Prioridad", "Prioridad").Width = Unit.Percentage(10);
         settings.Columns.Add("EstadoTarea", "Estado").Width = Unit.Percentage(10);
-        settings.Columns.Add("NombreGrupo", "Grupo").Width = Unit.Percentage(10);
+        settings.Columns.Add("Buzon", "#").Width = Unit.Percentage(10);
 
         settings.Columns.Add(c =>
         {
-            c.Caption = "Acciones";
+            c.Caption = "#";
             c.SetDataItemTemplateContent(tc =>
             {
-                if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "Estado")) == true && Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "AprobadoEncargado")) == false)
+                if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Buzon")) == "ASIGNADA")
                 {
                     ViewContext.Writer.Write(
                 Html.ActionLink("Aprobar","Nuevo", "AprobarTarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") },null)
@@ -99,15 +99,9 @@
                 }
                 else
                 {
-                    if (Convert.ToDateTime(DataBinder.Eval(tc.DataItem, "FechaCierreEncargado")).Date.Year == 1)
-                        ViewContext.Writer.Write(
-                       Html.ActionLink("Cerrar", "Cerrar", "Tarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }, null)
-                        );
-                    else
-                    {
-                        ViewContext.Writer.Write(
-                          Html.ActionLink("Consultar", "Consultar", "Tarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }, null));
-                    }
+                    ViewContext.Writer.Write(
+                Html.ActionLink("Cerrar", "CerrarPorSolicitante", "TAREA", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }, null)
+                    );
                 }
             });
 

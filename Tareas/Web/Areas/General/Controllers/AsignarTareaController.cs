@@ -94,7 +94,25 @@ namespace Web.Areas.General.Controllers
                 return View(model);
             }
             model.IdUsuario = SessionTareas.IdUsuario.ToString();
-            model.EstadoActual = 1;
+            Parametro_Bus bus_parametro = new Parametro_Bus();
+            var param = bus_parametro.get_info();
+            if (param == null)
+                param = new Parametro_Info();
+            if (param != null)
+            {
+                if (model.IdUsuarioAsignado == SessionTareas.IdUsuario)
+                {
+                    model.EstadoActual = param.IdEstadoAprobarTarea;
+                    model.AprobadoEncargado = true;
+                    model.FechaAprobacion = DateTime.Now;
+                }
+                else
+                {
+                    model.EstadoActual = 1;
+                    model.AprobadoSolicitado = true;
+
+                }
+            }
             if (!bus_tarea.guardarDB(model))
             {
                 cargar_combo();

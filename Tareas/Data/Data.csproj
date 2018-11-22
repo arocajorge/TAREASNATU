@@ -100,6 +100,9 @@
     <Compile Include="sp_carga_laboral_Result.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
+    <Compile Include="sp_tareas_por_aprobar_Result.cs">
+      <DependentUpon>ModelGeneral.tt</DependentUpon>
+    </Compile>
     <Compile Include="sp_Tareas_X_Usuarios_Result.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>

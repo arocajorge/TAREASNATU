@@ -57,6 +57,9 @@ namespace Info
         public Nullable<int> NumSubtarea { get; set; }
         public Nullable<int> NumSubtareasAbiertas { get; set; }
         public string EstadoCumplimiento { get; set; }
+        public string Buzon { get; set; }
+
+        public Nullable<System.DateTime> FechaAprobacion { get; set; }
 
         public Tarea_Info()
         {

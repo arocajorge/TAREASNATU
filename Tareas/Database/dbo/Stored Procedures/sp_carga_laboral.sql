@@ -17,7 +17,7 @@ FROM            dbo.Tarea
 						 where 
 						 Tarea.AprobadoEncargado=0
 						 and Tarea.IdUsuarioAsignado=@IdUsuario
-						 and CAST( Tarea.FechaEntrega as date) <= @FechaInicio 
+						-- and CAST( Tarea.FechaEntrega as date) <= @FechaInicio 
 						 )NumTareaPorAprobar,
 
 						( 	SELECT   COUNT(Tarea.IdTarea) As NumTareaVencidas   
@@ -26,7 +26,7 @@ FROM            dbo.Tarea
 						    CAST( Tarea.FechaEntrega as date) <= @FechaInicio 
 						    and Tarea.IdUsuarioAsignado=@IdUsuario
 						    and Tarea.FechaCierreEncargado is null
-							and Tarea.FechaEntrega>CAST(GETDATE() as date)
+							and Tarea.FechaEntrega<CAST(GETDATE() as date)
 						 )NumTareaVencidas,
 
 (SELECT   COUNT(Tarea.IdTarea) As TotalTareaResueltas
@@ -58,6 +58,7 @@ FROM            dbo.Tarea
 						 CAST(Tarea.FechaEntrega as date) <= @FechaInicio 
 					     AND Tarea.IdGrupo=@IdGrupo						
 						 and Tarea.FechaCierreEncargado is null
+						 and Tarea.FechaEntrega<CAST(GETDATE() as date)
 						 )NumTareaVencidas,
 
 (SELECT   COUNT(Tarea.IdTarea) As TotalTareaResueltas
