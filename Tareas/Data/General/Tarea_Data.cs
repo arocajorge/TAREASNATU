@@ -835,7 +835,7 @@ namespace Data
                         Secuancial = odta_estado.get_id(info.IdTarea),
                         IdUsuario = info.IdUsuario,
                         Observacion = info.ObsevacionModificacion,
-                        IdEstado = info.EstadoActual = info_parametro.IdEstadoCierreSolicitante,
+                        IdEstado = info.EstadoActual = info_parametro.IdEstadoTareaDevuelta,
                         FechaModificacion = DateTime.Now,
 
 
