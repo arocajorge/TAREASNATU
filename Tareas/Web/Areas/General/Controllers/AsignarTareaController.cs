@@ -67,6 +67,8 @@ namespace Web.Areas.General.Controllers
             model.TareaConcurrente = false;
             model.IdUsuarioSolicitante = SessionTareas.IdUsuario;
             model.IdUsuarioAsignado = null;
+            model.AprobadoEncargado = false;
+            model.AprobadoSolicitado = true;
             if (model == null)
                 return RedirectToAction("Asignar_subtareas");
             return View(model);
@@ -105,12 +107,13 @@ namespace Web.Areas.General.Controllers
                     model.EstadoActual = param.IdEstadoAprobarTarea;
                     model.AprobadoEncargado = true;
                     model.FechaAprobacion = DateTime.Now;
+                    model.AprobadoSolicitado = true;
+
                 }
                 else
                 {
                     model.EstadoActual = 1;
                     model.AprobadoSolicitado = true;
-
                 }
             }
             if (!bus_tarea.guardarDB(model))
