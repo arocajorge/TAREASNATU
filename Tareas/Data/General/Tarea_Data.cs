@@ -824,7 +824,8 @@ namespace Data
                     var Entity = Context.Tarea.Where(v => v.IdTarea == info.IdTarea).FirstOrDefault();
                     if (Entity == null)
                         return false;
-                    Entity.FechaCierreSolicitante = null;
+                    Entity.FechaCierreEncargado = null;
+                    Entity.FechaAprobacion = null;
                     Entity.EstadoActual = info_parametro.IdEstadoAprobarTarea;
                     #region Estado tarea
 
