@@ -769,7 +769,7 @@ namespace Data
                         return false;
                     if (Entity.IdUsuarioSolicitante != Entity.IdUsuarioAsignado)
                     {
-                        Entity.FechaCierreEncargado = DateTime.Now;
+                        Entity.FechaCierreSolicitante = DateTime.Now;
                         Entity.EstadoActual = info_parametro.IdEstadoCierreTarea;
                     }
                     else
