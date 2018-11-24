@@ -414,7 +414,7 @@ namespace Data
                         FechaEntrega = info.FechaEntrega,
                         AsuntoTarea = info.AsuntoTarea,
                         DescripcionTarea=info.DescripcionTarea,
-                        IdEstadoPrioridad = info.IdEstadoPrioridad,
+                        IdEstadoPrioridad = info.IdEstadoPrioridad=1,
                         TareaConcurrente = info.TareaConcurrente,
                         AprobadoEncargado=info.AprobadoEncargado,
                         AprobadoSolicitado=info.AprobadoSolicitado,
@@ -423,7 +423,8 @@ namespace Data
                         FechaTransaccion = DateTime.Now,
                         IdUsuario = info.IdUsuario,
                         Estado = true,
-                        IdTareaPadre=info.IdTareaPadre
+                        IdTareaPadre=info.IdTareaPadre,
+                        FechaAprobacion=info.FechaAprobacion
                     };
                     Context.Tarea.Add(Entity);
                     #endregion
@@ -500,7 +501,6 @@ namespace Data
                     Entity.FechaEntrega = info.FechaEntrega;
                     Entity.AsuntoTarea = info.AsuntoTarea;
                     Entity.DescripcionTarea = info.DescripcionTarea;
-                    Entity.IdEstadoPrioridad = info.IdEstadoPrioridad;
                     Entity.TareaConcurrente = info.TareaConcurrente;
                     Entity.AprobadoSolicitado = info.AprobadoSolicitado;
                     Entity.AprobadoEncargado = info.AprobadoEncargado;
@@ -706,8 +706,17 @@ namespace Data
                     var Entity = Context.Tarea.Where(v => v.IdTarea == info.IdTarea).FirstOrDefault();
                     if (Entity == null)
                         return false;
-                    Entity.FechaCierreEncargado = DateTime.Now;
-                    Entity.EstadoActual = info_parametro.IdEstadoCierreTarea;
+                    if (Entity.IdUsuarioSolicitante != Entity.IdUsuarioAsignado)
+                    {
+                        Entity.FechaCierreEncargado = DateTime.Now;
+                        Entity.EstadoActual = info_parametro.IdEstadoCierreTarea;
+                    }
+                    else
+                    {
+                        Entity.FechaCierreSolicitante = DateTime.Now;
+                        Entity.FechaCierreEncargado = DateTime.Now;
+                        Entity.EstadoActual = info_parametro.IdEstadoCierreSolicitante;
+                    }
                     #region Estado tarea
 
                     TareaEstado New_estado = new TareaEstado
@@ -758,8 +767,17 @@ namespace Data
                     var Entity = Context.Tarea.Where(v => v.IdTarea == info.IdTarea).FirstOrDefault();
                     if (Entity == null)
                         return false;
-                    Entity.FechaCierreSolicitante = DateTime.Now;
-                    Entity.EstadoActual = info_parametro.IdEstadoCierreSolicitante;
+                    if (Entity.IdUsuarioSolicitante != Entity.IdUsuarioAsignado)
+                    {
+                        Entity.FechaCierreEncargado = DateTime.Now;
+                        Entity.EstadoActual = info_parametro.IdEstadoCierreTarea;
+                    }
+                    else
+                    {
+                        Entity.FechaCierreSolicitante = DateTime.Now;
+                        Entity.FechaCierreEncargado = DateTime.Now;
+                        Entity.EstadoActual = info_parametro.IdEstadoCierreSolicitante;
+                    }
                     #region Estado tarea
 
                     TareaEstado New_estado = new TareaEstado

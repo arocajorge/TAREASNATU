@@ -101,6 +101,7 @@ namespace Web.Areas.General.Controllers
                 {
                     model.EstadoActual = param.IdEstadoAprobarTarea;
                     model.AprobadoEncargado = true;
+                    model.AprobadoSolicitado = true;
                     model.FechaAprobacion = DateTime.Now;
                 }
                 else
