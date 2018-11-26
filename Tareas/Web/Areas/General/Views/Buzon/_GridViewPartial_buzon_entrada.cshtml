@@ -68,7 +68,7 @@
 
         };
         settings.Columns.Add("IdTarea", "ID").Width = Unit.Percentage(5);
-        settings.Columns.Add("AsuntoTarea", "Asunto").Width = Unit.Percentage(30);
+        settings.Columns.Add("AsuntoTarea", "Asunto").Width = Unit.Percentage(45);
         settings.Columns.Add(column =>
         {
             column.FieldName = "FechaEntrega";
@@ -84,8 +84,6 @@
 
         settings.Columns.Add("solicitante", "Solicitante").Width = Unit.Percentage(10);
         settings.Columns.Add("EstadoTarea", "Estado").Width = Unit.Percentage(10);
-        settings.Columns.Add("NumSubtarea", "Subtareas").Width = Unit.Percentage(10);
-        settings.Columns.Add("NumSubtareasAbiertas", "Sub. Pendiente").Width = Unit.Percentage(10);
 
         settings.Columns.Add(c =>
         {
@@ -103,7 +101,7 @@
                 {
                     if (Convert.ToDateTime(DataBinder.Eval(tc.DataItem, "FechaCierreEncargado")).Date.Year == 1)
                         ViewContext.Writer.Write(
-                       Html.ActionLink("Cerrar", "Cerrar", "Tarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }, null)
+                       Html.ActionLink("ENTREGAR", "Cerrar", "Tarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }, null)
                         );
                     else
                     {

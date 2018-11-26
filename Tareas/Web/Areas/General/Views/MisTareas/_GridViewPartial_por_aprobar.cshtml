@@ -67,7 +67,8 @@
 
 
         };
-        settings.Columns.Add("AsuntoTarea", "Asunto").Width = Unit.Percentage(30);
+        settings.Columns.Add("IdTarea", "# Tarea").Width = Unit.Percentage(10);
+        settings.Columns.Add("AsuntoTarea", "Asunto").Width = Unit.Percentage(50);
         settings.Columns.Add(column =>
         {
             column.FieldName = "FechaEntrega";
@@ -82,8 +83,6 @@
         });
 
         settings.Columns.Add("solicitante", "Solicitante").Width = Unit.Percentage(10);
-        settings.Columns.Add("Prioridad", "Prioridad").Width = Unit.Percentage(10);
-        settings.Columns.Add("EstadoTarea", "Estado").Width = Unit.Percentage(10);
         settings.Columns.Add("Buzon", "#").Width = Unit.Percentage(10);
 
         settings.Columns.Add(c =>
@@ -91,7 +90,7 @@
             c.Caption = "#";
             c.SetDataItemTemplateContent(tc =>
             {
-                if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Buzon")) == "ASIGNADA")
+                if (Convert.ToString(DataBinder.Eval(tc.DataItem, "IdUsuarioSolicitante")) !=Web.Helps.SessionTareas.IdUsuario)
                 {
                     ViewContext.Writer.Write(
                 Html.ActionLink("Aprobar","Nuevo", "AprobarTarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") },null)
@@ -100,7 +99,7 @@
                 else
                 {
                     ViewContext.Writer.Write(
-                Html.ActionLink("Cerrar", "CerrarPorSolicitante", "TAREA", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }, null)
+                Html.ActionLink("CERRAR", "CerrarPorSolicitante", "TAREA", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }, null)
                     );
                 }
             });
