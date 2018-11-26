@@ -167,7 +167,7 @@ namespace Data
                     if(Tipo==cl_enumeradores.eTipoTarea.ASIGNADA)// se muestra en bizon de entrada
                         Lista = (from q in Context.vw_Tarea
                                  where q.IdUsuarioAsignado == IdUsuario
-                                 && q.EstadoActual != 5//Diferente de devuelta
+                                 //&& q.EstadoActual != 5//Diferente de devuelta
                                  && q.FechaEntrega >= FechaInicio
                                && q.FechaEntrega <= FechaFin
                                && q.Estado==true
