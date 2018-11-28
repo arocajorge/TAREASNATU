@@ -495,15 +495,10 @@ namespace Data
                     var Entity = Context. Tarea.Where(v => v.IdTarea == info.IdTarea).FirstOrDefault();
                     if (Entity == null)
                         return false;
-                    Entity.IdGrupo = info.IdGrupo;
-                    Entity.IdUsuarioAsignado = info.IdUsuarioAsignado;
-                    Entity.EstadoActual = info.EstadoActual=1;
                     Entity.FechaEntrega = info.FechaEntrega;
                     Entity.AsuntoTarea = info.AsuntoTarea;
                     Entity.DescripcionTarea = info.DescripcionTarea;
                     Entity.TareaConcurrente = info.TareaConcurrente;
-                    Entity.AprobadoSolicitado = info.AprobadoSolicitado;
-                    Entity.AprobadoEncargado = info.AprobadoEncargado;
                     Entity.FechaModificacion = DateTime.Now;
                     Entity.IdUsuarioModifica = info.IdUsuarioModifica;
                     Entity.FechaFinConcurrencia = info.FechaFinConcurrencia;
