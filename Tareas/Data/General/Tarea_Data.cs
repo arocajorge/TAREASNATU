@@ -839,6 +839,7 @@ namespace Data
                         return false;
                     Entity.FechaCierreEncargado = null;
                     Entity.EstadoActual = info_parametro.IdEstadoTareaDevuelta;
+                    Entity.EstadoDevuelta = info_parametro.IdEstadoTareaDevuelta;
                     #region Estado tarea
 
                     TareaEstado New_estado = new TareaEstado

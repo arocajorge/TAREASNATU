@@ -18,7 +18,7 @@ namespace Info
         [Required(ErrorMessage = "El campo usuario asignado es obligatorio")]
         public string IdUsuarioAsignado { get; set; }
         [Required(ErrorMessage = "El campo estado es obligatorio")]
-        public int EstadoActual { get; set; }
+        public Nullable<int> EstadoActual { get; set; }
         [Required(ErrorMessage = "El campo fecha inicio es obligatorio")]
         public System.DateTime FechaEntrega { get; set; }
        
