@@ -46,11 +46,15 @@ namespace Web.Areas.General.Controllers
                 model = model.Where(v => v.AprobadoEncargado == false).ToList();
             if (estado == "E") // ENTREGAR
                 model = model.Where(v => v.AprobadoEncargado == true).ToList();
-            if (estado == "V") // ENTREGAR
+            if (estado == "V") // vencidas
                 model = model.Where(v => v.AprobadoEncargado == true && v.FechaEntrega.Date<DateTime.Now.Date).ToList();
 
             if (estado == "Q") // APROBADAS
                 model = model.Where(v => v.AprobadoEncargado == false).ToList();
+
+            if (estado == "R") // RESUELTAS
+                model = model.Where(v => v.FechaCierreEncargado != null).ToList();
+
             return PartialView("_GridViewPartial_buzon_entrada", model);
         }
         public ActionResult Buzon_salida()
