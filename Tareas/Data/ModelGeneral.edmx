@@ -77,6 +77,7 @@
           <Property Name="IdEstadoTareaDevuelta" Type="int" Nullable="false" />
           <Property Name="IntervaloEjecucionMin" Type="int" Nullable="false" />
           <Property Name="IdEstadoCierreSolicitante" Type="int" Nullable="false" />
+          <Property Name="IdEstadoTareaVencida" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Tarea">
           <Key>
@@ -720,19 +721,6 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
           </FunctionImport>
           <EntitySet Name="vw_TareaArchivoAdjunto" EntityType="ModelGeneral.vw_TareaArchivoAdjunto" />
           <EntitySet Name="vw_TareaEstado" EntityType="ModelGeneral.vw_TareaEstado" />
-          <EntitySet Name="Parametro" EntityType="ModelGeneral.Parametro" />
-          <AssociationSet Name="FK_Parametro_Estado" Association="ModelGeneral.FK_Parametro_Estado">
-            <End Role="Estado" EntitySet="Estado" />
-            <End Role="Parametro" EntitySet="Parametro" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Parametro_Estado1" Association="ModelGeneral.FK_Parametro_Estado1">
-            <End Role="Estado" EntitySet="Estado" />
-            <End Role="Parametro" EntitySet="Parametro" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Parametro_Estado2" Association="ModelGeneral.FK_Parametro_Estado2">
-            <End Role="Estado" EntitySet="Estado" />
-            <End Role="Parametro" EntitySet="Parametro" />
-          </AssociationSet>
           <FunctionImport Name="sp_carga_laboral" ReturnType="Collection(ModelGeneral.sp_carga_laboral_Result)">
             <Parameter Name="IdUsuario" Mode="In" Type="String" />
             <Parameter Name="FechaInicio" Mode="In" Type="DateTime" />
@@ -772,6 +760,19 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
             <End Role="TareaEstado" EntitySet="TareaEstado" />
           </AssociationSet>
           <EntitySet Name="vw_Tarea" EntityType="ModelGeneral.vw_Tarea" />
+          <EntitySet Name="Parametro" EntityType="ModelGeneral.Parametro" />
+          <AssociationSet Name="FK_Parametro_Estado" Association="ModelGeneral.FK_Parametro_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="Parametro" EntitySet="Parametro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Parametro_Estado1" Association="ModelGeneral.FK_Parametro_Estado1">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="Parametro" EntitySet="Parametro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Parametro_Estado2" Association="ModelGeneral.FK_Parametro_Estado2">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="Parametro" EntitySet="Parametro" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Estado">
           <Key>
@@ -788,11 +789,11 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
           <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
           <Property Name="FechaAnulacion" Type="DateTime" Precision="3" />
           <NavigationProperty Name="EstadoTipo" Relationship="ModelGeneral.FK_Estado_EstadoTipo" FromRole="Estado" ToRole="EstadoTipo" />
+          <NavigationProperty Name="Tarea" Relationship="ModelGeneral.FK_Tarea_Estado" FromRole="Estado" ToRole="Tarea" />
+          <NavigationProperty Name="Tarea1" Relationship="ModelGeneral.FK_Tarea_Estado1" FromRole="Estado" ToRole="Tarea" />
           <NavigationProperty Name="Parametro" Relationship="ModelGeneral.FK_Parametro_Estado" FromRole="Estado" ToRole="Parametro" />
           <NavigationProperty Name="Parametro1" Relationship="ModelGeneral.FK_Parametro_Estado1" FromRole="Estado" ToRole="Parametro" />
           <NavigationProperty Name="Parametro2" Relationship="ModelGeneral.FK_Parametro_Estado2" FromRole="Estado" ToRole="Parametro" />
-          <NavigationProperty Name="Tarea" Relationship="ModelGeneral.FK_Tarea_Estado" FromRole="Estado" ToRole="Tarea" />
-          <NavigationProperty Name="Tarea1" Relationship="ModelGeneral.FK_Tarea_Estado1" FromRole="Estado" ToRole="Tarea" />
           </EntityType>
         <EntityType Name="EstadoTipo">
           <Key>
@@ -1025,65 +1026,6 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
           <Property Name="Observacion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="IdTareaPadre" Type="Decimal" Precision="18" Scale="0" />
         </EntityType>
-        <EntityType Name="Parametro">
-          <Key>
-            <PropertyRef Name="IdParametro" />
-          </Key>
-          <Property Name="IdParametro" Type="Int32" Nullable="false" />
-          <Property Name="CorreoCuenta" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="CorreoClave" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="Puerto" Type="Int32" Nullable="false" />
-          <Property Name="Host" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="PermitirSSL" Type="Boolean" Nullable="false" />
-          <Property Name="FtpUsuario" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="FtpClave" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="FtpURLArchivo" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
-          <Property Name="FtpURLAdjunto" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
-          <Property Name="IdEstadoCierreTarea" Type="Int32" Nullable="false" />
-          <Property Name="IdEstadoAprobarTarea" Type="Int32" Nullable="false" />
-          <Property Name="IdEstadoTareaDevuelta" Type="Int32" Nullable="false" />
-          <Property Name="IntervaloEjecucionMin" Type="Int32" Nullable="false" />
-          <Property Name="IdEstadoCierreSolicitante" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Estado" Relationship="ModelGeneral.FK_Parametro_Estado" FromRole="Parametro" ToRole="Estado" />
-          <NavigationProperty Name="Estado1" Relationship="ModelGeneral.FK_Parametro_Estado1" FromRole="Parametro" ToRole="Estado" />
-          <NavigationProperty Name="Estado2" Relationship="ModelGeneral.FK_Parametro_Estado2" FromRole="Parametro" ToRole="Estado" />
-        </EntityType>
-        <Association Name="FK_Parametro_Estado">
-          <End Type="ModelGeneral.Estado" Role="Estado" Multiplicity="1" />
-          <End Type="ModelGeneral.Parametro" Role="Parametro" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Estado">
-              <PropertyRef Name="IdEstado" />
-            </Principal>
-            <Dependent Role="Parametro">
-              <PropertyRef Name="IdEstadoCierreTarea" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Parametro_Estado1">
-          <End Type="ModelGeneral.Estado" Role="Estado" Multiplicity="1" />
-          <End Type="ModelGeneral.Parametro" Role="Parametro" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Estado">
-              <PropertyRef Name="IdEstado" />
-            </Principal>
-            <Dependent Role="Parametro">
-              <PropertyRef Name="IdEstadoAprobarTarea" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Parametro_Estado2">
-          <End Type="ModelGeneral.Estado" Role="Estado" Multiplicity="1" />
-          <End Type="ModelGeneral.Parametro" Role="Parametro" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Estado">
-              <PropertyRef Name="IdEstado" />
-            </Principal>
-            <Dependent Role="Parametro">
-              <PropertyRef Name="IdEstadoTareaDevuelta" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <ComplexType Name="sp_carga_laboral_Result">
           <Property Type="Int32" Name="NumTareaPorAprobar" Nullable="true" />
           <Property Type="Int32" Name="NumTareaVencidas" Nullable="true" />
@@ -1334,6 +1276,66 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
           <Property Name="NumSubtareasAbiertas" Type="Int32" />
           <Property Name="EstadoCumplimiento" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="Parametro">
+          <Key>
+            <PropertyRef Name="IdParametro" />
+          </Key>
+          <Property Name="IdParametro" Type="Int32" Nullable="false" />
+          <Property Name="CorreoCuenta" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="CorreoClave" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Puerto" Type="Int32" Nullable="false" />
+          <Property Name="Host" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="PermitirSSL" Type="Boolean" Nullable="false" />
+          <Property Name="FtpUsuario" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="FtpClave" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="FtpURLArchivo" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="FtpURLAdjunto" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="IdEstadoCierreTarea" Type="Int32" Nullable="false" />
+          <Property Name="IdEstadoAprobarTarea" Type="Int32" Nullable="false" />
+          <Property Name="IdEstadoTareaDevuelta" Type="Int32" Nullable="false" />
+          <Property Name="IntervaloEjecucionMin" Type="Int32" Nullable="false" />
+          <Property Name="IdEstadoCierreSolicitante" Type="Int32" Nullable="false" />
+          <Property Name="IdEstadoTareaVencida" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Estado" Relationship="ModelGeneral.FK_Parametro_Estado" FromRole="Parametro" ToRole="Estado" />
+          <NavigationProperty Name="Estado1" Relationship="ModelGeneral.FK_Parametro_Estado1" FromRole="Parametro" ToRole="Estado" />
+          <NavigationProperty Name="Estado2" Relationship="ModelGeneral.FK_Parametro_Estado2" FromRole="Parametro" ToRole="Estado" />
+        </EntityType>
+        <Association Name="FK_Parametro_Estado">
+          <End Type="ModelGeneral.Estado" Role="Estado" Multiplicity="1" />
+          <End Type="ModelGeneral.Parametro" Role="Parametro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="Parametro">
+              <PropertyRef Name="IdEstadoCierreTarea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Parametro_Estado1">
+          <End Type="ModelGeneral.Estado" Role="Estado" Multiplicity="1" />
+          <End Type="ModelGeneral.Parametro" Role="Parametro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="Parametro">
+              <PropertyRef Name="IdEstadoAprobarTarea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Parametro_Estado2">
+          <End Type="ModelGeneral.Estado" Role="Estado" Multiplicity="1" />
+          <End Type="ModelGeneral.Parametro" Role="Parametro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="Parametro">
+              <PropertyRef Name="IdEstadoTareaDevuelta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1505,27 +1507,6 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Parametro">
-            <EntityTypeMapping TypeName="ModelGeneral.Parametro">
-              <MappingFragment StoreEntitySet="Parametro">
-                <ScalarProperty Name="IdEstadoCierreSolicitante" ColumnName="IdEstadoCierreSolicitante" />
-                <ScalarProperty Name="IntervaloEjecucionMin" ColumnName="IntervaloEjecucionMin" />
-                <ScalarProperty Name="IdEstadoTareaDevuelta" ColumnName="IdEstadoTareaDevuelta" />
-                <ScalarProperty Name="IdEstadoAprobarTarea" ColumnName="IdEstadoAprobarTarea" />
-                <ScalarProperty Name="IdEstadoCierreTarea" ColumnName="IdEstadoCierreTarea" />
-                <ScalarProperty Name="FtpURLAdjunto" ColumnName="FtpURLAdjunto" />
-                <ScalarProperty Name="FtpURLArchivo" ColumnName="FtpURLArchivo" />
-                <ScalarProperty Name="FtpClave" ColumnName="FtpClave" />
-                <ScalarProperty Name="FtpUsuario" ColumnName="FtpUsuario" />
-                <ScalarProperty Name="PermitirSSL" ColumnName="PermitirSSL" />
-                <ScalarProperty Name="Host" ColumnName="Host" />
-                <ScalarProperty Name="Puerto" ColumnName="Puerto" />
-                <ScalarProperty Name="CorreoClave" ColumnName="CorreoClave" />
-                <ScalarProperty Name="CorreoCuenta" ColumnName="CorreoCuenta" />
-                <ScalarProperty Name="IdParametro" ColumnName="IdParametro" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="sp_carga_laboral" FunctionName="ModelGeneral.Store.sp_carga_laboral">
             <ResultMapping>
               <ComplexTypeMapping TypeName="ModelGeneral.sp_carga_laboral_Result">
@@ -1664,6 +1645,28 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
                 <ScalarProperty Name="IdGrupo" ColumnName="IdGrupo" />
                 <ScalarProperty Name="IdUsuarioSolicitante" ColumnName="IdUsuarioSolicitante" />
                 <ScalarProperty Name="IdTarea" ColumnName="IdTarea" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Parametro">
+            <EntityTypeMapping TypeName="ModelGeneral.Parametro">
+              <MappingFragment StoreEntitySet="Parametro">
+                <ScalarProperty Name="IdEstadoTareaVencida" ColumnName="IdEstadoTareaVencida" />
+                <ScalarProperty Name="IdEstadoCierreSolicitante" ColumnName="IdEstadoCierreSolicitante" />
+                <ScalarProperty Name="IntervaloEjecucionMin" ColumnName="IntervaloEjecucionMin" />
+                <ScalarProperty Name="IdEstadoTareaDevuelta" ColumnName="IdEstadoTareaDevuelta" />
+                <ScalarProperty Name="IdEstadoAprobarTarea" ColumnName="IdEstadoAprobarTarea" />
+                <ScalarProperty Name="IdEstadoCierreTarea" ColumnName="IdEstadoCierreTarea" />
+                <ScalarProperty Name="FtpURLAdjunto" ColumnName="FtpURLAdjunto" />
+                <ScalarProperty Name="FtpURLArchivo" ColumnName="FtpURLArchivo" />
+                <ScalarProperty Name="FtpClave" ColumnName="FtpClave" />
+                <ScalarProperty Name="FtpUsuario" ColumnName="FtpUsuario" />
+                <ScalarProperty Name="PermitirSSL" ColumnName="PermitirSSL" />
+                <ScalarProperty Name="Host" ColumnName="Host" />
+                <ScalarProperty Name="Puerto" ColumnName="Puerto" />
+                <ScalarProperty Name="CorreoClave" ColumnName="CorreoClave" />
+                <ScalarProperty Name="CorreoCuenta" ColumnName="CorreoCuenta" />
+                <ScalarProperty Name="IdParametro" ColumnName="IdParametro" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

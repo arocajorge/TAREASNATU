@@ -35,7 +35,7 @@ namespace Data.General
                             IdEstadoTareaDevuelta=info.IdEstadoTareaDevuelta,
                             IdEstadoCierreSolicitante=info.IdEstadoCierreSolicitante,
                             IntervaloEjecucionMin=info.IntervaloEjecucionMin,
-                           
+                            IdEstadoTareaVencida=info.IdEstadoTareaVencida
                            
 
                         };
@@ -58,6 +58,7 @@ namespace Data.General
                         Entity.IdEstadoCierreSolicitante = info.IdEstadoCierreSolicitante;
 
                         Entity.IntervaloEjecucionMin = info.IntervaloEjecucionMin;
+                        Entity.IdEstadoTareaVencida = info.IdEstadoTareaVencida;
                       
                     }
 
@@ -99,7 +100,8 @@ namespace Data.General
                         IdEstadoCierreTarea = Entity.IdEstadoCierreTarea,
                         IdEstadoTareaDevuelta = Entity.IdEstadoTareaDevuelta,
                         IntervaloEjecucionMin=Entity.IntervaloEjecucionMin,
-                        IdEstadoCierreSolicitante=Entity.IdEstadoCierreSolicitante
+                        IdEstadoCierreSolicitante=Entity.IdEstadoCierreSolicitante,
+                        IdEstadoTareaVencida=Entity.IdEstadoTareaVencida
                     };
                 }
                 return info;

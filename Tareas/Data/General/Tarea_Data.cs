@@ -764,13 +764,21 @@ namespace Data
                     if (Entity.IdUsuarioSolicitante != Entity.IdUsuarioAsignado)
                     {
                         Entity.FechaCierreSolicitante = DateTime.Now;
-                        Entity.EstadoActual = info_parametro.IdEstadoCierreTarea;
+                        Entity.EstadoActual = info_parametro.IdEstadoCierreSolicitante;
+                        if(info.FechaEntrega.Date<DateTime.Now.Date)
+                        {
+                            Entity.EstadoActual = info_parametro.IdEstadoTareaVencida;
+                        }
                     }
                     else
                     {
                         Entity.FechaCierreSolicitante = DateTime.Now;
                         Entity.FechaCierreEncargado = DateTime.Now;
                         Entity.EstadoActual = info_parametro.IdEstadoCierreSolicitante;
+                        if (info.FechaEntrega.Date < DateTime.Now.Date)
+                        {
+                            Entity.EstadoActual = info_parametro.IdEstadoTareaVencida;
+                        }
                     }
                     #region Estado tarea
 
