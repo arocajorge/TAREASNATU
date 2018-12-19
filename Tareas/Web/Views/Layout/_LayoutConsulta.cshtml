@@ -78,13 +78,16 @@
                 </a>
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
-                        <!-- User Account: style can be found in dropdown.less -->
-                        <li>
-                            <a href="/General/Buzon/Buzon_entrada"><i class="fa fa-circle-o text-red"></i> <span>Asignadas</span></a>
-                        </li>
-                        <li><a href="/General/Buzon/Buzon_salida"><i class="fa fa-circle-o text-yellow"></i> <span>Enviadas</span></a></li>
-                        <li><a href="/General/MisTareas/CargaLaboral"><i class="fa fa-circle-o text-aqua"></i> <span>Estadística</span></a></li>
+                        
+                        @*
+                            <li><a href="/General/Buzon/Buzon_entrada"><i class="fa fa-circle-o text-red"></i> <span>Asignadas</span></a></li>
+                            <li><a href="/General/Buzon/Buzon_salida"><i class="fa fa-circle-o text-yellow"></i> <span>Enviadas</span></a></li>
+                            <li><a href="/General/MisTareas/CargaLaboral"><i class="fa fa-circle-o text-aqua"></i> <span>Estadística</span></a></li>
+                        *@
 
+                        <li><a href="/General/Buzon/Buzon_entrada" title="Asignadas"><i class="fa fa fa-envelope text-white"></i></a></li>
+                        <li><a href="/General/Buzon/Buzon_salida" title="Enviadas"><i class="fa fa-upload text-white"></i> </a></li>
+                        <li><a href="/General/MisTareas/CargaLaboral" title="Estadísticas"><i class="fa fa-line-chart text-white"></i></a></li>
                        
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">

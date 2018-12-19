@@ -41,7 +41,8 @@ namespace Data.General
                                  Encargado=q.Encargado,
                                  Solicitante=q.Solicitante,
                                  Estado=q.Estado,
-                                 Usuario= IdUsuario
+                                 Usuario= IdUsuario,
+                                 Vencida = q.Vencida
                              }).ToList();
                     else
                         Lista = (from q in Context.VWGEN_001
@@ -62,8 +63,8 @@ namespace Data.General
                                      Encargado = q.Encargado,
                                      Solicitante = q.Solicitante,
                                      Estado = q.Estado,
-                                     Usuario = IdUsuario
-
+                                     Usuario = IdUsuario,
+                                     Vencida = q.Vencida
                                  }).ToList();
                 }
                 return Lista;

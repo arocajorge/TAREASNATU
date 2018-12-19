@@ -62,9 +62,13 @@ namespace Web.Areas.General.Controllers
                 model.IdUsuario = SessionTareas.IdUsuario;
                 model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(model.IdTransaccionSession);
                 model.FechaEntrega = model.FechaEntrega;
-
             }
-
+            string mensaje = Validaciones(model);
+            if (!string.IsNullOrEmpty(mensaje))
+            {
+                cargar_combo();
+                return View(model);
+            }
             if ( !bus_tarea.Aprobar(model))
             {
                 cargar_combo();
@@ -134,9 +138,8 @@ namespace Web.Areas.General.Controllers
         {
             try
             {
-                string mensaje = "";
-               
-               
+                string mensaje = "";               
+               /*
                 if (info.TareaConcurrente)
                 {
                     if (info.DiasIntervaloProximaTarea == null | info.DiasIntervaloProximaTarea == 0)
@@ -147,6 +150,18 @@ namespace Web.Areas.General.Controllers
                         if (Convert.ToDateTime(info.FechaFinConcurrencia).Year == 1)
                         mensaje = "La fecha de expiracion no es valida";
 
+                }
+                */
+                if (info.IdTareaPadre != null)
+                {
+                    var tarea = bus_tarea.get_info(Convert.ToDecimal(info.IdTareaPadre));
+                    if (tarea != null)
+                    {
+                        if (info.FechaEntrega.Date > tarea.FechaEntrega.Date)
+                        {
+                            mensaje = "La fecha de entrega es superior a la tarea principal";
+                        }
+                    }
                 }
                 return mensaje;
             }

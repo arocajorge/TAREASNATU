@@ -96,10 +96,15 @@
                 </a>
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
+
+                        <li><a href="/General/Buzon/Buzon_entrada" title="Asignadas"><i class="fa fa fa-envelope text-white"></i></a></li>
+                        <li><a href="/General/Buzon/Buzon_salida" title="Enviadas"><i class="fa fa-upload text-white"></i> </a></li>
+                        <li><a href="/General/MisTareas/CargaLaboral" title="Estadísticas"><i class="fa fa-line-chart text-white"></i></a></li>
+
                         <!-- User Account: style can be found in dropdown.less -->
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <span class="hidden-xs">@Web.Helps.SessionTareas.IdUsuario</span>
+                                <span class="hidden-xs">Usuario: @Web.Helps.SessionTareas.IdUsuario</span>
                             </a>
                         </li>
                         <li>
@@ -131,26 +136,38 @@
                                     </span>
                                 </a>
                                 <ul class="treeview-menu">
-                                    <li><a href="/General/Parametro/Index"><i class="fa fa-circle-o"></i>Parámetros</a></li>
+                                    @if (Web.Helps.SessionTareas.TipoUsuario == "1")
+                                    {
+                                        <li><a href="/General/Parametro/Index"><i class="fa fa-circle-o"></i>Parámetros</a></li>
+                                    }
                                     <li><a href="/General/EstadoTipo/Index"><i class="fa fa-circle-o"></i>Tipo estado</a></li>
                                     <li><a href="/General/Usuario/Index"><i class="fa fa-circle-o"></i>Usuarios</a></li>
                                     <li><a href="/General/Grupo/Index"><i class="fa fa-circle-o"></i>Grupos</a></li>
                                     <li><a href="/General/Archivo/Index"><i class="fa fa-circle-o"></i>Formatos ISO</a></li>
                                 </ul>
                             </li>
-                            <li class="treeview">
+                            <li class="treeview active">
                                 <a href="#">
                                     <i class="fa fa-circle-o"></i> Transacciones
                                     <span class="pull-right-container">
                                         <i class="fa fa-angle-left pull-right"></i>
                                     </span>
                                 </a>
+                                <ul class="treeview-menu active">
+                                    <li><a href="/General/Tarea/Nuevo"><i class="fa fa-circle-o"></i>Nueva tarea</a></li>
+                                    <li><a href="/General/AsignarTarea/Index"><i class="fa fa-circle-o"></i>Asignar subtareas</a></li>
+                                    <li><a href="/General/MisTareas/CargaLaboral"><i class="fa fa-circle-o"></i>Estadística</a></li>
+                                </ul>
+                            </li>
+                            <li class="treeview active">
+                                <a href="#">
+                                    <i class="fa fa-circle-o"></i> Buzon
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
                                 <ul class="treeview-menu">
-                                    <li><a href="/General/Tarea/Index"><i class="fa fa-circle-o"></i>Tareas</a></li>
-                                    <li><a href="/General/MisTareas/Index"><i class="fa fa-circle-o"></i>Mis tareas</a></li>
-                                    <li><a href="/General/AsignarTarea/Index"><i class="fa fa-circle-o"></i>Asignar tareas</a></li>
-
-
+                                    <li><a href="/General/Buzon/Buzon_eliminado"><i class="fa fa-circle-o text-aqua"></i> <span>Tareas Anuladas</span></a></li>
                                 </ul>
                             </li>
                             <li class="treeview">
@@ -163,17 +180,14 @@
                                 <ul class="treeview-menu">
                                     <li><a href="/Reportes/GeneralReportes/GEN_001" target="_blank"><i class="fa fa-circle-o"></i>Detallado</a></li>
                                     <li><a href="/Reportes/GeneralReportes/GEN_002" target="_blank"><i class="fa fa-circle-o"></i>Resumido</a></li>
-
-
-
                                 </ul>
                             </li>
+
+
+
+
                         </ul>
                     </li>
-                    <li class="header">BANDEJAS</li>
-                    <li><a href="/General/Buzon/Buzon_entrada"><i class="fa fa-circle-o text-red"></i> <span>Buzón entrada</span></a></li>
-                    <li><a href="/General/Buzon/Buzon_salida"><i class="fa fa-circle-o text-yellow"></i> <span>Buzón salida</span></a></li>
-                    <li><a href="/General/Buzon/Buzon_eliminados"><i class="fa fa-circle-o text-aqua"></i> <span>Eliminadas</span></a></li>
                 </ul>
             </section>
             <!-- /.sidebar -->

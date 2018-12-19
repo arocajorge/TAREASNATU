@@ -564,6 +564,37 @@ namespace Data
             }
         }
 
+        public bool Eliminar(Tarea_Info info)
+        {
+            try
+            {
+                using (EntityTareas db = new EntityTareas())
+                {
+                    var historico = db.TareaEstado.Where(q => q.IdTarea == info.IdTarea).ToList();
+                    db.TareaEstado.RemoveRange(historico);
+
+                    var tareashijo = db.Tarea.Where(q => q.IdTareaPadre == info.IdTarea).ToList();
+                    foreach (var item in tareashijo)
+                    {
+                        var historicohijo = db.TareaEstado.Where(q => q.IdTarea == item.IdTarea).ToList();
+                        db.TareaEstado.RemoveRange(historico);
+                    }
+                    db.Tarea.RemoveRange(tareashijo);
+
+                    var tarea = db.Tarea.Where(q => q.IdTarea == info.IdTarea).FirstOrDefault();
+                    db.Tarea.Remove(tarea);
+
+                    db.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public bool anularDB(Tarea_Info info)
         {
             try

@@ -91,6 +91,7 @@ namespace Web.Areas.General.Controllers
             mensaje = Validaciones(model);
             if (mensaje != "")
             {
+                
                 cargar_combo();
                 ViewBag.mensaje = mensaje;
                 return View(model);
@@ -178,9 +179,18 @@ namespace Web.Areas.General.Controllers
             try
             {
                 string mensaje = "";
-              
 
-               
+                if (info.IdTareaPadre != null)
+                {
+                    var tarea = bus_tarea.get_info(Convert.ToDecimal(info.IdTareaPadre));
+                    if (tarea != null)
+                    {
+                        if (info.FechaEntrega.Date > tarea.FechaEntrega.Date)
+                        {
+                            mensaje = "La fecha de entrega es superior a la fecha de entrega de la tarea principal";
+                        }
+                    }
+                }               
                 
                 return mensaje;
             }

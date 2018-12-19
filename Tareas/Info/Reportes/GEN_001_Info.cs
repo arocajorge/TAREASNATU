@@ -22,7 +22,7 @@ namespace Info.General
         public string Asunto { get; set; }
         public string Estado { get; set; }
         public string Solicitante { get; set; }
-
+        public string Vencida { get; set; }
         public string Usuario { get; set; }
     }
 }

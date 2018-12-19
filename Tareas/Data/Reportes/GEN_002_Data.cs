@@ -44,8 +44,8 @@ namespace Data.General
                         item.Total =item.Total+ Convert.ToInt32(item.EnProceso);
                     if (item.Cumplidas != null)
                         item.Total = item.Total + Convert.ToInt32(item.Cumplidas);
-                    if (item.Incumplidas != null)
-                        item.Total = item.Total + Convert.ToInt32(item.Incumplidas);
+                    /*if (item.Incumplidas != null)
+                        item.Total = item.Total + Convert.ToInt32(item.Incumplidas);*/
                 }  
                 return Lista;
             }

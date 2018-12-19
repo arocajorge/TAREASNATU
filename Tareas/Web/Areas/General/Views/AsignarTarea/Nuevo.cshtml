@@ -113,8 +113,7 @@
                        settings.Properties.EditFormat = EditFormat.Date;
                        settings.Properties.EditFormatString = "dd/MM/yyyy";
                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
-                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                       settings.ReadOnly = true;
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);                       
                    }).GetHtml()
                         @Html.ValidationMessageFor(q => q.FechaEntrega, "", new { @class = "text-danger" })
                     </div>

@@ -126,7 +126,18 @@ namespace Bus
                 throw;
             }
         }
+        public bool Eliminar(Tarea_Info info)
+        {
+            try
+            {
+                return odata.Eliminar(info);
+            }
+            catch (Exception)
+            {
 
+                throw;
+            }
+        }
         public bool anularDB(Tarea_Info info)
         {
             try
