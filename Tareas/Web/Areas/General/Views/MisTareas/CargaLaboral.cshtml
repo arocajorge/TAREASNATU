@@ -193,7 +193,7 @@
                         </div>
                         @if (Model.IdUsuario == Web.Helps.SessionTareas.IdUsuario)
                         {
-                            <a href="@Url.Action("Buzon_entrada","Buzon")" class="small-box-footer"> Resolver tareas <i class="fa fa-arrow-circle-right"></i></a>
+                            <a href="@Url.Action("Buzon_entrada","Buzon", new { Estado="A"})" class="small-box-footer"> Resolver tareas <i class="fa fa-arrow-circle-right"></i></a>
                         }
                         else
                         {
@@ -215,7 +215,7 @@
                         </div>
                         @if (Model.IdUsuario == Web.Helps.SessionTareas.IdUsuario)
                         {
-                            <a href="@Url.Action("Buzon_entrada","Buzon")" class="small-box-footer"> Resolver tareas <i class="fa fa-arrow-circle-right"></i></a>
+                            <a href="@Url.Action("Buzon_entrada","Buzon" , new { Estado="A"})" class="small-box-footer"> Resolver tareas <i class="fa fa-arrow-circle-right"></i></a>
                         }
                         else
                         {

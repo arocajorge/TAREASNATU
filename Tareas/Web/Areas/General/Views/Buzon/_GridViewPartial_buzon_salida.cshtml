@@ -102,8 +102,8 @@
                 if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "Estado")) == true && Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "AprobadoEncargado")) == false  )
                 {
                     ViewContext.Writer.Write(
-                Html.ActionLink("Modificar", "Modificar", "Tarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }, null) + "&nbsp;" +
-                        Html.ActionLink("Anular", "Anular", "Tarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") },
+                Html.ActionLink("MODIFICAR", "Modificar", "Tarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }, null) + "&nbsp;" +
+                        Html.ActionLink("ANULAR", "Anular", "Tarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") },
                             null)
                     );
                 }
@@ -115,13 +115,13 @@
                     && Convert.ToString(DataBinder.Eval(tc.DataItem, "IdUsuarioAsignado")) == Convert.ToString(DataBinder.Eval(tc.DataItem, "IdUsuarioSolicitante")))
                     {
                         ViewContext.Writer.Write(
-                   Html.ActionLink("Cerrar", "CerrarPorSolicitante", "Tarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }, null) + "&nbsp;"
+                   Html.ActionLink("CERRAR", "CerrarPorSolicitante", "Tarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }, null) + "&nbsp;"
 
                        );
 
                         ViewContext.Writer.Write(
-                Html.ActionLink("Modificar", "Modificar", "Tarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }, null) + "&nbsp;" +
-                        Html.ActionLink("Anular", "Anular", "Tarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") },
+                Html.ActionLink("MODIFICAR", "Modificar", "Tarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }, null) + "&nbsp;" +
+                        Html.ActionLink("ANULAR", "Anular", "Tarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") },
                             null)
                     );
                     }
@@ -137,7 +137,7 @@
                     && Convert.ToString(DataBinder.Eval(tc.DataItem, "IdUsuarioAsignado")) != Convert.ToString(DataBinder.Eval(tc.DataItem, "IdUsuarioSolicitante")))
                         {
                             ViewContext.Writer.Write(
-                       Html.ActionLink("Cerrar", "CerrarPorSolicitante", "Tarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }, null) + "&nbsp;"
+                       Html.ActionLink("CERRAR", "CerrarPorSolicitante", "Tarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }, null) + "&nbsp;"
 
                            );
                         }
@@ -151,7 +151,7 @@
                         && Convert.ToString(DataBinder.Eval(tc.DataItem, "IdUsuarioAsignado")) == Convert.ToString(DataBinder.Eval(tc.DataItem, "IdUsuarioSolicitante")))
                             {
                                 ViewContext.Writer.Write(
-                           Html.ActionLink("Cerrar", "CerrarPorSolicitante", "Tarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }, null) + "&nbsp;"
+                           Html.ActionLink("CERRAR", "CerrarPorSolicitante", "Tarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }, null) + "&nbsp;"
 
                                );
                             }
@@ -159,7 +159,7 @@
                             {
 
                                 ViewContext.Writer.Write(
-                        Html.ActionLink("Consultar", "Consultar", "Tarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }, null) + "&nbsp;"
+                        Html.ActionLink("CONSULTAR", "Consultar", "Tarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }, null) + "&nbsp;"
 
                             );
                             }

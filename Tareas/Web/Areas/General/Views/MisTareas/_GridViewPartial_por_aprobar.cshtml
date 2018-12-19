@@ -93,7 +93,7 @@
                 if (Convert.ToString(DataBinder.Eval(tc.DataItem, "IdUsuarioSolicitante")) !=Web.Helps.SessionTareas.IdUsuario)
                 {
                     ViewContext.Writer.Write(
-                Html.ActionLink("Aprobar","Nuevo", "AprobarTarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") },null)
+                Html.ActionLink("APROBAR","Nuevo", "AprobarTarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") },null)
                     );
                 }
                 else

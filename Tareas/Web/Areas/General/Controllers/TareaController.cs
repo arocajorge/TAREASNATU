@@ -95,7 +95,7 @@ namespace Web.Areas.General.Controllers
             if(model.FechaEntrega.Date<DateTime.Now.Date)
             {
                 cargar_combo();
-                ViewBag.mensaje = "La fecha de entrega no puede ser menor a la fcha actual";
+                ViewBag.mensaje = "La fecha de entrega no puede ser menor a la fecha actual";
                 return View(model);
             }
             var param = bus_parametro.get_info();
@@ -174,7 +174,7 @@ namespace Web.Areas.General.Controllers
             if (model.FechaEntrega.Date < DateTime.Now.Date)
             {
                 cargar_combo();
-                ViewBag.mensaje = "La fecha de entrega no puede ser menor a la fcha actual";
+                ViewBag.mensaje = "La fecha de entrega no puede ser menor a la fecha actual";
                 return View(model);
             }
             var grupo = bus_grupo.get_info_grup_usuario(model.IdUsuarioAsignado);

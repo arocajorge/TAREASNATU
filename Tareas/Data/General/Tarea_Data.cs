@@ -167,10 +167,9 @@ namespace Data
                     if(Tipo==cl_enumeradores.eTipoTarea.ASIGNADA)// se muestra en bizon de entrada
                         Lista = (from q in Context.vw_Tarea
                                  where q.IdUsuarioAsignado == IdUsuario
-                                 //&& q.EstadoActual != 5//Diferente de devuelta
                                  && q.FechaEntrega >= FechaInicio
-                               && q.FechaEntrega <= FechaFin
-                               && q.Estado==true
+                                 && q.FechaEntrega <= FechaFin
+                                 && q.Estado==true
                                  select new Tarea_Info
                              {
                                  IdTarea = q.IdTarea,
@@ -410,7 +409,7 @@ namespace Data
                         IdUsuarioSolicitante = info.IdUsuarioSolicitante,
                         IdGrupo = info.IdGrupo,
                         IdUsuarioAsignado = info.IdUsuarioAsignado,
-                        EstadoActual = info.EstadoActual,// ESTADO INICIADA,
+                        EstadoActual =Convert.ToInt32( info.EstadoActual),// ESTADO INICIADA,
                         FechaEntrega = info.FechaEntrega,
                         AsuntoTarea = info.AsuntoTarea,
                         DescripcionTarea=info.DescripcionTarea,
@@ -455,7 +454,7 @@ namespace Data
                             Secuancial = odta_estado.get_id(info.IdTarea),
                             IdUsuario = info.IdUsuario,
                             Observacion=info.DescripcionTarea==null?" ":info.DescripcionTarea,
-                            IdEstado=info.EstadoActual,
+                            IdEstado=Convert.ToInt32( info.EstadoActual),
                             FechaModificacion=DateTime.Now,
                             
 
@@ -534,7 +533,7 @@ namespace Data
                         Secuancial = odta_estado.get_id(info.IdTarea),
                         IdUsuario = info.IdUsuarioModifica,
                         Observacion = info.ObsevacionModificacion==null?" ":info.ObsevacionModificacion,
-                        IdEstado = info.EstadoActual,
+                        IdEstado =Convert.ToInt32( info.EstadoActual),
                         FechaModificacion = DateTime.Now
 
 
@@ -661,7 +660,7 @@ namespace Data
                         Secuancial = odta_estado.get_id(info.IdTarea),
                         IdUsuario = info.IdUsuario,
                         Observacion = info.ObsevacionModificacion = info.ObsevacionModificacion,
-                        IdEstado = info.EstadoActual,
+                        IdEstado =Convert.ToInt32( info.EstadoActual),
                         FechaModificacion = DateTime.Now,
 
 
@@ -720,7 +719,7 @@ namespace Data
                         Secuancial = odta_estado.get_id(info.IdTarea),
                         IdUsuario = info.IdUsuario,
                         Observacion = info.ObsevacionModificacion,
-                        IdEstado = info.EstadoActual=info_parametro.IdEstadoCierreTarea,
+                        IdEstado =info_parametro.IdEstadoCierreTarea,
                         FechaModificacion = DateTime.Now,
 
 
@@ -781,7 +780,7 @@ namespace Data
                         Secuancial = odta_estado.get_id(info.IdTarea),
                         IdUsuario = info.IdUsuario,
                         Observacion = info.ObsevacionModificacion,
-                        IdEstado = info.EstadoActual =info_parametro.IdEstadoCierreSolicitante,
+                        IdEstado  =info_parametro.IdEstadoCierreSolicitante,
                         FechaModificacion = DateTime.Now,
 
 
@@ -848,7 +847,7 @@ namespace Data
                         Secuancial = odta_estado.get_id(info.IdTarea),
                         IdUsuario = info.IdUsuario,
                         Observacion = info.ObsevacionModificacion,
-                        IdEstado = info.EstadoActual = info_parametro.IdEstadoTareaDevuelta,
+                        IdEstado  = info_parametro.IdEstadoTareaDevuelta,
                         FechaModificacion = DateTime.Now,
 
 

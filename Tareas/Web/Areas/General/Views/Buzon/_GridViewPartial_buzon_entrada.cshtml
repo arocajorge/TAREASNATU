@@ -94,7 +94,7 @@
                 if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "Estado")) == true && Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "AprobadoEncargado")) == false)
                 {
                     ViewContext.Writer.Write(
-                Html.ActionLink("Aprobar","Nuevo", "AprobarTarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") },null)
+                Html.ActionLink("APROBAR","Nuevo", "AprobarTarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") },null)
                     );
                 }
                 else
@@ -106,7 +106,7 @@
                     else
                     {
                         ViewContext.Writer.Write(
-                          Html.ActionLink("Consultar", "Consultar", "Tarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }, null));
+                          Html.ActionLink("CONSULTAR", "Consultar", "Tarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }, null));
                     }
                 }
             });
