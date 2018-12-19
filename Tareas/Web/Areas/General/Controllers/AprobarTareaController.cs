@@ -63,14 +63,19 @@ namespace Web.Areas.General.Controllers
                 model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(model.IdTransaccionSession);
                 model.FechaEntrega = model.FechaEntrega;
             }
+            
             string mensaje = Validaciones(model);
             if (!string.IsNullOrEmpty(mensaje))
             {
+                ViewBag.IdTareaPadre = model.IdTareaPadre;
+                ViewBag.mensaje = mensaje;
                 cargar_combo();
                 return View(model);
             }
             if ( !bus_tarea.Aprobar(model))
             {
+                ViewBag.IdTareaPadre = model.IdTareaPadre;
+                ViewBag.mensaje = mensaje;
                 cargar_combo();
                 return View(model);
             }

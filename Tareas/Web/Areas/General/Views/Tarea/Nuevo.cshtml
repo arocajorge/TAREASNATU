@@ -205,7 +205,16 @@
                                 <label for="DiasIntervaloProximaTarea">Días intervalo</label>
                                 @Html.TextBoxFor(v => v.DiasIntervaloProximaTarea, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(m => m.DiasIntervaloProximaTarea, "", new { @class = "text-danger" })
+                                
                             </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <h4 class="text-danger">En caso de requerir un mes digitar 0, esto creará la tarea en la misma fecha pero al mes siguiente</h4>
                         </div>
                     </div>
                 </div>

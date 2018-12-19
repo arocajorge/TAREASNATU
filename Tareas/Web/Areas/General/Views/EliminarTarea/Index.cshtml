@@ -3,16 +3,6 @@
 
 @{
 
-    if (ViewBag.mensaje != null)
-    {
-
-        <div class="alert alert-warning alert-dismissible">
-            <h4>
-                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
-            </h4>
-        </div>
-
-    }
     ViewBag.Title = "Eliminar tarea";
     if (Session["IdUsuario"] == null)
     {
@@ -51,9 +41,13 @@
             </div>
         </div>
     </div>
-    <div class="box-footer">
-        <button type="submit" class="btn btn-danger form-control">Eliminar</button>
-    </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-danger form-control">Eliminar</button>
+                </div>
+            </div>
+        </div>
 
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
