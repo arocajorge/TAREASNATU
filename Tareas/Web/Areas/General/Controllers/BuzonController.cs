@@ -26,6 +26,7 @@ namespace Web.Areas.General.Controllers
         {
             cl_filtros_Info model = new cl_filtros_Info();
             ViewBag.estado = estado;
+            model.estado = estado;
             return View(model);
         }
         [HttpPost]
@@ -44,6 +45,8 @@ namespace Web.Areas.General.Controllers
                 model = model.Where(v => v.AprobadoEncargado == false).ToList();
             if (estado == "E") // ENTREGAR
                 model = model.Where(v => v.AprobadoEncargado == true).ToList();
+            if (estado == "V") // ENTREGAR
+                model = model.Where(v => v.AprobadoEncargado == true && v.FechaEntrega.Date<DateTime.Now.Date).ToList();
             return PartialView("_GridViewPartial_buzon_entrada", model);
         }
         public ActionResult Buzon_salida()

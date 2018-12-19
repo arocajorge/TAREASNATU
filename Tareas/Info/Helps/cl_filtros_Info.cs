@@ -20,6 +20,7 @@ namespace Info.Helps
         public string IdUsuario { get; set; }
         public int IdGrupo { get; set; }
         public decimal IdTarea { get; set; }
+        public string estado { get; set; }
         public cl_filtros_Info()
         {
             fecha_ini = DateTime.Now.Date.AddMonths(-1);
