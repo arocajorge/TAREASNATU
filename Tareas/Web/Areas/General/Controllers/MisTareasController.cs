@@ -74,7 +74,7 @@ namespace Web.Areas.General.Controllers
             ViewBag.estado = estado;
             model = bus_tarea.get_lis_x_aprobar(SessionTareas.IdUsuario);
             if (estado == "Q") // APROBADAS
-                model = model.Where(v => v.AprobadoEncargado == false).ToList();
+                model = model.Where(v => v.AprobadoEncargado == false || v.FechaCierreSolicitante==null).ToList();
             return PartialView("_GridViewPartial_por_aprobar", model);
         }
 

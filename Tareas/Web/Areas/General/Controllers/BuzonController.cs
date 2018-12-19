@@ -42,17 +42,17 @@ namespace Web.Areas.General.Controllers
             ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date.AddMonths(1) : fecha_fin;
             ViewBag.estado = estado;
             model = bus_tarea.get_lis(SessionTareas.IdUsuario.ToString(), cl_enumeradores.eTipoTarea.ASIGNADA, ViewBag.fecha_ini, ViewBag.fecha_fin);
-            if (estado == "A") // APROBADAS
+            if (estado == "A") // APROBADAS TAREAS
                 model = model.Where(v => v.AprobadoEncargado == false).ToList();
-            if (estado == "E") // ENTREGAR
+            if (estado == "E") // ENTREGAR TAREAS
                 model = model.Where(v => v.AprobadoEncargado == true).ToList();
-            if (estado == "V") // vencidas
+            if (estado == "V") // TAREAS VENCIDAS
                 model = model.Where(v => v.AprobadoEncargado == true && v.FechaEntrega.Date<DateTime.Now.Date).ToList();
 
-            if (estado == "Q") // APROBADAS
-                model = model.Where(v => v.AprobadoEncargado == false).ToList();
+            if (estado == "Q") // TAREAS APROBADAS
+                model = model.Where(v => v.AprobadoEncargado == false ||v.FechaCierreEncargado ==null ).ToList();
 
-            if (estado == "R") // RESUELTAS
+            if (estado == "R") // TAREAS RESUELTAS V
                 model = model.Where(v => v.FechaCierreEncargado != null).ToList();
 
             return PartialView("_GridViewPartial_buzon_entrada", model);
