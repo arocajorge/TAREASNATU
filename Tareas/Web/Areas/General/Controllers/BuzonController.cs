@@ -48,6 +48,9 @@ namespace Web.Areas.General.Controllers
                 model = model.Where(v => v.AprobadoEncargado == true).ToList();
             if (estado == "V") // ENTREGAR
                 model = model.Where(v => v.AprobadoEncargado == true && v.FechaEntrega.Date<DateTime.Now.Date).ToList();
+
+            if (estado == "Q") // APROBADAS
+                model = model.Where(v => v.AprobadoEncargado == false).ToList();
             return PartialView("_GridViewPartial_buzon_entrada", model);
         }
         public ActionResult Buzon_salida()
