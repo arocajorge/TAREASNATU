@@ -77,6 +77,7 @@
           <Property Name="IdEstadoTareaDevuelta" Type="int" Nullable="false" />
           <Property Name="IntervaloEjecucionMin" Type="int" Nullable="false" />
           <Property Name="IdEstadoCierreSolicitante" Type="int" Nullable="false" />
+          <Property Name="IdEstadoTareaVencida" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Tarea">
           <Key>
@@ -107,6 +108,7 @@
           <Property Name="FechaModificacion" Type="datetime" />
           <Property Name="FechaAnulacion" Type="datetime" />
           <Property Name="IdTareaPadre" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="EstadoDevuelta" Type="int" />
         </EntityType>
         <EntityType Name="TareaArchivoAdjunto">
           <Key>
@@ -169,7 +171,6 @@ warning 6002: The table/view 'DB_TAREAS.dbo.vw_Tarea' does not have a primary ke
             <PropertyRef Name="IdUsuarioSolicitante" />
             <PropertyRef Name="IdGrupo" />
             <PropertyRef Name="IdUsuarioAsignado" />
-            <PropertyRef Name="EstadoActual" />
             <PropertyRef Name="FechaEntrega" />
             <PropertyRef Name="IdEstadoPrioridad" />
             <PropertyRef Name="TareaConcurrente" />
@@ -186,7 +187,7 @@ warning 6002: The table/view 'DB_TAREAS.dbo.vw_Tarea' does not have a primary ke
           <Property Name="IdUsuarioSolicitante" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="IdGrupo" Type="int" Nullable="false" />
           <Property Name="IdUsuarioAsignado" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="EstadoActual" Type="int" Nullable="false" />
+          <Property Name="EstadoActual" Type="int" />
           <Property Name="FechaEntrega" Type="date" Nullable="false" />
           <Property Name="AsuntoTarea" Type="varchar(max)" />
           <Property Name="DescripcionTarea" Type="varchar(max)" />
@@ -707,6 +708,28 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Grupo_Usuario" EntitySet="Grupo_Usuario" />
           </AssociationSet>
+          <EntitySet Name="VWGEN_001" EntityType="ModelGeneral.VWGEN_001" />
+          <FunctionImport Name="sp_crear_tarea_concurrente">
+          <Parameter Name="IdTarea" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Tareas_X_Usuarios" ReturnType="Collection(ModelGeneral.sp_Tareas_X_Usuarios_Result)">
+            <Parameter Name="IdUsuario" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPGEN_002" ReturnType="Collection(ModelGeneral.SPGEN_002_Result)">
+            <Parameter Name="FechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <EntitySet Name="vw_TareaArchivoAdjunto" EntityType="ModelGeneral.vw_TareaArchivoAdjunto" />
+          <EntitySet Name="vw_TareaEstado" EntityType="ModelGeneral.vw_TareaEstado" />
+          <FunctionImport Name="sp_carga_laboral" ReturnType="Collection(ModelGeneral.sp_carga_laboral_Result)">
+            <Parameter Name="IdUsuario" Mode="In" Type="String" />
+            <Parameter Name="FechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="IdGrupo" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="vw_Tarea_asignar_subtarea" EntityType="ModelGeneral.vw_Tarea_asignar_subtarea" />
+          <FunctionImport Name="sp_tareas_por_aprobar" ReturnType="Collection(ModelGeneral.sp_tareas_por_aprobar_Result)">
+          <Parameter Name="IdUsuario" Mode="In" Type="String" />
+          </FunctionImport>
           <EntitySet Name="Tarea" EntityType="ModelGeneral.Tarea" />
           <AssociationSet Name="FK_Tarea_Estado" Association="ModelGeneral.FK_Tarea_Estado">
             <End Role="Estado" EntitySet="Estado" />
@@ -736,19 +759,7 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
             <End Role="Tarea" EntitySet="Tarea" />
             <End Role="TareaEstado" EntitySet="TareaEstado" />
           </AssociationSet>
-          <EntitySet Name="VWGEN_001" EntityType="ModelGeneral.VWGEN_001" />
-          <FunctionImport Name="sp_crear_tarea_concurrente">
-          <Parameter Name="IdTarea" Mode="In" Type="Decimal" />
-          </FunctionImport>
-          <FunctionImport Name="sp_Tareas_X_Usuarios" ReturnType="Collection(ModelGeneral.sp_Tareas_X_Usuarios_Result)">
-            <Parameter Name="IdUsuario" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="SPGEN_002" ReturnType="Collection(ModelGeneral.SPGEN_002_Result)">
-            <Parameter Name="FechaInicio" Mode="In" Type="DateTime" />
-            <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
-          </FunctionImport>
-          <EntitySet Name="vw_TareaArchivoAdjunto" EntityType="ModelGeneral.vw_TareaArchivoAdjunto" />
-          <EntitySet Name="vw_TareaEstado" EntityType="ModelGeneral.vw_TareaEstado" />
+          <EntitySet Name="vw_Tarea" EntityType="ModelGeneral.vw_Tarea" />
           <EntitySet Name="Parametro" EntityType="ModelGeneral.Parametro" />
           <AssociationSet Name="FK_Parametro_Estado" Association="ModelGeneral.FK_Parametro_Estado">
             <End Role="Estado" EntitySet="Estado" />
@@ -762,16 +773,6 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
             <End Role="Estado" EntitySet="Estado" />
             <End Role="Parametro" EntitySet="Parametro" />
           </AssociationSet>
-          <FunctionImport Name="sp_carga_laboral" ReturnType="Collection(ModelGeneral.sp_carga_laboral_Result)">
-            <Parameter Name="IdUsuario" Mode="In" Type="String" />
-            <Parameter Name="FechaInicio" Mode="In" Type="DateTime" />
-            <Parameter Name="IdGrupo" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <EntitySet Name="vw_Tarea_asignar_subtarea" EntityType="ModelGeneral.vw_Tarea_asignar_subtarea" />
-          <EntitySet Name="vw_Tarea" EntityType="ModelGeneral.vw_Tarea" />
-          <FunctionImport Name="sp_tareas_por_aprobar" ReturnType="Collection(ModelGeneral.sp_tareas_por_aprobar_Result)">
-            <Parameter Name="IdUsuario" Mode="In" Type="String" />
-          </FunctionImport>
         </EntityContainer>
         <EntityType Name="Estado">
           <Key>
@@ -943,6 +944,170 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="VWGEN_001">
+          <Key>
+            <PropertyRef Name="IdTarea" />
+            <PropertyRef Name="IdGrupo" />
+            <PropertyRef Name="IdUsuarioAsignado" />
+            <PropertyRef Name="FechaEntrega" />
+            <PropertyRef Name="NombreGrupo" />
+            <PropertyRef Name="EstadoActual" />
+            <PropertyRef Name="Encargado" />
+            <PropertyRef Name="Solicitante" />
+          </Key>
+          <Property Name="IdTarea" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdGrupo" Type="Int32" Nullable="false" />
+          <Property Name="IdUsuarioAsignado" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaEntrega" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FechaCierreEncargado" Type="DateTime" Precision="0" />
+          <Property Name="FechaCierreSolicitante" Type="DateTime" Precision="0" />
+          <Property Name="NombreGrupo" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="EstadoActual" Type="Int32" Nullable="false" />
+          <Property Name="AsuntoTarea" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Encargado" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Asunto" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Solicitante" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <ComplexType Name="sp_Tareas_X_Usuarios_Result">
+          <Property Type="Decimal" Name="IdTarea" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="String" Name="IdUsuarioSolicitante" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="IdGrupo" Nullable="false" />
+          <Property Type="String" Name="IdUsuarioAsignado" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="EstadoActual" Nullable="false" />
+          <Property Type="DateTime" Name="FechaEntrega" Nullable="false" />
+          <Property Type="String" Name="AsuntoTarea" Nullable="true" />
+          <Property Type="String" Name="DescripcionTarea" Nullable="true" />
+          <Property Type="Int32" Name="IdEstadoPrioridad" Nullable="false" />
+          <Property Type="Boolean" Name="TareaConcurrente" Nullable="false" />
+          <Property Type="Boolean" Name="AprobadoSolicitado" Nullable="false" />
+          <Property Type="Boolean" Name="AprobadoEncargado" Nullable="false" />
+          <Property Type="Boolean" Name="Estado" Nullable="false" />
+          <Property Type="String" Name="IdUsuarioAsignado1" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="SPGEN_002_Result">
+          <Property Type="Int64" Name="Secuencia" Nullable="true" />
+          <Property Type="Int32" Name="IdGrupo" Nullable="false" />
+          <Property Type="Int32" Name="Cumplidas" Nullable="true" />
+          <Property Type="Int32" Name="Incumplidas" Nullable="true" />
+          <Property Type="Int32" Name="EnProceso" Nullable="true" />
+          <Property Type="String" Name="Encargado" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Grupo" Nullable="false" MaxLength="1000" />
+        </ComplexType>
+        <EntityType Name="vw_TareaArchivoAdjunto">
+          <Key>
+            <PropertyRef Name="IdTarea" />
+            <PropertyRef Name="Secuencial" />
+            <PropertyRef Name="NombreArchivo" />
+            <PropertyRef Name="Archivo" />
+            <PropertyRef Name="TipoArchivo" />
+          </Key>
+          <Property Name="IdTarea" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Secuencial" Type="Int32" Nullable="false" />
+          <Property Name="NombreArchivo" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Archivo" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="TipoArchivo" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IdTareaPadre" Type="Decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="vw_TareaEstado">
+          <Key>
+            <PropertyRef Name="IdTarea" />
+            <PropertyRef Name="Secuancial" />
+            <PropertyRef Name="IdEstado" />
+            <PropertyRef Name="IdUsuario" />
+            <PropertyRef Name="FechaModificacion" />
+            <PropertyRef Name="Observacion" />
+          </Key>
+          <Property Name="IdTarea" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Secuancial" Type="Int32" Nullable="false" />
+          <Property Name="IdEstado" Type="Int32" Nullable="false" />
+          <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaModificacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Observacion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IdTareaPadre" Type="Decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <ComplexType Name="sp_carga_laboral_Result">
+          <Property Type="Int32" Name="NumTareaPorAprobar" Nullable="true" />
+          <Property Type="Int32" Name="NumTareaVencidas" Nullable="true" />
+          <Property Type="Int32" Name="TotalTareaResueltas" Nullable="true" />
+          <Property Type="Int32" Name="TotalTareaPendiente" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="vw_Tarea_asignar_subtarea">
+          <Key>
+            <PropertyRef Name="IdTarea" />
+            <PropertyRef Name="IdUsuarioSolicitante" />
+            <PropertyRef Name="IdGrupo" />
+            <PropertyRef Name="IdUsuarioAsignado" />
+            <PropertyRef Name="EstadoActual" />
+            <PropertyRef Name="FechaEntrega" />
+            <PropertyRef Name="IdEstadoPrioridad" />
+            <PropertyRef Name="TareaConcurrente" />
+            <PropertyRef Name="AprobadoSolicitado" />
+            <PropertyRef Name="AprobadoEncargado" />
+            <PropertyRef Name="solicitante" />
+            <PropertyRef Name="Asignado" />
+            <PropertyRef Name="Prioridad" />
+            <PropertyRef Name="EstadoTarea" />
+            <PropertyRef Name="NombreGrupo" />
+            <PropertyRef Name="Estado" />
+          </Key>
+          <Property Name="IdTarea" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdUsuarioSolicitante" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdGrupo" Type="Int32" Nullable="false" />
+          <Property Name="IdUsuarioAsignado" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EstadoActual" Type="Int32" Nullable="false" />
+          <Property Name="FechaEntrega" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="AsuntoTarea" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DescripcionTarea" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IdEstadoPrioridad" Type="Int32" Nullable="false" />
+          <Property Name="TareaConcurrente" Type="Boolean" Nullable="false" />
+          <Property Name="AprobadoSolicitado" Type="Boolean" Nullable="false" />
+          <Property Name="AprobadoEncargado" Type="Boolean" Nullable="false" />
+          <Property Name="solicitante" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Asignado" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Prioridad" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="EstadoTarea" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="NombreGrupo" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <Property Name="FechaAprobacion" Type="DateTime" Precision="3" />
+          <Property Name="FechaFinConcurrencia" Type="DateTime" Precision="0" />
+          <Property Name="DiasIntervaloProximaTarea" Type="Int32" />
+          <Property Name="FechaCierreSolicitante" Type="DateTime" Precision="3" />
+          <Property Name="FechaCierreEncargado" Type="DateTime" Precision="3" />
+          <Property Name="IdTareaPadre" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="NumSubtarea" Type="Int32" />
+          <Property Name="NumSubtareasAbiertas" Type="Int32" />
+        </EntityType>
+        <ComplexType Name="sp_tareas_por_aprobar_Result">
+          <Property Type="Decimal" Name="IdTarea" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="String" Name="IdUsuarioSolicitante" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="IdGrupo" Nullable="false" />
+          <Property Type="String" Name="IdUsuarioAsignado" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="EstadoActual" Nullable="false" />
+          <Property Type="DateTime" Name="FechaEntrega" Nullable="false" />
+          <Property Type="String" Name="AsuntoTarea" Nullable="true" />
+          <Property Type="String" Name="DescripcionTarea" Nullable="true" />
+          <Property Type="Int32" Name="IdEstadoPrioridad" Nullable="false" />
+          <Property Type="Boolean" Name="TareaConcurrente" Nullable="false" />
+          <Property Type="Boolean" Name="AprobadoSolicitado" Nullable="false" />
+          <Property Type="Boolean" Name="AprobadoEncargado" Nullable="false" />
+          <Property Type="String" Name="solicitante" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Asignado" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Prioridad" Nullable="false" MaxLength="1000" />
+          <Property Type="String" Name="EstadoTarea" Nullable="false" MaxLength="1000" />
+          <Property Type="String" Name="NombreGrupo" Nullable="false" MaxLength="1000" />
+          <Property Type="Boolean" Name="Estado" Nullable="false" />
+          <Property Type="DateTime" Name="FechaAprobacion" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="FechaFinConcurrencia" Nullable="true" />
+          <Property Type="Int32" Name="DiasIntervaloProximaTarea" Nullable="true" />
+          <Property Type="DateTime" Name="FechaCierreSolicitante" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="FechaCierreEncargado" Nullable="true" Precision="23" />
+          <Property Type="Decimal" Name="IdTareaPadre" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Int32" Name="NumSubtarea" Nullable="true" />
+          <Property Type="Int32" Name="NumSubtareasAbiertas" Nullable="true" />
+          <Property Type="String" Name="EstadoCumplimiento" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="Buzon" Nullable="false" MaxLength="7" />
+        </ComplexType>
         <EntityType Name="Tarea">
           <Key>
             <PropertyRef Name="IdTarea" />
@@ -972,6 +1137,7 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
           <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
           <Property Name="FechaAnulacion" Type="DateTime" Precision="3" />
           <Property Name="IdTareaPadre" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="EstadoDevuelta" Type="Int32" />
           <NavigationProperty Name="Estado1" Relationship="ModelGeneral.FK_Tarea_Estado" FromRole="Tarea" ToRole="Estado" />
           <NavigationProperty Name="Estado2" Relationship="ModelGeneral.FK_Tarea_Estado1" FromRole="Tarea" ToRole="Estado" />
           <NavigationProperty Name="Grupo" Relationship="ModelGeneral.FK_Tarea_Grupo" FromRole="Tarea" ToRole="Grupo" />
@@ -1064,87 +1230,51 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="VWGEN_001">
+        <EntityType Name="vw_Tarea">
           <Key>
             <PropertyRef Name="IdTarea" />
+            <PropertyRef Name="IdUsuarioSolicitante" />
             <PropertyRef Name="IdGrupo" />
             <PropertyRef Name="IdUsuarioAsignado" />
             <PropertyRef Name="FechaEntrega" />
+            <PropertyRef Name="IdEstadoPrioridad" />
+            <PropertyRef Name="TareaConcurrente" />
+            <PropertyRef Name="AprobadoSolicitado" />
+            <PropertyRef Name="AprobadoEncargado" />
+            <PropertyRef Name="solicitante" />
+            <PropertyRef Name="Asignado" />
+            <PropertyRef Name="Prioridad" />
+            <PropertyRef Name="EstadoTarea" />
             <PropertyRef Name="NombreGrupo" />
-            <PropertyRef Name="EstadoActual" />
-            <PropertyRef Name="Encargado" />
-            <PropertyRef Name="Solicitante" />
+            <PropertyRef Name="Estado" />
           </Key>
           <Property Name="IdTarea" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdUsuarioSolicitante" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="IdGrupo" Type="Int32" Nullable="false" />
           <Property Name="IdUsuarioAsignado" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EstadoActual" Type="Int32" />
           <Property Name="FechaEntrega" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="FechaCierreEncargado" Type="DateTime" Precision="0" />
-          <Property Name="FechaCierreSolicitante" Type="DateTime" Precision="0" />
-          <Property Name="NombreGrupo" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="EstadoActual" Type="Int32" Nullable="false" />
           <Property Name="AsuntoTarea" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Encargado" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="Asunto" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Estado" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Solicitante" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <ComplexType Name="sp_Tareas_X_Usuarios_Result">
-          <Property Type="Decimal" Name="IdTarea" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="String" Name="IdUsuarioSolicitante" Nullable="false" MaxLength="50" />
-          <Property Type="Int32" Name="IdGrupo" Nullable="false" />
-          <Property Type="String" Name="IdUsuarioAsignado" Nullable="false" MaxLength="50" />
-          <Property Type="Int32" Name="EstadoActual" Nullable="false" />
-          <Property Type="DateTime" Name="FechaEntrega" Nullable="false" />
-          <Property Type="String" Name="AsuntoTarea" Nullable="true" />
-          <Property Type="String" Name="DescripcionTarea" Nullable="true" />
-          <Property Type="Int32" Name="IdEstadoPrioridad" Nullable="false" />
-          <Property Type="Boolean" Name="TareaConcurrente" Nullable="false" />
-          <Property Type="Boolean" Name="AprobadoSolicitado" Nullable="false" />
-          <Property Type="Boolean" Name="AprobadoEncargado" Nullable="false" />
-          <Property Type="Boolean" Name="Estado" Nullable="false" />
-          <Property Type="String" Name="IdUsuarioAsignado1" Nullable="false" MaxLength="50" />
-        </ComplexType>
-        <ComplexType Name="SPGEN_002_Result">
-          <Property Type="Int64" Name="Secuencia" Nullable="true" />
-          <Property Type="Int32" Name="IdGrupo" Nullable="false" />
-          <Property Type="Int32" Name="Cumplidas" Nullable="true" />
-          <Property Type="Int32" Name="Incumplidas" Nullable="true" />
-          <Property Type="Int32" Name="EnProceso" Nullable="true" />
-          <Property Type="String" Name="Encargado" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="Grupo" Nullable="false" MaxLength="1000" />
-        </ComplexType>
-        <EntityType Name="vw_TareaArchivoAdjunto">
-          <Key>
-            <PropertyRef Name="IdTarea" />
-            <PropertyRef Name="Secuencial" />
-            <PropertyRef Name="NombreArchivo" />
-            <PropertyRef Name="Archivo" />
-            <PropertyRef Name="TipoArchivo" />
-          </Key>
-          <Property Name="IdTarea" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="Secuencial" Type="Int32" Nullable="false" />
-          <Property Name="NombreArchivo" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="Archivo" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
-          <Property Name="TipoArchivo" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DescripcionTarea" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IdEstadoPrioridad" Type="Int32" Nullable="false" />
+          <Property Name="TareaConcurrente" Type="Boolean" Nullable="false" />
+          <Property Name="AprobadoSolicitado" Type="Boolean" Nullable="false" />
+          <Property Name="AprobadoEncargado" Type="Boolean" Nullable="false" />
+          <Property Name="solicitante" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Asignado" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Prioridad" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="EstadoTarea" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="NombreGrupo" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <Property Name="FechaAprobacion" Type="DateTime" Precision="3" />
+          <Property Name="FechaFinConcurrencia" Type="DateTime" Precision="0" />
+          <Property Name="DiasIntervaloProximaTarea" Type="Int32" />
+          <Property Name="FechaCierreSolicitante" Type="DateTime" Precision="3" />
+          <Property Name="FechaCierreEncargado" Type="DateTime" Precision="3" />
           <Property Name="IdTareaPadre" Type="Decimal" Precision="18" Scale="0" />
-        </EntityType>
-        <EntityType Name="vw_TareaEstado">
-          <Key>
-            <PropertyRef Name="IdTarea" />
-            <PropertyRef Name="Secuancial" />
-            <PropertyRef Name="IdEstado" />
-            <PropertyRef Name="IdUsuario" />
-            <PropertyRef Name="FechaModificacion" />
-            <PropertyRef Name="Observacion" />
-          </Key>
-          <Property Name="IdTarea" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="Secuancial" Type="Int32" Nullable="false" />
-          <Property Name="IdEstado" Type="Int32" Nullable="false" />
-          <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="FechaModificacion" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Observacion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="IdTareaPadre" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="NumSubtarea" Type="Int32" />
+          <Property Name="NumSubtareasAbiertas" Type="Int32" />
+          <Property Name="EstadoCumplimiento" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Parametro">
           <Key>
@@ -1165,6 +1295,7 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
           <Property Name="IdEstadoTareaDevuelta" Type="Int32" Nullable="false" />
           <Property Name="IntervaloEjecucionMin" Type="Int32" Nullable="false" />
           <Property Name="IdEstadoCierreSolicitante" Type="Int32" Nullable="false" />
+          <Property Name="IdEstadoTareaVencida" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Estado" Relationship="ModelGeneral.FK_Parametro_Estado" FromRole="Parametro" ToRole="Estado" />
           <NavigationProperty Name="Estado1" Relationship="ModelGeneral.FK_Parametro_Estado1" FromRole="Parametro" ToRole="Estado" />
           <NavigationProperty Name="Estado2" Relationship="ModelGeneral.FK_Parametro_Estado2" FromRole="Parametro" ToRole="Estado" />
@@ -1205,135 +1336,6 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <ComplexType Name="sp_carga_laboral_Result">
-          <Property Type="Int32" Name="NumTareaPorAprobar" Nullable="true" />
-          <Property Type="Int32" Name="NumTareaVencidas" Nullable="true" />
-          <Property Type="Int32" Name="TotalTareaResueltas" Nullable="true" />
-          <Property Type="Int32" Name="TotalTareaPendiente" Nullable="true" />
-        </ComplexType>
-        <EntityType Name="vw_Tarea_asignar_subtarea">
-          <Key>
-            <PropertyRef Name="IdTarea" />
-            <PropertyRef Name="IdUsuarioSolicitante" />
-            <PropertyRef Name="IdGrupo" />
-            <PropertyRef Name="IdUsuarioAsignado" />
-            <PropertyRef Name="EstadoActual" />
-            <PropertyRef Name="FechaEntrega" />
-            <PropertyRef Name="IdEstadoPrioridad" />
-            <PropertyRef Name="TareaConcurrente" />
-            <PropertyRef Name="AprobadoSolicitado" />
-            <PropertyRef Name="AprobadoEncargado" />
-            <PropertyRef Name="solicitante" />
-            <PropertyRef Name="Asignado" />
-            <PropertyRef Name="Prioridad" />
-            <PropertyRef Name="EstadoTarea" />
-            <PropertyRef Name="NombreGrupo" />
-            <PropertyRef Name="Estado" />
-          </Key>
-          <Property Name="IdTarea" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="IdUsuarioSolicitante" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdGrupo" Type="Int32" Nullable="false" />
-          <Property Name="IdUsuarioAsignado" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="EstadoActual" Type="Int32" Nullable="false" />
-          <Property Name="FechaEntrega" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="AsuntoTarea" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="DescripcionTarea" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="IdEstadoPrioridad" Type="Int32" Nullable="false" />
-          <Property Name="TareaConcurrente" Type="Boolean" Nullable="false" />
-          <Property Name="AprobadoSolicitado" Type="Boolean" Nullable="false" />
-          <Property Name="AprobadoEncargado" Type="Boolean" Nullable="false" />
-          <Property Name="solicitante" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="Asignado" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="Prioridad" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="EstadoTarea" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="NombreGrupo" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="Estado" Type="Boolean" Nullable="false" />
-          <Property Name="FechaAprobacion" Type="DateTime" Precision="3" />
-          <Property Name="FechaFinConcurrencia" Type="DateTime" Precision="0" />
-          <Property Name="DiasIntervaloProximaTarea" Type="Int32" />
-          <Property Name="FechaCierreSolicitante" Type="DateTime" Precision="3" />
-          <Property Name="FechaCierreEncargado" Type="DateTime" Precision="3" />
-          <Property Name="IdTareaPadre" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="NumSubtarea" Type="Int32" />
-          <Property Name="NumSubtareasAbiertas" Type="Int32" />
-        </EntityType>
-        <EntityType Name="vw_Tarea">
-          <Key>
-            <PropertyRef Name="IdTarea" />
-            <PropertyRef Name="IdUsuarioSolicitante" />
-            <PropertyRef Name="IdGrupo" />
-            <PropertyRef Name="IdUsuarioAsignado" />
-            <PropertyRef Name="EstadoActual" />
-            <PropertyRef Name="FechaEntrega" />
-            <PropertyRef Name="IdEstadoPrioridad" />
-            <PropertyRef Name="TareaConcurrente" />
-            <PropertyRef Name="AprobadoSolicitado" />
-            <PropertyRef Name="AprobadoEncargado" />
-            <PropertyRef Name="solicitante" />
-            <PropertyRef Name="Asignado" />
-            <PropertyRef Name="Prioridad" />
-            <PropertyRef Name="EstadoTarea" />
-            <PropertyRef Name="NombreGrupo" />
-            <PropertyRef Name="Estado" />
-          </Key>
-          <Property Name="IdTarea" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="IdUsuarioSolicitante" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdGrupo" Type="Int32" Nullable="false" />
-          <Property Name="IdUsuarioAsignado" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="EstadoActual" Type="Int32" Nullable="false" />
-          <Property Name="FechaEntrega" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="AsuntoTarea" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="DescripcionTarea" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="IdEstadoPrioridad" Type="Int32" Nullable="false" />
-          <Property Name="TareaConcurrente" Type="Boolean" Nullable="false" />
-          <Property Name="AprobadoSolicitado" Type="Boolean" Nullable="false" />
-          <Property Name="AprobadoEncargado" Type="Boolean" Nullable="false" />
-          <Property Name="solicitante" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="Asignado" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="Prioridad" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="EstadoTarea" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="NombreGrupo" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="Estado" Type="Boolean" Nullable="false" />
-          <Property Name="FechaAprobacion" Type="DateTime" Precision="3" />
-          <Property Name="FechaFinConcurrencia" Type="DateTime" Precision="0" />
-          <Property Name="DiasIntervaloProximaTarea" Type="Int32" />
-          <Property Name="FechaCierreSolicitante" Type="DateTime" Precision="3" />
-          <Property Name="FechaCierreEncargado" Type="DateTime" Precision="3" />
-          <Property Name="IdTareaPadre" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="NumSubtarea" Type="Int32" />
-          <Property Name="NumSubtareasAbiertas" Type="Int32" />
-          <Property Name="EstadoCumplimiento" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <ComplexType Name="sp_tareas_por_aprobar_Result">
-          <Property Type="Decimal" Name="IdTarea" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="String" Name="IdUsuarioSolicitante" Nullable="false" MaxLength="50" />
-          <Property Type="Int32" Name="IdGrupo" Nullable="false" />
-          <Property Type="String" Name="IdUsuarioAsignado" Nullable="false" MaxLength="50" />
-          <Property Type="Int32" Name="EstadoActual" Nullable="false" />
-          <Property Type="DateTime" Name="FechaEntrega" Nullable="false" />
-          <Property Type="String" Name="AsuntoTarea" Nullable="true" />
-          <Property Type="String" Name="DescripcionTarea" Nullable="true" />
-          <Property Type="Int32" Name="IdEstadoPrioridad" Nullable="false" />
-          <Property Type="Boolean" Name="TareaConcurrente" Nullable="false" />
-          <Property Type="Boolean" Name="AprobadoSolicitado" Nullable="false" />
-          <Property Type="Boolean" Name="AprobadoEncargado" Nullable="false" />
-          <Property Type="String" Name="solicitante" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="Asignado" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="Prioridad" Nullable="false" MaxLength="1000" />
-          <Property Type="String" Name="EstadoTarea" Nullable="false" MaxLength="1000" />
-          <Property Type="String" Name="NombreGrupo" Nullable="false" MaxLength="1000" />
-          <Property Type="Boolean" Name="Estado" Nullable="false" />
-          <Property Type="DateTime" Name="FechaAprobacion" Nullable="true" Precision="23" />
-          <Property Type="DateTime" Name="FechaFinConcurrencia" Nullable="true" />
-          <Property Type="Int32" Name="DiasIntervaloProximaTarea" Nullable="true" />
-          <Property Type="DateTime" Name="FechaCierreSolicitante" Nullable="true" Precision="23" />
-          <Property Type="DateTime" Name="FechaCierreEncargado" Nullable="true" Precision="23" />
-          <Property Type="Decimal" Name="IdTareaPadre" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="Int32" Name="NumSubtarea" Nullable="true" />
-          <Property Type="Int32" Name="NumSubtareasAbiertas" Nullable="true" />
-          <Property Type="String" Name="EstadoCumplimiento" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="Buzon" Nullable="false" MaxLength="7" />
-        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1447,37 +1449,6 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tarea">
-            <EntityTypeMapping TypeName="ModelGeneral.Tarea">
-              <MappingFragment StoreEntitySet="Tarea">
-                <ScalarProperty Name="IdTareaPadre" ColumnName="IdTareaPadre" />
-                <ScalarProperty Name="FechaAnulacion" ColumnName="FechaAnulacion" />
-                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
-                <ScalarProperty Name="FechaTransaccion" ColumnName="FechaTransaccion" />
-                <ScalarProperty Name="IdUsuarioAnula" ColumnName="IdUsuarioAnula" />
-                <ScalarProperty Name="IdUsuarioModifica" ColumnName="IdUsuarioModifica" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="FechaCierreSolicitante" ColumnName="FechaCierreSolicitante" />
-                <ScalarProperty Name="FechaCierreEncargado" ColumnName="FechaCierreEncargado" />
-                <ScalarProperty Name="DiasIntervaloProximaTarea" ColumnName="DiasIntervaloProximaTarea" />
-                <ScalarProperty Name="FechaFinConcurrencia" ColumnName="FechaFinConcurrencia" />
-                <ScalarProperty Name="FechaAprobacion" ColumnName="FechaAprobacion" />
-                <ScalarProperty Name="AprobadoEncargado" ColumnName="AprobadoEncargado" />
-                <ScalarProperty Name="AprobadoSolicitado" ColumnName="AprobadoSolicitado" />
-                <ScalarProperty Name="TareaConcurrente" ColumnName="TareaConcurrente" />
-                <ScalarProperty Name="IdEstadoPrioridad" ColumnName="IdEstadoPrioridad" />
-                <ScalarProperty Name="DescripcionTarea" ColumnName="DescripcionTarea" />
-                <ScalarProperty Name="AsuntoTarea" ColumnName="AsuntoTarea" />
-                <ScalarProperty Name="FechaEntrega" ColumnName="FechaEntrega" />
-                <ScalarProperty Name="EstadoActual" ColumnName="EstadoActual" />
-                <ScalarProperty Name="IdUsuarioAsignado" ColumnName="IdUsuarioAsignado" />
-                <ScalarProperty Name="IdGrupo" ColumnName="IdGrupo" />
-                <ScalarProperty Name="IdUsuarioSolicitante" ColumnName="IdUsuarioSolicitante" />
-                <ScalarProperty Name="IdTarea" ColumnName="IdTarea" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="VWGEN_001">
             <EntityTypeMapping TypeName="ModelGeneral.VWGEN_001">
               <MappingFragment StoreEntitySet="VWGEN_001">
@@ -1536,27 +1507,6 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Parametro">
-            <EntityTypeMapping TypeName="ModelGeneral.Parametro">
-              <MappingFragment StoreEntitySet="Parametro">
-                <ScalarProperty Name="IdEstadoCierreSolicitante" ColumnName="IdEstadoCierreSolicitante" />
-                <ScalarProperty Name="IntervaloEjecucionMin" ColumnName="IntervaloEjecucionMin" />
-                <ScalarProperty Name="IdEstadoTareaDevuelta" ColumnName="IdEstadoTareaDevuelta" />
-                <ScalarProperty Name="IdEstadoAprobarTarea" ColumnName="IdEstadoAprobarTarea" />
-                <ScalarProperty Name="IdEstadoCierreTarea" ColumnName="IdEstadoCierreTarea" />
-                <ScalarProperty Name="FtpURLAdjunto" ColumnName="FtpURLAdjunto" />
-                <ScalarProperty Name="FtpURLArchivo" ColumnName="FtpURLArchivo" />
-                <ScalarProperty Name="FtpClave" ColumnName="FtpClave" />
-                <ScalarProperty Name="FtpUsuario" ColumnName="FtpUsuario" />
-                <ScalarProperty Name="PermitirSSL" ColumnName="PermitirSSL" />
-                <ScalarProperty Name="Host" ColumnName="Host" />
-                <ScalarProperty Name="Puerto" ColumnName="Puerto" />
-                <ScalarProperty Name="CorreoClave" ColumnName="CorreoClave" />
-                <ScalarProperty Name="CorreoCuenta" ColumnName="CorreoCuenta" />
-                <ScalarProperty Name="IdParametro" ColumnName="IdParametro" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="sp_carga_laboral" FunctionName="ModelGeneral.Store.sp_carga_laboral">
             <ResultMapping>
               <ComplexTypeMapping TypeName="ModelGeneral.sp_carga_laboral_Result">
@@ -1570,39 +1520,6 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
           <EntitySetMapping Name="vw_Tarea_asignar_subtarea">
             <EntityTypeMapping TypeName="ModelGeneral.vw_Tarea_asignar_subtarea">
               <MappingFragment StoreEntitySet="vw_Tarea_asignar_subtarea">
-                <ScalarProperty Name="NumSubtareasAbiertas" ColumnName="NumSubtareasAbiertas" />
-                <ScalarProperty Name="NumSubtarea" ColumnName="NumSubtarea" />
-                <ScalarProperty Name="IdTareaPadre" ColumnName="IdTareaPadre" />
-                <ScalarProperty Name="FechaCierreEncargado" ColumnName="FechaCierreEncargado" />
-                <ScalarProperty Name="FechaCierreSolicitante" ColumnName="FechaCierreSolicitante" />
-                <ScalarProperty Name="DiasIntervaloProximaTarea" ColumnName="DiasIntervaloProximaTarea" />
-                <ScalarProperty Name="FechaFinConcurrencia" ColumnName="FechaFinConcurrencia" />
-                <ScalarProperty Name="FechaAprobacion" ColumnName="FechaAprobacion" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="NombreGrupo" ColumnName="NombreGrupo" />
-                <ScalarProperty Name="EstadoTarea" ColumnName="EstadoTarea" />
-                <ScalarProperty Name="Prioridad" ColumnName="Prioridad" />
-                <ScalarProperty Name="Asignado" ColumnName="Asignado" />
-                <ScalarProperty Name="solicitante" ColumnName="solicitante" />
-                <ScalarProperty Name="AprobadoEncargado" ColumnName="AprobadoEncargado" />
-                <ScalarProperty Name="AprobadoSolicitado" ColumnName="AprobadoSolicitado" />
-                <ScalarProperty Name="TareaConcurrente" ColumnName="TareaConcurrente" />
-                <ScalarProperty Name="IdEstadoPrioridad" ColumnName="IdEstadoPrioridad" />
-                <ScalarProperty Name="DescripcionTarea" ColumnName="DescripcionTarea" />
-                <ScalarProperty Name="AsuntoTarea" ColumnName="AsuntoTarea" />
-                <ScalarProperty Name="FechaEntrega" ColumnName="FechaEntrega" />
-                <ScalarProperty Name="EstadoActual" ColumnName="EstadoActual" />
-                <ScalarProperty Name="IdUsuarioAsignado" ColumnName="IdUsuarioAsignado" />
-                <ScalarProperty Name="IdGrupo" ColumnName="IdGrupo" />
-                <ScalarProperty Name="IdUsuarioSolicitante" ColumnName="IdUsuarioSolicitante" />
-                <ScalarProperty Name="IdTarea" ColumnName="IdTarea" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vw_Tarea">
-            <EntityTypeMapping TypeName="ModelGeneral.vw_Tarea">
-              <MappingFragment StoreEntitySet="vw_Tarea">
-                <ScalarProperty Name="EstadoCumplimiento" ColumnName="EstadoCumplimiento" />
                 <ScalarProperty Name="NumSubtareasAbiertas" ColumnName="NumSubtareasAbiertas" />
                 <ScalarProperty Name="NumSubtarea" ColumnName="NumSubtarea" />
                 <ScalarProperty Name="IdTareaPadre" ColumnName="IdTareaPadre" />
@@ -1666,6 +1583,93 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="Tarea">
+            <EntityTypeMapping TypeName="ModelGeneral.Tarea">
+              <MappingFragment StoreEntitySet="Tarea">
+                <ScalarProperty Name="EstadoDevuelta" ColumnName="EstadoDevuelta" />
+                <ScalarProperty Name="IdTareaPadre" ColumnName="IdTareaPadre" />
+                <ScalarProperty Name="FechaAnulacion" ColumnName="FechaAnulacion" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+                <ScalarProperty Name="FechaTransaccion" ColumnName="FechaTransaccion" />
+                <ScalarProperty Name="IdUsuarioAnula" ColumnName="IdUsuarioAnula" />
+                <ScalarProperty Name="IdUsuarioModifica" ColumnName="IdUsuarioModifica" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="FechaCierreSolicitante" ColumnName="FechaCierreSolicitante" />
+                <ScalarProperty Name="FechaCierreEncargado" ColumnName="FechaCierreEncargado" />
+                <ScalarProperty Name="DiasIntervaloProximaTarea" ColumnName="DiasIntervaloProximaTarea" />
+                <ScalarProperty Name="FechaFinConcurrencia" ColumnName="FechaFinConcurrencia" />
+                <ScalarProperty Name="FechaAprobacion" ColumnName="FechaAprobacion" />
+                <ScalarProperty Name="AprobadoEncargado" ColumnName="AprobadoEncargado" />
+                <ScalarProperty Name="AprobadoSolicitado" ColumnName="AprobadoSolicitado" />
+                <ScalarProperty Name="TareaConcurrente" ColumnName="TareaConcurrente" />
+                <ScalarProperty Name="IdEstadoPrioridad" ColumnName="IdEstadoPrioridad" />
+                <ScalarProperty Name="DescripcionTarea" ColumnName="DescripcionTarea" />
+                <ScalarProperty Name="AsuntoTarea" ColumnName="AsuntoTarea" />
+                <ScalarProperty Name="FechaEntrega" ColumnName="FechaEntrega" />
+                <ScalarProperty Name="EstadoActual" ColumnName="EstadoActual" />
+                <ScalarProperty Name="IdUsuarioAsignado" ColumnName="IdUsuarioAsignado" />
+                <ScalarProperty Name="IdGrupo" ColumnName="IdGrupo" />
+                <ScalarProperty Name="IdUsuarioSolicitante" ColumnName="IdUsuarioSolicitante" />
+                <ScalarProperty Name="IdTarea" ColumnName="IdTarea" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_Tarea">
+            <EntityTypeMapping TypeName="ModelGeneral.vw_Tarea">
+              <MappingFragment StoreEntitySet="vw_Tarea">
+                <ScalarProperty Name="EstadoCumplimiento" ColumnName="EstadoCumplimiento" />
+                <ScalarProperty Name="NumSubtareasAbiertas" ColumnName="NumSubtareasAbiertas" />
+                <ScalarProperty Name="NumSubtarea" ColumnName="NumSubtarea" />
+                <ScalarProperty Name="IdTareaPadre" ColumnName="IdTareaPadre" />
+                <ScalarProperty Name="FechaCierreEncargado" ColumnName="FechaCierreEncargado" />
+                <ScalarProperty Name="FechaCierreSolicitante" ColumnName="FechaCierreSolicitante" />
+                <ScalarProperty Name="DiasIntervaloProximaTarea" ColumnName="DiasIntervaloProximaTarea" />
+                <ScalarProperty Name="FechaFinConcurrencia" ColumnName="FechaFinConcurrencia" />
+                <ScalarProperty Name="FechaAprobacion" ColumnName="FechaAprobacion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="NombreGrupo" ColumnName="NombreGrupo" />
+                <ScalarProperty Name="EstadoTarea" ColumnName="EstadoTarea" />
+                <ScalarProperty Name="Prioridad" ColumnName="Prioridad" />
+                <ScalarProperty Name="Asignado" ColumnName="Asignado" />
+                <ScalarProperty Name="solicitante" ColumnName="solicitante" />
+                <ScalarProperty Name="AprobadoEncargado" ColumnName="AprobadoEncargado" />
+                <ScalarProperty Name="AprobadoSolicitado" ColumnName="AprobadoSolicitado" />
+                <ScalarProperty Name="TareaConcurrente" ColumnName="TareaConcurrente" />
+                <ScalarProperty Name="IdEstadoPrioridad" ColumnName="IdEstadoPrioridad" />
+                <ScalarProperty Name="DescripcionTarea" ColumnName="DescripcionTarea" />
+                <ScalarProperty Name="AsuntoTarea" ColumnName="AsuntoTarea" />
+                <ScalarProperty Name="FechaEntrega" ColumnName="FechaEntrega" />
+                <ScalarProperty Name="EstadoActual" ColumnName="EstadoActual" />
+                <ScalarProperty Name="IdUsuarioAsignado" ColumnName="IdUsuarioAsignado" />
+                <ScalarProperty Name="IdGrupo" ColumnName="IdGrupo" />
+                <ScalarProperty Name="IdUsuarioSolicitante" ColumnName="IdUsuarioSolicitante" />
+                <ScalarProperty Name="IdTarea" ColumnName="IdTarea" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Parametro">
+            <EntityTypeMapping TypeName="ModelGeneral.Parametro">
+              <MappingFragment StoreEntitySet="Parametro">
+                <ScalarProperty Name="IdEstadoTareaVencida" ColumnName="IdEstadoTareaVencida" />
+                <ScalarProperty Name="IdEstadoCierreSolicitante" ColumnName="IdEstadoCierreSolicitante" />
+                <ScalarProperty Name="IntervaloEjecucionMin" ColumnName="IntervaloEjecucionMin" />
+                <ScalarProperty Name="IdEstadoTareaDevuelta" ColumnName="IdEstadoTareaDevuelta" />
+                <ScalarProperty Name="IdEstadoAprobarTarea" ColumnName="IdEstadoAprobarTarea" />
+                <ScalarProperty Name="IdEstadoCierreTarea" ColumnName="IdEstadoCierreTarea" />
+                <ScalarProperty Name="FtpURLAdjunto" ColumnName="FtpURLAdjunto" />
+                <ScalarProperty Name="FtpURLArchivo" ColumnName="FtpURLArchivo" />
+                <ScalarProperty Name="FtpClave" ColumnName="FtpClave" />
+                <ScalarProperty Name="FtpUsuario" ColumnName="FtpUsuario" />
+                <ScalarProperty Name="PermitirSSL" ColumnName="PermitirSSL" />
+                <ScalarProperty Name="Host" ColumnName="Host" />
+                <ScalarProperty Name="Puerto" ColumnName="Puerto" />
+                <ScalarProperty Name="CorreoClave" ColumnName="CorreoClave" />
+                <ScalarProperty Name="CorreoCuenta" ColumnName="CorreoCuenta" />
+                <ScalarProperty Name="IdParametro" ColumnName="IdParametro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

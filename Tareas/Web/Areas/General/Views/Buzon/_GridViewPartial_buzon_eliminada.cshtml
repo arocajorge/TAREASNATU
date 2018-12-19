@@ -76,7 +76,7 @@
             c.SetDataItemTemplateContent(tc =>
             {
                 ViewContext.Writer.Write(
-                      Html.ActionLink("Consultar", "Consultar", "Tarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }, null));
+                      Html.ActionLink("CONSULTAR", "Consultar", "Tarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") }, null));
             });
 
         });

@@ -18,7 +18,7 @@ namespace Data
         public string IdUsuarioSolicitante { get; set; }
         public int IdGrupo { get; set; }
         public string IdUsuarioAsignado { get; set; }
-        public int EstadoActual { get; set; }
+        public Nullable<int> EstadoActual { get; set; }
         public System.DateTime FechaEntrega { get; set; }
         public string AsuntoTarea { get; set; }
         public string DescripcionTarea { get; set; }

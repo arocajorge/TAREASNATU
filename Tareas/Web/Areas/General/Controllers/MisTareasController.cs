@@ -63,14 +63,18 @@ namespace Web.Areas.General.Controllers
         [HttpPost]
         public ActionResult Por_aprobar(cl_filtros_Info model)
         {
+            ViewBag.estado = model.estado;
             return View(model);
         }
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_por_aprobar()
+        public ActionResult GridViewPartial_por_aprobar(string estado)
         {
             bus_tarea = new Tarea_Bus();
             List<Tarea_Info> model = new List<Tarea_Info>();
+            ViewBag.estado = estado;
             model = bus_tarea.get_lis_x_aprobar(SessionTareas.IdUsuario);
+            if (estado == "Q") // APROBADAS
+                model = model.Where(v => v.AprobadoEncargado == false || v.FechaCierreSolicitante==null).ToList();
             return PartialView("_GridViewPartial_por_aprobar", model);
         }
 

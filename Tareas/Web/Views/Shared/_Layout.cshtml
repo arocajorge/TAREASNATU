@@ -120,17 +120,29 @@
                                         <i class="fa fa-angle-left pull-right"></i>
                                     </span>
                                 </a>
-                                <ul class="treeview-menu">
-                                   @if (Web.Helps.SessionTareas.TipoUsuario == "1")
-                                   {
-                                    <li><a href="/General/Parametro/Index"><i class="fa fa-circle-o"></i>Parámetros</a></li>
-                                   }
-                                    <li><a href="/General/EstadoTipo/Index"><i class="fa fa-circle-o"></i>Tipo estado</a></li>
-                                    <li><a href="/General/Usuario/Index"><i class="fa fa-circle-o"></i>Usuarios</a></li>
-                                    <li><a href="/General/Grupo/Index"><i class="fa fa-circle-o"></i>Grupos</a></li>
-                                    <li><a href="/General/Archivo/Index"><i class="fa fa-circle-o"></i>Formatos ISO</a></li>
-                                </ul>
-                            </li>
+                                @if (Web.Helps.SessionTareas.TipoUsuario == "1")
+                                {
+                                <li class="treeview">
+                                    <a href="#">
+
+                                        <i class="fa fa-circle-o"></i> Mantenimientos
+                                        <span class="pull-right-container">
+                                            <i class="fa fa-angle-left pull-right"></i>
+                                        </span>
+                                    </a>
+                                    <ul class="treeview-menu">
+
+                                        <li><a href="/General/Parametro/Index"><i class="fa fa-circle-o"></i>Parámetros</a></li>
+
+                                        <li><a href="/General/EstadoTipo/Index"><i class="fa fa-circle-o"></i>Tipo estado</a></li>
+                                        <li><a href="/General/Usuario/Index"><i class="fa fa-circle-o"></i>Usuarios</a></li>
+                                        <li><a href="/General/Grupo/Index"><i class="fa fa-circle-o"></i>Grupos</a></li>
+                                        <li><a href="/General/Archivo/Index"><i class="fa fa-circle-o"></i>Formatos ISO</a></li>
+
+                                    </ul>
+                                </li>
+                            }
+</li>
                             <li class="treeview active">
                                 <a href="#">
                                     <i class="fa fa-circle-o"></i> Transacciones

@@ -92,6 +92,12 @@ namespace Web.Areas.General.Controllers
             string mensaje = "";
             model.Controller = cl_enumeradores.eController.AprobarTarea;
             model.Accion = cl_enumeradores.eAcciones.Nuevo;
+            if(model.FechaEntrega.Date<DateTime.Now.Date)
+            {
+                cargar_combo();
+                ViewBag.mensaje = "La fecha de entrega no puede ser menor a la fecha actual";
+                return View(model);
+            }
             var param = bus_parametro.get_info();
             if(param==null)
                 param = new Parametro_Info();
@@ -165,6 +171,12 @@ namespace Web.Areas.General.Controllers
             model.Accion = cl_enumeradores.eAcciones.Nuevo;
             var param = bus_parametro.get_info();
             string mensaje = "";
+            if (model.FechaEntrega.Date < DateTime.Now.Date)
+            {
+                cargar_combo();
+                ViewBag.mensaje = "La fecha de entrega no puede ser menor a la fecha actual";
+                return View(model);
+            }
             var grupo = bus_grupo.get_info_grup_usuario(model.IdUsuarioAsignado);
             if (grupo != null)
             {

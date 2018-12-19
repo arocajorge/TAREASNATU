@@ -4,7 +4,7 @@
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "GridViewPartial_buzon_entrada";
-        settings.CallbackRouteValues = new { Controller = "Buzon", Action = "GridViewPartial_buzon_entrada", fecha_ini = ViewBag.fecha_ini, fecha_fin = ViewBag.fecha_fin };
+        settings.CallbackRouteValues = new { Controller = "Buzon", Action = "GridViewPartial_buzon_entrada", fecha_ini = ViewBag.fecha_ini, fecha_fin = ViewBag.fecha_fin, ViewBag.estado };
         settings.Width = Unit.Percentage(100);
         settings.KeyFieldName = "IdTarea";
         //Configuración para que la grilla no muestre texto completo
@@ -93,7 +93,7 @@
                 if (Convert.ToString(DataBinder.Eval(tc.DataItem, "IdUsuarioSolicitante")) !=Web.Helps.SessionTareas.IdUsuario)
                 {
                     ViewContext.Writer.Write(
-                Html.ActionLink("Aprobar","Nuevo", "AprobarTarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") },null)
+                Html.ActionLink("APROBAR","Nuevo", "AprobarTarea", new { IdTarea = DataBinder.Eval(tc.DataItem, "IdTarea") },null)
                     );
                 }
                 else

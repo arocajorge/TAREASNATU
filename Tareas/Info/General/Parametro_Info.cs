@@ -38,6 +38,10 @@ namespace Info
         public int IntervaloEjecucionMin { get; set; }
         [Required(ErrorMessage = "El campo estado para tarea cerrada por solicitante es obligatorio")]
         public int IdEstadoCierreSolicitante { get; set; }
+        [Required(ErrorMessage = "El campo estado para tarea vencidas es obligatorio")]
+
+        public int IdEstadoTareaVencida { get; set; }
+
 
     }
 }
