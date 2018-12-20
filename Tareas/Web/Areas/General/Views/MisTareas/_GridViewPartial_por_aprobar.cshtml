@@ -83,11 +83,11 @@
         });
 
         settings.Columns.Add("solicitante", "Solicitante").Width = Unit.Percentage(10);
-        settings.Columns.Add("Buzon", "#").Width = Unit.Percentage(10);
+        settings.Columns.Add("Buzon", "Estado").Width = Unit.Percentage(10);
 
         settings.Columns.Add(c =>
         {
-            c.Caption = "#";
+            c.Caption = "Acciones";
             c.SetDataItemTemplateContent(tc =>
             {
                 if (Convert.ToString(DataBinder.Eval(tc.DataItem, "IdUsuarioSolicitante")) !=Web.Helps.SessionTareas.IdUsuario)

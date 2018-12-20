@@ -150,8 +150,8 @@
           <Property Name="FechaModificacion" Type="datetime" />
           <Property Name="FechaAnulacion" Type="datetime" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DB_TAREAS.dbo.vw_Grupo_Usuario' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_Grupo_Usuario' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vw_Grupo_Usuario">
           <Key>
             <PropertyRef Name="IdGrupo" />
@@ -163,8 +163,8 @@ warning 6002: The table/view 'DB_TAREAS.dbo.vw_Grupo_Usuario' does not have a pr
           <Property Name="Observacion" Type="varchar" MaxLength="100" />
           <Property Name="Descripcion" Type="varchar" MaxLength="1000" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DB_TAREAS.dbo.vw_Tarea' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_Tarea' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vw_Tarea">
           <Key>
             <PropertyRef Name="IdTarea" />
@@ -209,10 +209,10 @@ warning 6002: The table/view 'DB_TAREAS.dbo.vw_Tarea' does not have a primary ke
           <Property Name="IdTareaPadre" Type="decimal" Precision="18" Scale="0" />
           <Property Name="NumSubtarea" Type="int" />
           <Property Name="NumSubtareasAbiertas" Type="int" />
-          <Property Name="EstadoCumplimiento" Type="varchar" MaxLength="10" />
+          <Property Name="EstadoCumplimiento" Type="varchar" MaxLength="11" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DB_TAREAS.dbo.vw_Tarea_asignar_subtarea' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_Tarea_asignar_subtarea' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vw_Tarea_asignar_subtarea">
           <Key>
             <PropertyRef Name="IdTarea" />
@@ -259,8 +259,8 @@ warning 6002: The table/view 'DB_TAREAS.dbo.vw_Tarea_asignar_subtarea' does not 
           <Property Name="NumSubtarea" Type="int" />
           <Property Name="NumSubtareasAbiertas" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DB_TAREAS.dbo.vw_TareaArchivoAdjunto' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_TareaArchivoAdjunto' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vw_TareaArchivoAdjunto">
           <Key>
             <PropertyRef Name="IdTarea" />
@@ -276,8 +276,8 @@ warning 6002: The table/view 'DB_TAREAS.dbo.vw_TareaArchivoAdjunto' does not hav
           <Property Name="TipoArchivo" Type="varchar(max)" Nullable="false" />
           <Property Name="IdTareaPadre" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DB_TAREAS.dbo.vw_TareaEstado' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_TareaEstado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vw_TareaEstado">
           <Key>
             <PropertyRef Name="IdTarea" />
@@ -295,8 +295,8 @@ warning 6002: The table/view 'DB_TAREAS.dbo.vw_TareaEstado' does not have a prim
           <Property Name="Observacion" Type="varchar(max)" Nullable="false" />
           <Property Name="IdTareaPadre" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="VWGEN_001">
           <Key>
             <PropertyRef Name="IdTarea" />
@@ -306,6 +306,7 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
             <PropertyRef Name="NombreGrupo" />
             <PropertyRef Name="EstadoActual" />
             <PropertyRef Name="Encargado" />
+            <PropertyRef Name="Vencida" />
             <PropertyRef Name="Solicitante" />
           </Key>
           <Property Name="IdTarea" Type="numeric" Precision="18" Scale="0" Nullable="false" />
@@ -320,6 +321,7 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
           <Property Name="Encargado" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="Asunto" Type="varchar(max)" />
           <Property Name="Estado" Type="varchar" MaxLength="10" />
+          <Property Name="Vencida" Type="varchar" MaxLength="2" Nullable="false" />
           <Property Name="Solicitante" Type="varchar" MaxLength="500" Nullable="false" />
         </EntityType>
         <Association Name="FK_Estado_EstadoTipo">
@@ -490,6 +492,7 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="CierreTareaAutomatico" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_carga_laboral" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdUsuario" Type="varchar" Mode="In" />
           <Parameter Name="FechaInicio" Type="date" Mode="In" />
@@ -619,6 +622,7 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
     [VWGEN_001].[Encargado] AS [Encargado], 
     [VWGEN_001].[Asunto] AS [Asunto], 
     [VWGEN_001].[Estado] AS [Estado], 
+    [VWGEN_001].[Vencida] AS [Vencida], 
     [VWGEN_001].[Solicitante] AS [Solicitante]
     FROM [dbo].[VWGEN_001] AS [VWGEN_001]</DefiningQuery>
           </EntitySet>
@@ -773,6 +777,7 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
             <End Role="Estado" EntitySet="Estado" />
             <End Role="Parametro" EntitySet="Parametro" />
           </AssociationSet>
+          <FunctionImport Name="CierreTareaAutomatico" />
         </EntityContainer>
         <EntityType Name="Estado">
           <Key>
@@ -954,6 +959,7 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
             <PropertyRef Name="EstadoActual" />
             <PropertyRef Name="Encargado" />
             <PropertyRef Name="Solicitante" />
+            <PropertyRef Name="Vencida" />
           </Key>
           <Property Name="IdTarea" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="IdGrupo" Type="Int32" Nullable="false" />
@@ -968,6 +974,7 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
           <Property Name="Asunto" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Estado" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Solicitante" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Vencida" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
         </EntityType>
         <ComplexType Name="sp_Tareas_X_Usuarios_Result">
           <Property Type="Decimal" Name="IdTarea" Nullable="false" Precision="18" Scale="0" />
@@ -1274,7 +1281,7 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
           <Property Name="IdTareaPadre" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="NumSubtarea" Type="Int32" />
           <Property Name="NumSubtareasAbiertas" Type="Int32" />
-          <Property Name="EstadoCumplimiento" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="EstadoCumplimiento" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Parametro">
           <Key>
@@ -1452,6 +1459,7 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
           <EntitySetMapping Name="VWGEN_001">
             <EntityTypeMapping TypeName="ModelGeneral.VWGEN_001">
               <MappingFragment StoreEntitySet="VWGEN_001">
+                <ScalarProperty Name="Vencida" ColumnName="Vencida" />
                 <ScalarProperty Name="Solicitante" ColumnName="Solicitante" />
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="Asunto" ColumnName="Asunto" />
@@ -1670,6 +1678,7 @@ warning 6002: The table/view 'DB_TAREAS.dbo.VWGEN_001' does not have a primary k
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="CierreTareaAutomatico" FunctionName="ModelGeneral.Store.CierreTareaAutomatico" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

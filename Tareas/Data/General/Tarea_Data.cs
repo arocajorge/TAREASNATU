@@ -357,7 +357,22 @@ namespace Data
             }
         }
 
-
+        public bool CerrarTareasServicio()
+        {
+            try
+            {
+                using (EntityTareas db = new EntityTareas())
+                {
+                    db.CierreTareaAutomatico();
+                    db.Database.ExecuteSqlCommand("exec [dbo].[CierreTareaAutomatico]");
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         public List<Tarea_Info> get_lis(string IdUsuario)
         {
             try

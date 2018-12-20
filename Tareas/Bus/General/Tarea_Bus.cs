@@ -73,7 +73,18 @@ namespace Bus
                 throw;
             }
         }
-        
+        public bool CerrarTareasServicio()
+        {
+            try
+            {
+                return odata.CerrarTareasServicio();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         public List<Tarea_Info> get_lis_x_aprobar(string IdUsuario)
         {
             try

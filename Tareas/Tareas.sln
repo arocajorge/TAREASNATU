@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Info", "Info\Info.csproj", "{46B84638-08D0-4D35-B840-1900E3FE6259}"
 EndProject
@@ -12,6 +12,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "Web\Web.csproj", "{75579132-C880-42E2-A770-219B2E4C2155}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Database", "Database\Database.sqlproj", "{80CC9622-E28B-4E73-B986-D392E3FBFF4E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WS_CierreAutomatico", "WS_CierreAutomatico\WS_CierreAutomatico.csproj", "{FED5B682-5B11-4C13-826C-5CF9CC2B98A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestWS", "TestWS\TestWS.csproj", "{B0565D15-CE57-4D84-8A34-7629DDA82E9A}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup_CierreAuto", "Setup_CierreAuto\Setup_CierreAuto.vdproj", "{3CC6E362-32C7-41B2-B766-AC484F2BCDA1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +47,16 @@ Global
 		{80CC9622-E28B-4E73-B986-D392E3FBFF4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80CC9622-E28B-4E73-B986-D392E3FBFF4E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{80CC9622-E28B-4E73-B986-D392E3FBFF4E}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{FED5B682-5B11-4C13-826C-5CF9CC2B98A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FED5B682-5B11-4C13-826C-5CF9CC2B98A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FED5B682-5B11-4C13-826C-5CF9CC2B98A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FED5B682-5B11-4C13-826C-5CF9CC2B98A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0565D15-CE57-4D84-8A34-7629DDA82E9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0565D15-CE57-4D84-8A34-7629DDA82E9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0565D15-CE57-4D84-8A34-7629DDA82E9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0565D15-CE57-4D84-8A34-7629DDA82E9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CC6E362-32C7-41B2-B766-AC484F2BCDA1}.Debug|Any CPU.ActiveCfg = Debug
+		{3CC6E362-32C7-41B2-B766-AC484F2BCDA1}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
