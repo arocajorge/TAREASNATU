@@ -45,7 +45,7 @@
         {
             column.FieldName = "NombreArchivo";
             column.Caption = "Nombre archivo";
-            column.Width = Unit.Percentage(70);
+            column.Width = Unit.Percentage(50);
             column.EditorProperties().TextBox(sp =>
             {
                 sp.Width = Unit.Percentage(100);
@@ -64,7 +64,7 @@
                     ViewContext.Writer.Write("<span class=\"glyphicon glyphicon-download-alt\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("DolowarFille", "Tarea", new { Area = "General", IdTarea = DataBinder.Eval(c.DataItem, "IdTarea"),  Secuencial = DataBinder.Eval(c.DataItem, "Secuencial") }, Request.Url.Scheme) + "');\"></span>");
                 }
             });
-            column.Width = Unit.Percentage(10);
+            column.Width = Unit.Percentage(20);
         });
 
 
