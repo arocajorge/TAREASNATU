@@ -47,12 +47,11 @@ namespace Data
             }
         }
 
-        public List< Tarea_Info> get_lis(DateTime FechaInicio, DateTime FechaFin)
+        public List< Tarea_Info> get_lis(DateTime FechaInicio)
         {
             try
             {
                 FechaInicio = Convert.ToDateTime(FechaInicio.ToShortDateString());
-                FechaFin = Convert.ToDateTime(FechaFin.ToShortDateString());
 
                 List< Tarea_Info> Lista = new List< Tarea_Info>();
 
@@ -60,8 +59,6 @@ namespace Data
                 {
                     Lista = (from q in Context.vw_Tarea
                              where q.FechaEntrega >= FechaInicio
-
-
                              select new  Tarea_Info
                              {
                                  IdTarea = q.IdTarea,
@@ -154,12 +151,11 @@ namespace Data
                 throw;
             }
         }
-        public List<Tarea_Info> get_lis(string IdUsuario,  cl_enumeradores.eTipoTarea Tipo, DateTime FechaInicio, DateTime FechaFin)
+        public List<Tarea_Info> get_lis(string IdUsuario,  cl_enumeradores.eTipoTarea Tipo, DateTime FechaInicio)
         {
             try
             {
                 FechaInicio = Convert.ToDateTime(FechaInicio.ToShortDateString());
-                FechaFin = Convert.ToDateTime(FechaFin.ToShortDateString());
                 List<Tarea_Info> Lista = new List<Tarea_Info>();
 
                 using (EntityTareas Context = new EntityTareas())
@@ -168,7 +164,6 @@ namespace Data
                         Lista = (from q in Context.vw_Tarea
                                  where q.IdUsuarioAsignado == IdUsuario
                                  && q.FechaEntrega >= FechaInicio
-                                 && q.FechaEntrega <= FechaFin
                                  && q.Estado==true
                                  select new Tarea_Info
                              {
@@ -205,7 +200,6 @@ namespace Data
                         Lista = (from q in Context.vw_Tarea
                                  where q.IdUsuarioSolicitante == IdUsuario
                                && q.FechaEntrega >= FechaInicio
-                               && q.FechaEntrega <= FechaFin
                                && q.Estado==true
                                  select new Tarea_Info
                                  {
@@ -301,19 +295,17 @@ namespace Data
             }
         }
 
-        public List<Tarea_Info> get_lis_asignar_subtareas(string IdUsuario, cl_enumeradores.eTipoTarea Tipo, DateTime FechaInicio, DateTime FechaFin)
+        public List<Tarea_Info> get_lis_asignar_subtareas(string IdUsuario, cl_enumeradores.eTipoTarea Tipo, DateTime FechaInicio)
         {
             try
             {
                 FechaInicio = Convert.ToDateTime(FechaInicio.ToShortDateString());
-                FechaFin = Convert.ToDateTime(FechaFin.ToShortDateString());
                 List<Tarea_Info> Lista = new List<Tarea_Info>();
                 using (EntityTareas Context = new EntityTareas())
                 {
                         Lista = (from q in Context.vw_Tarea_asignar_subtarea
                                  where q.IdUsuarioAsignado == IdUsuario
                                  && q.FechaEntrega >= FechaInicio
-                                 && q.FechaEntrega <= FechaFin
                                 
                                  && q.Estado == true
                                  select new Tarea_Info
@@ -584,6 +576,10 @@ namespace Data
             {
                 using (EntityTareas db = new EntityTareas())
                 {
+                    var tarea = db.Tarea.Where(q => q.IdTarea == info.IdTarea).FirstOrDefault();
+                    if (tarea == null)
+                        return true;
+
                     var historico = db.TareaEstado.Where(q => q.IdTarea == info.IdTarea).ToList();
                     db.TareaEstado.RemoveRange(historico);
 
@@ -591,13 +587,18 @@ namespace Data
                     foreach (var item in tareashijo)
                     {
                         var historicohijo = db.TareaEstado.Where(q => q.IdTarea == item.IdTarea).ToList();
+                        var adjuntoshijo = db.TareaArchivoAdjunto.Where(q => q.IdTarea == item.IdTarea).ToList();
                         db.TareaEstado.RemoveRange(historico);
+                        db.TareaArchivoAdjunto.RemoveRange(adjuntoshijo);
                     }
-                    db.Tarea.RemoveRange(tareashijo);
+                    var adjuntos = db.TareaArchivoAdjunto.Where(q => q.IdTarea == info.IdTarea).ToList();
 
-                    var tarea = db.Tarea.Where(q => q.IdTarea == info.IdTarea).FirstOrDefault();
+                    db.TareaArchivoAdjunto.RemoveRange(adjuntos);
+                    db.Tarea.RemoveRange(tareashijo);                    
                     db.Tarea.Remove(tarea);
 
+
+                    
                     db.SaveChanges();
                 }
                 return true;

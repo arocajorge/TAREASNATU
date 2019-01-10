@@ -35,13 +35,12 @@ namespace Web.Areas.General.Controllers
             return View(model);
         }
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_buzon_entrada(DateTime? fecha_ini, DateTime? fecha_fin, string estado)
+        public ActionResult GridViewPartial_buzon_entrada(DateTime? fecha_ini, string estado)
         {
             List<Tarea_Info> model = new List<Tarea_Info>();
             ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : fecha_ini;
-            ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date.AddMonths(1) : fecha_fin;
             ViewBag.estado = estado;
-            model = bus_tarea.get_lis(SessionTareas.IdUsuario.ToString(), cl_enumeradores.eTipoTarea.ASIGNADA, ViewBag.fecha_ini, ViewBag.fecha_fin);
+            model = bus_tarea.get_lis(SessionTareas.IdUsuario.ToString(), cl_enumeradores.eTipoTarea.ASIGNADA, ViewBag.fecha_ini);
             if (estado == "A") // APROBADAS TAREAS
                 model = model.Where(v => v.AprobadoEncargado == false).ToList();
             if (estado == "E") // ENTREGAR TAREAS
@@ -69,14 +68,13 @@ namespace Web.Areas.General.Controllers
             return View(model);
         }
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_buzon_salida(DateTime? fecha_ini, DateTime? fecha_fin)
+        public ActionResult GridViewPartial_buzon_salida(DateTime? fecha_ini)
         {
             List<Tarea_Info> model = new List<Tarea_Info>();
             ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : fecha_ini;
-            ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date.AddMonths(1) : fecha_fin;
-            model = bus_tarea.get_lis(ViewBag.fecha_ini, ViewBag.fecha_fin);
+            model = bus_tarea.get_lis(ViewBag.fecha_ini);
 
-            model = bus_tarea.get_lis(SessionTareas.IdUsuario.ToString(), cl_enumeradores.eTipoTarea.GENERADAS, ViewBag.fecha_ini, ViewBag.fecha_fin);
+            model = bus_tarea.get_lis(SessionTareas.IdUsuario.ToString(), cl_enumeradores.eTipoTarea.GENERADAS, ViewBag.fecha_ini);
             return PartialView("_GridViewPartial_buzon_salida", model);
         }
 
@@ -92,12 +90,11 @@ namespace Web.Areas.General.Controllers
             return View(model);
         }
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_buzon_eliminada(DateTime? fecha_ini, DateTime? fecha_fin)
+        public ActionResult GridViewPartial_buzon_eliminada(DateTime? fecha_ini)
         {
             List<Tarea_Info> model = new List<Tarea_Info>();
             ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : fecha_ini;
-            ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date.AddMonths(1) : fecha_fin;
-            model = bus_tarea.get_lis(ViewBag.fecha_ini, ViewBag.fecha_fin);
+            model = bus_tarea.get_lis(ViewBag.fecha_ini);
 
             model = bus_tarea.get_lis_anulados(SessionTareas.IdUsuario.ToString(), ViewBag.fecha_ini, ViewBag.fecha_fin);
             return PartialView("_GridViewPartial_buzon_eliminada", model);

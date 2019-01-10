@@ -25,9 +25,9 @@ namespace Web.Areas.General.Controllers
                 if(bus_tarea.Eliminar(model))
                     model = new Tarea_Info();
             }
-            catch (Exception)
+            catch (Exception EX)
             {
-                ViewBag.mensaje = "No se ha podido eliminar la tarea";   
+                ViewBag.mensaje = "No se ha podido eliminar la tarea "+EX.ToString();   
             }
             
             return View(model);

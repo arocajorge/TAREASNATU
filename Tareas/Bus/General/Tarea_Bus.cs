@@ -12,11 +12,11 @@ namespace Bus
    public class Tarea_Bus
     {
         Tarea_Data odata = new Tarea_Data();
-        public List<Tarea_Info> get_lis(DateTime FechaiInicio, DateTime FehcaFin)
+        public List<Tarea_Info> get_lis(DateTime FechaiInicio)
         {
             try
             {
-                return odata.get_lis(FechaiInicio, FehcaFin);
+                return odata.get_lis(FechaiInicio);
             }
             catch (Exception)
             {
@@ -49,11 +49,11 @@ namespace Bus
                 throw;
             }
         }
-        public List<Tarea_Info> get_lis(string IdUsuario, cl_enumeradores.eTipoTarea Tipo, DateTime FechaInicio, DateTime FechaFin)
+        public List<Tarea_Info> get_lis(string IdUsuario, cl_enumeradores.eTipoTarea Tipo, DateTime FechaInicio)
         {
             try
             {
-                return odata.get_lis(IdUsuario, Tipo, FechaInicio, FechaFin);
+                return odata.get_lis(IdUsuario, Tipo, FechaInicio);
             }
             catch (Exception)
             {
@@ -61,11 +61,11 @@ namespace Bus
                 throw;
             }
         }
-        public List<Tarea_Info> get_lis_asignar_subtareas(string IdUsuario, cl_enumeradores.eTipoTarea Tipo, DateTime FechaInicio, DateTime FechaFin)
+        public List<Tarea_Info> get_lis_asignar_subtareas(string IdUsuario, cl_enumeradores.eTipoTarea Tipo, DateTime FechaInicio)
         {
             try
             {
-                return odata.get_lis_asignar_subtareas(IdUsuario, Tipo, FechaInicio, FechaFin);
+                return odata.get_lis_asignar_subtareas(IdUsuario, Tipo, FechaInicio);
             }
             catch (Exception)
             {

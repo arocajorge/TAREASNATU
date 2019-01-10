@@ -35,12 +35,11 @@ namespace Web.Areas.General.Controllers
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_Tarea(DateTime? fecha_ini, DateTime? fecha_fin)
+        public ActionResult GridViewPartial_Tarea(DateTime? fecha_ini)
         {
             List<Tarea_Info> model = new List<Tarea_Info>();
             ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date : fecha_ini;
-            ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date : fecha_fin;
-            model = bus_tarea.get_lis(ViewBag.fecha_ini, ViewBag.fecha_fin);
+            model = bus_tarea.get_lis(ViewBag.fecha_ini);
             return PartialView("_GridViewPartial_tarea", model);
         }
       
