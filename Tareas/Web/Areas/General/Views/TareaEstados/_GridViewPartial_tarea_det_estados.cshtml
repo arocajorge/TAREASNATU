@@ -69,6 +69,21 @@
                 sp.Width = Unit.Percentage(100);
             });
         });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdEstado";
+            column.Caption = "Estado";
+            column.Width = Unit.Percentage(10);
+            column.EditorProperties().ComboBox(p =>
+            {
+                p.Columns.Add("Descripcion", "Estado").Width = Unit.Percentage(100);
+                p.TextField = "Descripcion";
+                p.ValueField = "IdEstado";
+                p.ValueType = typeof(int);
+                p.DataSource = ViewBag.list_estado_detalle;
+            });
+        });
+        
     });
 
 }

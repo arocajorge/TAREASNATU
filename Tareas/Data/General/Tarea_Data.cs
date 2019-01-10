@@ -1057,10 +1057,14 @@ namespace Data
                 using (EntityTareas entity = new EntityTareas())
                 {
 
+                    string correo = inf_usu_dirigido.Correo;
+                    string[] correos = correo.Split(';');
                     sec++;
                     MailMessage mail = new MailMessage();
-
-                    mail.To.Add(inf_usu_dirigido.Correo);
+                    foreach (var item in correos)
+                    {
+                        mail.To.Add(item);
+                    }
                     mail.From = new MailAddress(infoParametros.CorreoCuenta);
                    
                     mail.Subject = AsuntoCorreo;

@@ -27,7 +27,8 @@ namespace Data
                                  FechaModificacion = q.FechaModificacion,
                                  IdUsuario = q.IdUsuario,
                                  IdEstado = q.IdEstado,
-                                 Observacion=q.Observacion
+                                 Observacion=q.Observacion,
+                                 
                              }).ToList();
                 }
 
