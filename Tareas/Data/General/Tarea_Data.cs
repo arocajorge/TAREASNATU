@@ -476,7 +476,7 @@ namespace Data
                
                 try
                 {
-                    info.Saludo = "Se encomiendo la siguiente tarea";
+                    info.Saludo = "Tarea asignada";
                     EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.NUEVA.ToString()+" "+cl_enumeradores.eAsuntoCorreo.TAREA.ToString(), cl_enumeradores.eCorreo.ENCARGADO);
                 }
                 catch (Exception)
@@ -551,7 +551,7 @@ namespace Data
                     Context.SaveChanges();
                     try
                     {
-                        info.Saludo = "La tarea fue modificada";
+                        info.Saludo = "Tarea modificada";
 
                         EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.TAREA.ToString() + " " + cl_enumeradores.eAsuntoCorreo.MODIFICADA.ToString(), cl_enumeradores.eCorreo.ENCARGADO);
                     }
@@ -668,7 +668,7 @@ namespace Data
                     Context.SaveChanges();
                     try
                     {
-                        info.Saludo = "Su tarea ha sido aprobada";
+                        info.Saludo = "Tarea aprobada";
 
                         EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.TAREA.ToString() + " " + cl_enumeradores.eAsuntoCorreo.ACEPTADA.ToString(), cl_enumeradores.eCorreo.SOLICITANTE);
                     }
@@ -719,7 +719,7 @@ namespace Data
                     Context.SaveChanges();
                     try
                     {
-                        info.Saludo = "Le estoy rechazando la tarea, por la cual se detalla en las observaciones ";
+                        info.Saludo = "Tarea rechazada";
                         EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.TAREA.ToString() + " " + cl_enumeradores.eAsuntoCorreo.DEVUELTA.ToString(), cl_enumeradores.eCorreo.SOLICITANTE);
                     }
                     catch (Exception)
@@ -794,7 +794,7 @@ namespace Data
                     Context.SaveChanges();
                     try
                     {
-                        info.Saludo = "Su tarea fue cerrada, favor ayudarme con la revisión";
+                        info.Saludo = "Tarea cerrada";
                         EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.TAREA.ToString() + " " + cl_enumeradores.eAsuntoCorreo.CERRADA.ToString(), cl_enumeradores.eCorreo.SOLICITANTE);
                     }
                     catch (Exception)
@@ -863,7 +863,7 @@ namespace Data
                     Context.SaveChanges();
                     try
                     {
-                        info.Saludo = "La tarea que le encomende ha sido cerrada";
+                        info.Saludo = "Tarea cerrada";
 
                         EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.TAREA.ToString() + " " + cl_enumeradores.eAsuntoCorreo.CERRADA.ToString(), cl_enumeradores.eCorreo.ENCARGADO);
                     }
@@ -930,7 +930,7 @@ namespace Data
                     Context.SaveChanges();
                     try
                     {
-                        info.Saludo = "La tarea que le encomende no ha sido aceptada";
+                        info.Saludo = "Tarea aceptada";
 
                         EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.TAREA.ToString() + " " + cl_enumeradores.eAsuntoCorreo.CERRADA.ToString(), cl_enumeradores.eCorreo.ENCARGADO);
                     }
@@ -978,7 +978,7 @@ namespace Data
 
                       try
                     {
-                        info.Saludo = "Su tarea ha sido distribuida";
+                        info.Saludo = "Tarea distribuida";
                         EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.TAREA.ToString() + " " + cl_enumeradores.eAsuntoCorreo.DISTRIBUIDA.ToString(), cl_enumeradores.eCorreo.SOLICITANTE);
                     }
                     catch (Exception)
@@ -1080,7 +1080,8 @@ namespace Data
                     MailMessage mail = new MailMessage();
                     foreach (var item in correos)
                     {
-                        mail.To.Add(item);
+                        if(!string.IsNullOrEmpty(item))
+                            mail.To.Add(item);
                     }
                     mail.From = new MailAddress(infoParametros.CorreoCuenta);
                    
