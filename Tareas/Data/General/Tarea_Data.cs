@@ -757,6 +757,22 @@ namespace Data
                         Entity.FechaCierreSolicitante = DateTime.Now;
                         Entity.FechaCierreEncargado = DateTime.Now;
                         Entity.EstadoActual = info_parametro.IdEstadoCierreSolicitante;
+
+                        if (info.TareaConcurrente)
+                        {
+                            if (info.FechaFinConcurrencia >= DateTime.Now.Date)
+                            {
+                                try
+                                {
+                                    Context.sp_crear_tarea_concurrente(info.IdTarea);
+                                    EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.NUEVA.ToString() + " " + cl_enumeradores.eAsuntoCorreo.TAREA.ToString(), cl_enumeradores.eCorreo.ENCARGADO);
+                                }
+                                catch (Exception)
+                                {
+
+                                }
+                            }
+                        }
                     }
                     #region Estado tarea
 

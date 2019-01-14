@@ -474,7 +474,7 @@ namespace Web.Areas.General.Controllers
                 }
                  if(info.TareaConcurrente)
                 {
-                    if(info.DiasIntervaloProximaTarea==null| info.DiasIntervaloProximaTarea==0)
+                    if(info.DiasIntervaloProximaTarea==null)
                         mensaje = "Los dias de intervalo es obligatorio";
                     if (info.FechaFinConcurrencia == null)
                     {
