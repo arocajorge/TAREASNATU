@@ -143,20 +143,25 @@ namespace Web.Areas.General.Controllers
         {
             try
             {
-                string mensaje = "";               
-               /*
-                if (info.TareaConcurrente)
-                {
-                    if (info.DiasIntervaloProximaTarea == null | info.DiasIntervaloProximaTarea == 0)
-                        mensaje = "Los dias de intervalo es obligatorio";
-                    if (info.FechaFinConcurrencia == null)
-                        mensaje = "La fecha de expiracion es obligatoria";
-                    else
-                        if (Convert.ToDateTime(info.FechaFinConcurrencia).Year == 1)
-                        mensaje = "La fecha de expiracion no es valida";
+                string mensaje = "";
+                /*
+                 if (info.TareaConcurrente)
+                 {
+                     if (info.DiasIntervaloProximaTarea == null | info.DiasIntervaloProximaTarea == 0)
+                         mensaje = "Los dias de intervalo es obligatorio";
+                     if (info.FechaFinConcurrencia == null)
+                         mensaje = "La fecha de expiracion es obligatoria";
+                     else
+                         if (Convert.ToDateTime(info.FechaFinConcurrencia).Year == 1)
+                         mensaje = "La fecha de expiracion no es valida";
 
+                 }
+                 */
+                if (info.FechaEntrega < DateTime.Now.Date)
+                {
+                    mensaje = "No se puede aceptar una tarea con fecha de entrega vencida";
+                    return mensaje;
                 }
-                */
                 if (info.IdTareaPadre != null)
                 {
                     var tarea = bus_tarea.get_info(Convert.ToDecimal(info.IdTareaPadre));
@@ -165,6 +170,7 @@ namespace Web.Areas.General.Controllers
                         if (info.FechaEntrega.Date > tarea.FechaEntrega.Date)
                         {
                             mensaje = "La fecha de entrega es superior a la tarea principal";
+                            return mensaje;
                         }
                     }
                 }

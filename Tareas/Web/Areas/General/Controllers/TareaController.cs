@@ -91,10 +91,10 @@ namespace Web.Areas.General.Controllers
             string mensaje = "";
             model.Controller = cl_enumeradores.eController.AprobarTarea;
             model.Accion = cl_enumeradores.eAcciones.Nuevo;
-            if(model.FechaEntrega.Date<DateTime.Now.Date)
+            if(model.FechaEntrega.Date < DateTime.Now.AddDays(1).Date)
             {
                 cargar_combo();
-                ViewBag.mensaje = "La fecha de entrega no puede ser menor a la fecha actual";
+                ViewBag.mensaje = "La fecha de entrega no puede ser hoy, seleccione una fecha de entrega superior";
                 return View(model);
             }
             var param = bus_parametro.get_info();
