@@ -637,6 +637,7 @@ namespace Data
         {
             try
             {
+                int secuencia = 1;
                 info_parametro = data_parametro.get_info();
                 using (EntityTareas Context = new EntityTareas())
                 {
@@ -665,6 +666,26 @@ namespace Data
                     #endregion
 
 
+                    #region adjuntos
+                    var resul_adjunto = Context.TareaArchivoAdjunto.Where(v => v.IdTarea == info.IdTarea);
+                    Context.TareaArchivoAdjunto.RemoveRange(resul_adjunto);
+                    foreach (var item in info.list_adjuntos)
+                    {
+                        TareaArchivoAdjunto det = new TareaArchivoAdjunto
+                        {
+                            IdTarea = info.IdTarea,
+                            Secuencial = secuencia,
+                            NombreArchivo = item.NombreArchivo,
+                            Archivo = item.Archivo,
+                            TipoArchivo = item.TipoArchivo
+
+
+                        };
+                        secuencia++;
+                        Context.TareaArchivoAdjunto.Add(det);
+                    }
+                    #endregion
+
                     Context.SaveChanges();
                     try
                     {
@@ -691,6 +712,8 @@ namespace Data
         {
             try
             {
+                int secuencia = 1;
+
                 info_parametro = data_parametro.get_info();
                 using (EntityTareas Context = new EntityTareas())
                 {
@@ -714,6 +737,27 @@ namespace Data
                     };
                     Context.TareaEstado.Add(New_estado);
 
+                    #endregion
+
+
+                    #region adjuntos
+                    var resul_adjunto = Context.TareaArchivoAdjunto.Where(v => v.IdTarea == info.IdTarea);
+                    Context.TareaArchivoAdjunto.RemoveRange(resul_adjunto);
+                    foreach (var item in info.list_adjuntos)
+                    {
+                        TareaArchivoAdjunto det = new TareaArchivoAdjunto
+                        {
+                            IdTarea = info.IdTarea,
+                            Secuencial = secuencia,
+                            NombreArchivo = item.NombreArchivo,
+                            Archivo = item.Archivo,
+                            TipoArchivo = item.TipoArchivo
+
+
+                        };
+                        secuencia++;
+                        Context.TareaArchivoAdjunto.Add(det);
+                    }
                     #endregion
 
                     Context.SaveChanges();
@@ -741,6 +785,8 @@ namespace Data
         {
             try
             {
+                int secuencia = 1;
+
                 info_parametro = data_parametro.get_info();
                 using (EntityTareas Context = new EntityTareas())
                 {
@@ -791,6 +837,25 @@ namespace Data
 
                     #endregion
 
+                    #region adjuntos
+                    var resul_adjunto = Context.TareaArchivoAdjunto.Where(v => v.IdTarea == info.IdTarea);
+                    Context.TareaArchivoAdjunto.RemoveRange(resul_adjunto);
+                    foreach (var item in info.list_adjuntos)
+                    {
+                        TareaArchivoAdjunto det = new TareaArchivoAdjunto
+                        {
+                            IdTarea = info.IdTarea,
+                            Secuencial = secuencia,
+                            NombreArchivo = item.NombreArchivo,
+                            Archivo = item.Archivo,
+                            TipoArchivo = item.TipoArchivo
+
+
+                        };
+                        secuencia++;
+                        Context.TareaArchivoAdjunto.Add(det);
+                    }
+                    #endregion
                     Context.SaveChanges();
                     try
                     {
@@ -818,6 +883,8 @@ namespace Data
         {
             try
             {
+                int secuencia = 1;
+
                 info_parametro = data_parametro.get_info();
                 using (EntityTareas Context = new EntityTareas())
                 {
@@ -858,6 +925,27 @@ namespace Data
                     };
                     Context.TareaEstado.Add(New_estado);
 
+                    #endregion
+
+
+                    #region adjuntos
+                    var resul_adjunto = Context.TareaArchivoAdjunto.Where(v => v.IdTarea == info.IdTarea);
+                    Context.TareaArchivoAdjunto.RemoveRange(resul_adjunto);
+                    foreach (var item in info.list_adjuntos)
+                    {
+                        TareaArchivoAdjunto det = new TareaArchivoAdjunto
+                        {
+                            IdTarea = info.IdTarea,
+                            Secuencial = secuencia,
+                            NombreArchivo = item.NombreArchivo,
+                            Archivo = item.Archivo,
+                            TipoArchivo = item.TipoArchivo
+
+
+                        };
+                        secuencia++;
+                        Context.TareaArchivoAdjunto.Add(det);
+                    }
                     #endregion
 
                     Context.SaveChanges();

@@ -510,7 +510,7 @@ namespace Web.Areas.General.Controllers
                 model.Accion = cl_enumeradores.eAcciones.Consultar;
 
                 model.ObsevacionModificacion = ObsevacionModificacion;
-                model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(model.IdTransaccionSession);
+                model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual));
                 model.IdUsuarioModifica = SessionTareas.IdUsuario.ToString();
                 model.IdUsuario = SessionTareas.IdUsuario.ToString();
 
@@ -533,7 +533,7 @@ namespace Web.Areas.General.Controllers
                 model.Accion = cl_enumeradores.eAcciones.Consultar;
 
                 model.ObsevacionModificacion = ObsevacionModificacion;
-                model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(model.IdTransaccionSession);
+                model.list_adjuntos = TareaArchivoAdjunto_Info_lis.get_list(Convert.ToDecimal(SessionTareas.IdTransaccionSessionActual));
                 model.IdUsuarioModifica = SessionTareas.IdUsuario.ToString();
                 model.FechaEntrega = model.FechaEntrega;
                 model.IdUsuario = SessionTareas.IdUsuario.ToString();
