@@ -44,17 +44,17 @@ namespace Web.Areas.General.Controllers
             if (estado == "A") // APROBADAS TAREAS
                 model = model.Where(v => v.AprobadoEncargado == false).ToList();
             if (estado == "E") // ENTREGAR TAREAS
-                model = model.Where(v => v.AprobadoEncargado == true).ToList();
+                model = model.Where(v => v.AprobadoEncargado == true && v.FechaCierreSolicitante == null).ToList();
             if (estado == "V") // TAREAS VENCIDAS
-                model = model.Where(v => v.AprobadoEncargado == true && v.FechaEntrega.Date<DateTime.Now.Date).ToList();
+                model = model.Where(v => v.FechaEntrega.Date < (v.FechaCierreEncargado == null ? DateTime.Now.Date : Convert.ToDateTime(v.FechaCierreEncargado).Date)).ToList();
 
             if (estado == "Q") // TAREAS APROBADAS
                 model = model.Where(v => v.AprobadoEncargado == false ||v.FechaCierreEncargado ==null ).ToList();
 
             if (estado == "R") // TAREAS RESUELTAS V
-                model = model.Where(v => v.FechaCierreEncargado != null).ToList();
+                model = model.Where(v => v.FechaCierreSolicitante != null).OrderByDescending(q=>q.FechaCierreEncargado).ToList();
 
-            return PartialView("_GridViewPartial_buzon_entrada", model);
+            return PartialView("_GridViewPartial_buzon_entrada", model.ToList());
         }
         public ActionResult Buzon_salida()
         {
@@ -75,7 +75,7 @@ namespace Web.Areas.General.Controllers
             model = bus_tarea.get_lis(ViewBag.fecha_ini);
 
             model = bus_tarea.get_lis(SessionTareas.IdUsuario.ToString(), cl_enumeradores.eTipoTarea.GENERADAS, ViewBag.fecha_ini);
-            return PartialView("_GridViewPartial_buzon_salida", model);
+            return PartialView("_GridViewPartial_buzon_salida", model.OrderByDescending(q=> q.IdTarea).ToList());
         }
 
         public ActionResult Buzon_eliminado()

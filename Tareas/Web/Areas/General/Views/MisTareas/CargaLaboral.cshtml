@@ -92,28 +92,28 @@
                             @Html.ValidationMessageFor(q => q.IdGrupoFiltro, "", new { @class = "text-danger" })
                         </div>
                     </div>
-
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <label for="FechaEntrega">Fecha corte*</label>
-                            <div class="input-group date">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
-                                </div>
-                                @Html.DevExpress().DateEditFor(q => q.FechaInicio, settings =>
-                           {
-                               settings.Name = "FechaInicio";
-                               settings.Properties.UseMaskBehavior = true;
-                               settings.Properties.EditFormat = EditFormat.Date;
-                               settings.Properties.EditFormatString = "dd/MM/yyyy";
-                               settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
-                               settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                           }).GetHtml()
-                                @Html.ValidationMessageFor(q => q.FechaInicio, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                    </div>
-
+                    @*
+    <div class="col-md-2">
+        <div class="form-group">
+            <label for="FechaEntrega">Fecha corte*</label>
+            <div class="input-group date">
+                <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                </div>
+                @Html.DevExpress().DateEditFor(q => q.FechaInicio, settings =>
+           {
+               settings.Name = "FechaInicio";
+               settings.Properties.UseMaskBehavior = true;
+               settings.Properties.EditFormat = EditFormat.Date;
+               settings.Properties.EditFormatString = "dd/MM/yyyy";
+               settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+               settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+           }).GetHtml()
+                @Html.ValidationMessageFor(q => q.FechaInicio, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+                    *@
 
                 </div>
             </div>

@@ -7477,6 +7477,7 @@
     <Content Include="Areas\General\Views\MisTareas\_GridViewPartial_por_aprobar.cshtml" />
     <Content Include="Areas\General\Views\EliminarTarea\Index.cshtml" />
     <None Include="Properties\PublishProfiles\p.pubxml" />
+    <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

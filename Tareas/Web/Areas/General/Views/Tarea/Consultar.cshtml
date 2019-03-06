@@ -219,7 +219,8 @@
                            {
                                settings.Name = "UploadControl_adjunto";
                                settings.CallbackRouteValues = new { Controller = "Tarea", Action = "UploadControl_adjuntoUpload" };
-
+                               settings.AutoStartUpload = true;
+                               settings.UploadMode = UploadControlUploadMode.Auto;
                                settings.AdvancedModeSettings.EnableMultiSelect = true;
                                settings.AdvancedModeSettings.EnableFileList = true;
                                settings.AdvancedModeSettings.EnableDragAndDrop = true;

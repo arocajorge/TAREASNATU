@@ -165,6 +165,7 @@ namespace Data
                                  where q.IdUsuarioAsignado == IdUsuario
                                  && q.FechaEntrega >= FechaInicio
                                  && q.Estado==true
+                                 orderby q.FechaEntrega 
                                  select new Tarea_Info
                              {
                                  IdTarea = q.IdTarea,
@@ -201,6 +202,7 @@ namespace Data
                                  where q.IdUsuarioSolicitante == IdUsuario
                                && q.FechaEntrega >= FechaInicio
                                && q.Estado==true
+                                 orderby q.FechaEntrega
                                  select new Tarea_Info
                                  {
                                      IdTarea = q.IdTarea,
@@ -893,19 +895,19 @@ namespace Data
                         return false;
                     if (Entity.IdUsuarioSolicitante != Entity.IdUsuarioAsignado)
                     {
-                        Entity.FechaCierreSolicitante = DateTime.Now;
+                        Entity.FechaCierreSolicitante = Entity.FechaCierreEncargado;
                         Entity.EstadoActual = info_parametro.IdEstadoCierreSolicitante;
-                        if(info.FechaEntrega.Date<DateTime.Now.Date)
+                        if(info.FechaEntrega.Date< Entity.FechaCierreEncargado)
                         {
                             Entity.EstadoActual = info_parametro.IdEstadoTareaVencida;
                         }
                     }
                     else
                     {
-                        Entity.FechaCierreSolicitante = DateTime.Now;
-                        Entity.FechaCierreEncargado = DateTime.Now;
+                        Entity.FechaCierreSolicitante = Entity.FechaCierreEncargado;
+                        Entity.FechaCierreEncargado = Entity.FechaCierreEncargado;
                         Entity.EstadoActual = info_parametro.IdEstadoCierreSolicitante;
-                        if (info.FechaEntrega.Date < DateTime.Now.Date)
+                        if (info.FechaEntrega.Date < Entity.FechaCierreEncargado)
                         {
                             Entity.EstadoActual = info_parametro.IdEstadoTareaVencida;
                         }

@@ -68,11 +68,23 @@
 
         };
         settings.Columns.Add("IdTarea", "ID").Width = Unit.Percentage(5);
-        settings.Columns.Add("AsuntoTarea", "Asunto").Width = Unit.Percentage(45);
+        settings.Columns.Add("AsuntoTarea", "Asunto").Width = Unit.Percentage(35);
         settings.Columns.Add(column =>
         {
             column.FieldName = "FechaEntrega";
             column.Caption = "Fecha entrega";
+            column.Width = Unit.Percentage(10);
+            column.PropertiesEdit.DisplayFormatString = "d";
+            column.EditorProperties().DateEdit(sp =>
+            {
+                column.PropertiesEdit.DisplayFormatString = "d";
+                sp.Width = Unit.Percentage(100);
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "FechaCierreEncargado";
+            column.Caption = "Fecha cierre";
             column.Width = Unit.Percentage(10);
             column.PropertiesEdit.DisplayFormatString = "d";
             column.EditorProperties().DateEdit(sp =>
