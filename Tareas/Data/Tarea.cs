@@ -47,6 +47,7 @@ namespace Data
         public Nullable<System.DateTime> FechaAnulacion { get; set; }
         public Nullable<decimal> IdTareaPadre { get; set; }
         public Nullable<int> EstadoDevuelta { get; set; }
+        public string TipoRecurrencia { get; set; }
     
         public virtual Estado Estado1 { get; set; }
         public virtual Estado Estado2 { get; set; }

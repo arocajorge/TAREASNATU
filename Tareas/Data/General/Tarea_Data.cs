@@ -432,11 +432,11 @@ namespace Data
                         IdUsuario = info.IdUsuario,
                         Estado = true,
                         IdTareaPadre=info.IdTareaPadre,
-                        FechaAprobacion=info.FechaAprobacion
+                        FechaAprobacion=info.FechaAprobacion,
+                        TipoRecurrencia = info.TipoRecurrencia
                     };
                     Context.Tarea.Add(Entity);
                     #endregion
-
                   
                     #region adjuntos
                     foreach (var item in info.list_adjuntos)
@@ -511,8 +511,8 @@ namespace Data
                     Entity.IdUsuarioModifica = info.IdUsuarioModifica;
                     Entity.FechaFinConcurrencia = info.FechaFinConcurrencia;
                     Entity.DiasIntervaloProximaTarea = info.DiasIntervaloProximaTarea;
+                    Entity.TipoRecurrencia = info.TipoRecurrencia;
 
-                   
 
                     #region adjuntos
                     var resul_adjunto = Context.TareaArchivoAdjunto.Where(v => v.IdTarea == info.IdTarea);
@@ -806,19 +806,16 @@ namespace Data
                         Entity.FechaCierreEncargado = DateTime.Now;
                         Entity.EstadoActual = info_parametro.IdEstadoCierreSolicitante;
 
-                        if (info.TareaConcurrente)
+                        if (!string.IsNullOrEmpty(Entity.TipoRecurrencia))
                         {
-                            if (info.FechaFinConcurrencia >= DateTime.Now.Date)
+                            try
                             {
-                                try
-                                {
-                                    Context.sp_crear_tarea_concurrente(info.IdTarea);
-                                    EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.NUEVA.ToString() + " " + cl_enumeradores.eAsuntoCorreo.TAREA.ToString(), cl_enumeradores.eCorreo.ENCARGADO);
-                                }
-                                catch (Exception)
-                                {
+                                Context.sp_crear_tarea_concurrente(info.IdTarea);
+                                EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.NUEVA.ToString() + " " + cl_enumeradores.eAsuntoCorreo.TAREA.ToString(), cl_enumeradores.eCorreo.ENCARGADO);
+                            }
+                            catch (Exception)
+                            {
 
-                                }
                             }
                         }
                     }
@@ -897,7 +894,7 @@ namespace Data
                     {
                         Entity.FechaCierreSolicitante = Entity.FechaCierreEncargado;
                         Entity.EstadoActual = info_parametro.IdEstadoCierreSolicitante;
-                        if(info.FechaEntrega.Date< Entity.FechaCierreEncargado)
+                        if (info.FechaEntrega.Date < Entity.FechaCierreEncargado)
                         {
                             Entity.EstadoActual = info_parametro.IdEstadoTareaVencida;
                         }
@@ -920,7 +917,7 @@ namespace Data
                         Secuancial = odta_estado.get_id(info.IdTarea),
                         IdUsuario = info.IdUsuario,
                         Observacion = info.ObsevacionModificacion,
-                        IdEstado  =info_parametro.IdEstadoCierreSolicitante,
+                        IdEstado = info_parametro.IdEstadoCierreSolicitante,
                         FechaModificacion = DateTime.Now,
 
 
@@ -961,22 +958,18 @@ namespace Data
                     {
 
                     }
-                    if (info.TareaConcurrente)
+                    if (!string.IsNullOrEmpty(Entity.TipoRecurrencia))
                     {
-                        if (info.FechaFinConcurrencia >= DateTime.Now.Date)
+                        try
                         {
-                            try
-                            {
-                                Context.sp_crear_tarea_concurrente(info.IdTarea);
-                                EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.NUEVA.ToString() + " " + cl_enumeradores.eAsuntoCorreo.TAREA.ToString(), cl_enumeradores.eCorreo.ENCARGADO);
-                            }
-                            catch (Exception)
-                            {
+                            Context.sp_crear_tarea_concurrente(info.IdTarea);
+                            EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.NUEVA.ToString() + " " + cl_enumeradores.eAsuntoCorreo.TAREA.ToString(), cl_enumeradores.eCorreo.ENCARGADO);
+                        }
+                        catch (Exception)
+                        {
 
-                            }
                         }
                     }
-
                 }
 
                 return true;
@@ -1028,19 +1021,16 @@ namespace Data
                     {
 
                     }
-                    if (info.TareaConcurrente)
+                    if (!string.IsNullOrEmpty(Entity.TipoRecurrencia))
                     {
-                        if (info.FechaFinConcurrencia >= DateTime.Now.Date)
+                        try
                         {
-                            try
-                            {
-                                Context.sp_crear_tarea_concurrente(info.IdTarea);
-                                EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.NUEVA.ToString() + " " + cl_enumeradores.eAsuntoCorreo.TAREA.ToString(), cl_enumeradores.eCorreo.ENCARGADO);
-                            }
-                            catch (Exception)
-                            {
+                            Context.sp_crear_tarea_concurrente(info.IdTarea);
+                            EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.NUEVA.ToString() + " " + cl_enumeradores.eAsuntoCorreo.TAREA.ToString(), cl_enumeradores.eCorreo.ENCARGADO);
+                        }
+                        catch (Exception)
+                        {
 
-                            }
                         }
                     }
 
@@ -1112,12 +1102,11 @@ namespace Data
                  Tarea_Info info = new  Tarea_Info();
                 using (EntityTareas Context = new EntityTareas())
                 {
-                    vw_Tarea Entity = Context. vw_Tarea.FirstOrDefault(q => q.IdTarea == IdTarea);
+                    var Entity = Context.Tarea.FirstOrDefault(q => q.IdTarea == IdTarea);
                     if (Entity == null) return null;
 
                     info = new  Tarea_Info
                     {
-                        
                         IdTarea =Entity.IdTarea,
                         IdUsuarioSolicitante = Entity.IdUsuarioSolicitante,
                         IdGrupo = Entity.IdGrupo,
@@ -1130,12 +1119,12 @@ namespace Data
                         TareaConcurrente = Entity.TareaConcurrente,
                         AprobadoEncargado = Entity.AprobadoEncargado,
                         AprobadoSolicitado = Entity.AprobadoSolicitado,
-                        nomb_jef_grupo=Entity.Asignado,
+                        //nomb_jef_grupo=Entity.Asignado,
                         DiasIntervaloProximaTarea=Entity.DiasIntervaloProximaTarea,
                         FechaFinConcurrencia=Entity.FechaFinConcurrencia,
                         IdTareaPadre=Entity.IdTareaPadre,
-                        NumSubtareasAbiertas=Entity.NumSubtareasAbiertas
-
+                        //NumSubtareasAbiertas=Entity.NumSubtareasAbiertas
+                        TipoRecurrencia = Entity.TipoRecurrencia
                     };
                 }
                 return info;

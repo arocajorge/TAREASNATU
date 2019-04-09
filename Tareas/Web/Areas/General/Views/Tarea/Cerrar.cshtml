@@ -94,14 +94,7 @@
                     @Html.ValidationMessageFor(q => q.IdUsuarioAsignado, "", new { @class = "text-danger" })
                 </div>
             </div>
-
-
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-2">
+            <div class="col-md-offset-2 col-md-2">
                 <div class="form-group">
                     <label for="FechaEntrega">Fecha de entrega*</label>
                     <div class="input-group date">
@@ -111,60 +104,43 @@
                         @Html.DevExpress().DateEditFor(q => q.FechaEntrega, settings =>
                    {
                        settings.Name = "FechaEntrega";
+                       settings.ReadOnly = true;
                        settings.Properties.UseMaskBehavior = true;
                        settings.Properties.EditFormat = EditFormat.Date;
                        settings.Properties.EditFormatString = "dd/MM/yyyy";
                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                       settings.ReadOnly = true;
-
                    }).GetHtml()
                         @Html.ValidationMessageFor(q => q.FechaEntrega, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
-
-
             <div class="col-md-2">
                 <div class="form-group">
-                    <label for="AprobadoSolicitado"></label>
-                    @Html.DevExpress().CheckBoxFor(q => q.AprobadoSolicitado, settings =>
+                    <label for="IdUsuarioSolicitante">Repetir cada:</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.TipoRecurrencia, settings =>
                {
-                   settings.Name = "AprobadoSolicitado";
-                   settings.Text = "Aprobado solicitante";
+                   settings.Name = "TipoRecurrencia";
                    settings.ReadOnly = true;
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.DisplayFormatString = "{0}";
+                   settings.Properties.Items.Add("DIA", "1DIA");
+                   settings.Properties.Items.Add("SEMANA", "1SEMANA");
+                   settings.Properties.Items.Add("2 SEMANAS", "2SEMANA");
+                   settings.Properties.Items.Add("MES", "1MES");
+                   settings.Properties.Items.Add("2 MESES", "2MES");
+                   settings.Properties.Items.Add("3 MESES", "3MES");
+                   settings.Properties.Items.Add("6 MESES", "6MES");
+                   settings.Properties.Items.Add("AÑO", "1ANIO");
+                   settings.Properties.ValueType = typeof(string);
+                   //Boton para seleccionar ningun registro
+                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
+                   settings.Properties.NullText = "== Seleccione ==";
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
                }).GetHtml()
-                    @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(q => q.TipoRecurrencia, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label for="AprobadoSolicitado"></label>
-                    @Html.DevExpress().CheckBoxFor(q => q.AprobadoEncargado, settings =>
-               {
-                   settings.Name = "AprobadoEncargado";
-                   settings.Text = "Aprobado encargado";
-                   settings.ReadOnly = true;
-
-               }).GetHtml()
-                    @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label for="TareaConcurrente"></label>
-                    @Html.DevExpress().CheckBoxFor(q => q.TareaConcurrente, settings =>
-               {
-                   settings.Name = "TareaConcurrente";
-                   settings.Text = "Tarea recurrente";
-                   settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){mostrar_parametros()}";
-                   settings.ReadOnly = true;
-
-               }).GetHtml()
-                    @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
         </div>
     </div>
 
@@ -173,7 +149,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="AsuntoTarea">Asunto*</label>
-                    @Html.TextAreaFor(v => v.AsuntoTarea, new { @class = "form-control", @rows = 2, @disabled = "disabled" })
+                    @Html.TextBoxFor(v => v.AsuntoTarea, new { @class = "form-control", @disabled = "disabled" })
                     @Html.ValidationMessageFor(m => m.AsuntoTarea, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -208,9 +184,6 @@
 
             <li>
                 <a href="#tab_adjuntos" aria-controls="adjunto" role="tab" data-toggle="tab" id="link_adjunto">Archivos adjuntos</a>
-            </li>
-            <li>
-                <a href="#tab_parametros" aria-controls="parametros" role="tab" data-toggle="tab" id="link_parametro">Parámetros</a>
             </li>
             <li class="active">
                 <a href="#tab_historico" aria-controls="parametros" role="tab" data-toggle="tab" id="link_historico">Histórico</a>
@@ -256,39 +229,6 @@
                 </div>
             </div>
 
-            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_parametros">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label for="FechaEntrega">Expira</label>
-                                <div class="input-group date">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-calendar"></i>
-                                    </div>
-                                    @Html.DevExpress().DateEditFor(q => q.FechaFinConcurrencia, settings =>
-                                   {
-                                       settings.Name = "FechaFinConcurrencia";
-                                       settings.Properties.UseMaskBehavior = true;
-                                       settings.Properties.EditFormat = EditFormat.Date;
-                                       settings.Properties.EditFormatString = "dd/MM/yyyy";
-                                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
-                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                   }).GetHtml()
-                                    @Html.ValidationMessageFor(q => q.FechaFinConcurrencia, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label for="DiasIntervaloProximaTarea">Días intervalo</label>
-                                @Html.TextBoxFor(v => v.DiasIntervaloProximaTarea, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(m => m.DiasIntervaloProximaTarea, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_historico">
                 <div class="row">
                     <div class="col-md-12">

@@ -44,6 +44,7 @@ namespace Info
         public Nullable<System.DateTime> FechaAnulacion { get; set; }
         [Required(ErrorMessage = "Ingrese una observación")]
         public string ObsevacionModificacion { get; set; }
+        public string TipoRecurrencia { get; set; }
 
 
         public cl_enumeradores.eController Controller { get; set; }

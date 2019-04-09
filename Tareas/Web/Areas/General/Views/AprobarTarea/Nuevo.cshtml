@@ -89,14 +89,7 @@
                     @Html.ValidationMessageFor(q => q.IdUsuarioAsignado, "", new { @class = "text-danger" })
                 </div>
             </div>
-
-
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-2">
+            <div class="col-md-offset-2 col-md-2">
                 <div class="form-group">
                     <label for="FechaEntrega">Fecha de entrega*</label>
                     <div class="input-group date">
@@ -116,33 +109,40 @@
                     </div>
                 </div>
             </div>
-
-
-           
             <div class="col-md-2">
                 <div class="form-group">
-                    <label for="TareaConcurrente"></label>
-                    @Html.DevExpress().CheckBoxFor(q => q.TareaConcurrente, settings =>
+                    <label for="IdUsuarioSolicitante">Repetir cada:</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.TipoRecurrencia, settings =>
                {
-                   settings.Name = "TareaConcurrente";
-                   settings.Text = "Tarea recurrente";
-                   settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){mostrar_parametros()}";
+                   settings.Name = "TipoRecurrencia";
                    settings.ReadOnly = true;
-
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.DisplayFormatString = "{0}";
+                   settings.Properties.Items.Add("DIA", "1DIA");
+                   settings.Properties.Items.Add("SEMANA", "1SEMANA");
+                   settings.Properties.Items.Add("2 SEMANAS", "2SEMANA");
+                   settings.Properties.Items.Add("MES", "1MES");
+                   settings.Properties.Items.Add("2 MESES", "2MES");
+                   settings.Properties.Items.Add("3 MESES", "3MES");
+                   settings.Properties.Items.Add("6 MESES", "6MES");
+                   settings.Properties.Items.Add("AÑO", "1ANIO");
+                   settings.Properties.ValueType = typeof(string);
+                   //Boton para seleccionar ningun registro
+                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
+                   settings.Properties.NullText = "== Seleccione ==";
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
                }).GetHtml()
-                    @Html.ValidationMessageFor(q => q.IdEstadoPrioridad, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(q => q.TipoRecurrencia, "", new { @class = "text-danger" })
                 </div>
             </div>
-
         </div>
     </div>
-
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="AsuntoTarea">Asunto*</label>
-                    @Html.TextAreaFor(v => v.AsuntoTarea, new { @class = "form-control", @rows = 2, @disabled = "disabled" })
+                    @Html.TextBoxFor(v => v.AsuntoTarea, new { @class = "form-control",  @disabled = "disabled" })
                     @Html.ValidationMessageFor(m => m.AsuntoTarea, "", new { @class = "text-danger" })
                 </div>
             </div>
