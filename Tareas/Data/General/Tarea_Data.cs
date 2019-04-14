@@ -1013,27 +1013,14 @@ namespace Data
                     Context.SaveChanges();
                     try
                     {
-                        info.Saludo = "Tarea aceptada";
+                        info.Saludo = "Tarea rechazada";
 
-                        EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.TAREA.ToString() + " " + cl_enumeradores.eAsuntoCorreo.CERRADA.ToString(), cl_enumeradores.eCorreo.ENCARGADO);
+                        EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.TAREA.ToString() + " " + cl_enumeradores.eAsuntoCorreo.DEVUELTA.ToString(), cl_enumeradores.eCorreo.ENCARGADO);
                     }
                     catch (Exception)
                     {
 
                     }
-                    if (!string.IsNullOrEmpty(Entity.TipoRecurrencia))
-                    {
-                        try
-                        {
-                            Context.sp_crear_tarea_concurrente(info.IdTarea);
-                            EnviarCorreo(info, cl_enumeradores.eAsuntoCorreo.NUEVA.ToString() + " " + cl_enumeradores.eAsuntoCorreo.TAREA.ToString(), cl_enumeradores.eCorreo.ENCARGADO);
-                        }
-                        catch (Exception)
-                        {
-
-                        }
-                    }
-
                 }
 
                 return true;
@@ -1175,7 +1162,6 @@ namespace Data
                     }
                     catch (Exception)
                     {
-
                         
                     }
                     string Body = "Estimado compañero, <br/><br/>";
@@ -1194,9 +1180,7 @@ namespace Data
                     Body += "<br/>";
                     Body += "<br/>";
                    
-                   // Body += "Observaciones: ";
                     Body += "<td><strong>Observaciones:</strong></td>";
-
                     Body += "<br/>";
                     Body += info.ObsevacionModificacion;
                     Body += "<table>";
@@ -1204,21 +1188,12 @@ namespace Data
                     Body += "<td><strong>Fecha entrega:</strong></td>";
                     Body += "<td><strong>" + info.FechaEntrega.ToShortDateString() + "</strong></td>";
                     Body += "</tr>";
-                    Body += "<tr>";
-                  
-                    Body += "</tr>";
                     Body += "</table>";
+
                     Body += "<br/>";
                     Body += "<br/>";
                     Body += "Para para acceder a la tarea acceder al link:<br/><br/>";
                     Body += "<a href='http://tareas.degeremcia.com/General/"+info.Controller+"/"+info.Accion+"?IdTarea=" + info.IdTarea+"'>Tareas</a>";
-
-                    Body += "<br/>";
-                    Body += "<br/>";
-                    Body += "<table>"; 
-                    Body += "<tr>";
-                    Body += "</tr>";
-                    Body += "</table>";
 
 
                     AlternateView htmlView = AlternateView.CreateAlternateViewFromString(Body, null, "text/html");
