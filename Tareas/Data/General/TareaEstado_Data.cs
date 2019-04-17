@@ -52,10 +52,12 @@ namespace Data
                         IdUsuario = info.IdUsuario,
                        Secuancial=info.Secuancial=get_id(info.IdTarea),
                        Observacion=info.Observacion,
-                       FechaModificacion=DateTime.Now
+                       FechaModificacion=DateTime.Now,
+                       IdEstado = info.IdEstado
+                       
                     };
-                    Context.SaveChanges();
                     Context.TareaEstado.Add(Entity);
+                    Context.SaveChanges();                    
                 }
                 return true;
             }

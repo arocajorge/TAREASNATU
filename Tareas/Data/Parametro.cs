@@ -30,6 +30,8 @@ namespace Data
         public int IntervaloEjecucionMin { get; set; }
         public int IdEstadoCierreSolicitante { get; set; }
         public int IdEstadoTareaVencida { get; set; }
+        public int IntervaloEjecucionMinApro { get; set; }
+        public string UtilizarFechaAutoApro { get; set; }
     
         public virtual Estado Estado { get; set; }
         public virtual Estado Estado1 { get; set; }

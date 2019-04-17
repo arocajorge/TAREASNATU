@@ -78,6 +78,8 @@
           <Property Name="IntervaloEjecucionMin" Type="int" Nullable="false" />
           <Property Name="IdEstadoCierreSolicitante" Type="int" Nullable="false" />
           <Property Name="IdEstadoTareaVencida" Type="int" Nullable="false" />
+          <Property Name="IntervaloEjecucionMinApro" Type="int" Nullable="false" />
+          <Property Name="UtilizarFechaAutoApro" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Tarea">
           <Key>
@@ -736,19 +738,6 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
           <Parameter Name="IdUsuario" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="vw_Tarea" EntityType="ModelGeneral.vw_Tarea" />
-          <EntitySet Name="Parametro" EntityType="ModelGeneral.Parametro" />
-          <AssociationSet Name="FK_Parametro_Estado" Association="ModelGeneral.FK_Parametro_Estado">
-            <End Role="Estado" EntitySet="Estado" />
-            <End Role="Parametro" EntitySet="Parametro" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Parametro_Estado1" Association="ModelGeneral.FK_Parametro_Estado1">
-            <End Role="Estado" EntitySet="Estado" />
-            <End Role="Parametro" EntitySet="Parametro" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Parametro_Estado2" Association="ModelGeneral.FK_Parametro_Estado2">
-            <End Role="Estado" EntitySet="Estado" />
-            <End Role="Parametro" EntitySet="Parametro" />
-          </AssociationSet>
           <FunctionImport Name="CierreTareaAutomatico" />
           <EntitySet Name="Tarea" EntityType="ModelGeneral.Tarea" />
           <AssociationSet Name="FK_Tarea_Estado" Association="ModelGeneral.FK_Tarea_Estado">
@@ -779,7 +768,20 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
             <End Role="Tarea" EntitySet="Tarea" />
             <End Role="TareaEstado" EntitySet="TareaEstado" />
           </AssociationSet>
-        </EntityContainer>
+          <EntitySet Name="Parametro" EntityType="ModelGeneral.Parametro" />
+          <AssociationSet Name="FK_Parametro_Estado" Association="ModelGeneral.FK_Parametro_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="Parametro" EntitySet="Parametro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Parametro_Estado1" Association="ModelGeneral.FK_Parametro_Estado1">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="Parametro" EntitySet="Parametro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Parametro_Estado2" Association="ModelGeneral.FK_Parametro_Estado2">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="Parametro" EntitySet="Parametro" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="Estado">
           <Key>
             <PropertyRef Name="IdEstado" />
@@ -795,11 +797,11 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
           <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
           <Property Name="FechaAnulacion" Type="DateTime" Precision="3" />
           <NavigationProperty Name="EstadoTipo" Relationship="ModelGeneral.FK_Estado_EstadoTipo" FromRole="Estado" ToRole="EstadoTipo" />
+          <NavigationProperty Name="Tarea" Relationship="ModelGeneral.FK_Tarea_Estado" FromRole="Estado" ToRole="Tarea" />
+          <NavigationProperty Name="Tarea1" Relationship="ModelGeneral.FK_Tarea_Estado1" FromRole="Estado" ToRole="Tarea" />
           <NavigationProperty Name="Parametro" Relationship="ModelGeneral.FK_Parametro_Estado" FromRole="Estado" ToRole="Parametro" />
           <NavigationProperty Name="Parametro1" Relationship="ModelGeneral.FK_Parametro_Estado1" FromRole="Estado" ToRole="Parametro" />
           <NavigationProperty Name="Parametro2" Relationship="ModelGeneral.FK_Parametro_Estado2" FromRole="Estado" ToRole="Parametro" />
-          <NavigationProperty Name="Tarea" Relationship="ModelGeneral.FK_Tarea_Estado" FromRole="Estado" ToRole="Tarea" />
-          <NavigationProperty Name="Tarea1" Relationship="ModelGeneral.FK_Tarea_Estado1" FromRole="Estado" ToRole="Tarea" />
           </EntityType>
         <EntityType Name="EstadoTipo">
           <Key>
@@ -1162,66 +1164,6 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
           <Property Name="NumSubtareasAbiertas" Type="Int32" />
           <Property Name="EstadoCumplimiento" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="Parametro">
-          <Key>
-            <PropertyRef Name="IdParametro" />
-          </Key>
-          <Property Name="IdParametro" Type="Int32" Nullable="false" />
-          <Property Name="CorreoCuenta" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="CorreoClave" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="Puerto" Type="Int32" Nullable="false" />
-          <Property Name="Host" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="PermitirSSL" Type="Boolean" Nullable="false" />
-          <Property Name="FtpUsuario" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="FtpClave" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="FtpURLArchivo" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
-          <Property Name="FtpURLAdjunto" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
-          <Property Name="IdEstadoCierreTarea" Type="Int32" Nullable="false" />
-          <Property Name="IdEstadoAprobarTarea" Type="Int32" Nullable="false" />
-          <Property Name="IdEstadoTareaDevuelta" Type="Int32" Nullable="false" />
-          <Property Name="IntervaloEjecucionMin" Type="Int32" Nullable="false" />
-          <Property Name="IdEstadoCierreSolicitante" Type="Int32" Nullable="false" />
-          <Property Name="IdEstadoTareaVencida" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Estado" Relationship="ModelGeneral.FK_Parametro_Estado" FromRole="Parametro" ToRole="Estado" />
-          <NavigationProperty Name="Estado1" Relationship="ModelGeneral.FK_Parametro_Estado1" FromRole="Parametro" ToRole="Estado" />
-          <NavigationProperty Name="Estado2" Relationship="ModelGeneral.FK_Parametro_Estado2" FromRole="Parametro" ToRole="Estado" />
-        </EntityType>
-        <Association Name="FK_Parametro_Estado">
-          <End Type="ModelGeneral.Estado" Role="Estado" Multiplicity="1" />
-          <End Type="ModelGeneral.Parametro" Role="Parametro" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Estado">
-              <PropertyRef Name="IdEstado" />
-            </Principal>
-            <Dependent Role="Parametro">
-              <PropertyRef Name="IdEstadoCierreTarea" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Parametro_Estado1">
-          <End Type="ModelGeneral.Estado" Role="Estado" Multiplicity="1" />
-          <End Type="ModelGeneral.Parametro" Role="Parametro" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Estado">
-              <PropertyRef Name="IdEstado" />
-            </Principal>
-            <Dependent Role="Parametro">
-              <PropertyRef Name="IdEstadoAprobarTarea" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Parametro_Estado2">
-          <End Type="ModelGeneral.Estado" Role="Estado" Multiplicity="1" />
-          <End Type="ModelGeneral.Parametro" Role="Parametro" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Estado">
-              <PropertyRef Name="IdEstado" />
-            </Principal>
-            <Dependent Role="Parametro">
-              <PropertyRef Name="IdEstadoTareaDevuelta" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Tarea">
           <Key>
             <PropertyRef Name="IdTarea" />
@@ -1342,6 +1284,68 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
             </Principal>
             <Dependent Role="TareaEstado">
               <PropertyRef Name="IdTarea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Parametro">
+          <Key>
+            <PropertyRef Name="IdParametro" />
+          </Key>
+          <Property Name="IdParametro" Type="Int32" Nullable="false" />
+          <Property Name="CorreoCuenta" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="CorreoClave" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Puerto" Type="Int32" Nullable="false" />
+          <Property Name="Host" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="PermitirSSL" Type="Boolean" Nullable="false" />
+          <Property Name="FtpUsuario" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="FtpClave" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="FtpURLArchivo" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="FtpURLAdjunto" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="IdEstadoCierreTarea" Type="Int32" Nullable="false" />
+          <Property Name="IdEstadoAprobarTarea" Type="Int32" Nullable="false" />
+          <Property Name="IdEstadoTareaDevuelta" Type="Int32" Nullable="false" />
+          <Property Name="IntervaloEjecucionMin" Type="Int32" Nullable="false" />
+          <Property Name="IdEstadoCierreSolicitante" Type="Int32" Nullable="false" />
+          <Property Name="IdEstadoTareaVencida" Type="Int32" Nullable="false" />
+          <Property Name="IntervaloEjecucionMinApro" Type="Int32" Nullable="false" />
+          <Property Name="UtilizarFechaAutoApro" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Estado" Relationship="ModelGeneral.FK_Parametro_Estado" FromRole="Parametro" ToRole="Estado" />
+          <NavigationProperty Name="Estado1" Relationship="ModelGeneral.FK_Parametro_Estado1" FromRole="Parametro" ToRole="Estado" />
+          <NavigationProperty Name="Estado2" Relationship="ModelGeneral.FK_Parametro_Estado2" FromRole="Parametro" ToRole="Estado" />
+        </EntityType>
+        <Association Name="FK_Parametro_Estado">
+          <End Type="ModelGeneral.Estado" Role="Estado" Multiplicity="1" />
+          <End Type="ModelGeneral.Parametro" Role="Parametro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="Parametro">
+              <PropertyRef Name="IdEstadoCierreTarea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Parametro_Estado1">
+          <End Type="ModelGeneral.Estado" Role="Estado" Multiplicity="1" />
+          <End Type="ModelGeneral.Parametro" Role="Parametro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="Parametro">
+              <PropertyRef Name="IdEstadoAprobarTarea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Parametro_Estado2">
+          <End Type="ModelGeneral.Estado" Role="Estado" Multiplicity="1" />
+          <End Type="ModelGeneral.Parametro" Role="Parametro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="Parametro">
+              <PropertyRef Name="IdEstadoTareaDevuelta" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1626,28 +1630,6 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Parametro">
-            <EntityTypeMapping TypeName="ModelGeneral.Parametro">
-              <MappingFragment StoreEntitySet="Parametro">
-                <ScalarProperty Name="IdEstadoTareaVencida" ColumnName="IdEstadoTareaVencida" />
-                <ScalarProperty Name="IdEstadoCierreSolicitante" ColumnName="IdEstadoCierreSolicitante" />
-                <ScalarProperty Name="IntervaloEjecucionMin" ColumnName="IntervaloEjecucionMin" />
-                <ScalarProperty Name="IdEstadoTareaDevuelta" ColumnName="IdEstadoTareaDevuelta" />
-                <ScalarProperty Name="IdEstadoAprobarTarea" ColumnName="IdEstadoAprobarTarea" />
-                <ScalarProperty Name="IdEstadoCierreTarea" ColumnName="IdEstadoCierreTarea" />
-                <ScalarProperty Name="FtpURLAdjunto" ColumnName="FtpURLAdjunto" />
-                <ScalarProperty Name="FtpURLArchivo" ColumnName="FtpURLArchivo" />
-                <ScalarProperty Name="FtpClave" ColumnName="FtpClave" />
-                <ScalarProperty Name="FtpUsuario" ColumnName="FtpUsuario" />
-                <ScalarProperty Name="PermitirSSL" ColumnName="PermitirSSL" />
-                <ScalarProperty Name="Host" ColumnName="Host" />
-                <ScalarProperty Name="Puerto" ColumnName="Puerto" />
-                <ScalarProperty Name="CorreoClave" ColumnName="CorreoClave" />
-                <ScalarProperty Name="CorreoCuenta" ColumnName="CorreoCuenta" />
-                <ScalarProperty Name="IdParametro" ColumnName="IdParametro" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="CierreTareaAutomatico" FunctionName="ModelGeneral.Store.CierreTareaAutomatico" />
           <EntitySetMapping Name="Tarea">
             <EntityTypeMapping TypeName="ModelGeneral.Tarea">
@@ -1679,6 +1661,30 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
                 <ScalarProperty Name="IdGrupo" ColumnName="IdGrupo" />
                 <ScalarProperty Name="IdUsuarioSolicitante" ColumnName="IdUsuarioSolicitante" />
                 <ScalarProperty Name="IdTarea" ColumnName="IdTarea" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Parametro">
+            <EntityTypeMapping TypeName="ModelGeneral.Parametro">
+              <MappingFragment StoreEntitySet="Parametro">
+                <ScalarProperty Name="UtilizarFechaAutoApro" ColumnName="UtilizarFechaAutoApro" />
+                <ScalarProperty Name="IntervaloEjecucionMinApro" ColumnName="IntervaloEjecucionMinApro" />
+                <ScalarProperty Name="IdEstadoTareaVencida" ColumnName="IdEstadoTareaVencida" />
+                <ScalarProperty Name="IdEstadoCierreSolicitante" ColumnName="IdEstadoCierreSolicitante" />
+                <ScalarProperty Name="IntervaloEjecucionMin" ColumnName="IntervaloEjecucionMin" />
+                <ScalarProperty Name="IdEstadoTareaDevuelta" ColumnName="IdEstadoTareaDevuelta" />
+                <ScalarProperty Name="IdEstadoAprobarTarea" ColumnName="IdEstadoAprobarTarea" />
+                <ScalarProperty Name="IdEstadoCierreTarea" ColumnName="IdEstadoCierreTarea" />
+                <ScalarProperty Name="FtpURLAdjunto" ColumnName="FtpURLAdjunto" />
+                <ScalarProperty Name="FtpURLArchivo" ColumnName="FtpURLArchivo" />
+                <ScalarProperty Name="FtpClave" ColumnName="FtpClave" />
+                <ScalarProperty Name="FtpUsuario" ColumnName="FtpUsuario" />
+                <ScalarProperty Name="PermitirSSL" ColumnName="PermitirSSL" />
+                <ScalarProperty Name="Host" ColumnName="Host" />
+                <ScalarProperty Name="Puerto" ColumnName="Puerto" />
+                <ScalarProperty Name="CorreoClave" ColumnName="CorreoClave" />
+                <ScalarProperty Name="CorreoCuenta" ColumnName="CorreoCuenta" />
+                <ScalarProperty Name="IdParametro" ColumnName="IdParametro" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

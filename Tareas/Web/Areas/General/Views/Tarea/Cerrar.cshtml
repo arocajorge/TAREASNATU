@@ -26,7 +26,7 @@
 @using (Html.BeginForm("Cerrar", "Tarea", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     @Html.HiddenFor(v => v.IdTransaccionSession);
-    @Html.HiddenFor(v => v.IdTarea);
+    @Html.HiddenFor(v => v.IdTarea, new { @ID = "IdTarea" });
     @Html.HiddenFor(v => v.nomb_jef_grupo);
     @Html.HiddenFor(v => v.IdUsuarioAsignado);
     @Html.HiddenFor(v => v.AsuntoTarea);

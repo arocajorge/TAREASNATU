@@ -35,9 +35,9 @@ namespace Data.General
                             IdEstadoTareaDevuelta=info.IdEstadoTareaDevuelta,
                             IdEstadoCierreSolicitante=info.IdEstadoCierreSolicitante,
                             IntervaloEjecucionMin=info.IntervaloEjecucionMin,
-                            IdEstadoTareaVencida=info.IdEstadoTareaVencida
-                           
-
+                            IdEstadoTareaVencida=info.IdEstadoTareaVencida,
+                            IntervaloEjecucionMinApro = info.IntervaloEjecucionMinApro,
+                            UtilizarFechaAutoApro = info.UtilizarFechaAutoApro
                         };
                         Context.Parametro.Add(Entity);
                     }
@@ -59,7 +59,9 @@ namespace Data.General
 
                         Entity.IntervaloEjecucionMin = info.IntervaloEjecucionMin;
                         Entity.IdEstadoTareaVencida = info.IdEstadoTareaVencida;
-                      
+                        Entity.IntervaloEjecucionMinApro = info.IntervaloEjecucionMinApro;
+
+                        Entity.UtilizarFechaAutoApro = info.UtilizarFechaAutoApro;
                     }
 
                     Context.SaveChanges();
@@ -101,7 +103,9 @@ namespace Data.General
                         IdEstadoTareaDevuelta = Entity.IdEstadoTareaDevuelta,
                         IntervaloEjecucionMin=Entity.IntervaloEjecucionMin,
                         IdEstadoCierreSolicitante=Entity.IdEstadoCierreSolicitante,
-                        IdEstadoTareaVencida=Entity.IdEstadoTareaVencida
+                        IdEstadoTareaVencida=Entity.IdEstadoTareaVencida,
+                        IntervaloEjecucionMinApro= Entity.IntervaloEjecucionMinApro,
+                        UtilizarFechaAutoApro = Entity.UtilizarFechaAutoApro
                     };
                 }
                 return info;

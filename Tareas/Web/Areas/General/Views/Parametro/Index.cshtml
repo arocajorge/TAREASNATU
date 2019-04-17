@@ -247,11 +247,41 @@
     <div class="row">
         <div class="col-md-12">
 
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <div class="form-group">
                     <label for="IdEstadoCierreTarea">Cerrar tarea cada [min]:*</label>
                     @Html.TextBoxFor(v => v.IntervaloEjecucionMin, new { @class = "form-control" })
                     @Html.ValidationMessageFor(m => m.IntervaloEjecucionMin, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IntervaloEjecucionMinApro">Aprobar tarea cada [min]:*</label>
+                    @Html.TextBoxFor(v => v.IntervaloEjecucionMinApro, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.IntervaloEjecucionMinApro, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="UtilizarFechaAutoApro">Asignar fecha de entrega auto aprobación:</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.UtilizarFechaAutoApro, settings =>
+               {
+                   settings.Name = "UtilizarFechaAutoApro";
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.DisplayFormatString = "{0}";
+                   settings.Properties.Items.Add("MANTENER FECHA DE ENTREGA", "FECHA");
+                   settings.Properties.Items.Add("MANTENER INTERVALO ENTRE CREACION - ENTREGA", "INTERVALO");
+                   settings.Properties.Items.Add("FECHA ACTUAL", "ACTUAL");
+                   settings.Properties.Items.Add("AGREGAR 1 DIA", "1DIA");
+                   settings.Properties.Items.Add("AGREGAR 2 DIAS", "2DIA");
+                   settings.Properties.Items.Add("AGREGAR 3 DIAS", "3DIA");
+                   settings.Properties.ValueType = typeof(string);
+                   //Boton para seleccionar ningun registro
+                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
+                   settings.Properties.NullText = "== Seleccione ==";
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+               }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.UtilizarFechaAutoApro, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>

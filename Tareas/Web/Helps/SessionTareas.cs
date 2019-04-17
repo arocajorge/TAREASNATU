@@ -8,6 +8,7 @@ namespace Web.Helps
         string IdTransaccionSession { get; set; }
         string IdTransaccionSessionActual { get; set; }
         string TipoUsuario { get; set; }
+        string IdTarea { get; set; }
 
     }
 
@@ -39,6 +40,11 @@ namespace Web.Helps
             get { return _sessionValueProvider.TipoUsuario; }
             set { _sessionValueProvider.TipoUsuario = value; }
         }
+        public static string IdTarea
+        {
+            get { return _sessionValueProvider.IdTarea; }
+            set { _sessionValueProvider.IdTarea = value; }
+        }
 
     }
 
@@ -48,7 +54,8 @@ namespace Web.Helps
 
         private const string _IdTransaccionSession = "IdTransaccionSesssion";
         private const string _IdTransaccionSessionActual = "IdTransaccionSessionActual";
-        private const string _TipoUsuario = "TipoUsuario";
+        private const string _TipoUsuario = "fx_TipoUsuario";
+        private const string _IdTarea = "fx_IdTarea";
 
         public string IdUsuario
         {
@@ -70,6 +77,11 @@ namespace Web.Helps
         {
             get { return (string)HttpContext.Current.Session[_TipoUsuario]; }
             set { HttpContext.Current.Session[_TipoUsuario] = value; }
+        }
+        public string IdTarea
+        {
+            get { return (string)HttpContext.Current.Session[_IdTarea]; }
+            set { HttpContext.Current.Session[_IdTarea] = value; }
         }
     }
 }

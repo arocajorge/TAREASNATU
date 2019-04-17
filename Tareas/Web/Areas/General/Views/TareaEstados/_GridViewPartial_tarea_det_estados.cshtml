@@ -7,6 +7,8 @@
         settings.KeyFieldName = "Secuancial";
         settings.Width = Unit.Percentage(100);
         settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = true;
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "TareaEstados", Action = "EditingAddNew"};
         //CConfiguracion responsive
         settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
         settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
@@ -17,21 +19,21 @@
         settings.Columns.Add(column =>
         {
             column.FieldName = "IdTarea";
-            column.Caption = "Id Tarea";
-            column.Width = Unit.Percentage(10);
+            column.Caption = "# Tarea";
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+            column.Width = Unit.Percentage(5);
             column.EditorProperties().TextBox(sp =>
             {
                 sp.Width = Unit.Percentage(100);
-
             });
         });
 
         settings.Columns.Add(column =>
         {
             column.FieldName = "Secuancial";
-            column.Caption = "Secuencia";
-            column.Width = Unit.Percentage(10);
-
+            column.Caption = "#";
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+            column.Width = Unit.Percentage(5);
         });
 
         settings.Columns.Add(column =>
@@ -39,6 +41,7 @@
             column.FieldName = "IdUsuario";
             column.Caption = "Usuario";
             column.Width = Unit.Percentage(20);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
             column.EditorProperties().ComboBox(p =>
             {
                 p.Columns.Add("IdUsuario", "Usuario").Width = Unit.Percentage(30);
@@ -56,21 +59,22 @@
 
             column.FieldName = "Observacion";
             column.Caption = "Observación";
-            column.Width = Unit.Percentage(45);
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.EditorProperties().Memo(q =>
+            {
 
+            });
+            column.Width = Unit.Percentage(40);
         });
         settings.Columns.Add(column =>
         {
             column.FieldName = "FechaModificacion";
             column.Caption = "Fecha";
-            column.Width = Unit.Percentage(15);
-            column.EditorProperties().DateEdit(sp =>
-            {
-                sp.Width = Unit.Percentage(100);
-            });
+            column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(column =>
         {
+            column.EditFormSettings.Visible = DefaultBoolean.False;
             column.FieldName = "IdEstado";
             column.Caption = "Estado";
             column.Width = Unit.Percentage(10);
@@ -83,7 +87,7 @@
                 p.DataSource = ViewBag.list_estado_detalle;
             });
         });
-        
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TareaActual'] = $('#IdTarea').val(); }";
     });
 
 }
