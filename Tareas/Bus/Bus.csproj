@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="General\AlertaUsuario_Bus.cs" />
     <Compile Include="General\Archivo_Bus.cs" />
     <Compile Include="General\EstadoTipo_Bus.cs" />
     <Compile Include="General\Estado_Bus.cs" />

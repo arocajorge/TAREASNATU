@@ -45,7 +45,7 @@ namespace Info
         public int IntervaloEjecucionMinApro { get; set; }
         [Required(ErrorMessage = "El campo fecha de entrega a utilizar es obligatorio")]
         public string UtilizarFechaAutoApro { get; set; }
-
-
+        public int IntervaloAlertaMin { get; set; }
+        public int IntervaloRepetirAlarma { get; set; }
     }
 }

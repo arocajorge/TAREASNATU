@@ -287,6 +287,25 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdEstadoCierreTarea">Alertar tareas antes de caducar [min]:*</label>
+                    @Html.TextBoxFor(v => v.IntervaloAlertaMin, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.IntervaloAlertaMin, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IntervaloEjecucionMinApro">Repetir alarma cada [min]:*</label>
+                    @Html.TextBoxFor(v => v.IntervaloRepetirAlarma, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.IntervaloRepetirAlarma, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="box-footer">
         <button type="submit" class="btn btn-primary">Guardar</button>
         <a class="btn btn-default" href="@Url.Action("Index","Grupo",new { Area = "General" },null)">Cancelar</a>

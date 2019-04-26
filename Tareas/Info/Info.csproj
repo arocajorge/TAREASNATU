@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="General\AlertaUsuario_Info.cs" />
     <Compile Include="General\Archivo_Info.cs" />
     <Compile Include="General\EstadoTipo_Info.cs" />
     <Compile Include="General\Estado_Info.cs" />

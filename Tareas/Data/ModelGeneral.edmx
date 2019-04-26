@@ -5,6 +5,14 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="ModelGeneral.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AlertaUsuario">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FechaUltimaAlerta" Type="datetime" />
+          <Property Name="MensajeCorreo" Type="varchar(max)" />
+        </EntityType>
         <EntityType Name="Estado">
           <Key>
             <PropertyRef Name="IdEstado" />
@@ -79,7 +87,9 @@
           <Property Name="IdEstadoCierreSolicitante" Type="int" Nullable="false" />
           <Property Name="IdEstadoTareaVencida" Type="int" Nullable="false" />
           <Property Name="IntervaloEjecucionMinApro" Type="int" Nullable="false" />
-          <Property Name="UtilizarFechaAutoApro" Type="varchar" MaxLength="50" />
+          <Property Name="UtilizarFechaAutoApro" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IntervaloAlertaMin" Type="int" Nullable="false" />
+          <Property Name="IntervaloRepetirAlarma" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Tarea">
           <Key>
@@ -263,6 +273,24 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_Tarea_asignar_subtarea' no 
           <Property Name="NumSubtareasAbiertas" Type="int" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_TareaAlerta' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vw_TareaAlerta">
+          <Key>
+            <PropertyRef Name="IdUsuarioAsignado" />
+            <PropertyRef Name="IdTarea" />
+            <PropertyRef Name="correo" />
+            <PropertyRef Name="MinutosUltimaAlarma" />
+            <PropertyRef Name="FechaEntrega" />
+          </Key>
+          <Property Name="IdUsuarioAsignado" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdTarea" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="MinutosCaducar" Type="int" />
+          <Property Name="AsuntoTarea" Type="varchar(max)" />
+          <Property Name="correo" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="MinutosUltimaAlarma" Type="int" Nullable="false" />
+          <Property Name="FechaEntrega" Type="date" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_TareaArchivoAdjunto' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vw_TareaArchivoAdjunto">
           <Key>
@@ -297,6 +325,18 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_TareaEstado' no tiene defin
           <Property Name="FechaModificacion" Type="datetime" Nullable="false" />
           <Property Name="Observacion" Type="varchar(max)" Nullable="false" />
           <Property Name="IdTareaPadre" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.vw_UsuarioAlerta' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vw_UsuarioAlerta">
+          <Key>
+            <PropertyRef Name="IdUsuarioAsignado" />
+            <PropertyRef Name="correo" />
+          </Key>
+          <Property Name="IdUsuarioAsignado" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Cont" Type="int" />
+          <Property Name="MinutosUltimaAlarma" Type="int" />
+          <Property Name="correo" Type="varchar" MaxLength="1000" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -512,6 +552,7 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
           <Parameter Name="FechaFin" Type="date" Mode="In" />
         </Function>
         <EntityContainer Name="ModelGeneralStoreContainer">
+          <EntitySet Name="AlertaUsuario" EntityType="Self.AlertaUsuario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Estado" EntityType="Self.Estado" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EstadoTipo" EntityType="Self.EstadoTipo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Grupo" EntityType="Self.Grupo" Schema="dbo" store:Type="Tables" />
@@ -590,6 +631,17 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
     [vw_Tarea_asignar_subtarea].[NumSubtareasAbiertas] AS [NumSubtareasAbiertas]
     FROM [dbo].[vw_Tarea_asignar_subtarea] AS [vw_Tarea_asignar_subtarea]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vw_TareaAlerta" EntityType="Self.vw_TareaAlerta" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_TareaAlerta].[IdUsuarioAsignado] AS [IdUsuarioAsignado], 
+    [vw_TareaAlerta].[IdTarea] AS [IdTarea], 
+    [vw_TareaAlerta].[MinutosCaducar] AS [MinutosCaducar], 
+    [vw_TareaAlerta].[AsuntoTarea] AS [AsuntoTarea], 
+    [vw_TareaAlerta].[correo] AS [correo], 
+    [vw_TareaAlerta].[MinutosUltimaAlarma] AS [MinutosUltimaAlarma], 
+    [vw_TareaAlerta].[FechaEntrega] AS [FechaEntrega]
+    FROM [dbo].[vw_TareaAlerta] AS [vw_TareaAlerta]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vw_TareaArchivoAdjunto" EntityType="Self.vw_TareaArchivoAdjunto" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vw_TareaArchivoAdjunto].[IdTarea] AS [IdTarea], 
@@ -610,6 +662,14 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
     [vw_TareaEstado].[Observacion] AS [Observacion], 
     [vw_TareaEstado].[IdTareaPadre] AS [IdTareaPadre]
     FROM [dbo].[vw_TareaEstado] AS [vw_TareaEstado]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_UsuarioAlerta" EntityType="Self.vw_UsuarioAlerta" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_UsuarioAlerta].[IdUsuarioAsignado] AS [IdUsuarioAsignado], 
+    [vw_UsuarioAlerta].[Cont] AS [Cont], 
+    [vw_UsuarioAlerta].[MinutosUltimaAlarma] AS [MinutosUltimaAlarma], 
+    [vw_UsuarioAlerta].[correo] AS [correo]
+    FROM [dbo].[vw_UsuarioAlerta] AS [vw_UsuarioAlerta]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="VWGEN_001" EntityType="Self.VWGEN_001" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -768,6 +828,7 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
             <End Role="Tarea" EntitySet="Tarea" />
             <End Role="TareaEstado" EntitySet="TareaEstado" />
           </AssociationSet>
+          <EntitySet Name="AlertaUsuario" EntityType="ModelGeneral.AlertaUsuario" />
           <EntitySet Name="Parametro" EntityType="ModelGeneral.Parametro" />
           <AssociationSet Name="FK_Parametro_Estado" Association="ModelGeneral.FK_Parametro_Estado">
             <End Role="Estado" EntitySet="Estado" />
@@ -781,6 +842,8 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
             <End Role="Estado" EntitySet="Estado" />
             <End Role="Parametro" EntitySet="Parametro" />
           </AssociationSet>
+          <EntitySet Name="vw_TareaAlerta" EntityType="ModelGeneral.vw_TareaAlerta" />
+          <EntitySet Name="vw_UsuarioAlerta" EntityType="ModelGeneral.vw_UsuarioAlerta" />
           </EntityContainer>
         <EntityType Name="Estado">
           <Key>
@@ -1287,6 +1350,14 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="AlertaUsuario">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaUltimaAlerta" Type="DateTime" Precision="3" />
+          <Property Name="MensajeCorreo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="Parametro">
           <Key>
             <PropertyRef Name="IdParametro" />
@@ -1308,7 +1379,9 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
           <Property Name="IdEstadoCierreSolicitante" Type="Int32" Nullable="false" />
           <Property Name="IdEstadoTareaVencida" Type="Int32" Nullable="false" />
           <Property Name="IntervaloEjecucionMinApro" Type="Int32" Nullable="false" />
-          <Property Name="UtilizarFechaAutoApro" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UtilizarFechaAutoApro" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IntervaloAlertaMin" Type="Int32" Nullable="false" />
+          <Property Name="IntervaloRepetirAlarma" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Estado" Relationship="ModelGeneral.FK_Parametro_Estado" FromRole="Parametro" ToRole="Estado" />
           <NavigationProperty Name="Estado1" Relationship="ModelGeneral.FK_Parametro_Estado1" FromRole="Parametro" ToRole="Estado" />
           <NavigationProperty Name="Estado2" Relationship="ModelGeneral.FK_Parametro_Estado2" FromRole="Parametro" ToRole="Estado" />
@@ -1349,6 +1422,32 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="vw_TareaAlerta">
+          <Key>
+            <PropertyRef Name="IdUsuarioAsignado" />
+            <PropertyRef Name="IdTarea" />
+            <PropertyRef Name="correo" />
+            <PropertyRef Name="MinutosUltimaAlarma" />
+            <PropertyRef Name="FechaEntrega" />
+          </Key>
+          <Property Name="IdUsuarioAsignado" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdTarea" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="MinutosCaducar" Type="Int32" />
+          <Property Name="AsuntoTarea" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="correo" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="MinutosUltimaAlarma" Type="Int32" Nullable="false" />
+          <Property Name="FechaEntrega" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <EntityType Name="vw_UsuarioAlerta">
+          <Key>
+            <PropertyRef Name="IdUsuarioAsignado" />
+            <PropertyRef Name="correo" />
+          </Key>
+          <Property Name="IdUsuarioAsignado" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Cont" Type="Int32" />
+          <Property Name="MinutosUltimaAlarma" Type="Int32" />
+          <Property Name="correo" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1664,9 +1763,20 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="AlertaUsuario">
+            <EntityTypeMapping TypeName="ModelGeneral.AlertaUsuario">
+              <MappingFragment StoreEntitySet="AlertaUsuario">
+                <ScalarProperty Name="MensajeCorreo" ColumnName="MensajeCorreo" />
+                <ScalarProperty Name="FechaUltimaAlerta" ColumnName="FechaUltimaAlerta" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Parametro">
             <EntityTypeMapping TypeName="ModelGeneral.Parametro">
               <MappingFragment StoreEntitySet="Parametro">
+                <ScalarProperty Name="IntervaloRepetirAlarma" ColumnName="IntervaloRepetirAlarma" />
+                <ScalarProperty Name="IntervaloAlertaMin" ColumnName="IntervaloAlertaMin" />
                 <ScalarProperty Name="UtilizarFechaAutoApro" ColumnName="UtilizarFechaAutoApro" />
                 <ScalarProperty Name="IntervaloEjecucionMinApro" ColumnName="IntervaloEjecucionMinApro" />
                 <ScalarProperty Name="IdEstadoTareaVencida" ColumnName="IdEstadoTareaVencida" />
@@ -1685,6 +1795,29 @@ advertencia 6002: La tabla o vista 'DB_TAREAS.dbo.VWGEN_001' no tiene definida n
                 <ScalarProperty Name="CorreoClave" ColumnName="CorreoClave" />
                 <ScalarProperty Name="CorreoCuenta" ColumnName="CorreoCuenta" />
                 <ScalarProperty Name="IdParametro" ColumnName="IdParametro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_TareaAlerta">
+            <EntityTypeMapping TypeName="ModelGeneral.vw_TareaAlerta">
+              <MappingFragment StoreEntitySet="vw_TareaAlerta">
+                <ScalarProperty Name="FechaEntrega" ColumnName="FechaEntrega" />
+                <ScalarProperty Name="MinutosUltimaAlarma" ColumnName="MinutosUltimaAlarma" />
+                <ScalarProperty Name="correo" ColumnName="correo" />
+                <ScalarProperty Name="AsuntoTarea" ColumnName="AsuntoTarea" />
+                <ScalarProperty Name="MinutosCaducar" ColumnName="MinutosCaducar" />
+                <ScalarProperty Name="IdTarea" ColumnName="IdTarea" />
+                <ScalarProperty Name="IdUsuarioAsignado" ColumnName="IdUsuarioAsignado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_UsuarioAlerta">
+            <EntityTypeMapping TypeName="ModelGeneral.vw_UsuarioAlerta">
+              <MappingFragment StoreEntitySet="vw_UsuarioAlerta">
+                <ScalarProperty Name="correo" ColumnName="correo" />
+                <ScalarProperty Name="MinutosUltimaAlarma" ColumnName="MinutosUltimaAlarma" />
+                <ScalarProperty Name="Cont" ColumnName="Cont" />
+                <ScalarProperty Name="IdUsuarioAsignado" ColumnName="IdUsuarioAsignado" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

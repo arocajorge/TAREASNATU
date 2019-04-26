@@ -51,12 +51,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlertaUsuario.cs">
+      <DependentUpon>ModelGeneral.tt</DependentUpon>
+    </Compile>
     <Compile Include="Estado.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
     <Compile Include="EstadoTipo.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
+    <Compile Include="General\AlertaUsuario_Data.cs" />
     <Compile Include="General\Archivo_Data.cs" />
     <Compile Include="General\EstadoTipo_Data.cs" />
     <Compile Include="General\Estado_Data.cs" />
@@ -127,6 +131,9 @@
     <Compile Include="vw_Tarea.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
+    <Compile Include="vw_TareaAlerta.cs">
+      <DependentUpon>ModelGeneral.tt</DependentUpon>
+    </Compile>
     <Compile Include="vw_TareaArchivoAdjunto.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
@@ -134,6 +141,9 @@
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
     <Compile Include="vw_Tarea_asignar_subtarea.cs">
+      <DependentUpon>ModelGeneral.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vw_UsuarioAlerta.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
   </ItemGroup>

@@ -41,7 +41,10 @@ namespace Data
         public virtual DbSet<vw_Tarea_asignar_subtarea> vw_Tarea_asignar_subtarea { get; set; }
         public virtual DbSet<vw_Tarea> vw_Tarea { get; set; }
         public virtual DbSet<Tarea> Tarea { get; set; }
+        public virtual DbSet<AlertaUsuario> AlertaUsuario { get; set; }
         public virtual DbSet<Parametro> Parametro { get; set; }
+        public virtual DbSet<vw_TareaAlerta> vw_TareaAlerta { get; set; }
+        public virtual DbSet<vw_UsuarioAlerta> vw_UsuarioAlerta { get; set; }
     
         public virtual int sp_crear_tarea_concurrente(Nullable<decimal> idTarea)
         {
