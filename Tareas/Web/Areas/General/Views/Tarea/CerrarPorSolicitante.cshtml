@@ -268,8 +268,8 @@
 
 
     function CerrarTarea() {
-        $("#cerrar").attr("disabled", false);
-        $("#rechazar").attr("disabled", false);
+        $("#cerrar").attr("disabled", true);
+        $("#rechazar").attr("disabled", true);
         var datos = {
             IdTarea: $("#IdTarea").val(),
             ObsevacionModificacion: $("#ObsevacionModificacion").val(),
@@ -296,8 +296,8 @@
 
 
     function RechazarTarea() {
-        $("#cerrar").attr("disabled", false);
-        $("#rechazar").attr("disabled", false);
+        $("#cerrar").attr("disabled", true);
+        $("#rechazar").attr("disabled", true);
 
         var datos = {
             IdTarea: $("#IdTarea").val(),

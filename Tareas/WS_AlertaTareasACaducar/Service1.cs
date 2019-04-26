@@ -74,8 +74,7 @@ namespace WS_AlertaTareasACaducar
                 mail.Subject = AsuntoCorreo;
 
                 string Body = "Estimado compañero, <br/><br/>";
-                Body += "<p>Estimado colaborador</p>";
-                Body += "<p>Por medio de la presente se le notifica que posee "+Cont.ToString()+" tareas en curso que no han sido entregadas próximas a caducar:</p>";
+                Body += "<p>Por medio de la presente se le notifica que posee ("+Cont.ToString()+") tarea(s) en curso que no han sido entregadas próximas a caducar:</p>";
                 Body += "<table style = 'float: left;' border = '1' cellpadding = '5'>";
                 Body += "<tbody>";
                 Body += "<tr>";
