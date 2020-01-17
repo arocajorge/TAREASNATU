@@ -17,8 +17,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestWS", "TestWS\TestWS.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WS_AlertaTareasACaducar", "WS_AlertaTareasACaducar\WS_AlertaTareasACaducar.csproj", "{63DBAF9D-81DA-4D55-8E69-D83A33ECD104}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "FixedAlertaSetup", "FixedAlertaSetup\FixedAlertaSetup.vdproj", "{4C2102BC-205A-4028-A39D-D5F2E4553A72}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,8 +51,6 @@ Global
 		{63DBAF9D-81DA-4D55-8E69-D83A33ECD104}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{63DBAF9D-81DA-4D55-8E69-D83A33ECD104}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{63DBAF9D-81DA-4D55-8E69-D83A33ECD104}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4C2102BC-205A-4028-A39D-D5F2E4553A72}.Debug|Any CPU.ActiveCfg = Debug
-		{4C2102BC-205A-4028-A39D-D5F2E4553A72}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
