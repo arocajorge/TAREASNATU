@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="d4a43452c29842239b34801f696e004f" Name="Diagram1" ZoomLevel="31">
+      <Diagram DiagramId="d4a43452c29842239b34801f696e004f" Name="Diagram1" ZoomLevel="59">
         <EntityTypeShape EntityType="ModelGeneral.Estado" Width="1.5" PointX="3" PointY="0.75" />
         <EntityTypeShape EntityType="ModelGeneral.EstadoTipo" Width="1.5" PointX="0.75" PointY="1.5" />
         <EntityTypeShape EntityType="ModelGeneral.Grupo" Width="1.5" PointX="3" PointY="6" />
@@ -21,7 +21,6 @@
         <EntityTypeShape EntityType="ModelGeneral.vw_TareaArchivoAdjunto" Width="1.5" PointX="10.375" PointY="10.75" />
         <EntityTypeShape EntityType="ModelGeneral.vw_TareaEstado" Width="1.5" PointX="12.375" PointY="0.75" />
         <EntityTypeShape EntityType="ModelGeneral.vw_Tarea_asignar_subtarea" Width="1.5" PointX="12.375" PointY="4.75" />
-        <EntityTypeShape EntityType="ModelGeneral.vw_Tarea" Width="1.5" PointX="0.75" PointY="10.75" />
         <EntityTypeShape EntityType="ModelGeneral.Tarea" Width="1.5" PointX="5.25" PointY="1.5" />
         <AssociationConnector Association="ModelGeneral.FK_Tarea_Estado" />
         <AssociationConnector Association="ModelGeneral.FK_Tarea_Estado1" />
@@ -35,8 +34,9 @@
         <AssociationConnector Association="ModelGeneral.FK_Parametro_Estado" />
         <AssociationConnector Association="ModelGeneral.FK_Parametro_Estado1" />
         <AssociationConnector Association="ModelGeneral.FK_Parametro_Estado2" />
-        <EntityTypeShape EntityType="ModelGeneral.vw_TareaAlerta" Width="1.5" PointX="7.375" PointY="13.75" />
-        <EntityTypeShape EntityType="ModelGeneral.vw_UsuarioAlerta" Width="1.5" PointX="9.375" PointY="13.75" />
+        <EntityTypeShape EntityType="ModelGeneral.vw_Tarea" Width="1.5" PointX="0.75" PointY="10.75" />
+        <EntityTypeShape EntityType="ModelGeneral.vw_TareaAlerta" Width="1.5" PointX="14.375" PointY="0.75" />
+        <EntityTypeShape EntityType="ModelGeneral.vw_UsuarioAlerta" Width="1.5" PointX="7.375" PointY="13.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -73,6 +73,18 @@
         settings.Columns.Add("AsuntoTarea", "Asunto").Width = Unit.Percentage(35);
         settings.Columns.Add(column =>
         {
+            column.FieldName = "FechaTransaccion";
+            column.Caption = "Fecha asignación";
+            column.Width = Unit.Percentage(10);
+            column.PropertiesEdit.DisplayFormatString = "d";
+            column.EditorProperties().DateEdit(sp =>
+            {
+                column.PropertiesEdit.DisplayFormatString = "d";
+                sp.Width = Unit.Percentage(100);
+            });
+        });
+        settings.Columns.Add(column =>
+        {
             column.FieldName = "FechaEntrega";
             column.Caption = "Fecha entrega";
             column.Width = Unit.Percentage(10);
@@ -98,7 +110,7 @@
 
         settings.Columns.Add("solicitante", "Solicitante").Width = Unit.Percentage(10);
         settings.Columns.Add("Asignado", "Encargado").Width = Unit.Percentage(10);
-        settings.Columns.Add("EstadoTarea", "Estado").Width = Unit.Percentage(10);
+        settings.Columns.Add("EstadoCumplimiento", "Estado").Width = Unit.Percentage(10);
         settings.Columns.Add(c =>
         {
             c.Caption = "Acciones";

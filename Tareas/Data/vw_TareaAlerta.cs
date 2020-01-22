@@ -18,8 +18,9 @@ namespace Data
         public decimal IdTarea { get; set; }
         public Nullable<int> MinutosCaducar { get; set; }
         public string AsuntoTarea { get; set; }
-        public string correo { get; set; }
+        public string Correo { get; set; }
         public int MinutosUltimaAlarma { get; set; }
         public System.DateTime FechaEntrega { get; set; }
+        public int IntervaloRepetirAlarma { get; set; }
     }
 }

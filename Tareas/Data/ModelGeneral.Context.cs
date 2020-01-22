@@ -39,10 +39,10 @@ namespace Data
         public virtual DbSet<vw_TareaArchivoAdjunto> vw_TareaArchivoAdjunto { get; set; }
         public virtual DbSet<vw_TareaEstado> vw_TareaEstado { get; set; }
         public virtual DbSet<vw_Tarea_asignar_subtarea> vw_Tarea_asignar_subtarea { get; set; }
-        public virtual DbSet<vw_Tarea> vw_Tarea { get; set; }
         public virtual DbSet<Tarea> Tarea { get; set; }
         public virtual DbSet<AlertaUsuario> AlertaUsuario { get; set; }
         public virtual DbSet<Parametro> Parametro { get; set; }
+        public virtual DbSet<vw_Tarea> vw_Tarea { get; set; }
         public virtual DbSet<vw_TareaAlerta> vw_TareaAlerta { get; set; }
         public virtual DbSet<vw_UsuarioAlerta> vw_UsuarioAlerta { get; set; }
     
@@ -94,6 +94,11 @@ namespace Data
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_carga_laboral_Result>("sp_carga_laboral", idUsuarioParameter, fechaInicioParameter, idGrupoParameter);
         }
     
+        public virtual int CierreTareaAutomatico()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CierreTareaAutomatico");
+        }
+    
         public virtual ObjectResult<sp_tareas_por_aprobar_Result> sp_tareas_por_aprobar(string idUsuario)
         {
             var idUsuarioParameter = idUsuario != null ?
@@ -101,11 +106,6 @@ namespace Data
                 new ObjectParameter("IdUsuario", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_tareas_por_aprobar_Result>("sp_tareas_por_aprobar", idUsuarioParameter);
-        }
-    
-        public virtual int CierreTareaAutomatico()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CierreTareaAutomatico");
         }
     }
 }

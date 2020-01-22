@@ -22,7 +22,7 @@ namespace Data.General
                         IdUsuario = q.IdUsuarioAsignado,
                         Cont = q.Cont,
                         MinutosUltimaAlarma = q.MinutosUltimaAlarma ?? 0,
-                        correo = q.correo
+                        correo = q.Correo
                     }).ToList();
                 }
 
@@ -48,7 +48,7 @@ namespace Data.General
                         IdTarea = q.IdTarea,
                         MinutosCaducar = q.MinutosCaducar,
                         AsuntoTarea = q.AsuntoTarea,
-                        correo = q.correo,
+                        correo = q.Correo,
                         MinutosUltimaAlarma = q.MinutosUltimaAlarma,
                         FechaEntrega = q.FechaEntrega
                     }).ToList();

@@ -191,7 +191,9 @@ namespace Data
                                  FechaCierreEncargado=q.FechaCierreEncargado,
                                  NumSubtarea=q.NumSubtarea,
                                  NumSubtareasAbiertas=q.NumSubtareasAbiertas,
-                                EstadoCumplimiento = q.EstadoCumplimiento
+                                EstadoCumplimiento = q.EstadoCumplimiento,
+                                FechaTransaccion = q.FechaTransaccion
+                                
 
 
 
@@ -228,7 +230,8 @@ namespace Data
                                      FechaCierreEncargado = q.FechaCierreEncargado,
                                      NumSubtarea = q.NumSubtarea,
                                      NumSubtareasAbiertas = q.NumSubtareasAbiertas,
-                                     EstadoCumplimiento=q.EstadoCumplimiento
+                                     EstadoCumplimiento=q.EstadoCumplimiento,
+                                     FechaTransaccion = q.FechaTransaccion
 
 
 
@@ -281,7 +284,8 @@ namespace Data
                                      FechaCierreSolicitante = q.FechaCierreSolicitante,
                                      FechaCierreEncargado = q.FechaCierreEncargado,
                                      NumSubtarea = q.NumSubtarea,
-                                     Buzon=q.Buzon
+                                     Buzon=q.Buzon,
+                                     FechaTransaccion = q.FechaTransaccion
 
 
 

@@ -41,5 +41,6 @@ namespace Data
         public Nullable<int> NumSubtareasAbiertas { get; set; }
         public string EstadoCumplimiento { get; set; }
         public string Buzon { get; set; }
+        public Nullable<System.DateTime> FechaTransaccion { get; set; }
     }
 }

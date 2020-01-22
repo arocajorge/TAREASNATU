@@ -17,6 +17,6 @@ namespace Data
         public string IdUsuarioAsignado { get; set; }
         public Nullable<int> Cont { get; set; }
         public Nullable<int> MinutosUltimaAlarma { get; set; }
-        public string correo { get; set; }
+        public string Correo { get; set; }
     }
 }
