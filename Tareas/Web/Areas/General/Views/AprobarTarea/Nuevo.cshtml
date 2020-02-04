@@ -31,6 +31,7 @@
     @Html.HiddenFor(v => v.IdGrupo);
     @Html.HiddenFor(v => v.AsuntoTarea);
     @Html.HiddenFor(v => v.DescripcionTarea);
+    @Html.HiddenFor(v => v.FechaInicio);
 
 
     if (ViewBag.IdTareaPadre != null)
@@ -102,6 +103,7 @@
                        settings.Properties.UseMaskBehavior = true;
                        settings.Properties.EditFormat = EditFormat.Date;
                        settings.Properties.EditFormatString = "dd/MM/yyyy";
+                       settings.Properties.AllowMouseWheel = false;
                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                    }).GetHtml()
@@ -118,6 +120,7 @@
                    settings.ReadOnly = true;
                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                    settings.Properties.DisplayFormatString = "{0}";
+                   settings.Properties.Items.Add("NO REPETIR", null);
                    settings.Properties.Items.Add("DIA", "1DIA");
                    settings.Properties.Items.Add("SEMANA", "1SEMANA");
                    settings.Properties.Items.Add("2 SEMANAS", "2SEMANA");

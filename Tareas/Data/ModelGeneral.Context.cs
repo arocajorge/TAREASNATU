@@ -41,10 +41,10 @@ namespace Data
         public virtual DbSet<vw_Tarea_asignar_subtarea> vw_Tarea_asignar_subtarea { get; set; }
         public virtual DbSet<Tarea> Tarea { get; set; }
         public virtual DbSet<AlertaUsuario> AlertaUsuario { get; set; }
-        public virtual DbSet<Parametro> Parametro { get; set; }
         public virtual DbSet<vw_Tarea> vw_Tarea { get; set; }
         public virtual DbSet<vw_TareaAlerta> vw_TareaAlerta { get; set; }
         public virtual DbSet<vw_UsuarioAlerta> vw_UsuarioAlerta { get; set; }
+        public virtual DbSet<Parametro> Parametro { get; set; }
     
         public virtual int sp_crear_tarea_concurrente(Nullable<decimal> idTarea)
         {
@@ -77,6 +77,20 @@ namespace Data
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPGEN_002_Result>("SPGEN_002", fechaInicioParameter, fechaFinParameter);
         }
     
+        public virtual int CierreTareaAutomatico()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CierreTareaAutomatico");
+        }
+    
+        public virtual ObjectResult<sp_tareas_por_aprobar_Result> sp_tareas_por_aprobar(string idUsuario)
+        {
+            var idUsuarioParameter = idUsuario != null ?
+                new ObjectParameter("IdUsuario", idUsuario) :
+                new ObjectParameter("IdUsuario", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_tareas_por_aprobar_Result>("sp_tareas_por_aprobar", idUsuarioParameter);
+        }
+    
         public virtual ObjectResult<sp_carga_laboral_Result> sp_carga_laboral(string idUsuario, Nullable<System.DateTime> fechaInicio, Nullable<int> idGrupo)
         {
             var idUsuarioParameter = idUsuario != null ?
@@ -92,20 +106,6 @@ namespace Data
                 new ObjectParameter("IdGrupo", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_carga_laboral_Result>("sp_carga_laboral", idUsuarioParameter, fechaInicioParameter, idGrupoParameter);
-        }
-    
-        public virtual int CierreTareaAutomatico()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CierreTareaAutomatico");
-        }
-    
-        public virtual ObjectResult<sp_tareas_por_aprobar_Result> sp_tareas_por_aprobar(string idUsuario)
-        {
-            var idUsuarioParameter = idUsuario != null ?
-                new ObjectParameter("IdUsuario", idUsuario) :
-                new ObjectParameter("IdUsuario", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_tareas_por_aprobar_Result>("sp_tareas_por_aprobar", idUsuarioParameter);
         }
     }
 }

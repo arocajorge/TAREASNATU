@@ -47,5 +47,6 @@ namespace Info
         public string UtilizarFechaAutoApro { get; set; }
         public int IntervaloAlertaMin { get; set; }
         public int IntervaloRepetirAlarma { get; set; }
+        public int? DiferenciaDiasAceptacionEntrgea { get; set; }
     }
 }

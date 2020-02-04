@@ -303,6 +303,13 @@
                     @Html.ValidationMessageFor(m => m.IntervaloRepetirAlarma, "", new { @class = "text-danger" })
                 </div>
             </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IntervaloEjecucionMinApro">Dias de cambio de fecha por parte del encargado:*</label>
+                    @Html.TextBoxFor(v => v.DiferenciaDiasAceptacionEntrgea, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.DiferenciaDiasAceptacionEntrgea, "", new { @class = "text-danger" })
+                </div>
+            </div>
         </div>
     </div>
 

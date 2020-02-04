@@ -20,6 +20,8 @@ namespace Data
         Parametro_Info info_parametro = new Parametro_Info();
         Parametro_Data data_parametro = new Parametro_Data();
         Usuario_Data usuario_data = new Usuario_Data();
+
+        
         #endregion
         public List<Tarea_Info> get_lis_cargar_combo()
         {
@@ -1113,7 +1115,8 @@ namespace Data
                         FechaFinConcurrencia=Entity.FechaFinConcurrencia,
                         IdTareaPadre=Entity.IdTareaPadre,
                         //NumSubtareasAbiertas=Entity.NumSubtareasAbiertas
-                        TipoRecurrencia = Entity.TipoRecurrencia
+                        TipoRecurrencia = Entity.TipoRecurrencia,
+                        FechaInicio = Entity.FechaEntrega
                     };
                 }
                 return info;
@@ -1239,6 +1242,7 @@ namespace Data
                         info.FechaInicio = fechaInicio;
                         info.IdUsuario = IdUsuario;
                         info.IdGrupoFiltro = IdGrupo;
+                        info.CalificacionEficiencia = Entity.CalificacionEficiencia ?? 0;
                     }
                   }
                 return info;

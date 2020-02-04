@@ -39,7 +39,8 @@ namespace Data.General
                             IntervaloEjecucionMinApro = info.IntervaloEjecucionMinApro,
                             UtilizarFechaAutoApro = info.UtilizarFechaAutoApro,
                             IntervaloAlertaMin = info.IntervaloAlertaMin,
-                            IntervaloRepetirAlarma = info.IntervaloRepetirAlarma
+                            IntervaloRepetirAlarma = info.IntervaloRepetirAlarma,
+                            DiferenciaDiasAceptacionEntrgea = info.DiferenciaDiasAceptacionEntrgea
                         };
                         Context.Parametro.Add(Entity);
                     }
@@ -66,6 +67,7 @@ namespace Data.General
                         Entity.UtilizarFechaAutoApro = info.UtilizarFechaAutoApro;
                         Entity.IntervaloAlertaMin = info.IntervaloAlertaMin;
                         Entity.IntervaloRepetirAlarma = info.IntervaloRepetirAlarma;
+                        Entity.DiferenciaDiasAceptacionEntrgea = info.DiferenciaDiasAceptacionEntrgea;
                     }
 
                     Context.SaveChanges();
@@ -111,7 +113,8 @@ namespace Data.General
                         IntervaloEjecucionMinApro= Entity.IntervaloEjecucionMinApro,
                         UtilizarFechaAutoApro = Entity.UtilizarFechaAutoApro,
                         IntervaloRepetirAlarma = Entity.IntervaloRepetirAlarma,
-                        IntervaloAlertaMin = Entity.IntervaloAlertaMin
+                        IntervaloAlertaMin = Entity.IntervaloAlertaMin,
+                        DiferenciaDiasAceptacionEntrgea = Entity.DiferenciaDiasAceptacionEntrgea ?? 0
                     };
                 }
                 return info;

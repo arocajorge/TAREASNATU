@@ -30,13 +30,13 @@
         <AssociationConnector Association="ModelGeneral.FK_TareaArchivoAdjunto_Tarea" />
         <AssociationConnector Association="ModelGeneral.FK_TareaEstado_Tarea" />
         <EntityTypeShape EntityType="ModelGeneral.AlertaUsuario" Width="1.5" PointX="12.375" PointY="11.75" />
-        <EntityTypeShape EntityType="ModelGeneral.Parametro" Width="1.5" PointX="5.25" PointY="11.125" />
-        <AssociationConnector Association="ModelGeneral.FK_Parametro_Estado" />
-        <AssociationConnector Association="ModelGeneral.FK_Parametro_Estado1" />
-        <AssociationConnector Association="ModelGeneral.FK_Parametro_Estado2" />
         <EntityTypeShape EntityType="ModelGeneral.vw_Tarea" Width="1.5" PointX="0.75" PointY="10.75" />
         <EntityTypeShape EntityType="ModelGeneral.vw_TareaAlerta" Width="1.5" PointX="14.375" PointY="0.75" />
         <EntityTypeShape EntityType="ModelGeneral.vw_UsuarioAlerta" Width="1.5" PointX="7.375" PointY="13.75" />
+        <EntityTypeShape EntityType="ModelGeneral.Parametro" Width="1.5" PointX="5.25" PointY="17.125" />
+        <AssociationConnector Association="ModelGeneral.FK_Parametro_Estado" />
+        <AssociationConnector Association="ModelGeneral.FK_Parametro_Estado1" />
+        <AssociationConnector Association="ModelGeneral.FK_Parametro_Estado2" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

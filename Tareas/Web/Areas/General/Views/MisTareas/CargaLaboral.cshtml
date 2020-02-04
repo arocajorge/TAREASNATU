@@ -223,7 +223,56 @@
                         }
                     </div>
                 </div>
+                @{ 
+                    ViewBag.Color = "green";
+                    ViewBag.Mensaje = "";
+                    ViewBag.Pulgar = "up";
+                    if (Model.CalificacionEficiencia > 70)
+                    {
+                        ViewBag.Color = "green";
+                        ViewBag.Mensaje = "Felicidades, sigue asi!!";
+                        ViewBag.Pulgar = "up";
+                    }
+                    else
+                        if (Model.CalificacionEficiencia < 50)
+                    {
+                        ViewBag.Color = "red";
+                        ViewBag.Mensaje = "Debes mejorar!!";
+                        ViewBag.Pulgar = "down";
+                    }
+                    else
+                    {
+                        ViewBag.Color = "yellow";
+                        ViewBag.Mensaje = "Se puede mejorar!!";
+                        ViewBag.Pulgar = "up";
+                    }
+
+                }
+                <div class="col-md-12 col-sm-6 col-xs-12">
+                    <div class="info-box bg-@ViewBag.Color">
+                        <span class="info-box-icon"><i class="fa fa-thumbs-o-@ViewBag.Pulgar"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Calificación de eficiencia</span>
+                            <span class="info-box-number">@Model.CalificacionEficiencia</span>
+
+                            <div class="progress">
+                                <div class="progress-bar" style="width: @Model.CalificacionEficiencia%"></div>
+                            </div>
+                           
+                                <span class="progress-description">
+                                    @ViewBag.Mensaje
+                                </span>
+                       
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+
             </div>
+
+          
 
 
             @*<div class="box box-primary">

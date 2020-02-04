@@ -20,7 +20,7 @@ namespace Web.Areas.General.Controllers
         Usuario_Bus bus_usuario = new Usuario_Bus();
         Estado_Bus bus_estado = new Estado_Bus();
         TareaArchivoAdjunto_Bus bus_adjunto = new TareaArchivoAdjunto_Bus();
-
+        Parametro_Bus bus_parametro = new Parametro_Bus();
         #endregion
 
         public ActionResult Nuevo(int IdTarea = 0)
@@ -144,6 +144,7 @@ namespace Web.Areas.General.Controllers
             try
             {
                 string mensaje = "";
+                var parametro = bus_parametro.get_info();
                 /*
                  if (info.TareaConcurrente)
                  {
@@ -157,11 +158,23 @@ namespace Web.Areas.General.Controllers
 
                  }
                  */
+
+                
                 if (info.FechaEntrega < DateTime.Now.Date)
                 {
                     mensaje = "No se puede aceptar una tarea con fecha de entrega vencida";
                     return mensaje;
                 }
+                
+                if (parametro != null && parametro.DiferenciaDiasAceptacionEntrgea > 0)
+                {
+                    if ((info.FechaEntrega.Date - info.FechaInicio.Date).TotalDays > parametro.DiferenciaDiasAceptacionEntrgea)
+                    {
+                        mensaje = "El cambio de fecha de entrega no puede exceder los " + parametro.DiferenciaDiasAceptacionEntrgea.ToString() + " dias parametrizados.";
+                        return mensaje;
+                    }
+                }
+
                 if (info.IdTareaPadre != null)
                 {
                     var tarea = bus_tarea.get_info(Convert.ToDecimal(info.IdTareaPadre));

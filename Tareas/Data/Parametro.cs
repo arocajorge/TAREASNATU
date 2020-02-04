@@ -34,6 +34,7 @@ namespace Data
         public string UtilizarFechaAutoApro { get; set; }
         public int IntervaloAlertaMin { get; set; }
         public int IntervaloRepetirAlarma { get; set; }
+        public Nullable<int> DiferenciaDiasAceptacionEntrgea { get; set; }
     
         public virtual Estado Estado { get; set; }
         public virtual Estado Estado1 { get; set; }

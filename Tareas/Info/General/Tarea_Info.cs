@@ -82,6 +82,7 @@ namespace Info
         public Nullable<int> IdGrupoFiltro { get; set; }
         public DateTime FechaInicio { get; set; }
         public DateTime FechaFin { get; set; }
+        public double CalificacionEficiencia { get; set; }
 
         #endregion
     }
